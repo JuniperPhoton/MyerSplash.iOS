@@ -33,20 +33,20 @@ class MainView: UIView {
         addSubview(navigationView)
 
         navigationView.snp.makeConstraints { (maker) in
-            maker.height.equalTo(100)
+            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
             maker.right.equalTo(self)
             maker.left.equalTo(self)
             maker.top.equalTo(self)
         }
         tableView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(self.snp.top)
+            maker.top.equalTo(navigationView.snp.bottom)
             maker.bottom.equalTo(self.snp.bottom)
             maker.width.equalTo(self.snp.width)
         }
         fab.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(70)
-            maker.right.equalTo(self.snp.right).offset(-20)
-            maker.bottom.equalTo(self.snp.bottom).offset(-20)
+            maker.width.height.equalTo(Dimensions.FAB_SIZE)
+            maker.right.equalTo(self.snp.right).offset(-8)
+            maker.bottom.equalTo(self.snp.bottom).offset(-8)
         }
     }
 
@@ -66,7 +66,7 @@ class MainView: UIView {
         }
         animating = true
         UIView.animate(
-                withDuration: TimeInterval(0.3),
+                withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,
                 options: UIViewAnimationOptions.curveEaseInOut,
                 animations: {
@@ -86,7 +86,7 @@ class MainView: UIView {
         }
         animating = true
         UIView.animate(
-                withDuration: TimeInterval(0.3),
+                withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,
                 options: UIViewAnimationOptions.curveEaseInOut,
                 animations: {

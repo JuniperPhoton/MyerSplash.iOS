@@ -3,7 +3,8 @@ import UIKit
 import SnapKit
 import Alamofire
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NavigationViewCallback {
+class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate,
+        NavigationViewDelegate, SettingsDelegate {
     private var images: [UnsplashImage] = [UnsplashImage]()
     private var mainView: MainView!
 
@@ -12,12 +13,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var paging = 1
     private var loading = false
     private var canLoadMore = false
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        get {
-            return UIStatusBarStyle.lightContent
-        }
-    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -31,7 +26,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        mainView.navigationView.callback = self
+        mainView.navigationView.delegate = self
 
         let tableView = mainView.tableView!
         tableView.dataSource = self
@@ -42,10 +37,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         loadingFooterView = LoadingFooterView(frame: CGRect(x: 0, y: 0,
                 width: UIScreen.main.bounds.width, height: 100))
-        let headerView = UIView(frame: CGRect(x: 0, y: 0,
-                width: UIScreen.main.bounds.width, height: 80))
         tableView.tableFooterView = loadingFooterView
-        tableView.tableHeaderView = headerView
 
         mainView.onRefresh = {
             self.refreshData()
@@ -69,7 +61,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             response in
             if (refreshing) {
                 self.images.removeAll(keepingCapacity: false)
-                self.images.append(UnsplashImage.createToday())
+
+                if (AppSettings.isTodayEnabled()) {
+                    self.images.append(UnsplashImage.createToday())
+                }
             }
             self.images += response
             self.mainView.tableView.reloadData()
@@ -105,6 +100,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         cell.onClickDownload = { unsplashImage in
             self.doDownload(unsplashImage)
+        }
+        cell.onClickMainImage = { (image) -> Void in
+            //todo: implement viewing image detail
         }
         cell.bind(image: images[indexPath.row])
         return cell
@@ -150,6 +148,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private func doDownload(_ unsplashImage: UnsplashImage) {
         print("downloading: \(unsplashImage.downloadUrl)")
 
+        showToast("Downloading in background...")
+
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
@@ -175,19 +175,34 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private func onSavedOrError(_ image: UIImage,
                                 didFinishSavingWithError error: Error?,
                                 contextInfo: UnsafeRawPointer) {
-        let title = error == nil ? "Saved" : "Error"
-        let message = error == nil ? "Image has been saved" : "error occurs: \(error.debugDescription)"
-        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { a in
-            ac.dismiss(animated: true)
-        }))
-        present(ac, animated: true)
+        if (error == nil) {
+            showToast("Downloaded")
+        } else {
+            showToast("Failed to download")
+        }
+    }
+
+    // MARK: Setting delegate
+    func refresh() {
+        if (!AppSettings.isTodayEnabled()) {
+            let today = images.first
+            if (today != nil && UnsplashImage.isToday(today!)) {
+                images.remove(at: 0)
+            }
+        } else {
+            let today = images.first
+            if (today != nil && !UnsplashImage.isToday(today!)) {
+                images.insert(UnsplashImage.createToday(), at: 0)
+            }
+        }
+        self.mainView.tableView.reloadData()
     }
 
     // MARK: MainView callback
 
     func onClickSettings() {
         let vc = SettingsViewController(nibName: nil, bundle: nil)
+        vc.delegate = self
         present(vc, animated: true, completion: nil)
     }
 

@@ -13,14 +13,19 @@ public class MainImageTableCell: UITableViewCell {
     private var bindImage: UnsplashImage?
 
     var mainImageView: UIImageView!
+
+    var onClickMainImage: ((UnsplashImage?) -> Void)?
     var onClickDownload: ((UnsplashImage) -> Void)?
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: UITableViewCellStyle.default, reuseIdentifier: reuseIdentifier)
 
-        mainImageView = UIImageView(frame: CGRect.zero)
+        mainImageView = UIImageView()
         mainImageView.contentMode = UIViewContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
+        mainImageView.isUserInteractionEnabled = true
+        mainImageView.addGestureRecognizer(
+                UITapGestureRecognizer(target: self, action: #selector(self.onClickImage)))
 
         starView = UIImageView()
         starView.image = UIImage(named: "ic_star")
@@ -70,21 +75,41 @@ public class MainImageTableCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    @objc
-    private func clickDownloadButton() {
-        if (bindImage != nil) {
-            onClickDownload?(bindImage!)
-        }
-    }
-
     func bind(image: UnsplashImage) {
         bindImage = image
         contentView.backgroundColor = image.themeColor
         mainImageView.image = nil
 
+        downloadView.isHidden = !AppSettings.isQuickDownloadEnabled()
+
         Manager.shared.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
 
         starView.isHidden = image.isUnsplash
         todayLabel.isHidden = image.isUnsplash
+    }
+
+    @objc
+    private func onClickImage() {
+        onClickMainImage?(bindImage!)
+    }
+
+
+    @objc
+    private func clickDownloadButton() {
+        if (bindImage != nil) {
+            animateDownloadButton()
+            onClickDownload?(bindImage!)
+        }
+    }
+
+    private func animateDownloadButton() {
+        UIView.animateKeyframes(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC, delay: 0, options: UIViewKeyframeAnimationOptions(), animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.5) {
+                self.downloadView.transform = CGAffineTransform(scaleX: 1.6, y: 1.6)
+            }
+            UIView.addKeyframe(withRelativeStartTime: Values.DEFAULT_ANIMATION_DURATION_SEC, relativeDuration: 0.5) {
+                self.downloadView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+        }, completion: nil)
     }
 }

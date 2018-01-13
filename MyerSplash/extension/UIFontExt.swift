@@ -15,9 +15,13 @@ extension UIFont {
     } // boldItalic
 
     func with(traits: UIFontDescriptorSymbolicTraits, fontSize: CGFloat = 0.0) -> UIFont {
-        guard let descriptor = self.fontDescriptor.withSymbolicTraits(traits) else {
-            return self
-        } // guard
+        var descriptor: UIFontDescriptor!
+        if (traits == UIFontDescriptorSymbolicTraits.traitBold) {
+            descriptor = UIFontDescriptor(name: "Helvetica-Bold", size: fontSize)
+        } else {
+            self.fontDescriptor.withSymbolicTraits(traits)
+        }
+
         return UIFont(descriptor: descriptor, size: fontSize)
     } // with(traits:)
 } // extension

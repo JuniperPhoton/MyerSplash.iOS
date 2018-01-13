@@ -36,13 +36,25 @@ class UnsplashImage {
 
     var listUrl: String? {
         get {
-            return urls?.regular
+            let quality = AppSettings.loadingQuality()
+            switch quality {
+            case 0: return urls?.regular
+            case 1: return urls?.small
+            case 2: return urls?.thumb
+            default: return urls?.regular
+            }
         }
     }
 
     var downloadUrl: String? {
         get {
-            return urls?.full
+            let quality = AppSettings.savingQuality()
+            switch quality {
+            case 0: return urls?.raw
+            case 1: return urls?.full
+            case 2: return urls?.regular
+            default: return urls?.full
+            }
         }
     }
 
@@ -78,6 +90,10 @@ class UnsplashImage {
 
         urls = ImageUrl(json["urls"])
         user = UnsplashUser(json["user"])
+    }
+
+    static func isToday(_ image: UnsplashImage) -> Bool {
+        return image.id == "TodayImage"
     }
 
     static func createToday() -> UnsplashImage {
