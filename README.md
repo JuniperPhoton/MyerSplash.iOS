@@ -1,5 +1,5 @@
 # MyerSplash.iOS
-iOS version of MyerSplash app. Written in pure swift.
+iOS version of MyerSplash app([UWP](https://github.com/JuniperPhoton/MyerSplash.UWP) & [Android](https://github.com/JuniperPhoton/MyerSplash.Android)). Written in pure swift.
 
 ![](https://github.com/JuniperPhoton/MyerSplash.iOS/raw/develop/design/demo.png)
 
