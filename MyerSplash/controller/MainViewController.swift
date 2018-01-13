@@ -176,9 +176,9 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
                                 didFinishSavingWithError error: Error?,
                                 contextInfo: UnsafeRawPointer) {
         if (error == nil) {
-            showToast("Downloaded")
+            showToast("Saved to your album :D")
         } else {
-            showToast("Failed to download")
+            showToast("Failed to download :(")
         }
     }
 
