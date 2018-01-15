@@ -10,22 +10,23 @@ protocol ImageDetailViewDelegate {
 }
 
 class ImageDetailView: UIView {
-    private var mainImageView: UIImageView!
-    private var backgroundView: UIView!
+    private var mainImageView:        UIImageView!
+    private var backgroundView:       UIView!
     private var extraInformationView: UIView!
-    private var photoByLabel: UILabel!
-    private var authorButton: UIButton!
-    private var downloadButton: UIButton!
+    private var photoByLabel:         UILabel!
+    private var authorButton:         UIButton!
+    private var authorStack:          UIStackView!
+    private var downloadButton:       UIButton!
 
-    private var initFrame: CGRect? = nil
+    private var initFrame: CGRect?        = nil
     private var bindImage: UnsplashImage? = nil
 
     var delegate: ImageDetailViewDelegate? = nil
 
     private var finalFrame: CGRect {
         get {
-            let width = self.frame.width
-            let height = MainViewController.calculateCellHeight(width)
+            let width      = self.frame.width
+            let height     = MainViewController.calculateCellHeight(width)
             let x: CGFloat = 0.0
             let y: CGFloat = (self.frame.height - height - Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT) / 2.0
             return CGRect(x: x, y: y, width: width, height: height)
@@ -72,7 +73,7 @@ class ImageDetailView: UIView {
         authorButton.titleLabel!.lineBreakMode = NSLineBreakMode.byTruncatingTail
         authorButton.addTarget(self, action: #selector(onClickAuthorName), for: .touchUpInside)
 
-        let authorStack = UIStackView(arrangedSubviews: [photoByLabel, authorButton])
+        authorStack = UIStackView(arrangedSubviews: [photoByLabel, authorButton])
         authorStack.axis = UILayoutConstraintAxis.vertical
         authorStack.spacing = 2
 
@@ -86,6 +87,8 @@ class ImageDetailView: UIView {
         let inset = UIEdgeInsetsMake(8, 8, 8, 8);
         downloadButton.contentEdgeInsets = inset
 
+        downloadButton.sizeToFit()
+
         extraInformationView.addSubview(authorStack)
         extraInformationView.addSubview(downloadButton)
 
@@ -94,23 +97,26 @@ class ImageDetailView: UIView {
         addSubview(mainImageView)
 
         backgroundView.snp.makeConstraints { maker in
-            maker.width.equalTo(self)
-            maker.height.equalTo(self)
+            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.height.equalTo(UIScreen.main.bounds.height)
         }
+
         extraInformationView.snp.makeConstraints { maker in
-            maker.left.equalTo(mainImageView.snp.left)
-            maker.right.equalTo(mainImageView.snp.right)
+            maker.width.equalTo(UIScreen.main.bounds.width)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
-            maker.top.equalTo(mainImageView.snp.bottom)
+            maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
+
         authorStack.snp.makeConstraints { maker in
-            maker.left.equalToSuperview().offset(12)
+            maker.left.equalTo(self.extraInformationView.snp.left).offset(12)
             maker.right.lessThanOrEqualTo(downloadButton.snp.left).offset(-8)
-            maker.centerY.equalToSuperview()
+            maker.centerY.equalTo(self.extraInformationView.snp.centerY)
         }
+
         downloadButton.snp.makeConstraints { maker in
-            maker.centerY.equalTo(extraInformationView)
-            maker.right.equalTo(extraInformationView).offset(-20)
+            maker.width.equalTo(self.downloadButton.frame.width)
+            maker.centerY.equalTo(self.extraInformationView.snp.centerY)
+            maker.right.equalTo(self.extraInformationView.snp.right).offset(-20)
         }
     }
 
@@ -122,17 +128,17 @@ class ImageDetailView: UIView {
         let translation = gesture.translation(in: self)
 
         switch gesture.state {
-        case UIGestureRecognizerState.began:
-            startX = mainImageView.center.x
-            startY = mainImageView.center.y
-            extraInformationView.isHidden = true
-        case UIGestureRecognizerState.changed:
-            mainImageView.center.x = startX + translation.x
-            mainImageView.center.y = startY + translation.y
-        case UIGestureRecognizerState.ended:
-            hideInternal()
-        default:
-            return
+            case UIGestureRecognizerState.began:
+                startX = mainImageView.center.x
+                startY = mainImageView.center.y
+                extraInformationView.isHidden = true
+            case UIGestureRecognizerState.changed:
+                mainImageView.center.x = startX + translation.x
+                mainImageView.center.y = startY + translation.y
+            case UIGestureRecognizerState.ended:
+                hideInternal()
+            default:
+                return
         }
     }
 
@@ -164,14 +170,14 @@ class ImageDetailView: UIView {
         mainImageView.frame = initFrame
         Manager.shared.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
 
-        let themeColor = image.themeColor
+        let themeColor   = image.themeColor
         let isThemeLight = themeColor.isLightColor()
 
         extraInformationView.backgroundColor = themeColor
 
-        photoByLabel.text = image.isUnsplash ? "photo by" : "recommend by"
+        photoByLabel.text = image.isUnsplash ? "photo by" : "recommended by"
 
-        let textColor = isThemeLight ? UIColor.black : UIColor.white
+        let textColor       = isThemeLight ? UIColor.black : UIColor.white
         let revertTextColor = isThemeLight ? UIColor.white : UIColor.black
 
         photoByLabel.textColor = textColor
@@ -203,16 +209,19 @@ class ImageDetailView: UIView {
     }
 
     private func showExtraInformation() {
-        let startCenterY = extraInformationView.center.y
-
         extraInformationView.isHidden = false
-        extraInformationView.center.y -= extraInformationView.frame.height
+
+        extraInformationView.snp.remakeConstraints { maker in
+            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.top.equalTo(self.mainImageView.snp.bottom)
+        }
 
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
                        delay: 0,
                        options: UIViewAnimationOptions.curveEaseOut,
                        animations: {
-                           self.extraInformationView.center.y = startCenterY
+                           self.layoutIfNeeded()
                        },
                        completion: nil)
     }
@@ -228,11 +237,17 @@ class ImageDetailView: UIView {
     }
 
     private func hideExtraInformationView(_ completion: (() -> Void)? = nil) {
+        extraInformationView.snp.remakeConstraints { maker in
+            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.bottom.equalTo(self.mainImageView.snp.bottom)
+        }
+
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
                        delay: 0,
                        options: UIViewAnimationOptions.curveEaseOut,
                        animations: {
-                           self.extraInformationView.center.y -= self.extraInformationView.frame.height
+                           self.layoutIfNeeded()
                        },
                        completion: { b in
                            self.extraInformationView.isHidden = true
