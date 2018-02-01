@@ -108,7 +108,7 @@ class UnsplashImage {
 
     static func createTodayImageDateString() -> String {
         let df = DateFormatter()
-        df.dateFormat = "yyyyMMDD"
+        df.dateFormat = "yyyyMMdd"
         return df.string(from: Date())
     }
 
