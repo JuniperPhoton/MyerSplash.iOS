@@ -107,13 +107,17 @@ class UnsplashImage {
     }
 
     static func createTodayImageDateString() -> String {
-        let df = DateFormatter()
-        df.dateFormat = "yyyyMMdd"
-        return df.string(from: Date())
+        return createDateString(Date())
     }
 
-    static func createToday() -> UnsplashImage {
-        let today = UnsplashImage()
+    static func createDateString(_ date: Date) -> String {
+        let df = DateFormatter()
+        df.dateFormat = "yyyyMMdd"
+        return df.string(from: date)
+    }
+
+    static func create(_ date: Date) -> UnsplashImage {
+        let image = UnsplashImage()
         let urls  = ImageUrl()
         let user  = UnsplashUser()
         user.userName = "JuniperPhoton"
@@ -124,20 +128,24 @@ class UnsplashImage {
         profileUrl.html = Request.ME_HOME_PAGE
         user.links = profileUrl
 
-        let date = createTodayImageDateString()
+        let dateStr = createDateString(date)
 
-        urls.raw = "\(Request.AUTO_CHANGE_WALLPAPER)\(date).jpg"
-        urls.full = "\(Request.AUTO_CHANGE_WALLPAPER)\(date).jpg"
-        urls.regular = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(date).jpg"
-        urls.small = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(date).jpg"
-        urls.thumb = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(date).jpg"
+        urls.raw = "\(Request.AUTO_CHANGE_WALLPAPER)\(dateStr).jpg"
+        urls.full = "\(Request.AUTO_CHANGE_WALLPAPER)\(dateStr).jpg"
+        urls.regular = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(dateStr).jpg"
+        urls.small = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(dateStr).jpg"
+        urls.thumb = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(dateStr).jpg"
 
-        today.color = "#ffffff"
-        today.id = createTodayImageId()
-        today.urls = urls
-        today.user = user
-        today.isUnsplash = false
-        return today
+        image.color = "#ffffff"
+        image.id = dateStr
+        image.urls = urls
+        image.user = user
+        image.isUnsplash = false
+        return image
+    }
+
+    static func createToday() -> UnsplashImage {
+        return create(Date())
     }
 }
 

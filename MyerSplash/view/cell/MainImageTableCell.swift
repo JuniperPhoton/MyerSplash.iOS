@@ -7,8 +7,6 @@ public class MainImageTableCell: UITableViewCell {
     static let ID = "MainImageTableCell"
 
     private var downloadView: UIButton!
-    private var starView:     UIImageView!
-    private var todayLabel:   UILabel!
 
     private var bindImage: UnsplashImage?
 
@@ -27,14 +25,6 @@ public class MainImageTableCell: UITableViewCell {
         mainImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                   action: #selector(self.onClickImage)))
 
-        starView = UIImageView()
-        starView.image = UIImage(named: "ic_star")
-
-        todayLabel = UILabel()
-        todayLabel.text = "TODAY"
-        todayLabel.textColor = UIColor.white
-        todayLabel.font = todayLabel.font.with(traits: .traitBold, fontSize: 12)
-
         downloadView = UIButton()
         downloadView.setImage(UIImage(named: "ic_file_download_white")?
                                       .resizableImage(withCapInsets: UIEdgeInsetsMake(20, 20, 20, 20)), for: .normal)
@@ -42,20 +32,6 @@ public class MainImageTableCell: UITableViewCell {
 
         contentView.addSubview(mainImageView)
         contentView.addSubview(downloadView)
-        contentView.addSubview(starView)
-        contentView.addSubview(todayLabel)
-
-        starView.snp.makeConstraints { (maker) in
-            maker.left.equalTo(contentView.snp.left).offset(12)
-            maker.bottom.equalTo(contentView.snp.bottom).offset(-12)
-            maker.width.height.equalTo(20)
-        }
-
-        todayLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(starView.snp.right).offset(8)
-            maker.top.equalTo(starView.snp.top)
-            maker.bottom.equalTo(starView.snp.bottom)
-        }
 
         mainImageView.snp.makeConstraints { (maker) in
             maker.left.equalTo(contentView.snp.left)
@@ -83,9 +59,6 @@ public class MainImageTableCell: UITableViewCell {
         downloadView.isHidden = !AppSettings.isQuickDownloadEnabled()
 
         Manager.shared.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
-
-        starView.isHidden = image.isUnsplash
-        todayLabel.isHidden = image.isUnsplash
     }
 
     private func isImageCached() -> Bool {

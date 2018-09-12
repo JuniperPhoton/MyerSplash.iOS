@@ -3,11 +3,12 @@ import Alamofire
 import SwiftyJSON
 
 class CloudService {
-    private static let PAGING_PARAM     = "page"
-    private static let PER_PAGE_PARAM   = "per_page"
-    private static let DEFAULT_PER_PAGE = 10
+    private static let PAGING_PARAM             = "page"
+    private static let PER_PAGE_PARAM           = "per_page"
+    private static let DEFAULT_PER_PAGE         = 10
+    private static let DEFAULT_HIGHLIGHTS_COUNT = 60
 
-    static func getNewPhotos(page: Int = 0, callback: @escaping ([UnsplashImage]) -> Void) {
+    static func getNewPhotos(page: Int = 1, callback: @escaping ([UnsplashImage]) -> Void) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
         var params = getDefaultParams()
@@ -27,6 +28,23 @@ class CloudService {
                     print(error)
             }
         }
+    }
+
+    static func getHighlights(page: Int = 1, callback: @escaping ([UnsplashImage]) -> Void) {
+        var result    = [UnsplashImage]()
+        let calendar  = Calendar(identifier: Calendar.Identifier.republicOfChina)
+        let startDate = calendar.date(byAdding: Calendar.Component.day,
+                                      value: -(page - 1) * DEFAULT_HIGHLIGHTS_COUNT,
+                                      to: Date())!
+
+        for i in (0..<DEFAULT_HIGHLIGHTS_COUNT) {
+            let date = calendar.date(byAdding: Calendar.Component.day,
+                                     value: -i,
+                                     to: startDate)!
+            result.append(UnsplashImage.create(date))
+        }
+
+        callback(result)
     }
 
     static func getDefaultParams() -> Dictionary<String, Any> {

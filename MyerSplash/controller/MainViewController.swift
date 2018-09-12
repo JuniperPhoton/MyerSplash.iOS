@@ -86,7 +86,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         }
 
         loading = true
-        CloudService.getNewPhotos(page: paging) { response in
+        CloudService.getHighlights(page: paging) { response in
             self.processResponse(response: response, refreshing)
             self.loading = false
             self.canLoadMore = true
@@ -114,10 +114,6 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         if (refreshing) {
             images.removeAll(keepingCapacity: false)
             cellDisplayAnimatedCount = 0
-
-            if (AppSettings.isTodayEnabled()) {
-                images.append(UnsplashImage.createToday())
-            }
         }
 
         images += response
@@ -302,17 +298,6 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 
     // MARK: Setting delegate
     func refresh() {
-        if (!AppSettings.isTodayEnabled()) {
-            let today = images.first
-            if (today != nil && UnsplashImage.isToday(today!)) {
-                images.remove(at: 0)
-            }
-        } else {
-            let today = images.first
-            if (today != nil && !UnsplashImage.isToday(today!)) {
-                images.insert(UnsplashImage.createToday(), at: 0)
-            }
-        }
         self.mainView.tableView.reloadData()
     }
 

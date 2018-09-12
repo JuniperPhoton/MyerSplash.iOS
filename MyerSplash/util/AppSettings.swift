@@ -11,10 +11,6 @@ class AppSettings {
         return UserDefaults.standard.bool(key: key, defaultValue: true)
     }
 
-    static func isTodayEnabled() -> Bool {
-        return isSettingsEnabled(key: Keys.ENABLE_TODAY)
-    }
-
     static func isQuickDownloadEnabled() -> Bool {
         return isSettingsEnabled(key: Keys.QUICK_DOWNLOAD)
     }

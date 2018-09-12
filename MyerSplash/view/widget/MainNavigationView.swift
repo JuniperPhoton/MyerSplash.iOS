@@ -12,7 +12,7 @@ public class MainNavigationView: UIView {
     private var settingsView:   UIButton!
     private var backgroundView: UIVisualEffectView!
 
-    var title: String = "NEW" { //todo: extract this string value
+    var title: String = "HIGHLIGHTS" { //todo: extract this string value
         didSet {
             titleView.text = title
         }

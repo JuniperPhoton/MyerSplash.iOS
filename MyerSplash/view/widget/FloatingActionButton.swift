@@ -13,14 +13,14 @@ class FloatingActionButton: UIView {
                                   width: Dimensions.FAB_RADIUS,
                                   height: Dimensions.FAB_RADIUS)
         roundLayer.cornerRadius = CGFloat(Dimensions.FAB_RADIUS) / 2.0
-        roundLayer.backgroundColor = Colors.THEME.asCGColor()
+        roundLayer.backgroundColor = UIColor.white.cgColor
         roundLayer.shadowColor = UIColor.black.cgColor
         roundLayer.shadowRadius = 5
         roundLayer.shadowOffset = CGSize(width: 5, height: 5)
         roundLayer.shadowOpacity = 0.3
 
         let imageLayer = CALayer()
-        let image      = UIImage(named: "ic_search_white")!
+        let image      = UIImage(named: "ic_search_black")!
         imageLayer.contents = image.cgImage
         imageLayer.frame = CGRect(
                 x: (Dimensions.FAB_RADIUS - Dimensions.FAB_ICON_SIZE) / 2,
