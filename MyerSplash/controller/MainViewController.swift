@@ -4,26 +4,26 @@ import SnapKit
 import Alamofire
 
 class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate,
-                          NavigationViewDelegate, SettingsDelegate, ImageDetailViewDelegate {
+        NavigationViewDelegate, SettingsDelegate, ImageDetailViewDelegate {
     static func calculateCellHeight(_ width: CGFloat) -> CGFloat {
         return width / 1.5
     }
 
     static let CELL_ANIMATE_OFFSET_X: CGFloat = 70.0
-    static let CELL_ANIMATE_DELAY_UNIT_SEC    = 0.3
-    static let CELL_ANIMATE_DURATION_SEC      = 0.6
+    static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.3
+    static let CELL_ANIMATE_DURATION_SEC = 0.6
 
-    private var images:   [UnsplashImage] = [UnsplashImage]()
+    private var images: [UnsplashImage] = [UnsplashImage]()
     private var mainView: MainView!
 
     private var loadingFooterView: LoadingFooterView!
 
-    private var paging      = 1
-    private var loading     = false
+    private var paging = 1
+    private var loading = false
     private var canLoadMore = false
 
     private var calculatedCellHeight: CGFloat = -1.0
-    private var initialMaxVisibleCellCount    = -1
+    private var initialMaxVisibleCellCount = -1
 
     private var cellDisplayAnimatedCount = 0
 
@@ -40,6 +40,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.isNavigationBarHidden = true
+
         mainView.navigationView.delegate = self
 
         let tableView = mainView.tableView!
@@ -50,9 +52,9 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
 
         loadingFooterView = LoadingFooterView(frame: CGRect(x: 0,
-                                                            y: 0,
-                                                            width: UIScreen.main.bounds.width,
-                                                            height: 100))
+                y: 0,
+                width: UIScreen.main.bounds.width,
+                height: 100))
         tableView.tableFooterView = loadingFooterView
 
         mainView.onRefresh = {
@@ -97,10 +99,10 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     private func processResponse(response: [UnsplashImage], _ refreshing: Bool) {
         if (images.count >= 2 && response.count > 0) {
             let firstResponseImage = response.first!
-            let firstExistImage    = images[1]
+            let firstExistImage = images[1]
 
             let todayHighlightUpdated = !firstExistImage.isUnsplash
-                                        && firstExistImage.id != UnsplashImage.createTodayImageId()
+                    && firstExistImage.id != UnsplashImage.createTodayImageId()
 
             let noNewData = firstExistImage.id == firstResponseImage.id
 
@@ -193,13 +195,13 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         let delaySec = Double(index + 1) * MainViewController.CELL_ANIMATE_DELAY_UNIT_SEC
 
         UIView.animate(withDuration: MainViewController.CELL_ANIMATE_DURATION_SEC,
-                       delay: delaySec,
-                       options: UIViewAnimationOptions.curveEaseOut,
-                       animations: {
-                           cell.alpha = 1.0
-                           cell.center.x = startX
-                       },
-                       completion: nil)
+                delay: delaySec,
+                options: UIViewAnimationOptions.curveEaseOut,
+                animations: {
+                    cell.alpha = 1.0
+                    cell.center.x = startX
+                },
+                completion: nil)
 
         cellDisplayAnimatedCount += 1
     }
@@ -267,7 +269,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             let documentsURL
-                        = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                    = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let fileURL = documentsURL.appendingPathComponent(unsplashImage.fileName)
 
             return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
