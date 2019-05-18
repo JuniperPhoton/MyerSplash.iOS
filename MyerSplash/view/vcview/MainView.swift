@@ -7,8 +7,6 @@ class MainView: UIView {
         case STILL, SHOWING, HIDING
     }
 
-    private var fab: FloatingActionButton!
-
     private var animatingStatus: AnimatingStatus = AnimatingStatus.STILL
     private var startY:          CGFloat         = -1
 
@@ -31,7 +29,6 @@ class MainView: UIView {
 
         tableView = UITableView(frame: CGRect.zero)
 
-        fab = FloatingActionButton(frame: CGRect.zero)
         imageDetailView = ImageDetailView(frame: CGRect(x: 0,
                                                         y: 0,
                                                         width: UIScreen.main.bounds.width,
@@ -47,7 +44,6 @@ class MainView: UIView {
         tableView.tableHeaderView = dummyHeader
 
         addSubview(tableView)
-        addSubview(fab)
         addSubview(navigationView)
         addSubview(imageDetailView)
 
@@ -66,11 +62,6 @@ class MainView: UIView {
             maker.height.equalTo(self)
             maker.width.equalTo(self)
         }
-        fab.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(Dimensions.FAB_SIZE)
-            maker.right.equalTo(self.snp.right).offset(-8)
-            maker.bottom.equalTo(self.snp.bottom).offset(-8)
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -80,16 +71,6 @@ class MainView: UIView {
     func hideNavigationElements() {
         if (animatingStatus == AnimatingStatus.HIDING) {
             return
-        }
-
-        if (startY == -1) {
-            startY = self.fab.center.y
-        }
-
-        fab.snp.remakeConstraints { (maker) in
-            maker.width.height.equalTo(Dimensions.FAB_SIZE)
-            maker.right.equalTo(self.snp.right).offset(-8)
-            maker.top.equalTo(self.snp.bottom).offset(8)
         }
 
         navigationView.snp.remakeConstraints { maker in
@@ -116,16 +97,6 @@ class MainView: UIView {
     func showNavigationElements() {
         if (animatingStatus == AnimatingStatus.SHOWING) {
             return
-        }
-
-        if (startY == -1) {
-            startY = self.fab.center.y
-        }
-
-        fab.snp.remakeConstraints { (maker) in
-            maker.width.height.equalTo(Dimensions.FAB_SIZE)
-            maker.right.equalTo(self.snp.right).offset(-8)
-            maker.bottom.equalTo(self.snp.bottom).offset(-8)
         }
 
         navigationView.snp.remakeConstraints { maker in
