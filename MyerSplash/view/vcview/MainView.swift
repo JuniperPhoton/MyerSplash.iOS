@@ -8,12 +8,12 @@ class MainView: UIView {
     }
 
     private var animatingStatus: AnimatingStatus = AnimatingStatus.STILL
-    private var startY:          CGFloat         = -1
+    private var startY: CGFloat = -1
 
     var imageDetailView: ImageDetailView!
-    var tableView:       UITableView!
-    var refreshControl:  UIRefreshControl!
-    var navigationView:  MainNavigationView!
+    var tableView: UITableView!
+    var refreshControl: UIRefreshControl!
+    var navigationView: MainNavigationView!
 
     var onRefresh: (() -> Void)?
 
@@ -30,34 +30,34 @@ class MainView: UIView {
         tableView = UITableView(frame: CGRect.zero)
 
         imageDetailView = ImageDetailView(frame: CGRect(x: 0,
-                                                        y: 0,
-                                                        width: UIScreen.main.bounds.width,
-                                                        height: UIScreen.main.bounds.height))
+                y: 0,
+                width: UIScreen.main.bounds.width,
+                height: UIScreen.main.bounds.height))
 
         tableView.backgroundColor = UIColor.black
         tableView.refreshControl = refreshControl
 
         let dummyHeader = UIView(frame: CGRect(x: 0,
-                                               y: 0,
-                                               width: UIScreen.main.bounds.width,
-                                               height: Dimensions.DUMMY_HEADER_HEIGHT))
-        tableView.tableHeaderView = dummyHeader
+                y: 0,
+                width: UIScreen.main.bounds.width,
+                height: Dimensions.DUMMY_HEADER_HEIGHT))
+        //tableView.tableHeaderView = dummyHeader
 
         addSubview(tableView)
-        addSubview(navigationView)
+        //addSubview(navigationView)
         addSubview(imageDetailView)
+//
+//        refreshControl.snp.makeConstraints { maker in
+//            maker.width.equalTo(UIScreen.main.bounds.width)
+//            maker.height.equalTo(Dimensions.DUMMY_HEADER_HEIGHT)
+//        }
 
-        refreshControl.snp.makeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
-            maker.height.equalTo(Dimensions.DUMMY_HEADER_HEIGHT)
-        }
-
-        navigationView.snp.makeConstraints { (maker) in
-            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
-            maker.right.equalTo(self)
-            maker.left.equalTo(self)
-            maker.top.equalTo(self)
-        }
+//        navigationView.snp.makeConstraints { (maker) in
+//            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
+//            maker.right.equalTo(self)
+//            maker.left.equalTo(self)
+//            maker.top.equalTo(self)
+//        }
         tableView.snp.makeConstraints { (maker) in
             maker.height.equalTo(self)
             maker.width.equalTo(self)
@@ -73,12 +73,12 @@ class MainView: UIView {
             return
         }
 
-        navigationView.snp.remakeConstraints { maker in
-            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
-            maker.right.equalTo(self)
-            maker.left.equalTo(self)
-            maker.bottom.equalTo(self.snp.top)
-        }
+//        navigationView.snp.remakeConstraints { maker in
+//            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
+//            maker.right.equalTo(self)
+//            maker.left.equalTo(self)
+//            maker.bottom.equalTo(self.snp.top)
+//        }
 
         animatingStatus = AnimatingStatus.HIDING
 
@@ -99,12 +99,12 @@ class MainView: UIView {
             return
         }
 
-        navigationView.snp.remakeConstraints { maker in
-            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
-            maker.right.equalTo(self)
-            maker.left.equalTo(self)
-            maker.top.equalTo(self)
-        }
+//        navigationView.snp.remakeConstraints { maker in
+//            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
+//            maker.right.equalTo(self)
+//            maker.left.equalTo(self)
+//            maker.top.equalTo(self)
+//        }
 
         animatingStatus = AnimatingStatus.SHOWING
 
@@ -126,6 +126,14 @@ class MainView: UIView {
 
     @objc
     private func onRefreshData() {
+        if (onRefresh == nil) {
+            return
+        }
+
         onRefresh?()
+
+        if (refreshControl.isRefreshing) {
+            refreshControl.endRefreshing()
+        }
     }
 }

@@ -3,11 +3,11 @@ import UIKit
 import SwiftyJSON
 
 class UnsplashImage {
-    private (set) var id:    String?
+    private (set) var id: String?
     private (set) var color: String?
     private (set) var likes: Int = 0
-    private (set) var urls:  ImageUrl?
-    private (set) var user:  UnsplashUser?
+    private (set) var urls: ImageUrl?
+    private (set) var user: UnsplashUser?
     private (set) var isUnsplash = true
 
     var fileNameForDownload: String {
@@ -38,10 +38,10 @@ class UnsplashImage {
         get {
             let quality = AppSettings.loadingQuality()
             switch quality {
-                case 0: return urls?.regular
-                case 1: return urls?.small
-                case 2: return urls?.thumb
-                default: return urls?.regular
+            case 0: return urls?.regular
+            case 1: return urls?.small
+            case 2: return urls?.thumb
+            default: return urls?.regular
             }
         }
     }
@@ -50,10 +50,10 @@ class UnsplashImage {
         get {
             let quality = AppSettings.savingQuality()
             switch quality {
-                case 0: return urls?.raw
-                case 1: return urls?.full
-                case 2: return urls?.regular
-                default: return urls?.full
+            case 0: return urls?.raw
+            case 1: return urls?.full
+            case 2: return urls?.regular
+            default: return urls?.full
             }
         }
     }
@@ -61,7 +61,7 @@ class UnsplashImage {
     var fileName: String {
         get {
             let name = user?.name ?? "author"
-            let id   = self.id ?? "id"
+            let id = self.id ?? "id"
             return "\(name)-\(id)-\(tagForDownload).jpg"
         }
     }
@@ -70,9 +70,9 @@ class UnsplashImage {
         get {
             let quality = AppSettings.savingQuality()
             switch quality {
-                case 0: return "raw"
-                case 2: return "regular"
-                default: return "full"
+            case 0: return "raw"
+            case 2: return "regular"
+            default: return "full"
             }
         }
     }
@@ -116,10 +116,12 @@ class UnsplashImage {
         return df.string(from: date)
     }
 
+    private static var createdImageCount = 0
+
     static func create(_ date: Date) -> UnsplashImage {
         let image = UnsplashImage()
-        let urls  = ImageUrl()
-        let user  = UnsplashUser()
+        let urls = ImageUrl()
+        let user = UnsplashUser()
         user.userName = "JuniperPhoton"
         user.name = "JuniperPhoton"
         user.id = "JuniperPhoton"
@@ -136,11 +138,14 @@ class UnsplashImage {
         urls.small = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(dateStr).jpg"
         urls.thumb = "\(Request.AUTO_CHANGE_WALLPAPER_THUMB)\(dateStr).jpg"
 
-        image.color = "#ffffff"
+        image.color = createdImageCount % 2 == 0 ? "#ffffff" : "#e2e2e2"
         image.id = dateStr
         image.urls = urls
         image.user = user
         image.isUnsplash = false
+
+        createdImageCount+=1
+
         return image
     }
 
@@ -150,11 +155,11 @@ class UnsplashImage {
 }
 
 class ImageUrl {
-    var raw:     String?
-    var full:    String?
+    var raw: String?
+    var full: String?
     var regular: String?
-    var small:   String?
-    var thumb:   String?
+    var small: String?
+    var thumb: String?
 
     init() {
     }

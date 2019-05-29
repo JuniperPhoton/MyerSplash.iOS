@@ -13,6 +13,8 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.3
     static let CELL_ANIMATE_DURATION_SEC = 0.6
 
+    static let HIGHLIGHTS_DELAY_SEC = 0.2
+
     private var images: [UnsplashImage] = [UnsplashImage]()
     private var mainView: MainView!
 
@@ -88,11 +90,14 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         }
 
         loading = true
-        CloudService.getHighlights(page: paging) { response in
-            self.processResponse(response: response, refreshing)
-            self.loading = false
-            self.canLoadMore = true
-            self.mainView.stopRefresh()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + HIGHLIGHTS_DELAY_SEC) {
+            CloudService.getHighlights(page: self.paging) { response in
+                self.processResponse(response: response, refreshing)
+                self.loading = false
+                self.canLoadMore = !response.isEmpty
+                self.mainView.stopRefresh()
+            }
         }
     }
 
@@ -133,6 +138,23 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     override func loadView() {
         mainView = MainView(frame: CGRect.zero)
         view = mainView
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        var topSafeArea: CGFloat
+        var bottomSafeArea: CGFloat
+
+        if #available(iOS 11.0, *) {
+            topSafeArea = view.safeAreaInsets.top
+            bottomSafeArea = view.safeAreaInsets.bottom
+        } else {
+            topSafeArea = topLayoutGuide.length
+            bottomSafeArea = bottomLayoutGuide.length
+        }
+
+        // safe area values are now available to use
     }
 
     // MARK: UITableViewDelegate

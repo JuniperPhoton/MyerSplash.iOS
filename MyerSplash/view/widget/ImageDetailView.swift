@@ -207,7 +207,7 @@ class ImageDetailView: UIView {
 
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                        delay: 0,
-                       options: UIViewAnimationOptions.curveEaseOut,
+                       options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                            self.backgroundView.alpha = 1.0
                            self.mainImageView.frame = self.finalFrame
@@ -227,8 +227,8 @@ class ImageDetailView: UIView {
         }
 
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
-                       delay: 0,
-                       options: UIViewAnimationOptions.curveEaseOut,
+                       delay: Values.DEFAULT_DELAY,
+                       options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                            self.layoutIfNeeded()
                        },
@@ -254,7 +254,7 @@ class ImageDetailView: UIView {
 
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
                        delay: 0,
-                       options: UIViewAnimationOptions.curveEaseOut,
+                       options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                            self.layoutIfNeeded()
                        },
@@ -267,7 +267,7 @@ class ImageDetailView: UIView {
     private func hideImage() {
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                        delay: 0,
-                       options: UIViewAnimationOptions.curveEaseOut,
+                       options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                            self.backgroundView.alpha = 0.0
                            self.mainImageView.frame = self.initFrame!
