@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0489B476236DF5DE005965D8 /* UIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0489B475236DF5DE005965D8 /* UIs.swift */; };
+		0489B47A236DF5F4005965D8 /* UIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0489B479236DF5F4005965D8 /* UIs.swift */; };
 		54A560316E4D62F7B0584255 /* CloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C25820A4CC3C06ECA77 /* CloudService.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56061449C955941092B50 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D0B25C0DD1328A6C717 /* AppSettings.swift */; };
@@ -47,6 +49,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0489B475236DF5DE005965D8 /* UIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIs.swift; path = MyerSplash/util/UIs.swift; sourceTree = SOURCE_ROOT; };
+		0489B479236DF5F4005965D8 /* UIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIs.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
 		54A560766AA522E37891C2A1 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 		54A56AB132A25F2929752FE9 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				0489B479236DF5F4005965D8 /* UIs.swift */,
 				54A56D0B25C0DD1328A6C717 /* AppSettings.swift */,
 			);
 			path = util;
@@ -205,6 +210,7 @@
 		54A56F8FB5119EC6900E1F23 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				0489B475236DF5DE005965D8 /* UIs.swift */,
 				54A56ADEB602096935F951BA /* Colors.swift */,
 				54A563C64A027840336DE12B /* Keys.swift */,
 				54A567940B6AD767A48580B6 /* FontSizes.swift */,
@@ -345,7 +351,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MyerSplash/Pods-MyerSplash-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -360,7 +366,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyerSplash/Pods-MyerSplash-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		668A65FC5D03D45D3A2C18DC /* [CP] Check Pods Manifest.lock */ = {
@@ -401,7 +407,9 @@
 				54A56DCFEF6798D1187393D4 /* Colors.swift in Sources */,
 				54A56436968DEEDE565A1488 /* LoadingFooterView.swift in Sources */,
 				54A567D034514DDE364499FF /* SettingsViewController.swift in Sources */,
+				0489B476236DF5DE005965D8 /* UIs.swift in Sources */,
 				54A5673F06B3997A1D9F10B5 /* SettingsGroup.swift in Sources */,
+				0489B47A236DF5F4005965D8 /* UIs.swift in Sources */,
 				54A5633E122F31E30C40824D /* SettingsSwitchItem.swift in Sources */,
 				54A5665E01B66E0F80499903 /* UserDefaultsExtension.swift in Sources */,
 				54A562670BEC508CD1903C49 /* Keys.swift in Sources */,
@@ -486,7 +494,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -537,7 +545,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

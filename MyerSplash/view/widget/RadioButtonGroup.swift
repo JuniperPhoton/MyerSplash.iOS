@@ -11,7 +11,7 @@ class RadioButtonGroup: UIStackView {
     }
 
     private func initUi(_ options: [String], _ selected: Int) {
-        self.axis = UILayoutConstraintAxis.vertical
+        self.axis = NSLayoutConstraint.Axis.vertical
 
         for i in 0..<options.count {
             let button = RadioButton(options[i])
@@ -31,7 +31,7 @@ class RadioButtonGroup: UIStackView {
     @objc
     private func onClickItem(_ sender: UITapGestureRecognizer) {
         guard let view = sender.view,
-              let index = self.subviews.index(of: view) else {
+              let index = self.subviews.firstIndex(of: view) else {
             return
         }
         for i in 0..<subviews.count {

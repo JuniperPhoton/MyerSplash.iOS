@@ -30,16 +30,19 @@ class SettingsView: UIView {
     }
 
     private func initUi() {
-        self.backgroundColor = Colors.BACKGROUND.asUIColor()
+
+        self.setDefaultBackgroundColor()
 
         titleView = UILabel()
-        titleView.textColor = UIColor.white
+        titleView.setDefaultLabelColor()
+        
         titleView.text = "SETTINGS"
         titleView.font = titleView.font.with(traits: .traitBold, fontSize: FontSizes.TITLE_FONT_SIZE)
 
-        closeView = UIButton()
+        closeView = UIButton(type: .system)
         closeView.setImage(UIImage(named: "ic_clear_white"), for: .normal)
         closeView.addTarget(self, action: #selector(onClickCloseButton), for: .touchUpInside)
+        closeView.tintColor = UIView.getDefaultLabelUIColor()
 
         scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
@@ -61,7 +64,7 @@ class SettingsView: UIView {
             self.shouldRefreshWhenDismiss = true
         }
 
-        personalizationGroup.addArrangedSubview(todaySwitch)
+        //personalizationGroup.addArrangedSubview(todaySwitch)
         personalizationGroup.addArrangedSubview(quickDownload)
 
         let qualityGroup = SettingsGroup()

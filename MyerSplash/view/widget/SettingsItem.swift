@@ -31,16 +31,16 @@ class SettingsItem: UIView {
 
     open func initUi() {
         label = UILabel()
-        label.textColor = UIColor.white
+        label.setDefaultLabelColor()
         label.font = label.font.withSize(FontSizes.NORMAL)
 
         contentView = UILabel()
-        contentView.textColor = UIColor.white
+        contentView.setDefaultLabelColor()
         contentView.font = label.font.withSize(FontSizes.NORMAL)
         contentView.alpha = 0.5
 
         let uiStack = UIStackView()
-        uiStack.axis = UILayoutConstraintAxis.vertical
+        uiStack.axis = NSLayoutConstraint.Axis.vertical
         uiStack.spacing = 8
 
         uiStack.addArrangedSubview(label)

@@ -25,7 +25,10 @@ class MainView: UIView {
         refreshControl = UIRefreshControl(frame: CGRect.zero)
         refreshControl.addTarget(self, action: #selector(onRefreshData), for: .valueChanged)
 
-        navigationView = MainNavigationView(frame: CGRect.zero)
+        navigationView = MainNavigationView(frame: CGRect(x: 0,
+                                                          y: 0,
+                                                          width: UIScreen.main.bounds.width,
+                                                          height: Dimensions.DUMMY_HEADER_HEIGHT))
 
         tableView = UITableView(frame: CGRect.zero)
 
@@ -34,30 +37,15 @@ class MainView: UIView {
                 width: UIScreen.main.bounds.width,
                 height: UIScreen.main.bounds.height))
 
-        tableView.backgroundColor = UIColor.black
+        tableView.setDefaultBackgroundColor()
+        
         tableView.refreshControl = refreshControl
 
-        let dummyHeader = UIView(frame: CGRect(x: 0,
-                y: 0,
-                width: UIScreen.main.bounds.width,
-                height: Dimensions.DUMMY_HEADER_HEIGHT))
-        //tableView.tableHeaderView = dummyHeader
+        tableView.tableHeaderView = navigationView
 
         addSubview(tableView)
-        //addSubview(navigationView)
         addSubview(imageDetailView)
-//
-//        refreshControl.snp.makeConstraints { maker in
-//            maker.width.equalTo(UIScreen.main.bounds.width)
-//            maker.height.equalTo(Dimensions.DUMMY_HEADER_HEIGHT)
-//        }
 
-//        navigationView.snp.makeConstraints { (maker) in
-//            maker.height.equalTo(Dimensions.NAVIGATION_VIEW_HEIGHT)
-//            maker.right.equalTo(self)
-//            maker.left.equalTo(self)
-//            maker.top.equalTo(self)
-//        }
         tableView.snp.makeConstraints { (maker) in
             maker.height.equalTo(self)
             maker.width.equalTo(self)

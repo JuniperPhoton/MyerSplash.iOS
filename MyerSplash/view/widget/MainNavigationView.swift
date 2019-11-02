@@ -23,34 +23,28 @@ public class MainNavigationView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let effectView = UIVisualEffectView()
-        effectView.effect = UIBlurEffect(style: .dark)
-
         titleView = UILabel(frame: CGRect.zero)
         titleView.font = titleView.font.with(traits: .traitBold, fontSize: FontSizes.TITLE_FONT_SIZE)
-        titleView.textColor = UIColor.white
+        titleView.setDefaultBackgroundColor()
         titleView.text = title
         titleView.isUserInteractionEnabled = true
         titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickTitle)))
 
-        settingsView = UIButton(frame: CGRect.zero)
+        settingsView = UIButton(type: .system)
         settingsView.setImage(UIImage(named: "ic_more_horiz_white"), for: .normal)
         settingsView.addTarget(self, action: #selector(onClickSettings), for: .touchUpInside)
+        settingsView.tintColor = UIView.getDefaultLabelUIColor()
 
-        addSubview(effectView)
         addSubview(titleView)
         addSubview(settingsView)
 
-        effectView.snp.makeConstraints { maker in
-            maker.left.right.top.bottom.equalTo(self)
-        }
         titleView.snp.makeConstraints { (maker) in
             maker.left.equalToSuperview().offset(Dimensions.TITLE_MARGIN)
-            maker.centerY.equalTo(self).offset(12)
+            maker.centerY.equalTo(self).offset(0)
         }
         settingsView.snp.makeConstraints { (maker) in
             maker.width.height.equalTo(Dimensions.NAVIGATION_ICON_SIZE)
-            maker.centerY.equalTo(self).offset(12)
+            maker.centerY.equalTo(self).offset(0)
             maker.right.equalTo(self.snp.right).offset(-12)
         }
     }

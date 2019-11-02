@@ -11,7 +11,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let controller = MainViewController(nibName: nil, bundle: nil)
         window!.rootViewController = controller
         window!.makeKeyAndVisible()
-        window!.backgroundColor = UIColor.black
         return true
     }
 

@@ -9,7 +9,7 @@ class LoadingFooterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        ac = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        ac = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorView.Style.white)
         ac.startAnimating()
         ac.color = UIColor.white
         addSubview(ac)
@@ -20,7 +20,7 @@ class LoadingFooterView: UIView {
         addSubview(label)
 
         stack = UIStackView()
-        stack.axis = UILayoutConstraintAxis.horizontal
+        stack.axis = NSLayoutConstraint.Axis.horizontal
         stack.addArrangedSubview(ac)
         stack.addArrangedSubview(label)
         stack.spacing = 12

@@ -21,7 +21,7 @@ class FadeOutTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
 
         UIView.animate(withDuration: durationSec,
                        delay: 0,
-                       options: UIViewAnimationOptions(),
+                       options: UIView.AnimationOptions(),
                        animations: {
                            fromVC.view.alpha = 0.0
                        },
@@ -54,7 +54,7 @@ class FadeInTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
 
         UIView.animate(withDuration: durationSec,
                        delay: 0,
-                       options: UIViewAnimationOptions(),
+                       options: UIView.AnimationOptions(),
                        animations: {
                            toVC.view.alpha = 1.0
                        },

@@ -91,7 +91,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 
         loading = true
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + HIGHLIGHTS_DELAY_SEC) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + MainViewController.HIGHLIGHTS_DELAY_SEC) {
             CloudService.getHighlights(page: self.paging) { response in
                 self.processResponse(response: response, refreshing)
                 self.loading = false

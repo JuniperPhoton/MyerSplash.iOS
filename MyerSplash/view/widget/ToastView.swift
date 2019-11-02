@@ -109,7 +109,8 @@ class ToastView: UILabel {
         self.layer.backgroundColor = UIColor.white.cgColor
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowRadius = 8
-        self.layer.shadowOpacity = 0.4
+        self.layer.shadowOpacity = 0.2
+        self.textColor = UIColor.black
 
         self.alpha = 0.0
         self.font = self.font.withSize(FontSizes.NORMAL)
@@ -120,7 +121,6 @@ class ToastView: UILabel {
     }
 
     override func drawText(in rect: CGRect) {
-        super.drawText(in: UIEdgeInsetsInsetRect(rect,
-                                                 UIEdgeInsetsMake(0, ToastView.PADDING, 0, ToastView.PADDING)))
+        super.drawText(in: rect.insetBy(dx: ToastView.PADDING, dy: 0))
     }
 }

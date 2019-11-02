@@ -21,7 +21,7 @@ class SettingsGroup: UIStackView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        axis = UILayoutConstraintAxis.vertical
+        axis = NSLayoutConstraint.Axis.vertical
         spacing = 20.0
 
         groupTitleView = UILabel()
