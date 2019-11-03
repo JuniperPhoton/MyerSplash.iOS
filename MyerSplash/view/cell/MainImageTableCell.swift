@@ -53,12 +53,12 @@ public class MainImageTableCell: UITableViewCell {
 
     func bind(image: UnsplashImage) {
         bindImage = image
-        contentView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
+        mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         mainImageView.image = nil
 
         downloadView.isHidden = !AppSettings.isQuickDownloadEnabled()
 
-        Manager.shared.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
+        Nuke.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
     }
 
     private func isImageCached() -> Bool {
@@ -66,7 +66,7 @@ public class MainImageTableCell: UITableViewCell {
               let url = bindImage.listUrl else {
             return false
         }
-        return Cache.isCached(urlString: url)
+        return ImageCache.isCached(urlString: url)
     }
 
     @objc

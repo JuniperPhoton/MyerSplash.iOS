@@ -168,7 +168,8 @@ class ImageDetailView: UIView {
             return
         }
         mainImageView.frame = initFrame
-        Manager.shared.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
+        
+        Nuke.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
 
         let themeColor   = image.themeColor
         let isThemeLight = themeColor.isLightColor()

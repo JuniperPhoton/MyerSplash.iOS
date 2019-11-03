@@ -2,14 +2,14 @@ import Foundation
 import UIKit
 import Nuke
 
-extension Nuke.Cache {
+extension ImageCache {
     static func isCached(urlString: String?) -> Bool {
         guard let url = urlString else {
             return false
         }
 
-        let request = Nuke.Request(url: URL(string: url)!)
-        return Cache.shared[request] != nil
+        let request = Nuke.ImageRequest(url: URL(string: url)!)
+        return ImageCache.shared[request] != nil
     }
 }
 
