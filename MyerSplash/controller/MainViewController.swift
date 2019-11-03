@@ -49,7 +49,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
         let tableView = mainView.tableView!
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.allowsSelection = false
         tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
 
@@ -218,7 +218,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 
         UIView.animate(withDuration: MainViewController.CELL_ANIMATE_DURATION_SEC,
                 delay: delaySec,
-                options: UIViewAnimationOptions.curveEaseOut,
+                options: UIView.AnimationOptions.curveEaseOut,
                 animations: {
                     cell.alpha = 1.0
                     cell.center.x = startX

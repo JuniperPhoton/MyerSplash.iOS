@@ -15,11 +15,11 @@ public class MainImageTableCell: UITableViewCell {
     var onClickMainImage: ((CGRect, UnsplashImage) -> Void)?
     var onClickDownload:  ((UnsplashImage) -> Void)?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: UITableViewCellStyle.default, reuseIdentifier: reuseIdentifier)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
 
         mainImageView = UIImageView()
-        mainImageView.contentMode = UIViewContentMode.scaleAspectFill
+        mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true
         mainImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
@@ -27,7 +27,7 @@ public class MainImageTableCell: UITableViewCell {
 
         downloadView = UIButton()
         downloadView.setImage(UIImage(named: "ic_file_download_white")?
-                                      .resizableImage(withCapInsets: UIEdgeInsetsMake(20, 20, 20, 20)), for: .normal)
+                                      .resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)), for: .normal)
         downloadView.addTarget(self, action: #selector(clickDownloadButton), for: .touchUpInside)
 
         contentView.addSubview(mainImageView)
@@ -95,7 +95,7 @@ public class MainImageTableCell: UITableViewCell {
     private func animateDownloadButton() {
         UIView.animateKeyframes(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                                 delay: 0,
-                                options: UIViewKeyframeAnimationOptions(),
+                                options: UIView.KeyframeAnimationOptions(),
                                 animations: {
                                     UIView.addKeyframe(withRelativeStartTime: 0.0,
                                                        relativeDuration: 0.5) {

@@ -56,7 +56,7 @@ class ImageDetailView: UIView {
         backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                    action: #selector(onClickBackground)))
         mainImageView = UIImageView(frame: CGRect.zero)
-        mainImageView.contentMode = UIViewContentMode.scaleAspectFill
+        mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true
         mainImageView.addGestureRecognizer(UIPanGestureRecognizer(target: self,
@@ -74,7 +74,7 @@ class ImageDetailView: UIView {
         authorButton.addTarget(self, action: #selector(onClickAuthorName), for: .touchUpInside)
 
         authorStack = UIStackView(arrangedSubviews: [photoByLabel, authorButton])
-        authorStack.axis = UILayoutConstraintAxis.vertical
+        authorStack.axis = NSLayoutConstraint.Axis.vertical
         authorStack.spacing = 2
 
         downloadButton = UIButton()
@@ -84,7 +84,7 @@ class ImageDetailView: UIView {
                                                                                fontSize: FontSizes.NORMAL)
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
 
-        let inset = UIEdgeInsetsMake(8, 8, 8, 8);
+        let inset = UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8);
         downloadButton.contentEdgeInsets = inset
 
         downloadButton.sizeToFit()
@@ -182,9 +182,9 @@ class ImageDetailView: UIView {
 
         photoByLabel.textColor = textColor
 
-        var attrs = [NSAttributedStringKey: Any]()
-        attrs[NSAttributedStringKey.foregroundColor] = textColor
-        attrs[NSAttributedStringKey.underlineStyle] = NSUnderlineStyle.styleSingle.rawValue
+        var attrs = [NSAttributedString.Key: Any]()
+        attrs[NSAttributedString.Key.foregroundColor] = textColor
+        attrs[NSAttributedString.Key.underlineStyle] = NSUnderlineStyle.single.rawValue
         let underlineAttributedString = NSAttributedString(string: image.userName!, attributes: attrs)
         authorButton.setAttributedTitle(underlineAttributedString, for: .normal)
 
@@ -207,7 +207,7 @@ class ImageDetailView: UIView {
 
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                        delay: 0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                            self.backgroundView.alpha = 1.0
                            self.mainImageView.frame = self.finalFrame
@@ -228,7 +228,7 @@ class ImageDetailView: UIView {
 
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
                        delay: Values.DEFAULT_DELAY,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                            self.layoutIfNeeded()
                        },
@@ -254,7 +254,7 @@ class ImageDetailView: UIView {
 
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
                        delay: 0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                            self.layoutIfNeeded()
                        },
@@ -267,7 +267,7 @@ class ImageDetailView: UIView {
     private func hideImage() {
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                        delay: 0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                            self.backgroundView.alpha = 0.0
                            self.mainImageView.frame = self.initFrame!

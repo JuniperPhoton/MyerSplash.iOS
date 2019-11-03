@@ -20,7 +20,7 @@ class CloudService {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                let array = json.flatMap { s, json -> UnsplashImage? in
+                let array = json.compactMap { s, json -> UnsplashImage? in
                     UnsplashImage(json)
                 }
                 callback(array)

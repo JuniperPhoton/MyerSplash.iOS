@@ -7,7 +7,7 @@ protocol DialogContent {
 }
 
 class AlertDialog: DialogContent {
-    internal (set) var title:   String? = nil
+    var title:   String? = nil
     private (set) var  content: String? = nil
 
     init(title: String?, content: String?) {
@@ -18,8 +18,8 @@ class AlertDialog: DialogContent {
 
 class SingleChoiceDialog: DialogContent {
     private (set) var  options:  [String]? = nil
-    internal (set) var title:    String?   = nil
     private (set) var  selected: Int       = 0
+    var title:    String?   = nil
 
     init(title: String?, options: [String], selected: Int) {
         self.title = title

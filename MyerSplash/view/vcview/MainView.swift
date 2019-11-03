@@ -73,7 +73,7 @@ class MainView: UIView {
         UIView.animate(
                 withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,
-                options: UIViewAnimationOptions.curveEaseInOut,
+                options: UIView.AnimationOptions.curveEaseInOut,
                 animations: {
                     self.layoutIfNeeded()
                 },
@@ -99,7 +99,7 @@ class MainView: UIView {
         UIView.animate(
                 withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,
-                options: UIViewAnimationOptions.curveEaseInOut,
+                options: UIView.AnimationOptions.curveEaseInOut,
                 animations: {
                     self.layoutIfNeeded()
                 },

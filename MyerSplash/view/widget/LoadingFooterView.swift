@@ -9,7 +9,7 @@ class LoadingFooterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        ac = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorView.Style.white)
+        ac = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.white)
         ac.startAnimating()
         ac.color = UIColor.white
         addSubview(ac)
