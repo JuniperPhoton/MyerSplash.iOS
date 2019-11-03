@@ -52,9 +52,10 @@ class ImageDetailView: UIView {
 
     private func initUi() {
         backgroundView = UIView()
-        backgroundView.backgroundColor = Colors.DIALOG_MASK.asUIColor()
+        backgroundView.backgroundColor = UIView.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
         backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                    action: #selector(onClickBackground)))
+        
         mainImageView = UIImageView(frame: CGRect.zero)
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true

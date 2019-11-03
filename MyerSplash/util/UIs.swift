@@ -42,11 +42,29 @@ extension UIView {
         }
     }
     
-    func setDefaultBackgroundColor() {
+    static func getDefaultBackgroundUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
-            self.backgroundColor = UIColor.systemBackground
+           return UIColor.systemBackground
         } else {
-            self.backgroundColor = UIColor.black
+           return UIColor.black
         }
+    }
+    
+    static func getDefaultDialogBackgroundUIColor() -> UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor { (trainCollection) -> UIColor in
+                if trainCollection.userInterfaceStyle == .dark {
+                    return "1e1e1e".asUIColor()
+                } else {
+                    return "f4f4f4".asUIColor()
+                }
+            }
+        } else {
+            return "1e1e1e".asUIColor()
+        }
+    }
+    
+    func setDefaultBackgroundColor() {
+        self.backgroundColor = UIView.getDefaultBackgroundUIColor()
     }
 }
