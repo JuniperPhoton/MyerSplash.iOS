@@ -1,9 +1,13 @@
 import Foundation
 import UIKit
 import SnapKit
+import Nuke
+import MessageUI
 
 protocol SettingsViewDelegate {
     func showDialog(content: DialogContent, key: String)
+    func onClickFeedback()
+    func onClickClose(shouldRefreshWhenDismiss: Bool)
 }
 
 class SettingsView: UIView {
@@ -13,8 +17,6 @@ class SettingsView: UIView {
     private var savingQualityItem:  SettingsItem!
 
     private var scrollView: UIScrollView!
-
-    var onClickClose: ((Bool) -> Void)?
 
     var shouldRefreshWhenDismiss = false
 
@@ -50,13 +52,6 @@ class SettingsView: UIView {
         let personalizationGroup = SettingsGroup()
         personalizationGroup.label = "PERSONALIZATION"
 
-        let todaySwitch = SettingsSwitchItem(Keys.ENABLE_TODAY)
-        todaySwitch.title = "Today Highlight"
-        todaySwitch.content = "Update every day"
-        todaySwitch.onCheckedChanged = { newValue in
-            self.shouldRefreshWhenDismiss = true
-        }
-
         let quickDownload = SettingsSwitchItem(Keys.QUICK_DOWNLOAD)
         quickDownload.title = "Download shortcut"
         quickDownload.content = "Show download button in list"
@@ -64,7 +59,6 @@ class SettingsView: UIView {
             self.shouldRefreshWhenDismiss = true
         }
 
-        //personalizationGroup.addArrangedSubview(todaySwitch)
         personalizationGroup.addArrangedSubview(quickDownload)
 
         let qualityGroup = SettingsGroup()
@@ -83,12 +77,38 @@ class SettingsView: UIView {
         savingQualityItem.onClicked = {
             self.popupSavingQualityChosenDialog()
         }
+        
+        let clearItem = SettingsItem(frame: CGRect.zero)
+        clearItem.title = "Clear cache"
+        clearItem.content = "Remove all cached images"
+        clearItem.onClicked = {
+            self.clearCache()
+        }
 
         qualityGroup.addArrangedSubview(loadingQualityItem)
         qualityGroup.addArrangedSubview(savingQualityItem)
+        qualityGroup.addArrangedSubview(clearItem)
+        
+        let aboutGroup = SettingsGroup()
+        aboutGroup.label = "ABOUT"
+        
+        let feedbackView = SettingsItem(frame: CGRect.zero)
+        feedbackView.title = "Feedback"
+        feedbackView.content = "Tell me your thoughts :)"
+        feedbackView.onClicked = {
+            self.delegate?.onClickFeedback()
+        }
+        
+        let versionView = SettingsItem(frame: CGRect.zero)
+        versionView.title = "Versions"
+        versionView.content = UIApplication.shared.versionBuild()
+
+        aboutGroup.addArrangedSubview(feedbackView)
+        aboutGroup.addArrangedSubview(versionView)
 
         scrollView.addSubview(personalizationGroup)
         scrollView.addSubview(qualityGroup)
+        scrollView.addSubview(aboutGroup)
 
         addSubview(titleView)
         addSubview(closeView)
@@ -112,10 +132,19 @@ class SettingsView: UIView {
             maker.left.right.equalTo(self)
             maker.top.equalTo(personalizationGroup.snp.bottom).offset(Dimensions.TITLE_MARGIN)
         }
+        aboutGroup.snp.makeConstraints { (maker) in
+            maker.left.right.equalTo(self)
+            maker.top.equalTo(qualityGroup.snp.bottom).offset(Dimensions.TITLE_MARGIN)
+        }
         scrollView.snp.makeConstraints { (maker) in
             maker.left.right.bottom.equalTo(self)
             maker.top.equalTo(titleView.snp.bottom).offset(0)
         }
+    }
+    
+    private func clearCache() {
+        Nuke.ImageCache.shared.removeAll()
+        self.showToast("Cleared")
     }
 
     func updatingSingleChoiceSelected(selectedIndex: Int, key: String) {
@@ -146,6 +175,6 @@ class SettingsView: UIView {
 
     @objc
     private func onClickCloseButton() {
-        onClickClose?(shouldRefreshWhenDismiss)
+        delegate?.onClickClose(shouldRefreshWhenDismiss: shouldRefreshWhenDismiss)
     }
 }

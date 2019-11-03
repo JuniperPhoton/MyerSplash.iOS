@@ -1,12 +1,13 @@
 import Foundation
 import UIKit
+import MessageUI
 
 protocol SettingsDelegate {
     func refresh()
 }
 
 class SettingsViewController: BaseViewController, UIViewControllerTransitioningDelegate,
-                              SettingsViewDelegate, SingleChoiceDelegate {
+SettingsViewDelegate, SingleChoiceDelegate, MFMailComposeViewControllerDelegate {
     private var settingsView: SettingsView!
 
     private var singleChoiceKey: String? = nil
@@ -52,15 +53,35 @@ class SettingsViewController: BaseViewController, UIViewControllerTransitioningD
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return FadeOutTransitioning()
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        settingsView.onClickClose = { shouldRefresh in
-            print("onclick close")
-            self.dismiss(animated: true)
-            if (shouldRefresh) {
-                self.delegate?.refresh()
-            }
+    
+    func onClickFeedback() {
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            return
         }
+        
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+         
+        // Configure the fields of the interface.
+        composeVC.setToRecipients(["dengweichao@hotmail.com"])
+        composeVC.setSubject("MyerSplash iOS feedback")
+        composeVC.setMessageBody("Hello from developer. Please write you suggestions below. Thanks!", isHTML: false)
+         
+        // Present the view controller modally.
+        self.present(composeVC, animated: true, completion: nil)
+    }
+    
+    func onClickClose(shouldRefreshWhenDismiss: Bool) {
+        print("onclick close")
+        self.dismiss(animated: true)
+        if (shouldRefreshWhenDismiss) {
+            self.delegate?.refresh()
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController,
+                               didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }

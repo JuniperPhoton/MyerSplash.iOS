@@ -44,12 +44,12 @@ class SettingsSwitchItem: SettingsItem {
 
     override func onClick() {
         super.onClick()
+        switchButton.setOn(!switchButton.isOn, animated: true)
         onSwitchStatusChanged()
     }
 
     @objc
     private func onSwitchStatusChanged() {
-        switchButton.setOn(!switchButton.isOn, animated: true)
         if let key = key {
             UserDefaults.standard.set(switchButton.isOn, forKey: key)
             onCheckedChanged?(switchButton.isOn)

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0489B476236DF5DE005965D8 /* UIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0489B475236DF5DE005965D8 /* UIs.swift */; };
+		04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DD9D41236F0A43009F5187 /* MessageUI.framework */; };
 		54A560316E4D62F7B0584255 /* CloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C25820A4CC3C06ECA77 /* CloudService.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56061449C955941092B50 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D0B25C0DD1328A6C717 /* AppSettings.swift */; };
@@ -50,6 +51,8 @@
 /* Begin PBXFileReference section */
 		0489B475236DF5DE005965D8 /* UIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIs.swift; path = MyerSplash/util/UIs.swift; sourceTree = SOURCE_ROOT; };
 		0489B479236DF5F4005965D8 /* UIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIs.swift; sourceTree = "<group>"; };
+		04DD9D41236F0A43009F5187 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		04DD9D46236F0B2B009F5187 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
 		54A560766AA522E37891C2A1 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */,
 				71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,6 +226,8 @@
 		6CE0DF92D868ABA501E01C2A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04DD9D46236F0B2B009F5187 /* Social.framework */,
+				04DD9D41236F0A43009F5187 /* MessageUI.framework */,
 				5FF9175F0CC748D0AC10924C /* Pods_MyerSplash.framework */,
 			);
 			name = Frameworks;
