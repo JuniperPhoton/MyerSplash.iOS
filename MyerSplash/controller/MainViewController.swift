@@ -296,14 +296,18 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 
             return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
         }
+        
+        Events.trackBeginDownloadEvent()
 
         Alamofire.download(unsplashImage.downloadUrl!, to: destination).response { response in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
 
             if response.error == nil, let imagePath = response.destinationURL?.path {
                 print("image downloaded!")
+                Events.trackDownloadEvent(true)
                 UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
             } else {
+                Events.trackDownloadEvent(false, response.error?.localizedDescription)
                 print("error while download image: %@", response.error)
             }
         }

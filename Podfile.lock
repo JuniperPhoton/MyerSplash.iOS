@@ -1,11 +1,20 @@
 PODS:
   - Alamofire (4.9.1)
+  - AppCenter (2.5.0):
+    - AppCenter/Analytics (= 2.5.0)
+    - AppCenter/Crashes (= 2.5.0)
+  - AppCenter/Analytics (2.5.0):
+    - AppCenter/Core
+  - AppCenter/Core (2.5.0)
+  - AppCenter/Crashes (2.5.0):
+    - AppCenter/Core
   - Nuke (8.3.1)
   - SnapKit (5.0.1)
   - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
+  - AppCenter
   - Nuke (~> 8.3.1)
   - SnapKit (~> 5.0.0)
   - SwiftyJSON
@@ -13,16 +22,18 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - AppCenter
     - Nuke
     - SnapKit
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AppCenter: 637f180deefc61e8ab3f94223869ee50f61dabea
   Nuke: 85fb80f8df0cb26c28d2f4e0cb7fb93bcd6548d3
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 81ccab7ff4f9f0faeed146f26bef3d399e5bda90
+PODFILE CHECKSUM: 5c4ed9ac2b990eb7d5f57c1d7680cadb3fddd86e
 
 COCOAPODS: 1.8.4

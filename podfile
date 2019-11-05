@@ -9,5 +9,6 @@ target 'MyerSplash' do
   pod 'Alamofire', '~> 4.9.1'
   pod 'SwiftyJSON'
   pod 'Nuke', '~> 8.3.1'
+  pod 'AppCenter'
 
 end

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0489B476236DF5DE005965D8 /* UIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0489B475236DF5DE005965D8 /* UIs.swift */; };
 		04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DD9D41236F0A43009F5187 /* MessageUI.framework */; };
+		04E5608B237139E00085C950 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608A237139E00085C950 /* AppKeys.swift */; };
+		04E5608D23713DAA0085C950 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608C23713DAA0085C950 /* Events.swift */; };
 		54A560316E4D62F7B0584255 /* CloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C25820A4CC3C06ECA77 /* CloudService.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56061449C955941092B50 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D0B25C0DD1328A6C717 /* AppSettings.swift */; };
@@ -53,6 +55,8 @@
 		0489B479236DF5F4005965D8 /* UIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIs.swift; sourceTree = "<group>"; };
 		04DD9D41236F0A43009F5187 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		04DD9D46236F0B2B009F5187 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		04E5608A237139E00085C950 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
+		04E5608C23713DAA0085C950 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
 		54A560766AA522E37891C2A1 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 			children = (
 				0489B479236DF5F4005965D8 /* UIs.swift */,
 				54A56D0B25C0DD1328A6C717 /* AppSettings.swift */,
+				04E5608A237139E00085C950 /* AppKeys.swift */,
+				04E5608C23713DAA0085C950 /* Events.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				54A56482196A6EC512092AEF /* MainViewController.swift in Sources */,
 				54A56DCD00FEAD384CC4603B /* UnsplashImage.swift in Sources */,
 				54A56D1346731D1233230A54 /* UIFontExtension.swift in Sources */,
+				04E5608B237139E00085C950 /* AppKeys.swift in Sources */,
 				54A567F0C9F34EFC67020AE9 /* ColorExtension.swift in Sources */,
 				54A560A877C5BED1896FA8C5 /* StringExtension.swift in Sources */,
 				54A56894511BAF5E3DC295F6 /* UnsplashUser.swift in Sources */,
@@ -423,6 +430,7 @@
 				54A56E07DAF6EB75DC63E7E8 /* DialogViewController.swift in Sources */,
 				54A56163F93551D241697C6F /* BaseViewController.swift in Sources */,
 				54A565F419E69EDFF931B2B3 /* FadeTransitioning.swift in Sources */,
+				04E5608D23713DAA0085C950 /* Events.swift in Sources */,
 				54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */,
 				54A56D875EF9B6AA93186403 /* FontSizes.swift in Sources */,
 				54A56B2BF448D4545E0B1795 /* Dimensions.swift in Sources */,
@@ -579,7 +587,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -600,7 +608,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
