@@ -15,7 +15,7 @@ class Events {
     }
     
     static func trackDownloadEvent(_ success: Bool, _ message: String? = nil) {
-        MSAnalytics.trackEvent("Begin download", withProperties: ["Success" : String(success), "Message" : message ])
+        MSAnalytics.trackEvent("Begin download", withProperties: ["Success" : String(success), "Message" : message ?? ""])
     }
     
     static func trackRefresh() {
