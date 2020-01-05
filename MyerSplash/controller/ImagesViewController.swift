@@ -268,7 +268,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         let ratio = image.aspectRatioF
         let width = UIScreen.main.bounds.width
         let height = width / ratio
-        return height
+        return floor(height)
     }
 
     // MARK: scroll

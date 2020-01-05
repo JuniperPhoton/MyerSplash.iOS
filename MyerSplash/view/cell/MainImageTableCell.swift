@@ -88,7 +88,7 @@ public class MainImageTableCell: UITableViewCell {
         }
 
         Nuke.loadImage(with: URL(string: url)!,
-                       options: ImageLoadingOptions(placeholder: nil, transition: .fadeIn(duration: 0.3), failureImage: nil, failureImageTransition: nil, contentModes: .none),
+                       options: ImageLoadingOptions(placeholder: nil, transition: .fadeIn(duration: 0.3), failureImage: nil, failureImageTransition: nil, contentModes: .init(success: .scaleAspectFill, failure: .center, placeholder: .center)),
                        into: mainImageView)
     }
 
