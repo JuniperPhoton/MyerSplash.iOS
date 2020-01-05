@@ -52,7 +52,7 @@ class ImageDetailView: UIView {
 
     private func initUi() {
         backgroundView = UIView()
-        backgroundView.backgroundColor = UIView.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
+        backgroundView.backgroundColor = UIColor.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
         backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                    action: #selector(onClickBackground)))
         

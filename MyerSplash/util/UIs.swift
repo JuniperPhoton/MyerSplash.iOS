@@ -11,7 +11,7 @@ import UIKit
 
 class UIs {
     static func setLabelColor(_ uiView: UILabel) {
-        uiView.textColor = UIView.getDefaultLabelUIColor()
+        uiView.textColor = UIColor.getDefaultLabelUIColor()
     }
     
     static func setBackgroundColor(_ uiView: UIView) {
@@ -33,15 +33,7 @@ extension UILabel {
     }
 }
 
-extension UIView {
-    static var hasTopNotch: Bool {
-        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
-    }
-    
-    static var topInset: CGFloat {
-        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
-    }
-    
+extension UIColor {
     static func getDefaultLabelUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
            return UIColor.label
@@ -56,6 +48,24 @@ extension UIView {
         } else {
            return UIColor.black
         }
+    }
+}
+
+extension UIView {
+    static var hasTopNotch: Bool {
+        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
+    }
+    
+    static var topInset: CGFloat {
+        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
+    }
+    
+    static func getDefaultLabelUIColor() -> UIColor {
+        return UIColor.getDefaultLabelUIColor()
+    }
+    
+    static func getDefaultBackgroundUIColor() -> UIColor {
+        return UIColor.getDefaultBackgroundUIColor()
     }
     
     static func getDefaultDialogBackgroundUIColor() -> UIColor {

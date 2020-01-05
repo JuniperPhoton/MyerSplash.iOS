@@ -5,6 +5,7 @@ class Request {
     static let PHOTO_URL          = "https://api.unsplash.com/photos?"
     static let FEATURED_PHOTO_URL = "https://api.unsplash.com/collections/featured?"
     static let RANDOM_PHOTOS_URL  = "https://api.unsplash.com/photos/random?"
+    static let DEVELOPER_PHOTOS_URL = "https://api.unsplash.com/users/juniperphoton/photos?"
     static let SEARCH_URL         = "https://api.unsplash.com/search/photos?"
 
     static let AUTO_CHANGE_WALLPAPER       = "https://juniperphoton.net/myersplash/wallpapers/"

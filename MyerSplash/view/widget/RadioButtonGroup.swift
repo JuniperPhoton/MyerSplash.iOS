@@ -63,11 +63,11 @@ class RadioButton: UIView {
         tickIcon = UIImageView()
         tickIcon.image = UIImage(named: "ic_done_white")?.withRenderingMode(.alwaysTemplate)
         tickIcon.isHidden = true
-        tickIcon.tintColor = UIView.getDefaultLabelUIColor()
+        tickIcon.tintColor = UIColor.getDefaultLabelUIColor()
 
         contentView = UILabel()
         contentView.text = content
-        contentView.textColor = UIView.getDefaultLabelUIColor()
+        contentView.textColor = UIColor.getDefaultLabelUIColor()
         contentView.font = contentView.font.withSize(FontSizes.NORMAL)
 
         addSubview(tickIcon)

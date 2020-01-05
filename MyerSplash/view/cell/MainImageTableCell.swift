@@ -57,8 +57,12 @@ public class MainImageTableCell: UITableViewCell {
         mainImageView.image = nil
 
         downloadView.isHidden = !AppSettings.isQuickDownloadEnabled()
+        
+        guard let url = image.listUrl else {
+            return
+        }
 
-        Nuke.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
+        Nuke.loadImage(with: URL(string: url)!, into: mainImageView)
     }
 
     private func isImageCached() -> Bool {

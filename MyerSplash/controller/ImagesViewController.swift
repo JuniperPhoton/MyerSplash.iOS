@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Alamofire
+import MaterialComponents.MaterialActivityIndicator
 
 protocol ImagesViewControllerDelegate {
     func onClickImage(rect: CGRect, image: UnsplashImage)
@@ -30,8 +31,6 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     static let CELL_ANIMATE_DURATION_SEC = 0.4
 
     static let HIGHLIGHTS_DELAY_SEC = 0.2
-
-    private var images: [UnsplashImage] = [UnsplashImage]()
 
     private var loadingFooterView: LoadingFooterView!
 
@@ -54,6 +53,8 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     
     private var imageRepo: ImageRepo? = nil
     
+    private var indicator: MDCActivityIndicator!
+    
     var delegate: ImagesViewControllerDelegate? = nil
     
     var repoTitle: String? {
@@ -74,7 +75,15 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         let view = self.view!
         
-        view.backgroundColor = UIView.getDefaultBackgroundUIColor()
+        view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
+        
+        imageRepo?.onLoadFinished = { (finished) in
+            self.indicator.stopAnimating()
+            self.loading = false
+            self.canLoadMore = !self.imageRepo!.images.isEmpty
+            self.stopRefresh()
+            self.tableView.reloadData()
+        }
         
         refreshControl = UIRefreshControl(frame: CGRect.zero)
         refreshControl.addTarget(self, action: #selector(onRefreshData), for: .valueChanged)
@@ -96,7 +105,16 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
         tableView.separatorStyle = .none
+        
+        indicator = MDCActivityIndicator()
+        indicator.sizeToFit()
+        indicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
+        view.addSubview(indicator)
 
+        indicator.snp.makeConstraints { (maker) in
+            maker.center.equalToSuperview()
+        }
+        
         refreshData()
     }
     
@@ -109,48 +127,20 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         loadData(true)
     }
 
-    private func loadData(_ refreshing: Bool) {
+    private func loadData(_ refresh: Bool) {
         if (loading) {
             NSLog("@string", "loading...")
-            //return
+            return
         }
-
         loading = true
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + ImagesViewController.HIGHLIGHTS_DELAY_SEC) {
-            CloudService.getHighlights(page: self.paging) { response in
-                self.processResponse(response: response, refreshing)
-                self.loading = false
-                self.canLoadMore = !response.isEmpty
-                self.stopRefresh()
-            }
+        
+        if imageRepo?.images.isEmpty ?? true && refresh {
+            indicator.startAnimating()
+        } else {
+            indicator.stopAnimating()
         }
-    }
-
-    private func processResponse(response: [UnsplashImage], _ refreshing: Bool) {
-        if (images.count >= 2 && response.count > 0) {
-            let firstResponseImage = response.first!
-            let firstExistImage = images[1]
-
-            let todayHighlightUpdated = !firstExistImage.isUnsplash
-                    && firstExistImage.id != UnsplashImage.createTodayImageId()
-
-            let noNewData = firstExistImage.id == firstResponseImage.id
-
-            // Today highlight is not updated and the first images are match, skip reload data.
-            if (noNewData && !todayHighlightUpdated) {
-                view.showToast("No new data")
-                return
-            }
-        }
-
-        if (refreshing) {
-            images.removeAll(keepingCapacity: false)
-            cellDisplayAnimatedCount = 0
-        }
-
-        images += response
-        tableView.reloadData()
+        
+        imageRepo?.loadImage(paging)
     }
 
     private func loadMore() {
@@ -215,7 +205,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return images.count
+        return imageRepo!.images.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -232,7 +222,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             self.tappedCell = cell
             self.delegate?.onClickImage(rect: rect, image: image)
         }
-        cell.bind(image: images[indexPath.row])
+        cell.bind(image: self.imageRepo!.images[indexPath.row])
         return cell
     }
 
@@ -256,6 +246,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             return
         }
 
+        // todo
         if (cellDisplayAnimatedCount >= count) {
             return
         }
@@ -292,8 +283,10 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             }
 
             let visibleHeight = tableView.frame.height
-            initialMaxVisibleCellCount = Int(ceil(Double(visibleHeight) / Double(calculatedCellHeight)))
+            initialMaxVisibleCellCount = Int(floor(Double(visibleHeight) / Double(calculatedCellHeight)))
         }
+        
+        print("initialMaxVisibleCellCount is ", initialMaxVisibleCellCount)
 
         return initialMaxVisibleCellCount
     }

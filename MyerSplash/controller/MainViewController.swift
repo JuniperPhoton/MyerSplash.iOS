@@ -4,7 +4,7 @@ import Pageboy
 import UIKit
 import SnapKit
 import Alamofire
-import MaterialComponents.MaterialTabs
+import MaterialComponents.MaterialButtons
 
 class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesViewControllerDelegate {
     override open var preferredStatusBarStyle: UIStatusBarStyle {
@@ -32,7 +32,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIView.getDefaultBackgroundUIColor()
+        self.view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
     
         self.dataSource = self
         
@@ -45,28 +45,28 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         bar.layout.transitionStyle = .snap
         bar.layout.alignment = .leading
         bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 12.0, right: 50)
-        bar.backgroundView.style = .flat(color: UIView.getDefaultBackgroundUIColor())
+        bar.backgroundView.style = .flat(color: UIColor.getDefaultBackgroundUIColor())
         bar.layout.interButtonSpacing = 12
         bar.buttons.customize { (button) in
-            button.tintColor = UIView.getDefaultLabelUIColor().withAlphaComponent(0.3)
-            button.selectedTintColor = UIView.getDefaultLabelUIColor()
+            button.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
+            button.selectedTintColor = UIColor.getDefaultLabelUIColor()
             button.font = UIFont.preferredFont(forTextStyle: .largeTitle).with(traits: .traitBold).withSize(13)
         }
-        bar.indicator.tintColor = UIView.getDefaultLabelUIColor()
+        bar.indicator.tintColor = UIColor.getDefaultLabelUIColor()
         bar.indicator.weight = .custom(value: 4)
 
         // Add to view
         addBar(bar, dataSource: self, at: .top)
         
         let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
-        statusBarPlaceholder.backgroundColor = UIView.getDefaultBackgroundUIColor()
+        statusBarPlaceholder.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         self.view.addSubview(statusBarPlaceholder)
         
         let moreButton = UIButton()
         let moreImage = UIImage.init(named: "ic_more_horiz_white")!.withRenderingMode(.alwaysTemplate)
         moreButton.setImage(moreImage, for: .normal)
-        moreButton.tintColor = UIView.getDefaultLabelUIColor().withAlphaComponent(0.3)
-        moreButton.backgroundColor = UIView.getDefaultBackgroundUIColor()
+        moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
+        moreButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         moreButton.addTarget(self, action: #selector(onClickSettings), for: .touchUpInside)
         self.view.addSubview(moreButton)
         
@@ -82,6 +82,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         fab.setImage(searchImage, for: .normal)
         fab.tintColor = UIColor.black
         fab.backgroundColor = UIColor.white
+        fab.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
         self.view.addSubview(fab)
         
         fab.snp.makeConstraints { (maker) in
@@ -97,6 +98,12 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
                 height: UIScreen.main.bounds.height))
         imageDetailView.delegate = self
         self.view.addSubview(imageDetailView)
+    }
+    
+    @objc
+    func onClickSearch() {
+        // todo
+        self.view.showToast("Not impl yet :D")
     }
     
     // MARK: ImagesViewControllerDelegate

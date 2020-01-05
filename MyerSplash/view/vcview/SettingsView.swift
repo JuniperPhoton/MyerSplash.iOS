@@ -44,7 +44,7 @@ class SettingsView: UIView {
         closeView = UIButton(type: .system)
         closeView.setImage(UIImage(named: "ic_clear_white"), for: .normal)
         closeView.addTarget(self, action: #selector(onClickCloseButton), for: .touchUpInside)
-        closeView.tintColor = UIView.getDefaultLabelUIColor()
+        closeView.tintColor = UIColor.getDefaultLabelUIColor()
 
         scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true

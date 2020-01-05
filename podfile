@@ -12,6 +12,7 @@ target 'MyerSplash' do
   pod 'Nuke', '~> 8.3.1'
   pod 'AppCenter'
   pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/ActivityIndicator'
   pod 'Tabman'
   pod 'Pageboy'
 end

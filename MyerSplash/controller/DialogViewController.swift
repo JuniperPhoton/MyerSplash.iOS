@@ -55,7 +55,7 @@ class DialogViewController: BaseViewController {
         }
 
         let rootView = UIView()
-        rootView.backgroundColor = UIView.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
+        rootView.backgroundColor = UIColor.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
         rootView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                              action: #selector(self.onClickBackground)))
 
@@ -65,7 +65,7 @@ class DialogViewController: BaseViewController {
 
         titleView = UILabel()
         titleView.text = dialogContent.title?.uppercased()
-        titleView.textColor = UIView.getDefaultLabelUIColor()
+        titleView.textColor = UIColor.getDefaultLabelUIColor()
         titleView.font = titleView.font.with(traits: .traitBold, fontSize: 20)
 
         dialogContentView.addSubview(titleView)
@@ -109,7 +109,7 @@ class DialogViewController: BaseViewController {
 
             let contentView = UILabel()
             contentView.text = alertDialog.content
-            contentView.textColor = UIView.getDefaultLabelUIColor()
+            contentView.textColor = UIColor.getDefaultLabelUIColor()
             contentView.font = contentView.font.withSize(14)
 
             dialogContentView.addSubview(contentView)

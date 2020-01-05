@@ -8,6 +8,11 @@ PODS:
   - AppCenter/Core (2.5.3)
   - AppCenter/Crashes (2.5.3):
     - AppCenter/Core
+  - MaterialComponents/ActivityIndicator (100.0.0):
+    - MaterialComponents/Palettes
+    - MaterialComponents/private/Application
+    - MDFInternationalization
+    - MotionAnimator (~> 2.0)
   - MaterialComponents/AnimationTiming (100.0.0)
   - MaterialComponents/Buttons (100.0.0):
     - MaterialComponents/Elevation
@@ -26,6 +31,7 @@ PODS:
   - MaterialComponents/Ink (100.0.0):
     - MaterialComponents/private/Color
     - MaterialComponents/private/Math
+  - MaterialComponents/Palettes (100.0.0)
   - MaterialComponents/private/Application (100.0.0)
   - MaterialComponents/private/Color (100.0.0)
   - MaterialComponents/private/Math (100.0.0)
@@ -45,6 +51,9 @@ PODS:
     - MaterialComponents/private/Math
   - MDFInternationalization (2.0.0)
   - MDFTextAccessibility (2.0.0)
+  - MotionAnimator (2.8.1):
+    - MotionInterchange (~> 1.6)
+  - MotionInterchange (1.6.0)
   - Nuke (8.3.1)
   - Pageboy (3.5.0)
   - RxAlamofire (5.1.0):
@@ -61,6 +70,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - AppCenter
+  - MaterialComponents/ActivityIndicator
   - MaterialComponents/Buttons
   - Nuke (~> 8.3.1)
   - Pageboy
@@ -76,6 +86,8 @@ SPEC REPOS:
     - MaterialComponents
     - MDFInternationalization
     - MDFTextAccessibility
+    - MotionAnimator
+    - MotionInterchange
     - Nuke
     - Pageboy
     - RxAlamofire
@@ -90,6 +102,8 @@ SPEC CHECKSUMS:
   MaterialComponents: b4cc6c1649a566d70bd72096f3e1aae2c3701e4f
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
+  MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
+  MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   Nuke: 85fb80f8df0cb26c28d2f4e0cb7fb93bcd6548d3
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
   RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
@@ -98,6 +112,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: d1410767ca481338b8ab1092fff5fe20f4ad226a
 
-PODFILE CHECKSUM: dd1f97d5da7c0e2aedea0c2a9954c1fc3d2d2845
+PODFILE CHECKSUM: 3ee715074da20083051835f595cf8bb69659b75a
 
 COCOAPODS: 1.8.4

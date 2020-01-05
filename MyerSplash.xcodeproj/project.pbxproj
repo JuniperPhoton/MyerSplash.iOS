@@ -11,7 +11,6 @@
 		04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DD9D41236F0A43009F5187 /* MessageUI.framework */; };
 		04E5608B237139E00085C950 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608A237139E00085C950 /* AppKeys.swift */; };
 		04E5608D23713DAA0085C950 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608C23713DAA0085C950 /* Events.swift */; };
-		222D468C23C10068003C754B /* IndicatorTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D468B23C10068003C754B /* IndicatorTemplate.swift */; };
 		222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46AF23C1081B003C754B /* ImagesViewController.swift */; };
 		222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46B223C10CAA003C754B /* ImageRepo.swift */; };
 		54A560316E4D62F7B0584255 /* CloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C25820A4CC3C06ECA77 /* CloudService.swift */; };
@@ -38,7 +37,6 @@
 		54A56894511BAF5E3DC295F6 /* UnsplashUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56ABD120FB1828A5DCFC3 /* UnsplashUser.swift */; };
 		54A56B2BF448D4545E0B1795 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C275843D1B6C0016A44 /* Dimensions.swift */; };
 		54A56BF05F180815B938D111 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56B10293331F08D52173B /* ToastView.swift */; };
-		54A56C399859EE5972C5962F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56A4D4E18D2BE2031B272 /* MainView.swift */; };
 		54A56CBA5A033F3AD5BED0EF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A560766AA522E37891C2A1 /* SettingsView.swift */; };
 		54A56D1346731D1233230A54 /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A567873B60B294584A7F5A /* UIFontExtension.swift */; };
 		54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5607B141B4AF5F592908D /* MainImageTableCell.swift */; };
@@ -60,7 +58,6 @@
 		04DD9D46236F0B2B009F5187 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		04E5608A237139E00085C950 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		04E5608C23713DAA0085C950 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
-		222D468B23C10068003C754B /* IndicatorTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorTemplate.swift; sourceTree = "<group>"; };
 		222D46AF23C1081B003C754B /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,7 +79,6 @@
 		54A568D0616F40376A967B11 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		54A56933262294E2EBAE4EBF /* SettingsGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGroup.swift; sourceTree = "<group>"; };
 		54A569D1A4CCF7A8541024F2 /* FadeTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeTransitioning.swift; sourceTree = "<group>"; };
-		54A56A4D4E18D2BE2031B272 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		54A56ABD120FB1828A5DCFC3 /* UnsplashUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsplashUser.swift; sourceTree = "<group>"; };
 		54A56ADEB602096935F951BA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		54A56B10293331F08D52173B /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
@@ -139,7 +135,6 @@
 		54A5614D781F22296CE77481 /* vcview */ = {
 			isa = PBXGroup;
 			children = (
-				54A56A4D4E18D2BE2031B272 /* MainView.swift */,
 				54A560766AA522E37891C2A1 /* SettingsView.swift */,
 			);
 			path = vcview;
@@ -214,7 +209,6 @@
 				54A56CD524A21D6CDFFE81CE /* SettingsViewController.swift */,
 				54A560BD8B67160A59D237A6 /* DialogViewController.swift */,
 				54A56D82CB9E1C0EF954ECE2 /* BaseViewController.swift */,
-				222D468B23C10068003C754B /* IndicatorTemplate.swift */,
 				222D46AF23C1081B003C754B /* ImagesViewController.swift */,
 			);
 			path = controller;
@@ -385,6 +379,8 @@
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
+				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
@@ -399,6 +395,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionAnimator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MotionInterchange.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nuke.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
@@ -438,7 +436,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0D247BD1FF7C35000BB8076 /* AppDelegate.swift in Sources */,
-				222D468C23C10068003C754B /* IndicatorTemplate.swift in Sources */,
 				54A56482196A6EC512092AEF /* MainViewController.swift in Sources */,
 				54A56DCD00FEAD384CC4603B /* UnsplashImage.swift in Sources */,
 				222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */,
@@ -471,7 +468,6 @@
 				54A564FF41C576E8871B455C /* Values.swift in Sources */,
 				54A56061449C955941092B50 /* AppSettings.swift in Sources */,
 				54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */,
-				54A56C399859EE5972C5962F /* MainView.swift in Sources */,
 				54A56CBA5A033F3AD5BED0EF /* SettingsView.swift in Sources */,
 				54A5611C988BDF72B7A5A7BD /* MainNavigationView.swift in Sources */,
 				54A5646DE8E2778738D9664F /* ImageDetailView.swift in Sources */,

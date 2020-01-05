@@ -33,7 +33,7 @@ public class MainNavigationView: UIView {
         settingsView = UIButton(type: .system)
         settingsView.setImage(UIImage(named: "ic_more_horiz_white"), for: .normal)
         settingsView.addTarget(self, action: #selector(onClickSettings), for: .touchUpInside)
-        settingsView.tintColor = UIView.getDefaultLabelUIColor()
+        settingsView.tintColor = UIColor.getDefaultLabelUIColor()
 
         addSubview(titleView)
         addSubview(settingsView)
