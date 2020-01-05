@@ -32,6 +32,15 @@ protocol SingleChoiceDelegate {
     func onItemSelected(index: Int)
 }
 
+extension UIView {
+    func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+         let mask = CAShapeLayer()
+         mask.path = path.cgPath
+         layer.mask = mask
+     }
+}
+
 class DialogViewController: BaseViewController {
     private var titleView:         UILabel!
     private var dialogContentView: UIView!
@@ -57,6 +66,9 @@ class DialogViewController: BaseViewController {
         dialogContentView = UIView()
         dialogContentView.backgroundColor = UIView.getDefaultDialogBackgroundUIColor()
         dialogContentView.addGestureRecognizer(UITapGestureRecognizer())
+        dialogContentView.layer.cornerRadius = 12
+        dialogContentView.clipsToBounds = true
+        dialogContentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
 
         titleView = UILabel()
         titleView.text = dialogContent.title?.uppercased()
