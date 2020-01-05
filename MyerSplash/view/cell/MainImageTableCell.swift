@@ -62,7 +62,9 @@ public class MainImageTableCell: UITableViewCell {
             return
         }
 
-        Nuke.loadImage(with: URL(string: url)!, into: mainImageView)
+        Nuke.loadImage(with: URL(string: url)!,
+                       options: ImageLoadingOptions(placeholder: nil, transition: .fadeIn(duration: 0.3), failureImage: nil, failureImageTransition: nil, contentModes: .none),
+                       into: mainImageView)
     }
 
     private func isImageCached() -> Bool {

@@ -207,7 +207,7 @@ class ImageDetailView: UIView {
         self.backgroundView.alpha = 0.0
         isHidden = false
 
-        UIView.animate(withDuration: 0.2,
+        UIView.animate(withDuration: 0.3,
                        delay: 0,
                        options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
@@ -228,8 +228,8 @@ class ImageDetailView: UIView {
             maker.top.equalTo(self.mainImageView.snp.bottom)
         }
 
-        UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
-                       delay: Values.DEFAULT_DELAY,
+        UIView.animate(withDuration: 0.4,
+                       delay: 0,
                        options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                            self.layoutIfNeeded()
