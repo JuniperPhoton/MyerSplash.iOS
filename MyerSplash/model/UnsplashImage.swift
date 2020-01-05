@@ -6,9 +6,55 @@ class UnsplashImage {
     private (set) var id: String?
     private (set) var color: String?
     private (set) var likes: Int = 0
+    private (set) var width: Int = 0
+    private (set) var height: Int = 0
     private (set) var urls: ImageUrl?
     private (set) var user: UnsplashUser?
     private (set) var isUnsplash = true
+    
+    var aspectRatioF: CGFloat {
+        get {
+            let r = aspectRatio
+            let splited = r.split(separator: ":")
+            let first = String(splited[0])
+            let second = String(splited[1])
+            return CGFloat(Double(first) ?? 3) / CGFloat(Double(second) ?? 2)
+        }
+    }
+    
+    var aspectRatio: String {
+        get {
+            let rawRatio: CGFloat
+            if width == 0 || height == 0 {
+                rawRatio = 3.0 / 2.0
+            } else {
+                rawRatio = CGFloat(width) / CGFloat(height)
+            }
+            
+            let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
+
+            let fixedMargin = CGFloat(100)
+
+            let decorViewWidth = UIScreen.main.bounds.width
+            let decorViewHeight = UIScreen.main.bounds.height
+
+            let availableHeight = decorViewHeight - fixedMargin * CGFloat(2)
+
+            let imageRatio = rawRatio
+            let wantedWidth = decorViewWidth
+            let wantedHeight = (wantedWidth / imageRatio) + fixedInfoHeight
+
+            let targetWidth = wantedWidth
+            var targetHeight = wantedHeight
+            if (wantedHeight > availableHeight) {
+                targetHeight = CGFloat(availableHeight) - fixedInfoHeight
+            } else {
+                targetHeight -= fixedInfoHeight
+            }
+
+            return "\(targetWidth):\(targetHeight)"
+        }
+    }
 
     var fileNameForDownload: String {
         get {
@@ -93,6 +139,8 @@ class UnsplashImage {
 
         color = json["color"].string
         likes = json["likes"].intValue
+        width = json["width"].intValue
+        height = json["height"].intValue
 
         urls = ImageUrl(json["urls"])
         user = UnsplashUser(json["user"])

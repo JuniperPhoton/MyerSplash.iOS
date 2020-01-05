@@ -26,7 +26,10 @@ class ImageDetailView: UIView {
     private var finalFrame: CGRect {
         get {
             let width      = self.frame.width
-            let height     = ImagesViewController.calculateCellHeight(width)
+            
+            let ratio = bindImage!.aspectRatioF
+            let height = width / ratio
+            
             let x: CGFloat = 0.0
             let y: CGFloat = (self.frame.height - height - Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT) / 2.0
             return CGRect(x: x, y: y, width: width, height: height)

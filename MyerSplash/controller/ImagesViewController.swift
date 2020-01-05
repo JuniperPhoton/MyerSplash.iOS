@@ -18,10 +18,6 @@ protocol ImagesViewControllerDelegate {
 }
 
 class ImagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    enum AnimatingStatus {
-           case STILL, SHOWING, HIDING
-    }
-    
     static func calculateCellHeight(_ width: CGFloat) -> CGFloat {
         return width / 1.5 // todo
     }
@@ -45,7 +41,6 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     private var tappedCell: UITableViewCell? = nil
     
-    private var animatingStatus: AnimatingStatus = AnimatingStatus.STILL
     private var startY: CGFloat = -1
 
     private var tableView: UITableView!
@@ -77,11 +72,16 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         
         view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         
-        imageRepo?.onLoadFinished = { (finished) in
+        imageRepo?.onLoadFinished = { (_ success: Bool, _ page: Int) in
             self.indicator.stopAnimating()
             self.loading = false
             self.canLoadMore = !self.imageRepo!.images.isEmpty
             self.stopRefresh()
+            
+            if page == 1 {
+                self.calculateInitialMaxVisibleCellCount()
+            }
+            
             self.tableView.reloadData()
         }
         
@@ -150,44 +150,6 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         paging = paging + 1
         loadData(false)
     }
-    
-    func hideNavigationElements() {
-        if (animatingStatus == AnimatingStatus.HIDING) {
-            return
-        }
-
-        animatingStatus = AnimatingStatus.HIDING
-
-        UIView.animate(
-                withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
-                delay: 0,
-                options: UIView.AnimationOptions.curveEaseInOut,
-                animations: {
-                    self.view.layoutIfNeeded()
-                },
-                completion: { c in
-                    self.animatingStatus = AnimatingStatus.STILL
-                })
-    }
-
-    func showNavigationElements() {
-        if (animatingStatus == AnimatingStatus.SHOWING) {
-            return
-        }
-
-        animatingStatus = AnimatingStatus.SHOWING
-
-        UIView.animate(
-                withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
-                delay: 0,
-                options: UIView.AnimationOptions.curveEaseInOut,
-                animations: {
-                    self.view.layoutIfNeeded()
-                },
-                completion: { c in
-                    self.animatingStatus = AnimatingStatus.STILL
-                })
-    }
 
     func stopRefresh() {
         refreshControl.endRefreshing()
@@ -231,17 +193,15 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     // and the table view use estimated height as content size at first,
     // which leads to the incorrect content size of table view.
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        calculateAndCacheCellHeight()
-        return calculatedCellHeight
+        return calculateAndCacheCellHeight(indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        calculateAndCacheCellHeight()
-        return calculatedCellHeight
+        return calculateAndCacheCellHeight(indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let count = calculateInitialMaxVisibleCellCount()
+        let count = initialMaxVisibleCellCount
         if (count < 0) {
             return
         }
@@ -274,27 +234,41 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         cellDisplayAnimatedCount += 1
     }
 
-    private func calculateInitialMaxVisibleCellCount() -> Int {
-        if (initialMaxVisibleCellCount == -1) {
-            calculateAndCacheCellHeight()
+    private func calculateInitialMaxVisibleCellCount() {
+        guard let tableView = tableView,
+              let repo = imageRepo else {
+            initialMaxVisibleCellCount = -1
+            return
+        }
+        
+        let visibleHeight = tableView.frame.height - (tableView.refreshControl?.frame.height ?? 0) - UIView.topInset
+        let visibleWidth = tableView.frame.width
+        
+        var accHeight = CGFloat(0)
+        
+        for index in 0..<repo.images.count {
+            let image = repo.images[index]
+            let ratio = image.aspectRatioF
+            accHeight += visibleWidth / ratio
 
-            guard let tableView = tableView else {
-                return initialMaxVisibleCellCount
+            if (accHeight >= visibleHeight) {
+                initialMaxVisibleCellCount = index + 1
+                break
             }
-
-            let visibleHeight = tableView.frame.height
-            initialMaxVisibleCellCount = Int(round(Double(visibleHeight) / Double(calculatedCellHeight)))
         }
         
         print("initialMaxVisibleCellCount is ", initialMaxVisibleCellCount)
-
-        return initialMaxVisibleCellCount
     }
 
-    private func calculateAndCacheCellHeight() {
-        if (calculatedCellHeight == -1.0) {
-            calculatedCellHeight = ImagesViewController.calculateCellHeight(UIScreen.main.bounds.width)
+    private func calculateAndCacheCellHeight(_ index: Int)-> CGFloat {
+        guard let image = imageRepo?.images[index] else {
+            return 3 / 2.0
         }
+        
+        let ratio = image.aspectRatioF
+        let width = UIScreen.main.bounds.width
+        let height = width / ratio
+        return height
     }
 
     // MARK: scroll
@@ -313,9 +287,9 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
         let dy = scrollView.contentOffset.y - lastScrollOffset.y
         if (dy > 10) {
-            hideNavigationElements()
+            print("prepare to hideNavigationElements")
         } else if (dy < -10) {
-            showNavigationElements()
+            print("prepare to showNavigationElements")
         }
 
         lastScrollOffset = scrollView.contentOffset
@@ -323,7 +297,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if (scrollView.contentOffset.y <= 0) {
-            showNavigationElements()
+            print("prepare to showNavigationElements")
         }
     }
 }

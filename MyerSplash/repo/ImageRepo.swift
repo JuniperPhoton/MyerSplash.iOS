@@ -43,7 +43,7 @@ class ImageRepo {
     
     private var disposeBag = DisposeBag()
     
-    var onLoadFinished: ((_ success:Bool)->Void)? = nil
+    var onLoadFinished: ((_ success: Bool, _ page: Int)->Void)? = nil
     
     func loadImage(_ page: Int) {
         loadImagesInternal(page)
@@ -59,10 +59,10 @@ class ImageRepo {
                 }
                 
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                self.onLoadFinished?.self(true)
+                self.onLoadFinished?.self(true, page)
             }, onError: { (e) in
                 print("Error on loading image: %s", e.localizedDescription)
-                self.onLoadFinished?.self(false)
+                self.onLoadFinished?.self(false, page)
             })
             .disposed(by: disposeBag)
     }
