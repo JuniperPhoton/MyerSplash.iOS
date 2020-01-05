@@ -26,7 +26,7 @@ class ImageDetailView: UIView {
     private var finalFrame: CGRect {
         get {
             let width      = self.frame.width
-            let height     = MainViewController.calculateCellHeight(width)
+            let height     = ImagesViewController.calculateCellHeight(width)
             let x: CGFloat = 0.0
             let y: CGFloat = (self.frame.height - height - Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT) / 2.0
             return CGRect(x: x, y: y, width: width, height: height)
@@ -207,7 +207,7 @@ class ImageDetailView: UIView {
         self.backgroundView.alpha = 0.0
         isHidden = false
 
-        UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
+        UIView.animate(withDuration: 0.2,
                        delay: 0,
                        options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {

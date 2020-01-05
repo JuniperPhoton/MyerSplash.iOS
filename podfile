@@ -7,8 +7,11 @@ target 'MyerSplash' do
 
   pod 'SnapKit', '~> 5.0.0'
   pod 'Alamofire', '~> 4.9.1'
+  pod 'RxAlamofire'
   pod 'SwiftyJSON'
   pod 'Nuke', '~> 8.3.1'
   pod 'AppCenter'
-
+  pod 'MaterialComponents/Buttons'
+  pod 'Tabman'
+  pod 'Pageboy'
 end

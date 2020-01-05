@@ -1,35 +1,24 @@
 import Foundation
+import Tabman
+import Pageboy
 import UIKit
 import SnapKit
 import Alamofire
+import MaterialComponents.MaterialTabs
 
-class MainViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate,
-        NavigationViewDelegate, SettingsDelegate, ImageDetailViewDelegate {
-    static func calculateCellHeight(_ width: CGFloat) -> CGFloat {
-        return width / 1.5
+class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesViewControllerDelegate {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return appStatusBarStyle
+        }
     }
 
-    static let CELL_ANIMATE_OFFSET_X: CGFloat = 70.0
-    static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.3
-    static let CELL_ANIMATE_DURATION_SEC = 0.6
+    private let viewControllers = [ImagesViewController(NewImageRepo()),
+                                   ImagesViewController(HighlightsImageRepo()),
+                                   ImagesViewController(RandomImageRepo()),
+                                   ImagesViewController(DeveloperImageRepo())]
 
-    static let HIGHLIGHTS_DELAY_SEC = 0.2
-
-    private var images: [UnsplashImage] = [UnsplashImage]()
-    private var mainView: MainView!
-
-    private var loadingFooterView: LoadingFooterView!
-
-    private var paging = 1
-    private var loading = false
-    private var canLoadMore = false
-
-    private var calculatedCellHeight: CGFloat = -1.0
-    private var initialMaxVisibleCellCount = -1
-
-    private var cellDisplayAnimatedCount = 0
-
-    private var tappedCell: UITableViewCell? = nil
+    private var imageDetailView: ImageDetailView!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -37,40 +26,95 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.isNavigationBarHidden = true
+        self.view.backgroundColor = UIView.getDefaultBackgroundUIColor()
+    
+        self.dataSource = self
+        
+        viewControllers.forEach { (controller) in
+            controller.delegate = self
+        }
 
-        mainView.navigationView.delegate = self
+        // Create bar
+        let bar = TMBar.ButtonBar()
+        bar.layout.transitionStyle = .snap
+        bar.layout.alignment = .leading
+        bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 12.0, right: 50)
+        bar.backgroundView.style = .flat(color: UIView.getDefaultBackgroundUIColor())
+        bar.layout.interButtonSpacing = 12
+        bar.buttons.customize { (button) in
+            button.tintColor = UIView.getDefaultLabelUIColor().withAlphaComponent(0.3)
+            button.selectedTintColor = UIView.getDefaultLabelUIColor()
+            button.font = UIFont.preferredFont(forTextStyle: .largeTitle).with(traits: .traitBold).withSize(13)
+        }
+        bar.indicator.tintColor = UIView.getDefaultLabelUIColor()
+        bar.indicator.weight = .custom(value: 4)
 
-        let tableView = mainView.tableView!
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        tableView.allowsSelection = false
-        tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
-
-        loadingFooterView = LoadingFooterView(frame: CGRect(x: 0,
+        // Add to view
+        addBar(bar, dataSource: self, at: .top)
+        
+        let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
+        statusBarPlaceholder.backgroundColor = UIView.getDefaultBackgroundUIColor()
+        self.view.addSubview(statusBarPlaceholder)
+        
+        let moreButton = UIButton()
+        let moreImage = UIImage.init(named: "ic_more_horiz_white")!.withRenderingMode(.alwaysTemplate)
+        moreButton.setImage(moreImage, for: .normal)
+        moreButton.tintColor = UIView.getDefaultLabelUIColor().withAlphaComponent(0.3)
+        moreButton.backgroundColor = UIView.getDefaultBackgroundUIColor()
+        moreButton.addTarget(self, action: #selector(onClickSettings), for: .touchUpInside)
+        self.view.addSubview(moreButton)
+        
+        moreButton.snp.makeConstraints { (maker) in
+            maker.top.equalTo(statusBarPlaceholder.snp.bottom)
+            maker.right.equalTo(self.view.snp.right)
+            maker.bottom.equalTo(bar.snp.bottom).offset(-15)
+            maker.width.equalTo(50)
+        }
+        
+        let fab = MDCFloatingButton()
+        let searchImage = UIImage.init(named: "round_search")?.withRenderingMode(.alwaysTemplate)
+        fab.setImage(searchImage, for: .normal)
+        fab.tintColor = UIColor.black
+        fab.backgroundColor = UIColor.white
+        self.view.addSubview(fab)
+        
+        fab.snp.makeConstraints { (maker) in
+            maker.right.equalTo(self.view).offset(-16)
+            maker.bottom.equalTo(self.view).offset(UIView.hasTopNotch ? -24: -16)
+            maker.width.equalTo(50)
+            maker.height.equalTo(50)
+        }
+        
+        imageDetailView = ImageDetailView(frame: CGRect(x: 0,
                 y: 0,
                 width: UIScreen.main.bounds.width,
-                height: 100))
-        tableView.tableFooterView = loadingFooterView
-
-        mainView.onRefresh = {
-            self.refreshData()
-        }
-        mainView.imageDetailView.delegate = self
-
-        refreshData()
+                height: UIScreen.main.bounds.height))
+        imageDetailView.delegate = self
+        self.view.addSubview(imageDetailView)
     }
-
+    
+    // MARK: ImagesViewControllerDelegate
+    func onClickImage(rect: CGRect, image: UnsplashImage) {
+        imageDetailView?.show(initFrame: rect, image: image)
+    }
+    
+    func onRequestDownload(image: UnsplashImage) {
+        doDownload(image)
+    }
+    
+    // MARK: ImageDetailViewDelegate
     func onHidden() {
-        tappedCell?.isHidden = false
+        if let vc = self.currentViewController as? ImagesViewController {
+            vc.showTappedCell()
+        }
     }
-
+    
     func onRequestOpenUrl(urlString: String) {
         UIApplication.shared.open(URL(string: urlString)!)
     }
@@ -78,214 +122,30 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
     func onRequestImageDownload(image: UnsplashImage) {
         doDownload(image)
     }
-
-    private func refreshData() {
-        paging = 1
-        loadData(true)
+    
+    @objc
+    private func onClickSettings() {
+        let controller = SettingsViewController()
+        self.present(controller, animated: true, completion: nil)
     }
-
-    private func loadData(_ refreshing: Bool) {
-        if (loading) {
-            return
-        }
-
-        loading = true
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + MainViewController.HIGHLIGHTS_DELAY_SEC) {
-            CloudService.getHighlights(page: self.paging) { response in
-                self.processResponse(response: response, refreshing)
-                self.loading = false
-                self.canLoadMore = !response.isEmpty
-                self.mainView.stopRefresh()
+    
+    override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                setNeedsStatusBarAppearanceUpdate()
             }
-        }
-    }
-
-    private func processResponse(response: [UnsplashImage], _ refreshing: Bool) {
-        if (images.count >= 2 && response.count > 0) {
-            let firstResponseImage = response.first!
-            let firstExistImage = images[1]
-
-            let todayHighlightUpdated = !firstExistImage.isUnsplash
-                    && firstExistImage.id != UnsplashImage.createTodayImageId()
-
-            let noNewData = firstExistImage.id == firstResponseImage.id
-
-            // Today highlight is not updated and the first images are match, skip reload data.
-            if (noNewData && !todayHighlightUpdated) {
-                mainView.showToast("No new data")
-                return
-            }
-        }
-
-        if (refreshing) {
-            images.removeAll(keepingCapacity: false)
-            cellDisplayAnimatedCount = 0
-        }
-
-        images += response
-        mainView.tableView.reloadData()
-    }
-
-    private func loadMore() {
-        if (!canLoadMore) {
-            return
-        }
-        paging = paging + 1
-        loadData(false)
-    }
-
-    override func loadView() {
-        mainView = MainView(frame: CGRect.zero)
-        view = mainView
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        var topSafeArea: CGFloat
-        var bottomSafeArea: CGFloat
-
-        if #available(iOS 11.0, *) {
-            topSafeArea = view.safeAreaInsets.top
-            bottomSafeArea = view.safeAreaInsets.bottom
         } else {
-            topSafeArea = topLayoutGuide.length
-            bottomSafeArea = bottomLayoutGuide.length
-        }
-
-        // safe area values are now available to use
-    }
-
-    // MARK: UITableViewDelegate
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return images.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MainImageTableCell.ID, for: indexPath) as? MainImageTableCell else {
-            fatalError()
-        }
-        cell.onClickDownload = { unsplashImage in
-            self.doDownload(unsplashImage)
-        }
-        cell.onClickMainImage = { (rect: CGRect, image: UnsplashImage) -> Void in
-            print("rect is %@", rect)
-            cell.isHidden = true
-            self.tappedCell = cell
-            self.mainView.imageDetailView.show(initFrame: rect, image: image)
-        }
-        cell.bind(image: images[indexPath.row])
-        return cell
-    }
-
-    // For iOS 11, this method must be conform to provide estimated height.
-    // After calling table view's reloadData(), all the items' contents size will be re-calculated,
-    // and the table view use estimated height as content size at first,
-    // which leads to the incorrect content size of table view.
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        calculateAndCacheCellHeight()
-        return calculatedCellHeight
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        calculateAndCacheCellHeight()
-        return calculatedCellHeight
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let count = calculateInitialMaxVisibleCellCount()
-        if (count < 0) {
-            return
-        }
-
-        if (cellDisplayAnimatedCount >= count) {
-            return
-        }
-
-        let index = indexPath.row
-        if (index >= count) {
-            return
-        }
-
-        let startX = cell.center.x
-        cell.alpha = 0.0
-        cell.center.x += MainViewController.CELL_ANIMATE_OFFSET_X
-
-        let delaySec = Double(index + 1) * MainViewController.CELL_ANIMATE_DELAY_UNIT_SEC
-
-        UIView.animate(withDuration: MainViewController.CELL_ANIMATE_DURATION_SEC,
-                delay: delaySec,
-                options: UIView.AnimationOptions.curveEaseOut,
-                animations: {
-                    cell.alpha = 1.0
-                    cell.center.x = startX
-                },
-                completion: nil)
-
-        cellDisplayAnimatedCount += 1
-    }
-
-    private func calculateInitialMaxVisibleCellCount() -> Int {
-        if (initialMaxVisibleCellCount == -1) {
-            calculateAndCacheCellHeight()
-
-            guard let tableView = mainView.tableView,
-                  let navigationView = mainView.navigationView else {
-                return initialMaxVisibleCellCount
-            }
-
-            let visibleHeight = tableView.frame.height - navigationView.frame.height
-            initialMaxVisibleCellCount = Int(ceil(Double(visibleHeight) / Double(calculatedCellHeight)))
-        }
-
-        return initialMaxVisibleCellCount
-    }
-
-    private func calculateAndCacheCellHeight() {
-        if (calculatedCellHeight == -1.0) {
-            calculatedCellHeight = MainViewController.calculateCellHeight(UIScreen.main.bounds.width)
+            // Fallback on earlier versions
         }
     }
-
-    // MARK: scroll
-
-    private var lastScrollOffset: CGPoint = CGPoint(x: 0, y: 0)
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // We don't want the over-scrolling takes any showing & hiding effect.
-        if (scrollView.contentOffset.y <= 0) {
-            return
-        }
-
-        if (scrollView.contentOffset.y + scrollView.frame.height > scrollView.contentSize.height) {
-            loadMore()
-        }
-
-        let dy = scrollView.contentOffset.y - lastScrollOffset.y
-        if (dy > 10) {
-            mainView.hideNavigationElements()
-        } else if (dy < -10) {
-            mainView.showNavigationElements()
-        }
-
-        lastScrollOffset = scrollView.contentOffset
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if (scrollView.contentOffset.y <= 0) {
-            mainView.showNavigationElements()
-        }
-    }
-
+    
     // MARK: cell callback
 
     private func doDownload(_ unsplashImage: UnsplashImage) {
         print("downloading: \(unsplashImage.downloadUrl ?? "")")
 
-        mainView.showToast("Downloading in background...")
+        view.showToast("Downloading in background...")
 
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
@@ -308,7 +168,7 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
                 UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
             } else {
                 Events.trackDownloadEvent(false, response.error?.localizedDescription)
-                print("error while download image: %@", response.error)
+                print("error while download image: %@", response.error ?? "")
             }
         }
     }
@@ -318,26 +178,29 @@ class MainViewController: BaseViewController, UITableViewDataSource, UITableView
                                 didFinishSavingWithError error: Error?,
                                 contextInfo: UnsafeRawPointer) {
         if (error == nil) {
-            mainView.showToast("Saved to your album :D")
+            view.showToast("Saved to your album :D")
         } else {
-            mainView.showToast("Failed to download :(")
+            view.showToast("Failed to download :(")
         }
     }
+}
 
-    // MARK: Setting delegate
-    func refresh() {
-        self.mainView.tableView.reloadData()
+extension MainViewController: PageboyViewControllerDataSource, TMBarDataSource {
+    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+        let item = TMBarItem(title: (viewControllers[index].repoTitle!))
+        return item
+    }
+    
+    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+        return viewControllers.count
     }
 
-    // MARK: MainView callback
-
-    func onClickSettings() {
-        let vc = SettingsViewController(nibName: nil, bundle: nil)
-        vc.delegate = self
-        present(vc, animated: true, completion: nil)
+    func viewController(for pageboyViewController: PageboyViewController,
+                        at index: PageboyViewController.PageIndex) -> UIViewController? {
+        return viewControllers[index]
     }
 
-    func onClickTitle() {
-        mainView.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+        return nil
     }
 }

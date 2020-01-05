@@ -34,6 +34,14 @@ extension UILabel {
 }
 
 extension UIView {
+    static var hasTopNotch: Bool {
+        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
+    }
+    
+    static var topInset: CGFloat {
+        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
+    }
+    
     static func getDefaultLabelUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
            return UIColor.label

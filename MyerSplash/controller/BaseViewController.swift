@@ -1,8 +1,8 @@
 import Foundation
 import UIKit
 
-open class BaseViewController: UIViewController {
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+extension UIViewController {
+    var appStatusBarStyle : UIStatusBarStyle {
         get {
             if #available(iOS 13.0, *) {
                 if UITraitCollection.current.userInterfaceStyle == .dark {
@@ -13,6 +13,14 @@ open class BaseViewController: UIViewController {
             } else {
                 return UIStatusBarStyle.lightContent
             }
+        }
+    }
+}
+
+open class BaseViewController: UIViewController {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        get {
+            return appStatusBarStyle
         }
     }
 

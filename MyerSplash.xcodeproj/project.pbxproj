@@ -11,6 +11,9 @@
 		04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DD9D41236F0A43009F5187 /* MessageUI.framework */; };
 		04E5608B237139E00085C950 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608A237139E00085C950 /* AppKeys.swift */; };
 		04E5608D23713DAA0085C950 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608C23713DAA0085C950 /* Events.swift */; };
+		222D468C23C10068003C754B /* IndicatorTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D468B23C10068003C754B /* IndicatorTemplate.swift */; };
+		222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46AF23C1081B003C754B /* ImagesViewController.swift */; };
+		222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46B223C10CAA003C754B /* ImageRepo.swift */; };
 		54A560316E4D62F7B0584255 /* CloudService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C25820A4CC3C06ECA77 /* CloudService.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56061449C955941092B50 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D0B25C0DD1328A6C717 /* AppSettings.swift */; };
@@ -57,6 +60,9 @@
 		04DD9D46236F0B2B009F5187 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		04E5608A237139E00085C950 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		04E5608C23713DAA0085C950 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		222D468B23C10068003C754B /* IndicatorTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorTemplate.swift; sourceTree = "<group>"; };
+		222D46AF23C1081B003C754B /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
+		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
 		54A560766AA522E37891C2A1 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
@@ -113,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		222D46B123C10C9B003C754B /* repo */ = {
+			isa = PBXGroup;
+			children = (
+				222D46B223C10CAA003C754B /* ImageRepo.swift */,
+			);
+			path = repo;
+			sourceTree = "<group>";
+		};
 		54A5610203E1DD4A590B39A2 /* api */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +214,8 @@
 				54A56CD524A21D6CDFFE81CE /* SettingsViewController.swift */,
 				54A560BD8B67160A59D237A6 /* DialogViewController.swift */,
 				54A56D82CB9E1C0EF954ECE2 /* BaseViewController.swift */,
+				222D468B23C10068003C754B /* IndicatorTemplate.swift */,
+				222D46AF23C1081B003C754B /* ImagesViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -274,6 +290,7 @@
 				F0D247C51FF7C35000BB8076 /* LaunchScreen.storyboard */,
 				F0D247C81FF7C35000BB8076 /* Info.plist */,
 				54A56DDFB155912867287711 /* controller */,
+				222D46B123C10C9B003C754B /* repo */,
 				54A56784A667D3A8D353B24A /* view */,
 				54A56970090A2FCD2EBD0914 /* transition */,
 				54A56C127081B830968B197A /* model */,
@@ -365,16 +382,30 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MyerSplash/Pods-MyerSplash-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
+				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
+				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nuke.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -407,8 +438,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0D247BD1FF7C35000BB8076 /* AppDelegate.swift in Sources */,
+				222D468C23C10068003C754B /* IndicatorTemplate.swift in Sources */,
 				54A56482196A6EC512092AEF /* MainViewController.swift in Sources */,
 				54A56DCD00FEAD384CC4603B /* UnsplashImage.swift in Sources */,
+				222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */,
 				54A56D1346731D1233230A54 /* UIFontExtension.swift in Sources */,
 				04E5608B237139E00085C950 /* AppKeys.swift in Sources */,
 				54A567F0C9F34EFC67020AE9 /* ColorExtension.swift in Sources */,
@@ -433,6 +466,7 @@
 				04E5608D23713DAA0085C950 /* Events.swift in Sources */,
 				54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */,
 				54A56D875EF9B6AA93186403 /* FontSizes.swift in Sources */,
+				222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */,
 				54A56B2BF448D4545E0B1795 /* Dimensions.swift in Sources */,
 				54A564FF41C576E8871B455C /* Values.swift in Sources */,
 				54A56061449C955941092B50 /* AppSettings.swift in Sources */,
