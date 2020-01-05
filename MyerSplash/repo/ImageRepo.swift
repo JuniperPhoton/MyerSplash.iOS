@@ -105,12 +105,16 @@ class HighlightsImageRepo: ImageRepo {
 }
 
 extension Observable {
-    func mapToList() -> Observable<[UnsplashImage]> {
+    func mapToList(appendTodyImage: Bool = false) -> Observable<[UnsplashImage]> {
         return self.map { jsonResponse in
            let json = JSON(jsonResponse)
-           let images: [UnsplashImage] = json.compactMap { s, json -> UnsplashImage? in
+           var images: [UnsplashImage] = json.compactMap { s, json -> UnsplashImage? in
                UnsplashImage(json)
            }
+            
+            if appendTodyImage {
+                images.insert(UnsplashImage.createToday(), at: 0)
+            }
            return images
         }
     }
@@ -127,7 +131,7 @@ class NewImageRepo: ImageRepo {
     }
     
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
-        return json(.get, Request.PHOTO_URL,parameters: CloudService.getDefaultParams(paging: page)).mapToList()
+        return json(.get, Request.PHOTO_URL,parameters: CloudService.getDefaultParams(paging: page)).mapToList(appendTodyImage: page == 1)
     }
 }
 

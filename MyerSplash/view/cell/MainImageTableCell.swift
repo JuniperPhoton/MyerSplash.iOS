@@ -7,7 +7,8 @@ public class MainImageTableCell: UITableViewCell {
     static let ID = "MainImageTableCell"
 
     private var downloadView: UIButton!
-
+    private var todayTag: UIView!
+    private var todayTextTag: UILabel!
     private var bindImage: UnsplashImage?
 
     var mainImageView: UIImageView!
@@ -29,9 +30,19 @@ public class MainImageTableCell: UITableViewCell {
         downloadView.setImage(UIImage(named: "ic_file_download_white")?
                                       .resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)), for: .normal)
         downloadView.addTarget(self, action: #selector(clickDownloadButton), for: .touchUpInside)
-
+        
+        todayTag = UIImageView(image: UIImage(named: "ic_star"))
+        todayTag.isHidden = true
+        
+        todayTextTag = UILabel()
+        todayTextTag.text = "Today"
+        todayTextTag.textColor = UIColor.white
+        todayTextTag.font = todayTextTag.font.with(traits: .traitBold).withSize(14)
+        
         contentView.addSubview(mainImageView)
         contentView.addSubview(downloadView)
+        contentView.addSubview(todayTag)
+        contentView.addSubview(todayTextTag)
 
         mainImageView.snp.makeConstraints { (maker) in
             maker.left.equalTo(contentView.snp.left)
@@ -45,6 +56,18 @@ public class MainImageTableCell: UITableViewCell {
             maker.right.equalTo(contentView.snp.right).offset(-8)
             maker.bottom.equalTo(contentView.snp.bottom).offset(-8)
         }
+        
+        todayTag.snp.makeConstraints { (maker) in
+            maker.width.height.equalTo(23)
+            maker.left.equalTo(contentView.snp.left).offset(15)
+            maker.bottom.equalTo(contentView.snp.bottom).offset(-15)
+        }
+        
+        todayTextTag.snp.makeConstraints { (maker) in
+            maker.left.equalTo(todayTag.snp.right).offset(8)
+            maker.top.equalTo(todayTag.snp.top)
+            maker.bottom.equalTo(todayTag.snp.bottom)
+        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -57,7 +80,9 @@ public class MainImageTableCell: UITableViewCell {
         mainImageView.image = nil
 
         downloadView.isHidden = !AppSettings.isQuickDownloadEnabled()
-        
+        todayTag.isHidden = !UnsplashImage.isToday(image)
+        todayTextTag.isHidden = !UnsplashImage.isToday(image)
+
         guard let url = image.listUrl else {
             return
         }

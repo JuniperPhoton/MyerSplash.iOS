@@ -99,7 +99,7 @@ class UnsplashImage {
     }
 
     static func isToday(_ image: UnsplashImage) -> Bool {
-        return image.id == "TodayImage"
+        return image.id == createDateString(Date())
     }
 
     static func createTodayImageId() -> String {
