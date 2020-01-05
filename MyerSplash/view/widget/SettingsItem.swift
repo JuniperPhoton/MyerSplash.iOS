@@ -17,7 +17,7 @@ class SettingsItem: UIView {
             contentView.text = content
         }
     }
-
+    
     var onClicked: (() -> Void)?
 
     override init(frame: CGRect) {
@@ -37,7 +37,7 @@ class SettingsItem: UIView {
         contentView = UILabel()
         contentView.setDefaultLabelColor()
         contentView.font = label.font.withSize(FontSizes.NORMAL)
-        contentView.alpha = 0.5
+        contentView.alpha = 0.3
 
         let uiStack = UIStackView()
         uiStack.axis = NSLayoutConstraint.Axis.vertical

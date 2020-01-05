@@ -8,6 +8,10 @@ protocol SettingsDelegate {
 
 class SettingsViewController: BaseViewController, UIViewControllerTransitioningDelegate,
 SettingsViewDelegate, SingleChoiceDelegate, MFMailComposeViewControllerDelegate {
+    func present(vc: UIViewController) {
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     private var settingsView: SettingsView!
 
     private var singleChoiceKey: String? = nil

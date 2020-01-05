@@ -48,16 +48,11 @@ class DialogViewController: BaseViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
-    override func loadView() {
+        
+    override func viewDidLoad() {
         guard let dialogContent = dialogContent else {
             return
         }
-
-        let rootView = UIView()
-        rootView.backgroundColor = UIColor.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
-        rootView.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                             action: #selector(self.onClickBackground)))
 
         dialogContentView = UIView()
         dialogContentView.backgroundColor = UIView.getDefaultDialogBackgroundUIColor()
@@ -72,19 +67,15 @@ class DialogViewController: BaseViewController {
 
         initDialogContentView(dialogContentView)
 
-        rootView.addSubview(dialogContentView)
-
-        dialogContentView.snp.makeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width * 0.85)
-            maker.height.equalTo(230)
-            maker.center.equalTo(rootView)
-        }
-
         titleView.snp.makeConstraints { maker in
             maker.left.top.equalTo(dialogContentView).offset(20)
         }
-
-        view = rootView
+        
+        self.view.addSubview(dialogContentView)
+        
+        dialogContentView.snp.makeConstraints { (maker) in
+            maker.left.top.right.bottom.equalToSuperview()
+        }
     }
 
     private func initDialogContentView(_ dialogContentView: UIView) {
@@ -119,10 +110,5 @@ class DialogViewController: BaseViewController {
                 maker.top.equalTo(titleView).offset(20)
             }
         }
-    }
-
-    @objc
-    private func onClickBackground() {
-        dismiss(animated: true)
     }
 }

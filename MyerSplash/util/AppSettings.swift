@@ -12,11 +12,15 @@ class AppSettings {
     }
 
     static func isQuickDownloadEnabled() -> Bool {
-        return isSettingsEnabled(key: Keys.QUICK_DOWNLOAD)
+        return true
     }
 
-    static func isMeteredEnabled() -> Bool {
-        return isSettingsEnabled(key: Keys.METERED)
+    static func isMeterredEnabled() -> Bool {
+        return isSettingsEnabled(key: Keys.METERRED)
+    }
+    
+    static func setMeterredEnabled(_ enabled: Bool) {
+        UserDefaults.standard.set(enabled, forKey: Keys.METERRED)
     }
 
     static func loadingQuality() -> Int {

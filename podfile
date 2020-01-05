@@ -13,6 +13,8 @@ target 'MyerSplash' do
   pod 'AppCenter'
   pod 'MaterialComponents/Buttons'
   pod 'MaterialComponents/ActivityIndicator'
+  pod 'MaterialComponents/BottomSheet'
+  pod 'MaterialComponents/Dialogs'
   pod 'Tabman'
   pod 'Pageboy'
 end

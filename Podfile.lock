@@ -14,6 +14,14 @@ PODS:
     - MDFInternationalization
     - MotionAnimator (~> 2.0)
   - MaterialComponents/AnimationTiming (100.0.0)
+  - MaterialComponents/BottomSheet (100.0.0):
+    - MaterialComponents/Elevation
+    - MaterialComponents/private/KeyboardWatcher
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/ShapeLibrary
+    - MaterialComponents/Shapes
   - MaterialComponents/Buttons (100.0.0):
     - MaterialComponents/Elevation
     - MaterialComponents/Ink
@@ -25,6 +33,15 @@ PODS:
     - MaterialComponents/Typography
     - MDFInternationalization
     - MDFTextAccessibility
+  - MaterialComponents/Dialogs (100.0.0):
+    - MaterialComponents/Buttons
+    - MaterialComponents/Elevation
+    - MaterialComponents/private/KeyboardWatcher
+    - MaterialComponents/private/Math
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/Elevation (100.0.0):
     - MaterialComponents/private/Color
     - MaterialComponents/private/Math
@@ -34,6 +51,8 @@ PODS:
   - MaterialComponents/Palettes (100.0.0)
   - MaterialComponents/private/Application (100.0.0)
   - MaterialComponents/private/Color (100.0.0)
+  - MaterialComponents/private/KeyboardWatcher (100.0.0):
+    - MaterialComponents/private/Application
   - MaterialComponents/private/Math (100.0.0)
   - MaterialComponents/Ripple (100.0.0):
     - MaterialComponents/AnimationTiming
@@ -42,6 +61,9 @@ PODS:
   - MaterialComponents/ShadowElevations (100.0.0)
   - MaterialComponents/ShadowLayer (100.0.0):
     - MaterialComponents/ShadowElevations
+  - MaterialComponents/ShapeLibrary (100.0.0):
+    - MaterialComponents/private/Math
+    - MaterialComponents/Shapes
   - MaterialComponents/Shapes (100.0.0):
     - MaterialComponents/private/Color
     - MaterialComponents/private/Math
@@ -71,7 +93,9 @@ DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - AppCenter
   - MaterialComponents/ActivityIndicator
+  - MaterialComponents/BottomSheet
   - MaterialComponents/Buttons
+  - MaterialComponents/Dialogs
   - Nuke (~> 8.3.1)
   - Pageboy
   - RxAlamofire
@@ -112,6 +136,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: d1410767ca481338b8ab1092fff5fe20f4ad226a
 
-PODFILE CHECKSUM: 3ee715074da20083051835f595cf8bb69659b75a
+PODFILE CHECKSUM: f5ec34c4accd7219c3647b0f966f84deda1ab135
 
 COCOAPODS: 1.8.4

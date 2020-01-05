@@ -3,11 +3,13 @@ import UIKit
 import SnapKit
 import Nuke
 import MessageUI
+import MaterialComponents.MaterialDialogs
 
 protocol SettingsViewDelegate {
     func showDialog(content: DialogContent, key: String)
     func onClickFeedback()
     func onClickClose(shouldRefreshWhenDismiss: Bool)
+    func present(vc: UIViewController)
 }
 
 class SettingsView: UIView {
@@ -52,12 +54,9 @@ class SettingsView: UIView {
         let personalizationGroup = SettingsGroup()
         personalizationGroup.label = "PERSONALIZATION"
 
-        let quickDownload = SettingsSwitchItem(Keys.QUICK_DOWNLOAD)
-        quickDownload.title = "Download shortcut"
-        quickDownload.content = "Show download button in list"
-        quickDownload.onCheckedChanged = { newValue in
-            self.shouldRefreshWhenDismiss = true
-        }
+        let quickDownload = SettingsSwitchItem(Keys.METERRED)
+        quickDownload.title = "Metered network warning"
+        quickDownload.content = "Notice you before downloading"
 
         personalizationGroup.addArrangedSubview(quickDownload)
 
@@ -65,14 +64,14 @@ class SettingsView: UIView {
         qualityGroup.label = "QUALITY"
 
         loadingQualityItem = SettingsItem(frame: CGRect.zero)
-        loadingQualityItem.title = "Thumbnails"
+        loadingQualityItem.title = "Browsing Quality (WIP)"
         loadingQualityItem.content = AppSettings.LOADING_OPTIONS[AppSettings.loadingQuality()]
         loadingQualityItem.onClicked = {
             self.popupListQualityChosenDialog()
         }
 
         savingQualityItem = SettingsItem(frame: CGRect.zero)
-        savingQualityItem.title = "Save"
+        savingQualityItem.title = "Download Quality (WIP)"
         savingQualityItem.content = AppSettings.SAVING_OPTIONS[AppSettings.savingQuality()]
         savingQualityItem.onClicked = {
             self.popupSavingQualityChosenDialog()
@@ -161,7 +160,7 @@ class SettingsView: UIView {
                 title: loadingQualityItem.title,
                 options: AppSettings.LOADING_OPTIONS,
                 selected: selected)
-        delegate?.showDialog(content: content, key: Keys.LOADING_QUALITY)
+        presentBottomSheet(content)
     }
 
     private func popupSavingQualityChosenDialog() {
@@ -170,11 +169,24 @@ class SettingsView: UIView {
                 title: savingQualityItem.title,
                 options: AppSettings.SAVING_OPTIONS,
                 selected: selected)
-        delegate?.showDialog(content: content, key: Keys.SAVING_QUALITY)
+        presentBottomSheet(content)
+    }
+    
+    private func presentBottomSheet(_ content: SingleChoiceDialog) {
+        let targetController = DialogViewController(dialogContent: content)
+        let sheetController = MDCBottomSheetController(contentViewController: targetController)
+        sheetController.makeNormalDialogSize()
+        delegate?.present(vc: sheetController)
     }
 
     @objc
     private func onClickCloseButton() {
         delegate?.onClickClose(shouldRefreshWhenDismiss: shouldRefreshWhenDismiss)
+    }
+}
+
+extension MDCBottomSheetController {
+    func makeNormalDialogSize() {
+        self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 230)
     }
 }

@@ -19,7 +19,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
                                    ImagesViewController(DeveloperImageRepo())]
 
     private var imageDetailView: ImageDetailView!
-
+        
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -112,6 +112,41 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
     
     func onRequestDownload(image: UnsplashImage) {
+        var reachability: Reachability!
+
+        do {
+            reachability = try Reachability()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+
+        if reachability.connection != .unavailable {
+            print("isReachable")
+        } else {
+            print("is NOT Reachable")
+            self.view.showToast("Network unavailable :(")
+            return
+        }
+
+        if reachability.connection != .wifi {
+            print("NOT using wifi")
+            if AppSettings.isMeterredEnabled() {
+                let alertController = MDCAlertController(title: "Alert", message: "You are using meterred network, continue to download?")
+                let ok = MDCAlertAction(title:"OK") { (action) in
+                    self.doDownload(image)
+                }
+                let cancel = MDCAlertAction(title: "CANCEL") { (action) in
+                    alertController.dismiss(animated: true, completion: nil)
+                }
+                alertController.addAction(ok)
+                alertController.addAction(cancel)
+
+                present(alertController, animated:true, completion:nil)
+                return
+            }
+        }
+        
         doDownload(image)
     }
     
