@@ -283,7 +283,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             }
 
             let visibleHeight = tableView.frame.height
-            initialMaxVisibleCellCount = Int(floor(Double(visibleHeight) / Double(calculatedCellHeight)))
+            initialMaxVisibleCellCount = Int(round(Double(visibleHeight) / Double(calculatedCellHeight)))
         }
         
         print("initialMaxVisibleCellCount is ", initialMaxVisibleCellCount)
