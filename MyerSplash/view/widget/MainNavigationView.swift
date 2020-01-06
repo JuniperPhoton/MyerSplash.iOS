@@ -8,8 +8,8 @@ protocol NavigationViewDelegate {
 }
 
 public class MainNavigationView: UIView {
-    private var titleView:      UILabel!
-    private var settingsView:   UIButton!
+    private var titleView: UILabel!
+    private var settingsView: UIButton!
     private var backgroundView: UIVisualEffectView!
 
     var title: String = "HIGHLIGHTS" { //todo: extract this string value

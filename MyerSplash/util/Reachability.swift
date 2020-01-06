@@ -5,6 +5,7 @@
 //  Created by JuniperPhoton on 2020/1/5.
 //  Copyright © 2020 juniper. All rights reserved.
 //
+
 import SystemConfiguration
 import Foundation
 
@@ -80,7 +81,7 @@ public class Reachability {
         if flags == nil {
             try? setReachabilityFlags()
         }
-        
+
         switch flags?.connection {
         case .unavailable?, nil: return .unavailable
         case .none?: return .unavailable
@@ -91,9 +92,9 @@ public class Reachability {
 
     fileprivate var isRunningOnDevice: Bool = {
         #if targetEnvironment(simulator)
-            return false
+        return false
         #else
-            return true
+        return true
         #endif
     }()
 
@@ -103,7 +104,9 @@ public class Reachability {
     fileprivate let notificationQueue: DispatchQueue?
     fileprivate(set) var flags: SCNetworkReachabilityFlags? {
         didSet {
-            guard flags != oldValue else { return }
+            guard flags != oldValue else {
+                return
+            }
             notifyReachabilityChanged()
         }
     }
@@ -151,10 +154,14 @@ public extension Reachability {
 
     // MARK: - *** Notifier methods ***
     func startNotifier() throws {
-        guard !notifierRunning else { return }
+        guard !notifierRunning else {
+            return
+        }
 
         let callback: SCNetworkReachabilityCallBack = { (reachability, flags, info) in
-            guard let info = info else { return }
+            guard let info = info else {
+                return
+            }
 
             // `weakifiedReachability` is guaranteed to exist by virtue of our
             // retain/release callbacks which we provided to the `SCNetworkReachabilityContext`.
@@ -169,23 +176,23 @@ public extension Reachability {
         let opaqueWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.passUnretained(weakifiedReachability).toOpaque()
 
         var context = SCNetworkReachabilityContext(
-            version: 0,
-            info: UnsafeMutableRawPointer(opaqueWeakifiedReachability),
-            retain: { (info: UnsafeRawPointer) -> UnsafeRawPointer in
-                let unmanagedWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.fromOpaque(info)
-                _ = unmanagedWeakifiedReachability.retain()
-                return UnsafeRawPointer(unmanagedWeakifiedReachability.toOpaque())
-            },
-            release: { (info: UnsafeRawPointer) -> Void in
-                let unmanagedWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.fromOpaque(info)
-                unmanagedWeakifiedReachability.release()
-            },
-            copyDescription: { (info: UnsafeRawPointer) -> Unmanaged<CFString> in
-                let unmanagedWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.fromOpaque(info)
-                let weakifiedReachability = unmanagedWeakifiedReachability.takeUnretainedValue()
-                let description = weakifiedReachability.reachability?.description ?? "nil"
-                return Unmanaged.passRetained(description as CFString)
-            }
+                version: 0,
+                info: UnsafeMutableRawPointer(opaqueWeakifiedReachability),
+                retain: { (info: UnsafeRawPointer) -> UnsafeRawPointer in
+                    let unmanagedWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.fromOpaque(info)
+                    _ = unmanagedWeakifiedReachability.retain()
+                    return UnsafeRawPointer(unmanagedWeakifiedReachability.toOpaque())
+                },
+                release: { (info: UnsafeRawPointer) -> Void in
+                    let unmanagedWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.fromOpaque(info)
+                    unmanagedWeakifiedReachability.release()
+                },
+                copyDescription: { (info: UnsafeRawPointer) -> Unmanaged<CFString> in
+                    let unmanagedWeakifiedReachability = Unmanaged<ReachabilityWeakifier>.fromOpaque(info)
+                    let weakifiedReachability = unmanagedWeakifiedReachability.takeUnretainedValue()
+                    let description = weakifiedReachability.reachability?.description ?? "nil"
+                    return Unmanaged.passRetained(description as CFString)
+                }
         )
 
         if !SCNetworkReachabilitySetCallback(reachabilityRef, callback, &context) {
@@ -205,7 +212,9 @@ public extension Reachability {
     }
 
     func stopNotifier() {
-        defer { notifierRunning = false }
+        defer {
+            notifierRunning = false
+        }
 
         SCNetworkReachabilitySetCallback(reachabilityRef, nil, nil)
         SCNetworkReachabilitySetDispatchQueue(reachabilityRef, nil)
@@ -223,7 +232,7 @@ public extension Reachability {
         return connection == .cellular
     }
 
-   @available(*, deprecated, message: "Please use `connection == .wifi`")
+    @available(*, deprecated, message: "Please use `connection == .wifi`")
     var isReachableViaWiFi: Bool {
         return connection == .wifi
     }
@@ -242,15 +251,17 @@ fileprivate extension Reachability {
                 self.stopNotifier()
                 throw ReachabilityError.unableToGetFlags(SCError())
             }
-            
+
             self.flags = flags
         }
     }
-    
+
 
     func notifyReachabilityChanged() {
         let notify = { [weak self] in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             self.connection != .unavailable ? self.whenReachable?(self) : self.whenUnreachable?(self)
             self.notificationCenter.post(name: .reachabilityChanged, object: self)
         }
@@ -265,7 +276,9 @@ extension SCNetworkReachabilityFlags {
     typealias Connection = Reachability.Connection
 
     var connection: Connection {
-        guard isReachableFlagSet else { return .unavailable }
+        guard isReachableFlagSet else {
+            return .unavailable
+        }
 
         // If we're reachable, but not on an iOS device (i.e. simulator), we must be on WiFi
         #if targetEnvironment(simulator)
@@ -380,6 +393,7 @@ extension SCNetworkReachabilityFlags {
  */
 private class ReachabilityWeakifier {
     weak var reachability: Reachability?
+
     init(reachability: Reachability) {
         self.reachability = reachability
     }

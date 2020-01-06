@@ -11,7 +11,7 @@ class UnsplashImage {
     private (set) var urls: ImageUrl?
     private (set) var user: UnsplashUser?
     private (set) var isUnsplash = true
-    
+
     var aspectRatioF: CGFloat {
         get {
             let r = aspectRatio
@@ -21,7 +21,7 @@ class UnsplashImage {
             return CGFloat(Double(first) ?? 3) / CGFloat(Double(second) ?? 2)
         }
     }
-    
+
     var aspectRatio: String {
         get {
             let rawRatio: CGFloat
@@ -30,7 +30,7 @@ class UnsplashImage {
             } else {
                 rawRatio = CGFloat(width) / CGFloat(height)
             }
-            
+
             let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
 
             let fixedMargin = CGFloat(100)
@@ -192,7 +192,7 @@ class UnsplashImage {
         image.user = user
         image.isUnsplash = false
 
-        createdImageCount+=1
+        createdImageCount += 1
 
         return image
     }

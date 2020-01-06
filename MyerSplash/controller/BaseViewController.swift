@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    var appStatusBarStyle : UIStatusBarStyle {
+    var appStatusBarStyle: UIStatusBarStyle {
         get {
             if #available(iOS 13.0, *) {
                 if UITraitCollection.current.userInterfaceStyle == .dark {
@@ -20,7 +20,7 @@ extension UIViewController {
 open class BaseViewController: UIViewController {
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         get {
-            return appStatusBarStyle
+            appStatusBarStyle
         }
     }
 
@@ -32,7 +32,7 @@ open class BaseViewController: UIViewController {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if #available(iOS 13.0, *) {

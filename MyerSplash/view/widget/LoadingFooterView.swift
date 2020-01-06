@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 class LoadingFooterView: UIView {
-    private var ac:    UIActivityIndicatorView!
+    private var ac: UIActivityIndicatorView!
     private var label: UILabel!
     private var stack: UIStackView!
 

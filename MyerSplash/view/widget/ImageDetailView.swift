@@ -10,26 +10,26 @@ protocol ImageDetailViewDelegate {
 }
 
 class ImageDetailView: UIView {
-    private var mainImageView:        UIImageView!
-    private var backgroundView:       UIView!
+    private var mainImageView: UIImageView!
+    private var backgroundView: UIView!
     private var extraInformationView: UIView!
-    private var photoByLabel:         UILabel!
-    private var authorButton:         UIButton!
-    private var authorStack:          UIStackView!
-    private var downloadButton:       UIButton!
+    private var photoByLabel: UILabel!
+    private var authorButton: UIButton!
+    private var authorStack: UIStackView!
+    private var downloadButton: UIButton!
 
-    private var initFrame: CGRect?        = nil
+    private var initFrame: CGRect? = nil
     private var bindImage: UnsplashImage? = nil
 
     var delegate: ImageDetailViewDelegate? = nil
 
     private var finalFrame: CGRect {
         get {
-            let width      = self.frame.width
-            
+            let width = self.frame.width
+
             let ratio = bindImage!.aspectRatioF
             let height = width / ratio
-            
+
             let x: CGFloat = 0.0
             let y: CGFloat = (self.frame.height - height - Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT) / 2.0
             return CGRect(x: x, y: y, width: width, height: height)
@@ -57,14 +57,14 @@ class ImageDetailView: UIView {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
         backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                                   action: #selector(onClickBackground)))
-        
+                action: #selector(onClickBackground)))
+
         mainImageView = UIImageView(frame: CGRect.zero)
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true
         mainImageView.addGestureRecognizer(UIPanGestureRecognizer(target: self,
-                                                                  action: #selector(onMotionEvent)))
+                action: #selector(onMotionEvent)))
 
         extraInformationView = UIView()
         extraInformationView.isHidden = true
@@ -85,7 +85,7 @@ class ImageDetailView: UIView {
         downloadButton.setTitle("DOWNLOAD", for: .normal)
         downloadButton.layer.cornerRadius = Dimensions.RECT_CORNER_RADIUS_NORMAL
         downloadButton.titleLabel!.font = downloadButton.titleLabel!.font.with(traits: .traitBold,
-                                                                               fontSize: FontSizes.NORMAL)
+                fontSize: FontSizes.NORMAL)
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
 
         let inset = UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8);
@@ -132,17 +132,17 @@ class ImageDetailView: UIView {
         let translation = gesture.translation(in: self)
 
         switch gesture.state {
-            case UIGestureRecognizerState.began:
-                startX = mainImageView.center.x
-                startY = mainImageView.center.y
-                resetExtraInformationConstraint()
-            case UIGestureRecognizerState.changed:
-                mainImageView.center.x = startX + translation.x
-                mainImageView.center.y = startY + translation.y
-            case UIGestureRecognizerState.ended:
-                hideInternal()
-            default:
-                return
+        case UIGestureRecognizerState.began:
+            startX = mainImageView.center.x
+            startY = mainImageView.center.y
+            resetExtraInformationConstraint()
+        case UIGestureRecognizerState.changed:
+            mainImageView.center.x = startX + translation.x
+            mainImageView.center.y = startY + translation.y
+        case UIGestureRecognizerState.ended:
+            hideInternal()
+        default:
+            return
         }
     }
 
@@ -172,17 +172,17 @@ class ImageDetailView: UIView {
             return
         }
         mainImageView.frame = initFrame
-        
+
         Nuke.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
 
-        let themeColor   = image.themeColor
+        let themeColor = image.themeColor
         let isThemeLight = themeColor.isLightColor()
 
         extraInformationView.backgroundColor = themeColor
 
         photoByLabel.text = image.isUnsplash ? "photo by" : "recommended by"
 
-        let textColor       = isThemeLight ? UIColor.black : UIColor.white
+        let textColor = isThemeLight ? UIColor.black : UIColor.white
         let revertTextColor = isThemeLight ? UIColor.white : UIColor.black
 
         photoByLabel.textColor = textColor
@@ -211,15 +211,15 @@ class ImageDetailView: UIView {
         isHidden = false
 
         UIView.animate(withDuration: 0.3,
-                       delay: 0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                           self.backgroundView.alpha = 1.0
-                           self.mainImageView.frame = self.finalFrame
-                       },
-                       completion: { b in
-                           self.showExtraInformation()
-                       })
+                delay: 0,
+                options: UIView.AnimationOptions.curveEaseInOut,
+                animations: {
+                    self.backgroundView.alpha = 1.0
+                    self.mainImageView.frame = self.finalFrame
+                },
+                completion: { b in
+                    self.showExtraInformation()
+                })
     }
 
     private func showExtraInformation() {
@@ -232,12 +232,12 @@ class ImageDetailView: UIView {
         }
 
         UIView.animate(withDuration: 0.4,
-                       delay: 0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                           self.layoutIfNeeded()
-                       },
-                       completion: nil)
+                delay: 0,
+                options: UIView.AnimationOptions.curveEaseInOut,
+                animations: {
+                    self.layoutIfNeeded()
+                },
+                completion: nil)
     }
 
     private func hideInternal() {
@@ -258,29 +258,29 @@ class ImageDetailView: UIView {
         }
 
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
-                       delay: 0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                           self.layoutIfNeeded()
-                       },
-                       completion: { b in
-                           self.extraInformationView.isHidden = true
-                           completion?()
-                       })
+                delay: 0,
+                options: UIView.AnimationOptions.curveEaseInOut,
+                animations: {
+                    self.layoutIfNeeded()
+                },
+                completion: { b in
+                    self.extraInformationView.isHidden = true
+                    completion?()
+                })
     }
 
     private func hideImage() {
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
-                       delay: 0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                           self.backgroundView.alpha = 0.0
-                           self.mainImageView.frame = self.initFrame!
-                       },
-                       completion: { b in
-                           self.isHidden = true
-                           self.extraInformationView.isHidden = true
-                           self.delegate?.onHidden()
-                       })
+                delay: 0,
+                options: UIView.AnimationOptions.curveEaseInOut,
+                animations: {
+                    self.backgroundView.alpha = 0.0
+                    self.mainImageView.frame = self.initFrame!
+                },
+                completion: { b in
+                    self.isHidden = true
+                    self.extraInformationView.isHidden = true
+                    self.delegate?.onHidden()
+                })
     }
 }

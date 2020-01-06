@@ -13,10 +13,10 @@ protocol SettingsViewDelegate {
 }
 
 class SettingsView: UIView {
-    private var titleView:          UILabel!
-    private var closeView:          UIButton!
+    private var titleView: UILabel!
+    private var closeView: UIButton!
     private var loadingQualityItem: SettingsItem!
-    private var savingQualityItem:  SettingsItem!
+    private var savingQualityItem: SettingsItem!
 
     private var scrollView: UIScrollView!
 
@@ -39,7 +39,7 @@ class SettingsView: UIView {
 
         titleView = UILabel()
         titleView.setDefaultLabelColor()
-        
+
         titleView.text = "SETTINGS"
         titleView.font = titleView.font.with(traits: .traitBold, fontSize: FontSizes.TITLE_FONT_SIZE)
 
@@ -54,7 +54,7 @@ class SettingsView: UIView {
         let personalizationGroup = SettingsGroup()
         personalizationGroup.label = "PERSONALIZATION"
 
-        let quickDownload = SettingsSwitchItem(Keys.METERRED)
+        let quickDownload = SettingsSwitchItem(Keys.METERED)
         quickDownload.title = "Metered network warning"
         quickDownload.content = "Notice you before downloading"
 
@@ -76,7 +76,7 @@ class SettingsView: UIView {
         savingQualityItem.onClicked = {
             self.popupSavingQualityChosenDialog()
         }
-        
+
         let clearItem = SettingsItem(frame: CGRect.zero)
         clearItem.title = "Clear cache"
         clearItem.content = "Remove all cached images"
@@ -87,17 +87,17 @@ class SettingsView: UIView {
         qualityGroup.addArrangedSubview(loadingQualityItem)
         qualityGroup.addArrangedSubview(savingQualityItem)
         qualityGroup.addArrangedSubview(clearItem)
-        
+
         let aboutGroup = SettingsGroup()
         aboutGroup.label = "ABOUT"
-        
+
         let feedbackView = SettingsItem(frame: CGRect.zero)
         feedbackView.title = "Feedback"
         feedbackView.content = "Tell me your thoughts :)"
         feedbackView.onClicked = {
             self.delegate?.onClickFeedback()
         }
-        
+
         let versionView = SettingsItem(frame: CGRect.zero)
         versionView.title = "Versions"
         versionView.content = UIApplication.shared.versionBuild()
@@ -140,7 +140,7 @@ class SettingsView: UIView {
             maker.top.equalTo(titleView.snp.bottom).offset(0)
         }
     }
-    
+
     private func clearCache() {
         Nuke.ImageCache.shared.removeAll()
         self.showToast("Cleared")
@@ -156,7 +156,7 @@ class SettingsView: UIView {
 
     private func popupListQualityChosenDialog() {
         let selected = UserDefaults.standard.integer(key: Keys.LOADING_QUALITY, defaultValue: 0)
-        let content  = SingleChoiceDialog(
+        let content = SingleChoiceDialog(
                 title: loadingQualityItem.title,
                 options: AppSettings.LOADING_OPTIONS,
                 selected: selected)
@@ -165,13 +165,13 @@ class SettingsView: UIView {
 
     private func popupSavingQualityChosenDialog() {
         let selected = UserDefaults.standard.integer(key: Keys.SAVING_QUALITY, defaultValue: 1)
-        let content  = SingleChoiceDialog(
+        let content = SingleChoiceDialog(
                 title: savingQualityItem.title,
                 options: AppSettings.SAVING_OPTIONS,
                 selected: selected)
         presentBottomSheet(content)
     }
-    
+
     private func presentBottomSheet(_ content: SingleChoiceDialog) {
         let targetController = DialogViewController(dialogContent: content)
         let sheetController = MDCBottomSheetController(contentViewController: targetController)

@@ -13,7 +13,7 @@ class UIs {
     static func setLabelColor(_ uiView: UILabel) {
         uiView.textColor = UIColor.getDefaultLabelUIColor()
     }
-    
+
     static func setBackgroundColor(_ uiView: UIView) {
         if #available(iOS 13.0, *) {
             uiView.backgroundColor = UIColor.systemBackground
@@ -36,17 +36,17 @@ extension UILabel {
 extension UIColor {
     static func getDefaultLabelUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
-           return UIColor.label
+            return UIColor.label
         } else {
-           return UIColor.white
+            return UIColor.white
         }
     }
-    
+
     static func getDefaultBackgroundUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
-           return UIColor.systemBackground
+            return UIColor.systemBackground
         } else {
-           return UIColor.black
+            return UIColor.black
         }
     }
 }
@@ -55,19 +55,19 @@ extension UIView {
     static var hasTopNotch: Bool {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
     }
-    
+
     static var topInset: CGFloat {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
-    
+
     static func getDefaultLabelUIColor() -> UIColor {
         return UIColor.getDefaultLabelUIColor()
     }
-    
+
     static func getDefaultBackgroundUIColor() -> UIColor {
         return UIColor.getDefaultBackgroundUIColor()
     }
-    
+
     static func getDefaultDialogBackgroundUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (trainCollection) -> UIColor in
@@ -81,7 +81,7 @@ extension UIView {
             return "1e1e1e".asUIColor()
         }
     }
-    
+
     func setDefaultBackgroundColor() {
         self.backgroundColor = UIView.getDefaultBackgroundUIColor()
     }
