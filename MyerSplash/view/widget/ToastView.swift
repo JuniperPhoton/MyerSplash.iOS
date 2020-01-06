@@ -105,7 +105,7 @@ class ToastView: UILabel {
     }
 
     private func initUi() {
-        self.layer.cornerRadius = Dimensions.RECT_CORNER_RADIUS_NORMAL
+        self.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
         self.layer.backgroundColor = UIColor.white.cgColor
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowRadius = 8

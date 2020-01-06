@@ -19,6 +19,8 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
                                    ImagesViewController(DeveloperImageRepo())]
 
     private var imageDetailView: ImageDetailView!
+    
+    private var moreRippleController: MDCRippleTouchController!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -40,43 +42,34 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
             controller.delegate = self
         }
 
-        // Create bar
-        let bar = TMBar.ButtonBar()
-        bar.layout.transitionStyle = .snap
-        bar.layout.alignment = .leading
-        bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 12.0, right: 50)
-        bar.backgroundView.style = .flat(color: UIColor.getDefaultBackgroundUIColor())
-        bar.layout.interButtonSpacing = 12
-        bar.buttons.customize { (button) in
-            button.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
-            button.selectedTintColor = UIColor.getDefaultLabelUIColor()
-            button.font = UIFont.preferredFont(forTextStyle: .largeTitle).with(traits: .traitBold).withSize(13)
-        }
-        bar.indicator.tintColor = UIColor.getDefaultLabelUIColor()
-        bar.indicator.weight = .custom(value: 4)
-
-        // Add to view
+        let bar = createTopTabBar()
         addBar(bar, dataSource: self, at: .top)
 
+        // MARK: statusBarPlaceholder
         let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
         statusBarPlaceholder.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         self.view.addSubview(statusBarPlaceholder)
 
+        // MARK: MORE
         let moreButton = UIButton()
         let moreImage = UIImage.init(named: "ic_more_horiz_white")!.withRenderingMode(.alwaysTemplate)
         moreButton.setImage(moreImage, for: .normal)
-        moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
+        moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         moreButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         moreButton.addTarget(self, action: #selector(onClickSettings), for: .touchUpInside)
         self.view.addSubview(moreButton)
 
+        moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
+                withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
+
         moreButton.snp.makeConstraints { (maker) in
             maker.top.equalTo(statusBarPlaceholder.snp.bottom)
-            maker.right.equalTo(self.view.snp.right)
+            maker.right.equalTo(self.view.snp.right).offset(-10)
             maker.bottom.equalTo(bar.snp.bottom).offset(-15)
             maker.width.equalTo(50)
         }
 
+        // MARK: FAB
         let fab = MDCFloatingButton()
         let searchImage = UIImage.init(named: "round_search")?.withRenderingMode(.alwaysTemplate)
         fab.setImage(searchImage, for: .normal)
@@ -92,6 +85,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
             maker.height.equalTo(50)
         }
 
+        // MARK: ImageDetailView
         imageDetailView = ImageDetailView(frame: CGRect(x: 0,
                 y: 0,
                 width: UIScreen.main.bounds.width,
@@ -167,7 +161,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
     @objc
     private func onClickSettings() {
-        let controller = SettingsViewController()
+        let controller = MoreViewController()
         self.present(controller, animated: true, completion: nil)
     }
 
@@ -243,6 +237,6 @@ extension MainViewController: PageboyViewControllerDataSource, TMBarDataSource {
     }
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        nil
+        .first
     }
 }

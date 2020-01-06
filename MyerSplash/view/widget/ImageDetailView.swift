@@ -83,7 +83,7 @@ class ImageDetailView: UIView {
 
         downloadButton = UIButton()
         downloadButton.setTitle("DOWNLOAD", for: .normal)
-        downloadButton.layer.cornerRadius = Dimensions.RECT_CORNER_RADIUS_NORMAL
+        downloadButton.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
         downloadButton.titleLabel!.font = downloadButton.titleLabel!.font.with(traits: .traitBold,
                 fontSize: FontSizes.NORMAL)
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
@@ -173,7 +173,9 @@ class ImageDetailView: UIView {
         }
         mainImageView.frame = initFrame
 
-        Nuke.loadImage(with: URL(string: image.listUrl!)!, into: mainImageView)
+        if let listUrl = image.listUrl {
+            ImageIO.loadImage(url: listUrl, intoView: mainImageView)
+        }
 
         let themeColor = image.themeColor
         let isThemeLight = themeColor.isLightColor()

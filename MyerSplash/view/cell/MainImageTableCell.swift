@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Nuke
+import MaterialComponents.MaterialRipple
 
 public class MainImageTableCell: UITableViewCell {
     static let ID = "MainImageTableCell"
@@ -10,6 +11,8 @@ public class MainImageTableCell: UITableViewCell {
     private var todayTag: UIView!
     private var todayTextTag: UILabel!
     private var bindImage: UnsplashImage?
+
+    private var downloadRippleController: MDCRippleTouchController!
 
     var mainImageView: UIImageView!
 
@@ -27,9 +30,14 @@ public class MainImageTableCell: UITableViewCell {
                 action: #selector(self.onClickImage)))
 
         downloadView = UIButton()
-        downloadView.setImage(UIImage(named: "ic_file_download_white")?
-                .resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)), for: .normal)
+        downloadView.setImage(UIImage(
+                named: "ic_file_download_white")?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)),
+                              for: .normal)
+        downloadView.adjustsImageWhenHighlighted = false
         downloadView.addTarget(self, action: #selector(clickDownloadButton), for: .touchUpInside)
+
+        downloadRippleController = MDCRippleTouchController.load(
+                intoView: downloadView, withColor: UIColor.white.withAlphaComponent(0.3), maxRadius: 30)
 
         todayTag = UIImageView(image: UIImage(named: "ic_star"))
         todayTag.isHidden = true
@@ -52,9 +60,9 @@ public class MainImageTableCell: UITableViewCell {
         }
 
         downloadView.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(40)
-            maker.right.equalTo(contentView.snp.right).offset(-8)
-            maker.bottom.equalTo(contentView.snp.bottom).offset(-8)
+            maker.width.height.equalTo(56)
+            maker.right.equalTo(contentView.snp.right)
+            maker.bottom.equalTo(contentView.snp.bottom)
         }
 
         todayTag.snp.makeConstraints { (maker) in
@@ -79,17 +87,12 @@ public class MainImageTableCell: UITableViewCell {
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         mainImageView.image = nil
 
-        downloadView.isHidden = !AppSettings.isQuickDownloadEnabled()
         todayTag.isHidden = !UnsplashImage.isToday(image)
         todayTextTag.isHidden = !UnsplashImage.isToday(image)
 
-        guard let url = image.listUrl else {
-            return
+        if let url = image.listUrl {
+            ImageIO.loadImage(url: url, intoView: mainImageView)
         }
-
-        Nuke.loadImage(with: URL(string: url)!,
-                options: ImageLoadingOptions(placeholder: nil, transition: .fadeIn(duration: 0.3), failureImage: nil, failureImageTransition: nil, contentModes: .init(success: .scaleAspectFill, failure: .center, placeholder: .center)),
-                into: mainImageView)
     }
 
     private func isImageCached() -> Bool {
@@ -118,7 +121,6 @@ public class MainImageTableCell: UITableViewCell {
     @objc
     private func clickDownloadButton() {
         if let image = bindImage {
-            animateDownloadButton()
             onClickDownload?(image)
         }
     }

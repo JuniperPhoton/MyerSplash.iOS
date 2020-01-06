@@ -53,7 +53,7 @@ class SettingsItem: UIView {
             maker.left.equalTo(self).offset(Dimensions.TITLE_MARGIN)
         }
 
-        snp.makeConstraints { maker in
+        self.snp.makeConstraints { maker in
             maker.height.equalTo(Dimensions.SETTING_ITEM_HEIGHT)
         }
 

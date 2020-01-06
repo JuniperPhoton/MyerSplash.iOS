@@ -10,6 +10,8 @@ class Dimensions {
     static let NAVIGATION_ICON_SIZE: CGFloat = 50
     static let IMAGE_DETAIL_EXTRA_HEIGHT: CGFloat = 80
     static let DUMMY_HEADER_HEIGHT: CGFloat = 80
+    
+    static let SMALL_ROUND_CORNOR = 4
 
     static let TOP_NAVIGATION_BAR_HEIGHT: CGFloat = 50
 
@@ -17,7 +19,12 @@ class Dimensions {
 
     static let TOAST_MARGIN_BOTTOM = 30
 
-    static let RECT_CORNER_RADIUS_NORMAL: CGFloat = 4
     static let FAB_RADIUS = 50
     static let FAB_ICON_SIZE = 20
+}
+
+extension Int {
+    func toCGFloat() -> CGFloat {
+        return CGFloat(self)
+    }
 }

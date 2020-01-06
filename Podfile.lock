@@ -96,6 +96,7 @@ DEPENDENCIES:
   - MaterialComponents/BottomSheet
   - MaterialComponents/Buttons
   - MaterialComponents/Dialogs
+  - MaterialComponents/Ripple
   - Nuke (~> 8.3.1)
   - Pageboy
   - RxAlamofire
@@ -136,6 +137,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: d1410767ca481338b8ab1092fff5fe20f4ad226a
 
-PODFILE CHECKSUM: f5ec34c4accd7219c3647b0f966f84deda1ab135
+PODFILE CHECKSUM: edb549a199a46c756f4b9a5b182e8947727a6daa
 
 COCOAPODS: 1.8.4

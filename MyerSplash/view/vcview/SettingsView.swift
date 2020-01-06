@@ -7,13 +7,11 @@ import MaterialComponents.MaterialDialogs
 
 protocol SettingsViewDelegate {
     func showDialog(content: DialogContent, key: String)
-    func onClickFeedback()
     func onClickClose(shouldRefreshWhenDismiss: Bool)
     func present(vc: UIViewController)
 }
 
 class SettingsView: UIView {
-    private var titleView: UILabel!
     private var closeView: UIButton!
     private var loadingQualityItem: SettingsItem!
     private var savingQualityItem: SettingsItem!
@@ -34,14 +32,7 @@ class SettingsView: UIView {
     }
 
     private func initUi() {
-
         self.setDefaultBackgroundColor()
-
-        titleView = UILabel()
-        titleView.setDefaultLabelColor()
-
-        titleView.text = "SETTINGS"
-        titleView.font = titleView.font.with(traits: .traitBold, fontSize: FontSizes.TITLE_FONT_SIZE)
 
         closeView = UIButton(type: .system)
         closeView.setImage(UIImage(named: "ic_clear_white"), for: .normal)
@@ -88,40 +79,16 @@ class SettingsView: UIView {
         qualityGroup.addArrangedSubview(savingQualityItem)
         qualityGroup.addArrangedSubview(clearItem)
 
-        let aboutGroup = SettingsGroup()
-        aboutGroup.label = "ABOUT"
-
-        let feedbackView = SettingsItem(frame: CGRect.zero)
-        feedbackView.title = "Feedback"
-        feedbackView.content = "Tell me your thoughts :)"
-        feedbackView.onClicked = {
-            self.delegate?.onClickFeedback()
-        }
-
-        let versionView = SettingsItem(frame: CGRect.zero)
-        versionView.title = "Versions"
-        versionView.content = UIApplication.shared.versionBuild()
-
-        aboutGroup.addArrangedSubview(feedbackView)
-        aboutGroup.addArrangedSubview(versionView)
-
         scrollView.addSubview(personalizationGroup)
         scrollView.addSubview(qualityGroup)
-        scrollView.addSubview(aboutGroup)
 
-        addSubview(titleView)
         addSubview(closeView)
         addSubview(scrollView)
 
-        titleView.snp.makeConstraints { maker in
-            maker.left.equalTo(self.snp.left).offset(Dimensions.TITLE_MARGIN)
-            maker.top.equalTo(self.snp.top).offset(40)
-        }
         closeView.snp.makeConstraints { maker in
             maker.width.height.equalTo(Dimensions.NAVIGATION_ICON_SIZE)
             maker.right.equalTo(self.snp.right).offset(-12)
-            maker.top.equalTo(titleView.snp.top)
-            maker.bottom.equalTo(titleView.snp.bottom)
+            maker.top.equalToSuperview()
         }
         personalizationGroup.snp.makeConstraints { (maker) in
             maker.left.right.equalTo(self)
@@ -131,13 +98,9 @@ class SettingsView: UIView {
             maker.left.right.equalTo(self)
             maker.top.equalTo(personalizationGroup.snp.bottom).offset(Dimensions.TITLE_MARGIN)
         }
-        aboutGroup.snp.makeConstraints { (maker) in
-            maker.left.right.equalTo(self)
-            maker.top.equalTo(qualityGroup.snp.bottom).offset(Dimensions.TITLE_MARGIN)
-        }
         scrollView.snp.makeConstraints { (maker) in
             maker.left.right.bottom.equalTo(self)
-            maker.top.equalTo(titleView.snp.bottom).offset(0)
+            maker.top.equalToSuperview()
         }
     }
 

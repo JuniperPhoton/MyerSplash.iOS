@@ -1,19 +1,13 @@
 import Foundation
 import UIKit
-import MessageUI
 
 protocol SettingsDelegate {
     func refresh()
 }
 
 class SettingsViewController: BaseViewController, UIViewControllerTransitioningDelegate,
-        SettingsViewDelegate, SingleChoiceDelegate, MFMailComposeViewControllerDelegate {
-    func present(vc: UIViewController) {
-        self.present(vc, animated: true, completion: nil)
-    }
-
+        SettingsViewDelegate, SingleChoiceDelegate {
     private var settingsView: SettingsView!
-
     private var singleChoiceKey: String? = nil
 
     var delegate: SettingsDelegate?
@@ -58,21 +52,6 @@ class SettingsViewController: BaseViewController, UIViewControllerTransitioningD
         return FadeOutTransitioning()
     }
 
-    func onClickFeedback() {
-        if !MFMailComposeViewController.canSendMail() {
-            print("Mail services are not available")
-            return
-        }
-
-        let composeVC = MFMailComposeViewController()
-        composeVC.mailComposeDelegate = self
-        composeVC.setToRecipients(["dengweichao@hotmail.com"])
-        composeVC.setSubject("MyerSplash iOS feedback")
-        composeVC.setMessageBody("Hello from developer. Please write you suggestions below. Thanks!", isHTML: false)
-
-        self.present(composeVC, animated: true, completion: nil)
-    }
-
     func onClickClose(shouldRefreshWhenDismiss: Bool) {
         print("onclick close")
         self.dismiss(animated: true)
@@ -80,9 +59,8 @@ class SettingsViewController: BaseViewController, UIViewControllerTransitioningD
             self.delegate?.refresh()
         }
     }
-
-    func mailComposeController(_ controller: MFMailComposeViewController,
-                               didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
+    
+    func present(vc: UIViewController) {
+        self.present(vc, animated: true, completion: nil)
     }
 }
