@@ -91,11 +91,11 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         
         let feedbackLabel = createTitleLabel("FEEDBACK")
         
-        let feedBackButton = UIButton(type: .system)
+        let feedBackButton = MDCFlatButton()
         feedBackButton.setTitle("Email me", for: .normal)
         feedBackButton.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
         feedBackButton.addTarget(self, action: #selector(sendFeedback), for: .touchUpInside)
-        feedBackButton.contentEdgeInsets = UIEdgeInsets.make(unifiedSize: 12)
+        feedBackButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
         feedBackButton.showsTouchWhenHighlighted = false
         
         rootStack.addArrangedSubview(appNameStack)

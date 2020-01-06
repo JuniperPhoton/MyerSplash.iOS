@@ -24,7 +24,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     static let HIGHLIGHTS_DELAY_SEC = 0.2
 
-    private var loadingFooterView: LoadingFooterView!
+    private var loadingFooterView: MDCActivityIndicator!
 
     private var paging = 1
     private var loading = false
@@ -39,6 +39,8 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     private var tableView: UITableView!
     private var refreshControl: UIRefreshControl!
+    
+    private var errorHintView: ErrorHintView!
 
     private var imageRepo: ImageRepo? = nil
 
@@ -66,17 +68,23 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
         view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
 
-        imageRepo?.onLoadFinished = { (_ success: Bool, _ page: Int) in
-            self.indicator.stopAnimating()
-            self.loading = false
-            self.canLoadMore = !self.imageRepo!.images.isEmpty
-            self.stopRefresh()
+        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int) in
+            if let self = self {
+                self.indicator.stopAnimating()
+                self.loading = false
+                self.canLoadMore = !self.imageRepo!.images.isEmpty
+                self.stopRefresh()
 
-            if page == 1 {
-                self.calculateInitialMaxVisibleCellCount()
+                if page == 1 {
+                    self.calculateInitialMaxVisibleCellCount()
+                }
+
+                self.tableView.reloadData()
+                
+                if !success && self.imageRepo!.images.isEmpty {
+                    self.errorHintView.isHidden = false
+                }
             }
-
-            self.tableView.reloadData()
         }
 
         refreshControl = UIRefreshControl(frame: CGRect.zero)
@@ -105,6 +113,14 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             maker.width.equalTo(view)
             maker.top.equalTo(view)
         }
+        
+        loadingFooterView = MDCActivityIndicator(frame: CGRect(x: 0,
+                y: 0,
+                width: UIScreen.main.bounds.width,
+                height: 100))
+        loadingFooterView.cycleColors = [.getDefaultLabelUIColor()]
+        
+        tableView.tableFooterView = loadingFooterView
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -115,6 +131,18 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         indicator.sizeToFit()
         indicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
         view.addSubview(indicator)
+        
+        errorHintView = ErrorHintView()
+        errorHintView.onClickRetry = { [weak self] in
+            self?.refreshData()
+        }
+        errorHintView.isHidden = true
+
+        view.addSubview(errorHintView)
+        
+        errorHintView.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
 
         indicator.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
@@ -127,7 +155,12 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         tappedCell?.isHidden = false
     }
 
+    @objc
     private func refreshData() {
+        print("refresh data")
+        
+        errorHintView.isHidden = true
+        
         paging = 1
         loadData(true)
     }
@@ -152,6 +185,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         if (!canLoadMore) {
             return
         }
+        loadingFooterView.startAnimating()
         paging = paging + 1
         loadData(false)
     }
@@ -162,6 +196,8 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     @objc
     private func onRefreshData() {
+        print("onRefreshData")
+        
         self.refreshData()
 
         if (refreshControl.isRefreshing) {
