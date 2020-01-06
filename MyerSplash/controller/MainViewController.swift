@@ -44,7 +44,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
         let bar = createTopTabBar()
         addBar(bar, dataSource: self, at: .top)
-
+        
         // MARK: statusBarPlaceholder
         let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
         statusBarPlaceholder.backgroundColor = UIColor.getDefaultBackgroundUIColor()

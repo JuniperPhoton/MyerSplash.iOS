@@ -33,8 +33,6 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     private var calculatedCellHeight: CGFloat = -1.0
     private var initialMaxVisibleCellCount = -1
 
-    private var cellDisplayAnimatedCount = 0
-
     private var tappedCell: UITableViewCell? = nil
 
     private var startY: CGFloat = -1
@@ -45,7 +43,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     private var imageRepo: ImageRepo? = nil
 
     private var indicator: MDCActivityIndicator!
-
+    
     var delegate: ImagesViewControllerDelegate? = nil
 
     var repoTitle: String? {
@@ -83,11 +81,22 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
         refreshControl = UIRefreshControl(frame: CGRect.zero)
         refreshControl.addTarget(self, action: #selector(onRefreshData), for: .valueChanged)
+        refreshControl.tintColor = .clear
 
         tableView = UITableView(frame: CGRect.zero)
 
         tableView.setDefaultBackgroundColor()
         tableView.refreshControl = refreshControl
+
+        let refreshIndicator = MDCActivityIndicator()
+        refreshIndicator.startAnimating()
+        refreshIndicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
+        
+        refreshControl.addSubview(refreshIndicator)
+        
+        refreshIndicator.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
 
         view.addSubview(tableView)
 
@@ -101,7 +110,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
         tableView.separatorStyle = .none
-
+                
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
         indicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
@@ -202,8 +211,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             return
         }
 
-        // todo
-        if (cellDisplayAnimatedCount >= count) {
+        if (indexPath.row >= count) {
             return
         }
 
@@ -226,8 +234,6 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
                     cell.center.x = startX
                 },
                 completion: nil)
-
-        cellDisplayAnimatedCount += 1
     }
 
     private func calculateInitialMaxVisibleCellCount() {
