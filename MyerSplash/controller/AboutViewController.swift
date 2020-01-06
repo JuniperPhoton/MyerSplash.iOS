@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 import MessageUI
+import MaterialComponents.MDCRippleTouchController
 
-class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate {
+class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate {    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,17 +31,17 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         let myerLabel = UILabel()
         myerLabel.text = "Myer"
         myerLabel.textColor = UIColor.getDefaultLabelUIColor()
-        myerLabel.font = myerLabel.font.withSize(26)
+        myerLabel.font = myerLabel.font.withSize(32)
         myerLabel.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         
         let splashLabel = UILabel()
         splashLabel.text = "Splash"
         splashLabel.textColor = UIColor.getDefaultLabelUIColor()
-        splashLabel.font = splashLabel.font.with(traits: .traitBold).withSize(26)
+        splashLabel.font = splashLabel.font.with(traits: .traitBold).withSize(32)
         splashLabel.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         
         let logo = UIImageView()
-        logo.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        logo.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         logo.image = UIImage.init(named: "Image")
         logo.contentMode = .scaleAspectFit
         logo.clipsToBounds = true
@@ -94,6 +95,8 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         feedBackButton.setTitle("Email me", for: .normal)
         feedBackButton.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
         feedBackButton.addTarget(self, action: #selector(sendFeedback), for: .touchUpInside)
+        feedBackButton.contentEdgeInsets = UIEdgeInsets.make(unifiedSize: 12)
+        feedBackButton.showsTouchWhenHighlighted = false
         
         rootStack.addArrangedSubview(appNameStack)
         rootStack.addArrangedSubview(platformsLabel)
