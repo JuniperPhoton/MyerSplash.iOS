@@ -8,7 +8,7 @@ class CloudService {
     private static let DEFAULT_PER_PAGE = 10
     private static let DEFAULT_HIGHLIGHTS_COUNT = 60
     private static let CLIENT_ID_KEY = "client_id"
-    
+
     static func getNewPhotos(page: Int = 1, callback: @escaping ([UnsplashImage]) -> Void) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
 

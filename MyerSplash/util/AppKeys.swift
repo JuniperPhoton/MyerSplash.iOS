@@ -9,13 +9,13 @@
 import Foundation
 
 class AppKeys {
-    static let KEY_PLIST_NAME    = "Key"
+    static let KEY_PLIST_NAME = "Key"
     static let UNSPLASH_KEY_NAME = "UnsplashKey"
     static let APP_CENTER_KEY_NAME = "AppCenterKey"
 
     private static var clientId: String = ""
     private static var appCenterKey: String = ""
-    
+
     static func prepare() {
         var keyDict: NSDictionary?
         if let path = Bundle.main.path(forResource: KEY_PLIST_NAME, ofType: "plist") {
@@ -31,15 +31,15 @@ class AppKeys {
         if clientId.isEmpty {
             prepare()
         }
-        
+
         return clientId
     }
-    
+
     static func getAppCenterKey() -> String {
         if appCenterKey.isEmpty {
             prepare()
         }
-        
+
         return appCenterKey
     }
 }

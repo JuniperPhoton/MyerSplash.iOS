@@ -18,10 +18,6 @@ protocol ImagesViewControllerDelegate {
 }
 
 class ImagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    static func calculateCellHeight(_ width: CGFloat) -> CGFloat {
-        return width / 1.5 // todo
-    }
-
     static let CELL_ANIMATE_OFFSET_X: CGFloat = 50.0
     static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.1
     static let CELL_ANIMATE_DURATION_SEC = 0.4
@@ -40,18 +36,18 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     private var cellDisplayAnimatedCount = 0
 
     private var tappedCell: UITableViewCell? = nil
-    
+
     private var startY: CGFloat = -1
 
     private var tableView: UITableView!
     private var refreshControl: UIRefreshControl!
-    
+
     private var imageRepo: ImageRepo? = nil
-    
+
     private var indicator: MDCActivityIndicator!
-    
+
     var delegate: ImagesViewControllerDelegate? = nil
-    
+
     var repoTitle: String? {
         get {
             return imageRepo?.title
@@ -62,29 +58,29 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         self.imageRepo = repo
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     override func viewDidLoad() {
         let view = self.view!
-        
+
         view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
-        
+
         imageRepo?.onLoadFinished = { (_ success: Bool, _ page: Int) in
             self.indicator.stopAnimating()
             self.loading = false
             self.canLoadMore = !self.imageRepo!.images.isEmpty
             self.stopRefresh()
-            
+
             if page == 1 {
                 self.calculateInitialMaxVisibleCellCount()
             }
-            
+
             self.tableView.reloadData()
         }
-        
+
         refreshControl = UIRefreshControl(frame: CGRect.zero)
         refreshControl.addTarget(self, action: #selector(onRefreshData), for: .valueChanged)
 
@@ -100,12 +96,12 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             maker.width.equalTo(view)
             maker.top.equalTo(view)
         }
-        
+
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
         tableView.separatorStyle = .none
-        
+
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
         indicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
@@ -114,10 +110,10 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         indicator.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
         }
-        
+
         refreshData()
     }
-    
+
     func showTappedCell() {
         tappedCell?.isHidden = false
     }
@@ -133,13 +129,13 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             return
         }
         loading = true
-        
+
         if imageRepo?.images.isEmpty ?? true && refresh {
             indicator.startAnimating()
         } else {
             indicator.stopAnimating()
         }
-        
+
         imageRepo?.loadImage(paging)
     }
 
@@ -158,12 +154,12 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     @objc
     private func onRefreshData() {
         self.refreshData()
-        
+
         if (refreshControl.isRefreshing) {
             refreshControl.endRefreshing()
         }
     }
-    
+
     // MARK: UITableViewDelegate
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -240,12 +236,12 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             initialMaxVisibleCellCount = -1
             return
         }
-        
+
         let visibleHeight = tableView.frame.height - (tableView.refreshControl?.frame.height ?? 0) - UIView.topInset
         let visibleWidth = tableView.frame.width
-        
+
         var accHeight = CGFloat(0)
-        
+
         for index in 0..<repo.images.count {
             let image = repo.images[index]
             let ratio = image.aspectRatioF
@@ -256,15 +252,15 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
                 break
             }
         }
-        
+
         print("initialMaxVisibleCellCount is ", initialMaxVisibleCellCount)
     }
 
-    private func calculateAndCacheCellHeight(_ index: Int)-> CGFloat {
+    private func calculateAndCacheCellHeight(_ index: Int) -> CGFloat {
         guard let image = imageRepo?.images[index] else {
             return 3 / 2.0
         }
-        
+
         let ratio = image.aspectRatioF
         let width = UIScreen.main.bounds.width
         let height = width / ratio

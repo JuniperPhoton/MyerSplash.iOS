@@ -16,11 +16,11 @@ extension ImageCache {
 extension UIView {
     func showToast(_ text: String) {
         ToastView.Builder.init()
-                         .attachTo(self)
-                         .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
-                         .setText(text)
-                         .build()
-                         .show()
+                .attachTo(self)
+                .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
+                .setText(text)
+                .build()
+                .show()
     }
 }
 

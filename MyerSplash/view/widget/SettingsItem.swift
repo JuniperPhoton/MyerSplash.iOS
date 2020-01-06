@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 
 class SettingsItem: UIView {
-    private var label:       UILabel!
+    private var label: UILabel!
     private var contentView: UILabel!
 
     var title: String? {
@@ -17,7 +17,7 @@ class SettingsItem: UIView {
             contentView.text = content
         }
     }
-    
+
     var onClicked: (() -> Void)?
 
     override init(frame: CGRect) {

@@ -20,14 +20,14 @@ class FadeOutTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
         fromVC.view.alpha = 1.0
 
         UIView.animate(withDuration: durationSec,
-                       delay: 0,
-                       options: UIView.AnimationOptions(),
-                       animations: {
-                           fromVC.view.alpha = 0.0
-                       },
-                       completion: { b in
-                           transitionContext.completeTransition(true)
-                       })
+                delay: 0,
+                options: UIView.AnimationOptions(),
+                animations: {
+                    fromVC.view.alpha = 0.0
+                },
+                completion: { b in
+                    transitionContext.completeTransition(true)
+                })
     }
 }
 
@@ -53,13 +53,13 @@ class FadeInTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
         toVC.view.frame = fromVC.view.frame
 
         UIView.animate(withDuration: durationSec,
-                       delay: 0,
-                       options: UIView.AnimationOptions(),
-                       animations: {
-                           toVC.view.alpha = 1.0
-                       },
-                       completion: { b in
-                           transitionContext.completeTransition(true)
-                       })
+                delay: 0,
+                options: UIView.AnimationOptions(),
+                animations: {
+                    toVC.view.alpha = 1.0
+                },
+                completion: { b in
+                    transitionContext.completeTransition(true)
+                })
     }
 }

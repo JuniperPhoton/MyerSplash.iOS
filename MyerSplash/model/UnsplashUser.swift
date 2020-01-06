@@ -2,10 +2,10 @@ import Foundation
 import SwiftyJSON
 
 class UnsplashUser {
-    var id:       String?
+    var id: String?
     var userName: String?
-    var name:     String?
-    var links:    ProfileUrl?
+    var name: String?
+    var links: ProfileUrl?
 
     var homeUrl: String? {
         get {
@@ -27,10 +27,10 @@ class UnsplashUser {
 }
 
 class ProfileUrl {
-    var selfUrl:   String?
-    var html:      String?
-    var photos:    String?
-    var likes:     String?
+    var selfUrl: String?
+    var html: String?
+    var photos: String?
+    var likes: String?
     var portfolio: String?
 
     init() {

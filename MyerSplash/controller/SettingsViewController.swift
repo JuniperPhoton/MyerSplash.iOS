@@ -7,11 +7,11 @@ protocol SettingsDelegate {
 }
 
 class SettingsViewController: BaseViewController, UIViewControllerTransitioningDelegate,
-SettingsViewDelegate, SingleChoiceDelegate, MFMailComposeViewControllerDelegate {
+        SettingsViewDelegate, SingleChoiceDelegate, MFMailComposeViewControllerDelegate {
     func present(vc: UIViewController) {
         self.present(vc, animated: true, completion: nil)
     }
-    
+
     private var settingsView: SettingsView!
 
     private var singleChoiceKey: String? = nil
@@ -57,25 +57,22 @@ SettingsViewDelegate, SingleChoiceDelegate, MFMailComposeViewControllerDelegate 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return FadeOutTransitioning()
     }
-    
+
     func onClickFeedback() {
         if !MFMailComposeViewController.canSendMail() {
             print("Mail services are not available")
             return
         }
-        
+
         let composeVC = MFMailComposeViewController()
         composeVC.mailComposeDelegate = self
-         
-        // Configure the fields of the interface.
         composeVC.setToRecipients(["dengweichao@hotmail.com"])
         composeVC.setSubject("MyerSplash iOS feedback")
         composeVC.setMessageBody("Hello from developer. Please write you suggestions below. Thanks!", isHTML: false)
-         
-        // Present the view controller modally.
+
         self.present(composeVC, animated: true, completion: nil)
     }
-    
+
     func onClickClose(shouldRefreshWhenDismiss: Bool) {
         print("onclick close")
         self.dismiss(animated: true)
@@ -83,7 +80,7 @@ SettingsViewDelegate, SingleChoiceDelegate, MFMailComposeViewControllerDelegate 
             self.delegate?.refresh()
         }
     }
-    
+
     func mailComposeController(_ controller: MFMailComposeViewController,
                                didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)

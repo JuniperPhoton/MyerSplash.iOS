@@ -20,7 +20,7 @@ class RadioButtonGroup: UIStackView {
             }
             button.isUserInteractionEnabled = true
             button.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                               action: #selector(self.onClickItem)))
+                    action: #selector(self.onClickItem)))
             addArrangedSubview(button)
             button.snp.makeConstraints { maker in
                 maker.left.right.equalTo(self)
@@ -42,7 +42,7 @@ class RadioButtonGroup: UIStackView {
 }
 
 class RadioButton: UIView {
-    private var tickIcon:    UIImageView!
+    private var tickIcon: UIImageView!
     private var contentView: UILabel!
 
     var checked: Bool = false {
