@@ -131,7 +131,8 @@ class NewImageRepo: ImageRepo {
     }
 
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
-        return json(.get, Request.PHOTO_URL, parameters: CloudService.getDefaultParams(paging: page)).mapToList(appendTodayImage: page == 1)
+        return json(.get, Request.PHOTO_URL,
+                    parameters: Request.getDefaultParams(paging: page)).mapToList(appendTodayImage: page == 1)
     }
 }
 
@@ -146,7 +147,7 @@ class RandomImageRepo: ImageRepo {
     }
 
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
-        var params = CloudService.getDefaultParams(paging: page)
+        var params = Request.getDefaultParams(paging: page)
         params["count"] = 30
         return json(.get, Request.RANDOM_PHOTOS_URL, parameters: params).mapToList()
     }
@@ -163,7 +164,8 @@ class DeveloperImageRepo: ImageRepo {
     }
 
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
-        return json(.get, Request.DEVELOPER_PHOTOS_URL, parameters: CloudService.getDefaultParams(paging: page)).mapToList()
+        return json(.get, Request.DEVELOPER_PHOTOS_URL,
+                    parameters: Request.getDefaultParams(paging: page)).mapToList()
     }
 }
 
