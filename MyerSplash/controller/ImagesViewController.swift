@@ -69,8 +69,6 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         let view = self.view!
 
-        view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
-
         imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int) in
             if let self = self {
                 self.indicator.stopAnimating()

@@ -27,7 +27,24 @@ class SearchViewController: UIViewController {
             return
         }
         
-        view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
+        if !UIAccessibility.isReduceTransparencyEnabled {
+            view.backgroundColor = .clear
+
+            let blurEffect: UIBlurEffect!
+            if #available(iOS 13.0, *) {
+                blurEffect = UIBlurEffect(style: .systemChromeMaterial)
+            } else {
+                blurEffect = UIBlurEffect(style: .light)
+            }
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+
+            blurEffectView.frame = self.view.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+            view.addSubview(blurEffectView)
+        } else {
+            view.backgroundColor = .getDefaultBackgroundUIColor()
+        }
         
         searchView = UISearchBar()
         searchView.placeholder = "Search in English"
@@ -43,7 +60,6 @@ class SearchViewController: UIViewController {
         let closeImage = UIImage.init(named: "ic_clear_white")!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
-        closeButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
         self.view.addSubview(closeButton)
         
