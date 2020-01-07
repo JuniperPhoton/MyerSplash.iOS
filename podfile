@@ -19,4 +19,5 @@ target 'MyerSplash' do
   pod 'Tabman'
   pod 'Pageboy'
   pod 'FlexLayout'
+  pod 'PinLayout'
 end

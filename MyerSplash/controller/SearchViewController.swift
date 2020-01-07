@@ -63,15 +63,17 @@ class SearchViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
         self.view.addSubview(closeButton)
         
-//        let searchHintView = SearchHintView()
-//        searchHintView.onClickKeyword = { [weak self] (keyword) in
-//            self?.addImageViewController(keyword.query)
-//        }
-//        self.view.addSubview(searchHintView)
+        let searchHintView = SearchHintView()
+        searchHintView.onClickKeyword = { [weak self] (keyword) in
+            self?.searchView.text = keyword.query
+            self?.addImageViewController(keyword.query)
+            self?.searchView.resignFirstResponder()
+        }
+        self.view.addSubview(searchHintView)
         
+        let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
         closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
-                                                              withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3),
-                                                              maxRadius: 25)
+                                                              withColor: rippleColor, maxRadius: 25)
         
         closeButton.snp.makeConstraints { (maker) in
             maker.top.equalTo(searchView.snp.top)
@@ -86,12 +88,12 @@ class SearchViewController: UIViewController {
             maker.top.equalToSuperview().offset(UIView.topInset)
         }
         
-//        searchHintView.snp.makeConstraints { (maker) in
-//            maker.top.equalTo(searchView.snp.bottom)
-//            maker.left.equalToSuperview()
-//            maker.right.equalToSuperview()
-//            maker.bottom.equalToSuperview()
-//        }
+        searchHintView.snp.makeConstraints { (maker) in
+            maker.top.equalTo(searchView.snp.bottom)
+            maker.left.equalToSuperview()
+            maker.right.equalToSuperview()
+            maker.bottom.equalToSuperview()
+        }
         
         imageDetailView = ImageDetailView(frame: self.view.bounds)
         imageDetailView.delegate = self

@@ -9,6 +9,7 @@
 import Foundation
 import FlexLayout
 import UIKit
+import PinLayout
 
 struct Keyword {
     var displayTitle: String!
@@ -46,34 +47,18 @@ class SearchHintView: UIView {
     
     init() {
         super.init(frame: .zero)
-        backgroundColor = .getDefaultBackgroundUIColor()
         
-        rootFlexContainer.flex.direction(.row).padding(12).define { (flex) in
+        rootFlexContainer.flex.direction(.row).justifyContent(.start).wrap(.wrap).padding(12).define { (flex) in
             var index = 0
             builtInKeywords.forEach { (keyword) in
-                let root = UIView()
-                root.backgroundColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
-                root.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat();
-                root.clipsToBounds = true
-                
                 let uiLabel = UIButton()
                 uiLabel.setTitle(keyword.displayTitle, for: .normal)
+                uiLabel.titleLabel?.font = uiLabel.titleLabel?.font.withSize(12)
                 uiLabel.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
                 uiLabel.tag = index
                 uiLabel.addTarget(self, action: #selector(onClickItem(button:)), for: .touchUpInside)
                 
-                //root.addSubview(uiLabel)
-                
-//                uiLabel.snp.makeConstraints { (maker) in
-//                    let margin = 5
-//                    maker.edges.equalToSuperview()
-////                    maker.left.equalToSuperview().offset(margin)
-////                    maker.right.equalToSuperview().offset(-margin)
-////                    maker.top.equalToSuperview().offset(margin)
-////                    maker.bottom.equalToSuperview().offset(-margin)
-//                }
-                
-                flex.addItem(uiLabel)
+                flex.addItem(uiLabel).margin(8)
                 
                 index = index + 1
             }
@@ -89,10 +74,8 @@ class SearchHintView: UIView {
     override func layoutSubviews() {
         // Layout the flexbox container using PinLayout
         // NOTE: Could be also layouted by setting directly rootFlexContainer.frame
-        rootFlexContainer.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
-        }
-
+        rootFlexContainer.pin.all(pin.safeArea)
+        
         // Then let the flexbox container layout itself
         rootFlexContainer.flex.layout(mode: .adjustHeight)
     }

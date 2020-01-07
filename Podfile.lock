@@ -79,6 +79,7 @@ PODS:
   - MotionInterchange (1.6.0)
   - Nuke (8.3.1)
   - Pageboy (3.5.0)
+  - PinLayout (1.8.13)
   - RxAlamofire (5.1.0):
     - RxAlamofire/Core (= 5.1.0)
   - RxAlamofire/Core (5.1.0):
@@ -101,6 +102,7 @@ DEPENDENCIES:
   - MaterialComponents/Ripple
   - Nuke (~> 8.3.1)
   - Pageboy
+  - PinLayout
   - RxAlamofire
   - SnapKit (~> 5.0.0)
   - SwiftyJSON
@@ -118,6 +120,7 @@ SPEC REPOS:
     - MotionInterchange
     - Nuke
     - Pageboy
+    - PinLayout
     - RxAlamofire
     - RxSwift
     - SnapKit
@@ -135,12 +138,13 @@ SPEC CHECKSUMS:
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
   Nuke: 85fb80f8df0cb26c28d2f4e0cb7fb93bcd6548d3
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
+  PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: d1410767ca481338b8ab1092fff5fe20f4ad226a
 
-PODFILE CHECKSUM: aa0c552344ad526a53b35870e69f5e9d4a918ab1
+PODFILE CHECKSUM: 04935a96c4412027606c13e23f12451e27498f65
 
 COCOAPODS: 1.8.4
