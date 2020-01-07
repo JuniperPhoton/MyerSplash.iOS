@@ -27,21 +27,11 @@ class SearchViewController: UIViewController {
             return
         }
         
-        if !UIAccessibility.isReduceTransparencyEnabled {
+        let blurEffectView = UIView.makeBlurBackgroundView()
+        if let blurView = blurEffectView {
             view.backgroundColor = .clear
-
-            let blurEffect: UIBlurEffect!
-            if #available(iOS 13.0, *) {
-                blurEffect = UIBlurEffect(style: .systemChromeMaterial)
-            } else {
-                blurEffect = UIBlurEffect(style: .light)
-            }
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-
-            blurEffectView.frame = self.view.bounds
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-            view.addSubview(blurEffectView)
+            blurView.frame = view.bounds
+            view.addSubview(blurView)
         } else {
             view.backgroundColor = .getDefaultBackgroundUIColor()
         }
@@ -63,12 +53,14 @@ class SearchViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
         self.view.addSubview(closeButton)
         
-        let searchHintView = SearchHintView()
+        searchHintView = SearchHintView()
         searchHintView.onClickKeyword = { [weak self] (keyword) in
             self?.searchView.text = keyword.query
             self?.addImageViewController(keyword.query)
             self?.searchView.resignFirstResponder()
         }
+        searchHintView.isUserInteractionEnabled = true
+        searchHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickClose)))
         self.view.addSubview(searchHintView)
         
         let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
@@ -105,6 +97,8 @@ class SearchViewController: UIViewController {
     }
     
     private func addImageViewController(_ query: String) {
+        searchHintView.isHidden = true
+        
         listController?.delegate = nil
         listController?.remove()
         

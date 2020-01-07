@@ -91,8 +91,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         refreshControl.addTarget(self, action: #selector(onRefreshData), for: .valueChanged)
 
         tableView = UITableView(frame: CGRect.zero)
-
-        tableView.setDefaultBackgroundColor()
+        tableView.backgroundColor = .clear
         tableView.refreshControl = refreshControl
 
         view.addSubview(tableView)

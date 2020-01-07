@@ -59,6 +59,24 @@ extension UIView {
     static var topInset: CGFloat {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
+    
+    static func makeBlurBackgroundView()-> UIView? {
+        if !UIAccessibility.isReduceTransparencyEnabled {
+            let blurEffect: UIBlurEffect!
+            if #available(iOS 13.0, *) {
+                blurEffect = UIBlurEffect(style: .systemChromeMaterial)
+            } else {
+                blurEffect = UIBlurEffect(style: .light)
+            }
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+            return blurEffectView
+        } else {
+            return nil
+        }
+    }
 
     static func getDefaultLabelUIColor() -> UIColor {
         return UIColor.getDefaultLabelUIColor()
