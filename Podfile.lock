@@ -8,6 +8,7 @@ PODS:
   - AppCenter/Core (2.5.3)
   - AppCenter/Crashes (2.5.3):
     - AppCenter/Core
+  - FlexLayout (1.3.17)
   - MaterialComponents/ActivityIndicator (100.0.0):
     - MaterialComponents/Palettes
     - MaterialComponents/private/Application
@@ -92,6 +93,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - AppCenter
+  - FlexLayout
   - MaterialComponents/ActivityIndicator
   - MaterialComponents/BottomSheet
   - MaterialComponents/Buttons
@@ -108,6 +110,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AppCenter
+    - FlexLayout
     - MaterialComponents
     - MDFInternationalization
     - MDFTextAccessibility
@@ -124,6 +127,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AppCenter: 765ff38c4d360fc5ec61b61a8be24d74cd6d4d83
+  FlexLayout: 257b6763526bc957d2abc2b77a05760b86ca0e21
   MaterialComponents: b4cc6c1649a566d70bd72096f3e1aae2c3701e4f
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
@@ -137,6 +141,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: d1410767ca481338b8ab1092fff5fe20f4ad226a
 
-PODFILE CHECKSUM: edb549a199a46c756f4b9a5b182e8947727a6daa
+PODFILE CHECKSUM: aa0c552344ad526a53b35870e69f5e9d4a918ab1
 
 COCOAPODS: 1.8.4

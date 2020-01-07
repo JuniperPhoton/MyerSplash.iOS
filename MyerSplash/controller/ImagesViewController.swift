@@ -13,7 +13,7 @@ import Alamofire
 import MaterialComponents.MaterialActivityIndicator
 
 protocol ImagesViewControllerDelegate: class {
-    func onClickImage(rect: CGRect, image: UnsplashImage)
+    func onClickImage(rect: CGRect, image: UnsplashImage)-> Bool
     func onRequestDownload(image: UnsplashImage)
 }
 
@@ -45,12 +45,12 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     private var imageRepo: ImageRepo? = nil
 
     private var indicator: MDCActivityIndicator!
+    private var noItemView: UIView!
     
     private var animateCellFinished = false
     
     weak var delegate: ImagesViewControllerDelegate? = nil
     
-
     var repoTitle: String? {
         get {
             return imageRepo?.title
@@ -82,32 +82,20 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
                     self.calculateInitialMaxVisibleCellCount()
                 }
 
-                self.tableView.reloadData()
-                
-                if !success && self.imageRepo!.images.isEmpty {
-                    self.errorHintView.isHidden = false
+                if self.imageRepo!.images.isEmpty {
+                    self.updateHintViews(success)
                 }
+                self.tableView.reloadData()
             }
         }
 
         refreshControl = UIRefreshControl(frame: CGRect.zero)
         refreshControl.addTarget(self, action: #selector(onRefreshData), for: .valueChanged)
-        refreshControl.tintColor = .clear
 
         tableView = UITableView(frame: CGRect.zero)
 
         tableView.setDefaultBackgroundColor()
         tableView.refreshControl = refreshControl
-
-        let refreshIndicator = MDCActivityIndicator()
-        refreshIndicator.startAnimating()
-        refreshIndicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
-        
-        refreshControl.addSubview(refreshIndicator)
-        
-        refreshIndicator.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
-        }
 
         view.addSubview(tableView)
 
@@ -150,8 +138,42 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         indicator.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
         }
+        
+        let noItemView = UILabel()
+        noItemView.isHidden = true
+        noItemView.text = "No Items :("
+        noItemView.textColor = .getDefaultLabelUIColor()
+        noItemView.font = noItemView.font.with(traits: .traitBold).withSize(32)
+        self.view.addSubview(noItemView)
+        self.noItemView = noItemView
+        
+        noItemView.snp.makeConstraints { (maker) in
+            maker.center.equalToSuperview()
+        }
 
         refreshData()
+    }
+    
+    private func updateHintViews(_ success: Bool) {
+        if !success {
+            self.errorHintView.isHidden = false
+        } else {
+            self.noItemView.isHidden = false
+        }
+    }
+    
+    private func customRefreshControl() {
+        refreshControl.tintColor = .clear
+
+        let refreshIndicator = MDCActivityIndicator()
+        refreshIndicator.startAnimating()
+        refreshIndicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
+        
+        refreshControl.addSubview(refreshIndicator)
+        
+        refreshIndicator.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
     }
 
     func showTappedCell() {
@@ -163,6 +185,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         print("refresh data")
         
         errorHintView.isHidden = true
+        noItemView.isHidden = true
         
         paging = 1
         loadData(true)
@@ -188,6 +211,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         if (!canLoadMore) {
             return
         }
+        
         loadingFooterView.startAnimating()
         paging = paging + 1
         loadData(false)
@@ -219,14 +243,16 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
                 withIdentifier: MainImageTableCell.ID, for: indexPath) as? MainImageTableCell else {
             fatalError()
         }
-        cell.onClickDownload = { unsplashImage in
-            self.delegate?.onRequestDownload(image: unsplashImage)
+        cell.onClickDownload = { [weak self] unsplashImage in
+            self?.delegate?.onRequestDownload(image: unsplashImage)
         }
-        cell.onClickMainImage = { (rect: CGRect, image: UnsplashImage) -> Void in
-            print("rect is %@", rect)
-            cell.isHidden = true
-            self.tappedCell = cell
-            self.delegate?.onClickImage(rect: rect, image: image)
+        cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage) -> Void in
+            print("rect is ", rect)
+            
+            if self?.delegate?.onClickImage(rect: rect, image: image) == true {
+                cell.isHidden = true
+                self?.tappedCell = cell
+            }
         }
         cell.bind(image: self.imageRepo!.images[indexPath.row])
         return cell
@@ -278,9 +304,24 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             initialMaxVisibleCellCount = -1
             return
         }
+        
+        let tableViewFrame = tableView.frame
+        let refreshFrame = tableView.refreshControl?.frame
+        
+        let tableViewBound = tableView.bounds
+        let refreshBound = tableView.refreshControl?.bounds
+        
+        print("tableViewFrame frame is ", tableViewFrame)
+        print("tableViewFrame bounds is ", tableViewBound)
+        
+        print("refreshFrame frame is ", refreshFrame ?? "")
+        print("refreshFrame bounds is ", refreshBound ?? "")
+        
+        print("contentInset is ", tableView.contentInset)
+        print("contentOffset is ", tableView.contentOffset)
 
-        let visibleHeight = tableView.frame.height - (tableView.refreshControl?.frame.height ?? 0) - UIView.topInset
-        let visibleWidth = tableView.frame.width
+        let visibleHeight = tableViewFrame.height + tableView.contentOffset.y
+        let visibleWidth = tableViewFrame.width
 
         var accHeight = CGFloat(0)
 
@@ -325,9 +366,9 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
         let dy = scrollView.contentOffset.y - lastScrollOffset.y
         if (dy > 10) {
-            print("prepare to hideNavigationElements")
+            //print("prepare to hideNavigationElements")
         } else if (dy < -10) {
-            print("prepare to showNavigationElements")
+            //print("prepare to showNavigationElements")
         }
 
         lastScrollOffset = scrollView.contentOffset
@@ -335,7 +376,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if (scrollView.contentOffset.y <= 0) {
-            print("prepare to showNavigationElements")
+            //print("prepare to showNavigationElements")
         }
     }
 }

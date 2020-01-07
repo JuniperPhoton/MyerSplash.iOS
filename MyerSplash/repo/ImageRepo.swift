@@ -20,6 +20,10 @@ class NotImplError: Error {
 
 }
 
+class ApiError: Error {
+    
+}
+
 class AppConcurrentDispatchQueueScheduler {
     private static var internalInstance: ConcurrentDispatchQueueScheduler? = nil
 
@@ -104,22 +108,6 @@ class HighlightsImageRepo: ImageRepo {
     }
 }
 
-extension Observable {
-    func mapToList(appendTodayImage: Bool = false) -> Observable<[UnsplashImage]> {
-        return self.map { jsonResponse in
-            let json = JSON(jsonResponse)
-            var images: [UnsplashImage] = json.compactMap { s, json -> UnsplashImage? in
-                UnsplashImage(json)
-            }
-
-            if appendTodayImage {
-                images.insert(UnsplashImage.createToday(), at: 0)
-            }
-            return images
-        }
-    }
-}
-
 class NewImageRepo: ImageRepo {
     override var title: String {
         get {
@@ -178,8 +166,46 @@ class SearchImageRepo: ImageRepo {
             // read only
         }
     }
+    
+    private var query: String? = nil
+    
+    init(query: String?) {
+        self.query = query
+        super.init()
+    }
 
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
-        return Observable.error(NotImplError())
+        if query == nil || query == "" {
+            return Observable.error(ApiError())
+        }
+        
+        var params = Request.getDefaultParams(paging: page)
+        params["query"] = query
+        
+        return json(.get, Request.SEARCH_URL, parameters: params)
+            .map { jsonResponse in
+                let json = JSON(jsonResponse)
+                let images = json["results"]
+                
+                return images.compactMap { s, json -> UnsplashImage? in
+                    UnsplashImage(json)
+                }
+        }
+    }
+}
+
+extension Observable {
+    func mapToList(appendTodayImage: Bool = false) -> Observable<[UnsplashImage]> {
+        return self.map { jsonResponse in
+            let json = JSON(jsonResponse)
+            var images: [UnsplashImage] = json.compactMap { s, json -> UnsplashImage? in
+                UnsplashImage(json)
+            }
+
+            if appendTodayImage {
+                images.insert(UnsplashImage.createToday(), at: 0)
+            }
+            return images
+        }
     }
 }

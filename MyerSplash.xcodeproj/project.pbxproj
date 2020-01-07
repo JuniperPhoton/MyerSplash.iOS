@@ -19,6 +19,9 @@
 		2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721F23C369E600F921F4 /* DownloadsViewController.swift */; };
 		2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722123C36A1100F921F4 /* AboutViewController.swift */; };
 		2268722423C36AAB00F921F4 /* TMBarButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722323C36AAB00F921F4 /* TMBarButtonBar.swift */; };
+		2268722623C4CFD300F921F4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722523C4CFD300F921F4 /* SearchViewController.swift */; };
+		2268722823C4DF8B00F921F4 /* SearchHintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722723C4DF8B00F921F4 /* SearchHintView.swift */; };
+		2268722B23C4F69800F921F4 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722A23C4F69800F921F4 /* DownloadManager.swift */; };
 		227D5D2123C2346400B2CC4A /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */; };
 		227D5D2423C23DEA00B2CC4A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227D5D2323C23DEA00B2CC4A /* Reachability.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
@@ -72,6 +75,9 @@
 		2268721F23C369E600F921F4 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		2268722123C36A1100F921F4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		2268722323C36AAB00F921F4 /* TMBarButtonBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMBarButtonBar.swift; sourceTree = "<group>"; };
+		2268722523C4CFD300F921F4 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		2268722723C4DF8B00F921F4 /* SearchHintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHintView.swift; sourceTree = "<group>"; };
+		2268722A23C4F69800F921F4 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen2.storyboard; sourceTree = "<group>"; };
 		227D5D2223C239BA00B2CC4A /* MyerSplash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyerSplash.entitlements; sourceTree = "<group>"; };
 		227D5D2323C23DEA00B2CC4A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -136,6 +142,14 @@
 			path = repo;
 			sourceTree = "<group>";
 		};
+		2268722923C4F68400F921F4 /* download */ = {
+			isa = PBXGroup;
+			children = (
+				2268722A23C4F69800F921F4 /* DownloadManager.swift */,
+			);
+			path = download;
+			sourceTree = "<group>";
+		};
 		54A5610203E1DD4A590B39A2 /* api */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +189,7 @@
 				54A5614D781F22296CE77481 /* vcview */,
 				54A56CB57A8144BFC40E7E39 /* cell */,
 				2268722323C36AAB00F921F4 /* TMBarButtonBar.swift */,
+				2268722723C4DF8B00F921F4 /* SearchHintView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -228,6 +243,7 @@
 				2268721D23C369AB00F921F4 /* MoreViewController.swift */,
 				2268721F23C369E600F921F4 /* DownloadsViewController.swift */,
 				2268722123C36A1100F921F4 /* AboutViewController.swift */,
+				2268722523C4CFD300F921F4 /* SearchViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -302,6 +318,7 @@
 				F0D247BC1FF7C35000BB8076 /* AppDelegate.swift */,
 				F0D247C51FF7C35000BB8076 /* LaunchScreen.storyboard */,
 				F0D247C81FF7C35000BB8076 /* Info.plist */,
+				2268722923C4F68400F921F4 /* download */,
 				54A56DDFB155912867287711 /* controller */,
 				222D46B123C10C9B003C754B /* repo */,
 				54A56784A667D3A8D353B24A /* view */,
@@ -397,6 +414,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MyerSplash/Pods-MyerSplash-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
 				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
@@ -413,6 +431,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFInternationalization.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MDFTextAccessibility.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MaterialComponents.framework",
@@ -471,6 +490,8 @@
 				54A56138C1DC0A93A94EE7D5 /* FloatingActionButton.swift in Sources */,
 				54A56DCFEF6798D1187393D4 /* Colors.swift in Sources */,
 				54A56436968DEEDE565A1488 /* ErrorHintView.swift in Sources */,
+				2268722623C4CFD300F921F4 /* SearchViewController.swift in Sources */,
+				2268722B23C4F69800F921F4 /* DownloadManager.swift in Sources */,
 				54A567D034514DDE364499FF /* SettingsViewController.swift in Sources */,
 				0489B476236DF5DE005965D8 /* UIs.swift in Sources */,
 				54A5673F06B3997A1D9F10B5 /* SettingsGroup.swift in Sources */,
@@ -494,6 +515,7 @@
 				54A56CBA5A033F3AD5BED0EF /* SettingsView.swift in Sources */,
 				2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */,
 				54A5646DE8E2778738D9664F /* ImageDetailView.swift in Sources */,
+				2268722823C4DF8B00F921F4 /* SearchHintView.swift in Sources */,
 				2268722423C36AAB00F921F4 /* TMBarButtonBar.swift in Sources */,
 				54A56452EA2B7115BF2CDBA6 /* MiscExtension.swift in Sources */,
 				1A54F0004F33742176D613EF /* ImageIO.swift in Sources */,

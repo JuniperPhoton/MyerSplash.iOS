@@ -14,7 +14,7 @@ class DownloadsViewController: UIViewController {
         super.viewDidLoad()
         
         let label = UILabel()
-        label.text = "Stay tune :D"
+        label.text = "Workig on this page, please stay tune :D"
         self.view.addSubview(label)
         
         label.snp.makeConstraints { (maker) in

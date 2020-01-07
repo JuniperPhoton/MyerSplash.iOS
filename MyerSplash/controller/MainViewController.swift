@@ -32,6 +32,8 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
 
     override func viewDidLoad() {
+        self.automaticallyAdjustsChildInsets = true
+        
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -43,7 +45,11 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         }
 
         let bar = createTopTabBar()
+        bar.fadesContentEdges = true
         addBar(bar, dataSource: self, at: .top)
+        
+        let an = self.barInsets
+        print("ancor is ", an)
         
         // MARK: statusBarPlaceholder
         let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
@@ -96,52 +102,24 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
     @objc
     func onClickSearch() {
-        // todo
-        self.view.showToast("Not impl yet :D")
+        let vc = SearchViewController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
 
     // MARK: ImagesViewControllerDelegate
-    func onClickImage(rect: CGRect, image: UnsplashImage) {
+    func onClickImage(rect: CGRect, image: UnsplashImage)-> Bool {
         imageDetailView?.show(initFrame: rect, image: image)
+        return true
     }
 
     func onRequestDownload(image: UnsplashImage) {
-        var reachability: Reachability!
-
-        do {
-            reachability = try Reachability()
-        } catch {
-            print("Unable to create Reachability")
-            return
-        }
-
-        if reachability.connection != .unavailable {
-            print("isReachable")
-        } else {
-            print("is NOT Reachable")
-            self.view.showToast("Network unavailable :(")
-            return
-        }
-
-        if reachability.connection != .wifi {
-            print("NOT using wifi")
-            if AppSettings.isMeteredEnabled() {
-                let alertController = MDCAlertController(title: "Alert", message: "You are using meterred network, continue to download?")
-                let ok = MDCAlertAction(title: "OK") { (action) in
-                    self.doDownload(image)
-                }
-                let cancel = MDCAlertAction(title: "CANCEL") { (action) in
-                    alertController.dismiss(animated: true, completion: nil)
-                }
-                alertController.addAction(ok)
-                alertController.addAction(cancel)
-
-                present(alertController, animated: true, completion: nil)
+        DownloadManager.prepareToDownload(vc: self, image: image) { [weak self] (imagePath) in
+            guard let self = self else {
                 return
             }
+            UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
         }
-
-        doDownload(image)
     }
 
     // MARK: ImageDetailViewDelegate
@@ -156,7 +134,12 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
 
     func onRequestImageDownload(image: UnsplashImage) {
-        onRequestDownload(image: image)
+        DownloadManager.prepareToDownload(vc: self, image: image) { [weak self] (imagePath) in
+            guard let self = self else {
+                return
+            }
+            UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
+        }
     }
 
     @objc
@@ -175,49 +158,12 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
             // Fallback on earlier versions
         }
     }
-
-    // MARK: cell callback
-
-    private func doDownload(_ unsplashImage: UnsplashImage) {
-        print("downloading: \(unsplashImage.downloadUrl ?? "")")
-
-        view.showToast("Downloading in background...")
-
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-
-        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
-            let documentsURL
-                    = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let fileURL = documentsURL.appendingPathComponent(unsplashImage.fileName)
-
-            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
-        }
-
-        Events.trackBeginDownloadEvent()
-
-        Alamofire.download(unsplashImage.downloadUrl!, to: destination).response { response in
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-
-            if response.error == nil, let imagePath = response.destinationURL?.path {
-                print("image downloaded!")
-                Events.trackDownloadEvent(true)
-                UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
-            } else {
-                Events.trackDownloadEvent(false, response.error?.localizedDescription)
-                print("error while download image: %@", response.error ?? "")
-            }
-        }
-    }
-
+    
     @objc
     private func onSavedOrError(_ image: UIImage,
                                 didFinishSavingWithError error: Error?,
                                 contextInfo: UnsafeRawPointer) {
-        if (error == nil) {
-            view.showToast("Saved to your album :D")
-        } else {
-            view.showToast("Failed to download :(")
-        }
+        DownloadManager.showSavedToastOnVC(self, success: error == nil)
     }
 }
 
