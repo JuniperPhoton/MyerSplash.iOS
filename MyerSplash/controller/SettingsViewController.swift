@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-protocol SettingsDelegate {
+protocol SettingsDelegate: class {
     func refresh()
 }
 
@@ -10,7 +10,7 @@ class SettingsViewController: BaseViewController, UIViewControllerTransitioningD
     private var settingsView: SettingsView!
     private var singleChoiceKey: String? = nil
 
-    var delegate: SettingsDelegate?
+    weak var delegate: SettingsDelegate?
 
     override func loadView() {
         self.definesPresentationContext = true

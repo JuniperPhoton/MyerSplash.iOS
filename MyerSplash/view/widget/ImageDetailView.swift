@@ -3,7 +3,7 @@ import UIKit
 import SnapKit
 import Nuke
 
-protocol ImageDetailViewDelegate {
+protocol ImageDetailViewDelegate: class {
     func onHidden()
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
@@ -21,7 +21,7 @@ class ImageDetailView: UIView {
     private var initFrame: CGRect? = nil
     private var bindImage: UnsplashImage? = nil
 
-    var delegate: ImageDetailViewDelegate? = nil
+    weak var delegate: ImageDetailViewDelegate? = nil
 
     private var finalFrame: CGRect {
         get {

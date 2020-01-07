@@ -12,7 +12,7 @@ import SnapKit
 import Alamofire
 import MaterialComponents.MaterialActivityIndicator
 
-protocol ImagesViewControllerDelegate {
+protocol ImagesViewControllerDelegate: class {
     func onClickImage(rect: CGRect, image: UnsplashImage)
     func onRequestDownload(image: UnsplashImage)
 }
@@ -46,7 +46,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     private var indicator: MDCActivityIndicator!
     
-    var delegate: ImagesViewControllerDelegate? = nil
+    weak var delegate: ImagesViewControllerDelegate? = nil
 
     var repoTitle: String? {
         get {

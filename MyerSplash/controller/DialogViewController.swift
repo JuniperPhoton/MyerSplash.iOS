@@ -6,6 +6,10 @@ protocol DialogContent {
     var title: String? { get set }
 }
 
+protocol SingleChoiceDelegate: class {
+    func onItemSelected(index: Int)
+}
+
 class SingleChoiceDialog: DialogContent {
     private (set) var options: [String]? = nil
     private (set) var selected: Int = 0
@@ -16,10 +20,6 @@ class SingleChoiceDialog: DialogContent {
         self.options = options
         self.selected = selected
     }
-}
-
-protocol SingleChoiceDelegate {
-    func onItemSelected(index: Int)
 }
 
 extension UIView {
@@ -37,7 +37,7 @@ class DialogViewController: BaseViewController {
 
     private var dialogContent: DialogContent?
 
-    var delegate: SingleChoiceDelegate? = nil
+    weak var delegate: SingleChoiceDelegate? = nil
 
     init(dialogContent: DialogContent) {
         super.init(nibName: nil, bundle: nil)

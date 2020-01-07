@@ -24,7 +24,6 @@
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56061449C955941092B50 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D0B25C0DD1328A6C717 /* AppSettings.swift */; };
 		54A560A877C5BED1896FA8C5 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56F847E06CBA141699C1F /* StringExtension.swift */; };
-		54A5611C988BDF72B7A5A7BD /* MainNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A561B6FB4D634C21639A97 /* MainNavigationView.swift */; };
 		54A56138C1DC0A93A94EE7D5 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A567D34E47588666380237 /* FloatingActionButton.swift */; };
 		54A56163F93551D241697C6F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D82CB9E1C0EF954ECE2 /* BaseViewController.swift */; };
 		54A562670BEC508CD1903C49 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A563C64A027840336DE12B /* Keys.swift */; };
@@ -81,7 +80,6 @@
 		54A560BD8B67160A59D237A6 /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		54A560D859A7C4BEFD55ADD4 /* ImageDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
 		54A5610ACB2BC8B7B3465EE3 /* Values.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Values.swift; sourceTree = "<group>"; };
-		54A561B6FB4D634C21639A97 /* MainNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationView.swift; sourceTree = "<group>"; };
 		54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioButtonGroup.swift; sourceTree = "<group>"; };
 		54A563330188B6094B9D072F /* SettingsSwitchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSwitchItem.swift; sourceTree = "<group>"; };
 		54A563C64A027840336DE12B /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				54A56B10293331F08D52173B /* ToastView.swift */,
 				54A56D5065F7E6CC380396F3 /* SettingsItem.swift */,
 				54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */,
-				54A561B6FB4D634C21639A97 /* MainNavigationView.swift */,
 				54A560D859A7C4BEFD55ADD4 /* ImageDetailView.swift */,
 			);
 			path = widget;
@@ -497,7 +494,6 @@
 				54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */,
 				54A56CBA5A033F3AD5BED0EF /* SettingsView.swift in Sources */,
 				2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */,
-				54A5611C988BDF72B7A5A7BD /* MainNavigationView.swift in Sources */,
 				54A5646DE8E2778738D9664F /* ImageDetailView.swift in Sources */,
 				2268722423C36AAB00F921F4 /* TMBarButtonBar.swift in Sources */,
 				54A56452EA2B7115BF2CDBA6 /* MiscExtension.swift in Sources */,

@@ -5,7 +5,7 @@ import Nuke
 import MessageUI
 import MaterialComponents.MaterialDialogs
 
-protocol SettingsViewDelegate {
+protocol SettingsViewDelegate: class {
     func showDialog(content: DialogContent, key: String)
     func onClickClose(shouldRefreshWhenDismiss: Bool)
     func present(vc: UIViewController)
@@ -20,7 +20,7 @@ class SettingsView: UIView {
 
     var shouldRefreshWhenDismiss = false
 
-    var delegate: SettingsViewDelegate?
+    weak var delegate: SettingsViewDelegate? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
