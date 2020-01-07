@@ -14,7 +14,7 @@ public class MainImageTableCell: UITableViewCell {
 
     private var downloadRippleController: MDCRippleTouchController!
 
-    var mainImageView: UIImageView!
+    var mainImageView: DayNightImageView!
 
     var onClickMainImage: ((CGRect, UnsplashImage) -> Void)?
     var onClickDownload: ((UnsplashImage) -> Void)?
@@ -22,7 +22,8 @@ public class MainImageTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
 
-        mainImageView = UIImageView()
+        mainImageView = DayNightImageView()
+        mainImageView.applyMask()
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true

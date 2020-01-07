@@ -12,6 +12,7 @@
 		04E5608B237139E00085C950 /* AppKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608A237139E00085C950 /* AppKeys.swift */; };
 		04E5608D23713DAA0085C950 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E5608C23713DAA0085C950 /* Events.swift */; };
 		1A54F0004F33742176D613EF /* ImageIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54F03AD19D14182EA816F0 /* ImageIO.swift */; };
+		1A54FD1D9B7E93F3367E6C10 /* DayNightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54F6D86983A7220256314E /* DayNightImageView.swift */; };
 		222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46AF23C1081B003C754B /* ImagesViewController.swift */; };
 		222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46B223C10CAA003C754B /* ImageRepo.swift */; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
@@ -64,6 +65,7 @@
 		04E5608A237139E00085C950 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		04E5608C23713DAA0085C950 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		1A54F03AD19D14182EA816F0 /* ImageIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageIO.swift; sourceTree = "<group>"; };
+		1A54F6D86983A7220256314E /* DayNightImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayNightImageView.swift; sourceTree = "<group>"; };
 		222D46AF23C1081B003C754B /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
 		2268721D23C369AB00F921F4 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				54A56D5065F7E6CC380396F3 /* SettingsItem.swift */,
 				54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */,
 				54A560D859A7C4BEFD55ADD4 /* ImageDetailView.swift */,
+				1A54F6D86983A7220256314E /* DayNightImageView.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				2268722423C36AAB00F921F4 /* TMBarButtonBar.swift in Sources */,
 				54A56452EA2B7115BF2CDBA6 /* MiscExtension.swift in Sources */,
 				1A54F0004F33742176D613EF /* ImageIO.swift in Sources */,
+				1A54FD1D9B7E93F3367E6C10 /* DayNightImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

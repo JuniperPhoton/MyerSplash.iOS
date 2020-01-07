@@ -10,7 +10,7 @@ protocol ImageDetailViewDelegate: class {
 }
 
 class ImageDetailView: UIView {
-    private var mainImageView: UIImageView!
+    private var mainImageView: DayNightImageView!
     private var backgroundView: UIView!
     private var extraInformationView: UIView!
     private var photoByLabel: UILabel!
@@ -59,7 +59,8 @@ class ImageDetailView: UIView {
         backgroundView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                 action: #selector(onClickBackground)))
 
-        mainImageView = UIImageView(frame: CGRect.zero)
+        mainImageView = DayNightImageView()
+        mainImageView.applyMask()
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true
