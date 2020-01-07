@@ -110,6 +110,6 @@ extension MoreViewController: PageboyViewControllerDataSource, TMBarDataSource {
     }
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        .at(index: 1)
+        nil
     }
 }

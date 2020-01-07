@@ -156,7 +156,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
 
     func onRequestImageDownload(image: UnsplashImage) {
-        doDownload(image)
+        onRequestDownload(image: image)
     }
 
     @objc

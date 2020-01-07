@@ -46,7 +46,10 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     private var indicator: MDCActivityIndicator!
     
+    private var animateCellFinished = false
+    
     weak var delegate: ImagesViewControllerDelegate? = nil
+    
 
     var repoTitle: String? {
         get {
@@ -234,26 +237,23 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     // and the table view use estimated height as content size at first,
     // which leads to the incorrect content size of table view.
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return calculateAndCacheCellHeight(indexPath.row)
+        return calculateCellHeight(indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return calculateAndCacheCellHeight(indexPath.row)
+        return calculateCellHeight(indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let count = initialMaxVisibleCellCount
-        if (count < 0) {
+        let maxCount = initialMaxVisibleCellCount
+        if (animateCellFinished || maxCount < 0 || indexPath.row >= maxCount) {
             return
         }
-
-        if (indexPath.row >= count) {
-            return
-        }
-
+        
         let index = indexPath.row
-        if (index >= count) {
-            return
+        
+        if (index == maxCount - 1) {
+            animateCellFinished = true
         }
 
         let startX = cell.center.x
@@ -298,7 +298,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         print("initialMaxVisibleCellCount is ", initialMaxVisibleCellCount)
     }
 
-    private func calculateAndCacheCellHeight(_ index: Int) -> CGFloat {
+    private func calculateCellHeight(_ index: Int) -> CGFloat {
         guard let image = imageRepo?.images[index] else {
             return 3 / 2.0
         }
