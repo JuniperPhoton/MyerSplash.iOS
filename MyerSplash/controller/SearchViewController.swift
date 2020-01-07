@@ -136,7 +136,7 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
     }
 
     func onRequestImageDownload(image: UnsplashImage) {
-        
+        onRequestDownload(image: image)
     }
     
     // MARK: ImagesViewControllerDelegate
