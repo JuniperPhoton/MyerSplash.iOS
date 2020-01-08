@@ -5,8 +5,7 @@ protocol SettingsDelegate: class {
     func refresh()
 }
 
-class SettingsViewController: BaseViewController, UIViewControllerTransitioningDelegate,
-        SettingsViewDelegate, SingleChoiceDelegate {
+class SettingsViewController: BaseViewController {
     private var settingsView: SettingsView!
     private var singleChoiceKey: String? = nil
 
@@ -23,35 +22,18 @@ class SettingsViewController: BaseViewController, UIViewControllerTransitioningD
     private func onClick() {
         dismiss(animated: true)
     }
+}
 
+extension SettingsViewController: SettingsViewDelegate {
+    // MARK: SettingsViewDelegate
     func showDialog(content: DialogContent, key: String) {
         singleChoiceKey = key
         let vc = DialogViewController(dialogContent: content)
         vc.delegate = self
-        vc.transitioningDelegate = self
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         present(vc, animated: true)
     }
-
-    func onItemSelected(index: Int) {
-        guard let singleChoiceKey = singleChoiceKey else {
-            return
-        }
-
-        UserDefaults.standard.set(index, forKey: singleChoiceKey)
-        settingsView.updatingSingleChoiceSelected(selectedIndex: index, key: singleChoiceKey)
-    }
-
-    func animationController(forPresented presented: UIViewController,
-                             presenting: UIViewController,
-                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return FadeInTransitioning()
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return FadeOutTransitioning()
-    }
-
+    
     func onClickClose(shouldRefreshWhenDismiss: Bool) {
         print("onclick close")
         self.dismiss(animated: true)
@@ -62,5 +44,18 @@ class SettingsViewController: BaseViewController, UIViewControllerTransitioningD
     
     func present(vc: UIViewController) {
         self.present(vc, animated: true, completion: nil)
+    }
+}
+
+
+extension SettingsViewController: SingleChoiceDelegate {
+    // MARK: SingleChoiceDelegate
+    func onItemSelected(index: Int) {
+        guard let singleChoiceKey = singleChoiceKey else {
+            return
+        }
+
+        UserDefaults.standard.set(index, forKey: singleChoiceKey)
+        settingsView.updatingSingleChoiceSelected(selectedIndex: index, key: singleChoiceKey)
     }
 }

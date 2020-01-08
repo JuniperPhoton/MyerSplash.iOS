@@ -8,6 +8,7 @@ PODS:
   - AppCenter/Core (2.5.3)
   - AppCenter/Crashes (2.5.3):
     - AppCenter/Core
+  - ELWaterFallLayout (0.1.2)
   - FlexLayout (1.3.17)
   - MaterialComponents/ActivityIndicator (100.0.0):
     - MaterialComponents/Palettes
@@ -55,6 +56,14 @@ PODS:
   - MaterialComponents/private/KeyboardWatcher (100.0.0):
     - MaterialComponents/private/Application
   - MaterialComponents/private/Math (100.0.0)
+  - MaterialComponents/private/ThumbTrack (100.0.0):
+    - MaterialComponents/Ink
+    - MaterialComponents/private/Math
+    - MaterialComponents/Ripple
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
   - MaterialComponents/Ripple (100.0.0):
     - MaterialComponents/AnimationTiming
     - MaterialComponents/private/Color
@@ -69,6 +78,12 @@ PODS:
     - MaterialComponents/private/Color
     - MaterialComponents/private/Math
     - MaterialComponents/ShadowLayer
+  - MaterialComponents/Slider (100.0.0):
+    - MaterialComponents/Elevation
+    - MaterialComponents/Palettes
+    - MaterialComponents/private/Math
+    - MaterialComponents/private/ThumbTrack
+    - MaterialComponents/ShadowElevations
   - MaterialComponents/Typography (100.0.0):
     - MaterialComponents/private/Application
     - MaterialComponents/private/Math
@@ -87,19 +102,27 @@ PODS:
     - RxSwift (~> 5.0)
   - RxSwift (5.0.1)
   - SnapKit (5.0.1)
+  - SQLiteRepairKit (1.2.2):
+    - WCDBOptimizedSQLCipher (~> 1.2.0)
   - SwiftyJSON (5.0.0)
   - Tabman (2.7.0):
     - Pageboy (~> 3.5.0)
+  - WCDB.swift (1.0.8.2):
+    - SQLiteRepairKit (~> 1.2.0)
+    - WCDBOptimizedSQLCipher (~> 1.2.0)
+  - WCDBOptimizedSQLCipher (1.2.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - AppCenter
+  - ELWaterFallLayout
   - FlexLayout
   - MaterialComponents/ActivityIndicator
   - MaterialComponents/BottomSheet
   - MaterialComponents/Buttons
   - MaterialComponents/Dialogs
   - MaterialComponents/Ripple
+  - MaterialComponents/Slider
   - Nuke (~> 8.3.1)
   - Pageboy
   - PinLayout
@@ -107,11 +130,13 @@ DEPENDENCIES:
   - SnapKit (~> 5.0.0)
   - SwiftyJSON
   - Tabman
+  - WCDB.swift
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - AppCenter
+    - ELWaterFallLayout
     - FlexLayout
     - MaterialComponents
     - MDFInternationalization
@@ -124,12 +149,16 @@ SPEC REPOS:
     - RxAlamofire
     - RxSwift
     - SnapKit
+    - SQLiteRepairKit
     - SwiftyJSON
     - Tabman
+    - WCDB.swift
+    - WCDBOptimizedSQLCipher
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AppCenter: 765ff38c4d360fc5ec61b61a8be24d74cd6d4d83
+  ELWaterFallLayout: 12bf34e49aa39c4b0315f5da829a1705133cebeb
   FlexLayout: 257b6763526bc957d2abc2b77a05760b86ca0e21
   MaterialComponents: b4cc6c1649a566d70bd72096f3e1aae2c3701e4f
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
@@ -142,9 +171,12 @@ SPEC CHECKSUMS:
   RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SQLiteRepairKit: 35aaae5a8838adb85f5b1eb4d796055be6060a4b
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   Tabman: d1410767ca481338b8ab1092fff5fe20f4ad226a
+  WCDB.swift: 05d509d7a0e60fb6e11c34eb7e4027c0fab5849f
+  WCDBOptimizedSQLCipher: baf44493b0c7a3d49e97bc5b64a3856f6428ddd1
 
-PODFILE CHECKSUM: 04935a96c4412027606c13e23f12451e27498f65
+PODFILE CHECKSUM: 64c565b285a93f1462da958bd39082347b272f18
 
 COCOAPODS: 1.8.4

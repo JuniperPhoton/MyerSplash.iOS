@@ -16,12 +16,12 @@ protocol Callback {
     func onFailed(_ e: Error?)
 }
 
-class NotImplError: Error {
+struct NotImplError: Error {
 
 }
 
-class ApiError: Error {
-    
+struct ApiError: Error {
+    var message: String? = nil
 }
 
 class AppConcurrentDispatchQueueScheduler {
@@ -176,9 +176,9 @@ class SearchImageRepo: ImageRepo {
 
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
         if query == nil || query == "" {
-            return Observable.error(ApiError())
+            return Observable.error(ApiError(message: "query should not be nil"))
         }
-        
+
         var params = Request.getDefaultParams(paging: page)
         params["query"] = query
         

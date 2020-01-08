@@ -20,4 +20,8 @@ target 'MyerSplash' do
   pod 'Pageboy'
   pod 'FlexLayout'
   pod 'PinLayout'
+  pod 'WCDB.swift'
+  pod 'ELWaterFallLayout'
+  pod 'MaterialComponents/Slider'
+
 end

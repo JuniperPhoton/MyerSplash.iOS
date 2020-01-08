@@ -3,7 +3,7 @@ import SnapKit
 import UIKit
 
 class ToastView: UILabel {
-    static let PADDING = CGFloat(8)
+    static let PADDING = CGFloat(10)
     static let SHOWING_HIDING_DURATION_SEC = 0.2
     static let STAYING_DURATION_SEC = 2.0
 
@@ -88,19 +88,19 @@ class ToastView: UILabel {
 
         UIView.animateKeyframes(withDuration: overallDuration,
                 delay: 0.0,
-                animations: { () -> Void in
+                animations: { [weak self] () -> Void in
                     UIView.addKeyframe(withRelativeStartTime: 0.0,
                             relativeDuration: relativeShowingDuration) {
-                        self.alpha = 1.0
+                        self?.alpha = 1.0
                     }
 
                     UIView.addKeyframe(withRelativeStartTime: 1 - relativeShowingDuration,
                             relativeDuration: relativeShowingDuration) {
-                        self.alpha = 0.0
+                        self?.alpha = 0.0
                     }
                 },
-                completion: { b in
-                    self.removeFromSuperview()
+                completion: { [weak self] b in
+                    self?.removeFromSuperview()
                 })
     }
 

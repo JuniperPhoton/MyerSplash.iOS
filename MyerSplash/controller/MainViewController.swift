@@ -5,6 +5,7 @@ import UIKit
 import SnapKit
 import Alamofire
 import MaterialComponents.MaterialButtons
+import RxSwift
 
 class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesViewControllerDelegate {
     override open var preferredStatusBarStyle: UIStatusBarStyle {
@@ -99,6 +100,10 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         imageDetailView.delegate = self
         self.view.addSubview(imageDetailView)
     }
+    
+    func onRequestEdit(image: UnsplashImage) {
+        presentEdit(image: image)
+    }
 
     @objc
     func onClickSearch() {
@@ -115,12 +120,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
 
     func onRequestDownload(image: UnsplashImage) {
-        DownloadManager.prepareToDownload(vc: self, image: image) { [weak self] (imagePath) in
-            guard let self = self else {
-                return
-            }
-            UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
-        }
+        DownloadManager.instance.prepareToDownload(vc: self, image: image)
     }
 
     // MARK: ImageDetailViewDelegate
@@ -135,12 +135,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
 
     func onRequestImageDownload(image: UnsplashImage) {
-        DownloadManager.prepareToDownload(vc: self, image: image) { [weak self] (imagePath) in
-            guard let self = self else {
-                return
-            }
-            UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
-        }
+        DownloadManager.instance.prepareToDownload(vc: self, image: image)
     }
 
     @objc
@@ -158,13 +153,6 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         } else {
             // Fallback on earlier versions
         }
-    }
-    
-    @objc
-    private func onSavedOrError(_ image: UIImage,
-                                didFinishSavingWithError error: Error?,
-                                contextInfo: UnsafeRawPointer) {
-        DownloadManager.showSavedToastOnVC(self, success: error == nil)
     }
 }
 

@@ -1,8 +1,9 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import WCDBSwift
 
-class UnsplashImage {
+class UnsplashImage: ColumnJSONCodable {
     private (set) var id: String?
     private (set) var color: String?
     private (set) var likes: Int = 0
@@ -11,6 +12,16 @@ class UnsplashImage {
     private (set) var urls: ImageUrl?
     private (set) var user: UnsplashUser?
     private (set) var isUnsplash = true
+    
+    var rawAspectRatioF: CGFloat {
+        get {
+            if width == 0 || height == 0 {
+                return CGFloat(1.5)
+            } else {
+                return CGFloat(width) / CGFloat(height)
+            }
+        }
+    }
 
     var aspectRatioF: CGFloat {
         get {
@@ -202,7 +213,7 @@ class UnsplashImage {
     }
 }
 
-class ImageUrl {
+class ImageUrl: ColumnJSONCodable {
     var raw: String?
     var full: String?
     var regular: String?

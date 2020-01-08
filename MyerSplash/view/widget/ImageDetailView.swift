@@ -2,11 +2,13 @@ import Foundation
 import UIKit
 import SnapKit
 import Nuke
+import RxSwift
 
 protocol ImageDetailViewDelegate: class {
     func onHidden()
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
+    func onRequestEdit(image: UnsplashImage)
 }
 
 class ImageDetailView: UIView {
@@ -16,12 +18,14 @@ class ImageDetailView: UIView {
     private var photoByLabel: UILabel!
     private var authorButton: UIButton!
     private var authorStack: UIStackView!
-    private var downloadButton: UIButton!
+    private var downloadButton: DownloadButton!
 
     private var initFrame: CGRect? = nil
     private var bindImage: UnsplashImage? = nil
 
     weak var delegate: ImageDetailViewDelegate? = nil
+    
+    private var disposable: Disposable? = nil
 
     private var finalFrame: CGRect {
         get {
@@ -53,6 +57,7 @@ class ImageDetailView: UIView {
         showInternal()
     }
 
+    // MARK: UI
     private func initUi() {
         backgroundView = UIView()
         backgroundView.backgroundColor = UIColor.getDefaultBackgroundUIColor().withAlphaComponent(0.5)
@@ -82,17 +87,8 @@ class ImageDetailView: UIView {
         authorStack.axis = NSLayoutConstraint.Axis.vertical
         authorStack.spacing = 2
 
-        downloadButton = UIButton()
-        downloadButton.setTitle("DOWNLOAD", for: .normal)
-        downloadButton.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
-        downloadButton.titleLabel!.font = downloadButton.titleLabel!.font.with(traits: .traitBold,
-                fontSize: FontSizes.NORMAL)
+        downloadButton = DownloadButton()
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
-
-        let inset = UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8);
-        downloadButton.contentEdgeInsets = inset
-
-        downloadButton.sizeToFit()
 
         extraInformationView.addSubview(authorStack)
         extraInformationView.addSubview(downloadButton)
@@ -125,6 +121,7 @@ class ImageDetailView: UIView {
         }
     }
 
+    // MARK: Motion
     private var startX: CGFloat = -1
     private var startY: CGFloat = -1
 
@@ -152,7 +149,19 @@ class ImageDetailView: UIView {
         guard let bindImage = bindImage else {
             return
         }
-        delegate?.onRequestImageDownload(image: bindImage)
+        
+        switch downloadItem?.status {
+        case DownloadStatus.Downloading.rawValue:
+            DownloadManager.instance.cancel(id: bindImage.id!)
+            break
+        case DownloadStatus.Success.rawValue:
+            Log.info(tag: ImageDetailView.self.description(), "click on success")
+            delegate?.onRequestEdit(image: bindImage)
+            break
+        default:
+            delegate?.onRequestImageDownload(image: bindImage)
+            break
+        }
     }
 
     @objc
@@ -166,12 +175,32 @@ class ImageDetailView: UIView {
     @objc private func onClickBackground() {
         hideInternal()
     }
+    
+    private var downloadItem: DownloadItem? = nil
 
+    // MARK: Bind
     private func bind() {
         guard let initFrame = initFrame,
               let image = bindImage else {
             return
         }
+        
+        disposable?.dispose()
+        disposable = DownloadManager.instance.addObserver(image, { [weak self] (e) in
+            guard let item = e.element else { return }
+            guard let self = self else { return }
+
+            if item.id != image.id {
+                return
+            }
+            
+            self.downloadItem = item
+            
+            Log.info(tag: ImageDetailView.self.description(), "download status: \(item.status)")
+            
+            self.downloadButton.updateStatus(item)
+        })
+        
         mainImageView.frame = initFrame
 
         if let listUrl = image.listUrl {
@@ -244,6 +273,8 @@ class ImageDetailView: UIView {
     }
 
     private func hideInternal() {
+        disposable?.dispose()
+        
         if (!self.extraInformationView.isHidden) {
             hideExtraInformationView {
                 self.hideImage()

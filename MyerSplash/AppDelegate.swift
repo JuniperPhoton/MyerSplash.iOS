@@ -15,6 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = controller
         window!.makeKeyAndVisible()
         
+        #if DEBUG
+        MSAppCenter.setEnabled(false)
+        #endif
+        
         MSAppCenter.start(AppKeys.getAppCenterKey(), withServices:[
           MSAnalytics.self,
           MSCrashes.self

@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 class Dimensions {
-    static let TOAST_HEIGHT: CGFloat = 32
+    static let TOAST_HEIGHT: CGFloat = 36
     static let SETTING_ITEM_HEIGHT: CGFloat = 50
     static let SINGLE_CHOICE_OPTION_HEIGHT: CGFloat = 50
     static let FAB_SIZE: CGFloat = 70

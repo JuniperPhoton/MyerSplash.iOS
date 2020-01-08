@@ -1,7 +1,8 @@
 import Foundation
 import SwiftyJSON
+import WCDBSwift
 
-class UnsplashUser {
+class UnsplashUser: ColumnJSONCodable {
     var id: String?
     var userName: String?
     var name: String?
@@ -26,7 +27,7 @@ class UnsplashUser {
     }
 }
 
-class ProfileUrl {
+class ProfileUrl: ColumnJSONCodable {
     var selfUrl: String?
     var html: String?
     var photos: String?

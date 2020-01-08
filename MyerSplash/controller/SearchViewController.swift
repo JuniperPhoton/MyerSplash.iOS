@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MaterialComponents.MDCRippleTouchController
 import FlexLayout
+import RxSwift
 
 class SearchViewController: UIViewController {
     private var closeRippleController: MDCRippleTouchController!
@@ -19,6 +20,8 @@ class SearchViewController: UIViewController {
     
     private var searchHintView: SearchHintView!
     private var imageDetailView: ImageDetailView!
+
+    private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +46,7 @@ class SearchViewController: UIViewController {
         searchView.becomeFirstResponder()
         searchView.tintColor = UIColor.getDefaultLabelUIColor()
         searchView.searchTextField.keyboardType = .asciiCapable
+        searchView.searchTextField.font = searchView.searchTextField.font?.withSize(16)
 
         view.addSubview(searchView)
         
@@ -142,6 +146,10 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
             vc.showTappedCell()
         }
     }
+    
+    func onRequestEdit(image: UnsplashImage) {
+        presentEdit(image: image)
+    }
 
     func onRequestOpenUrl(urlString: String) {
         UIApplication.shared.open(URL(string: urlString)!)
@@ -156,20 +164,12 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
         imageDetailView?.show(initFrame: rect, image: image)
         return true
     }
-
-    func onRequestDownload(image: UnsplashImage) {
-        DownloadManager.prepareToDownload(vc: self, image: image) { [weak self] (imagePath) in
-            guard let self = self else {
-                return
-            }
-            UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
-        }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        // todo
     }
     
-    @objc
-    private func onSavedOrError(_ image: UIImage,
-                                didFinishSavingWithError error: Error?,
-                                contextInfo: UnsafeRawPointer) {
-        DownloadManager.showSavedToastOnVC(self, success: error == nil)
+    func onRequestDownload(image: UnsplashImage) {
+        DownloadManager.instance.prepareToDownload(vc: self, image: image)
     }
 }

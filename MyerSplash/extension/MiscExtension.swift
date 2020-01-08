@@ -14,6 +14,19 @@ extension ImageCache {
     }
 }
 
+func showToast(_ text: String) {
+    guard let view = UIApplication.shared.keyWindow?.rootViewController?.view else {
+        Log.warn(tag: "showtoast", "no active view")
+        return
+    }
+    ToastView.Builder.init()
+        .attachTo(view)
+        .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
+        .setText(text)
+        .build()
+        .show()
+}
+
 extension UIView {
     func showToast(_ text: String) {
         ToastView.Builder.init()
