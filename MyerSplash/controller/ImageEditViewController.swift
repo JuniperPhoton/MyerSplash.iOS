@@ -195,7 +195,6 @@ class ImageEditViewController: UIViewController {
             self.indicator.isHidden = true
         }
         
-        homePreviewView.isHidden = true
         indicator.isHidden = false
         indicator.startAnimating()
         
