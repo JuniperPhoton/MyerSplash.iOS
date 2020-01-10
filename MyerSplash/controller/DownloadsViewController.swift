@@ -92,6 +92,7 @@ class DownloadsViewController: UIViewController {
     @objc
     private func onClickDelete() {
         let vc = MDCAlertController(title: "Delete download history?", message: "This operation won't delete photos in your devices")
+        vc.applyColors()
         vc.addAction(MDCAlertAction(title: "CANCEL", emphasis: .high, handler: {(action) in
             vc.dismiss(animated: true, completion: nil)
         }))

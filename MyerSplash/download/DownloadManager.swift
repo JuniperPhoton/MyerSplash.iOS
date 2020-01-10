@@ -80,6 +80,7 @@ class DownloadManager: NSObject {
             print("NOT using wifi")
             if AppSettings.isMeteredEnabled() {
                 let alertController = MDCAlertController(title: "Alert", message: "You are using meterred network, continue to download?")
+                alertController.applyColors()
                 let ok = MDCAlertAction(title: "OK") { (action) in
                     self.doDownload(image)
                 }
