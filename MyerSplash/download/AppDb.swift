@@ -34,8 +34,6 @@ class AppDb {
     
     func updateItemsToFailed() {
         do {
-            let row: [ColumnCodableBase] = [DownloadStatus.Failed.rawValue]
-
             try db.update(table: AppDb.DOWNLOADS_TABLE,
                           on: [DownloadItem.Properties.status],
                           with: [DownloadStatus.Failed.rawValue],
