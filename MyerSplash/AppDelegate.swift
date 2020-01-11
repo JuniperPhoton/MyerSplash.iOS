@@ -5,6 +5,8 @@ import AppCenterCrashes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    static let SEARCH_SHORTCUT = "search"
+    static let DOWNLOADS_SHORTCUT = "downloads"
 
     var window: UIWindow?
 
@@ -24,7 +26,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           MSCrashes.self
         ])
         
+        setupShortcuts(application)
+        
         return true
+    }
+    
+    private func setupShortcuts(_ application: UIApplication) {
+        let searchItem = UIApplicationShortcutItem(type: AppDelegate.SEARCH_SHORTCUT,
+                                                   localizedTitle: R.strings.shortcut_search,
+                                                   localizedSubtitle: nil,
+                                                   icon: UIApplicationShortcutIcon(templateImageName: R.icons.ic_search), userInfo: nil)
+        let downloadsItem = UIApplicationShortcutItem(type: AppDelegate.DOWNLOADS_SHORTCUT,
+        localizedTitle: R.strings.shortcut_downloads,
+        localizedSubtitle: nil,
+        icon: UIApplicationShortcutIcon(templateImageName: R.icons.ic_download), userInfo: nil)
+        
+        application.shortcutItems = [searchItem, downloadsItem]
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -47,6 +64,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        guard let vc = UIApplication.shared.keyWindow?.rootViewController as? MainViewController else {
+            return
+        }
+        
+        switch shortcutItem.type {
+        case AppDelegate.SEARCH_SHORTCUT:
+                let targetVc = SearchViewController()
+                vc.present(targetVc, animated: true, completion: nil)
+        case AppDelegate.DOWNLOADS_SHORTCUT:
+                let targetVc = MoreViewController()
+                vc.present(targetVc, animated: true, completion: nil)
+        default: break
+        }
     }
 }
 

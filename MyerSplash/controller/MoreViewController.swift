@@ -24,6 +24,11 @@ class MoreViewController: TabmanViewController {
     private var viewControllers = [DownloadsViewController(),
                                    SettingsViewController(),
                                    AboutViewController()]
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        self.modalPresentationStyle = .pageSheet
+    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

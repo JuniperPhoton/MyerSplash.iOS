@@ -60,3 +60,6 @@
 "cleared" = "Cleared";
 
 "download_in_background" = "Downloading in background...";
+
+"shortcut_search" = "Search";
+"shortcut_downloads" = "Downloads";

@@ -89,6 +89,8 @@ class R {
         static let metered_dialog_message = NSLocalizedString("metered_dialog_message", comment: "")
         
         static let download_cancelled = NSLocalizedString("download_cancelled", comment: "")
+        static let shortcut_search = NSLocalizedString("shortcut_search", comment: "")
+        static let shortcut_downloads = NSLocalizedString("shortcut_downloads", comment: "")
 
         private init() {
             

@@ -22,7 +22,16 @@ class SearchViewController: UIViewController {
     private var imageDetailView: ImageDetailView!
 
     private var disposeBag = DisposeBag()
-
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        self.modalPresentationStyle = .fullScreen
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
