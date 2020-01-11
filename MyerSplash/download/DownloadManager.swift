@@ -108,6 +108,11 @@ class DownloadManager: NSObject {
     }
 
     private func doDownload(_ unsplashImage: UnsplashImage) {
+        if downloadRecord[unsplashImage.id!] != nil {
+            Log.warn(tag: DownloadManager.TAG, "already downloading...")
+            return
+        }
+        
         print("downloading: \(unsplashImage.downloadUrl ?? "")")
 
         let item = DownloadItem()

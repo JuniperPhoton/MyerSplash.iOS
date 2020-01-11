@@ -16,11 +16,12 @@ func createTopTabBar() -> TMBar.ButtonBar {
     bar.layout.alignment = .leading
     bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 12.0, right: 60)
     bar.backgroundView.style = .flat(color: UIColor.getDefaultBackgroundUIColor())
-    bar.layout.interButtonSpacing = 12
+    bar.layout.interButtonSpacing = 6
+    bar.fadesContentEdges = true
     bar.buttons.customize { (button) in
         button.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
         button.selectedTintColor = UIColor.getDefaultLabelUIColor()
-        button.font = UIFont.preferredFont(forTextStyle: .largeTitle).with(traits: .traitBold).withSize(13)
+        button.font = UIFont.preferredFont(forTextStyle: .largeTitle).with(traits: .traitBold).withSize(14)
     }
     bar.indicator.tintColor = UIColor.getDefaultLabelUIColor()
     bar.indicator.weight = .custom(value: 4)

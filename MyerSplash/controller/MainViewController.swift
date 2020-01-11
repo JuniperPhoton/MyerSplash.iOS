@@ -46,7 +46,6 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         }
 
         let bar = createTopTabBar()
-        bar.fadesContentEdges = true
         addBar(bar, dataSource: self, at: .top)
 
         // MARK: statusBarPlaceholder
