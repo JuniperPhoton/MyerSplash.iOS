@@ -12,6 +12,8 @@ import RxSwift
 
 class DownloadItemCell: UICollectionViewCell {
     static let ID = "DownloadItemCell"
+    
+    private static let TAG = "DownloadItemCell"
 
     static let BOTTOM_BUTTON_HEIGHT = 50
 
@@ -19,30 +21,50 @@ class DownloadItemCell: UICollectionViewCell {
 
     private var mainImageView: DayNightImageView!
     private var button: DownloadButton!
+    private var downloadRoot: UIView!
+    
+    private var progressLayer: CALayer!
 
     var onClickEdit: ((UnsplashImage) -> Void)? = nil
     var onClickDownload: ((UnsplashImage) -> Void)? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        self.backgroundColor = .black
+        
+        downloadRoot = UIView()
+        downloadRoot.backgroundColor = .getDefaultLabelUIColor()
 
         button = DownloadButton()
         button.contentHorizontalAlignment = .leading
 
-        button.setTitleColor(.getDefaultBackgroundUIColor(), for: .normal)
-        button.backgroundColor = .getDefaultLabelUIColor()
+        button.setTitleColor(.white, for: .normal)
+        
         button.addTarget(self, action: #selector(handleClickedSetAs), for: .touchUpInside)
         button.showsTouchWhenHighlighted = false
         button.layer.cornerRadius = 0
+        
+        progressLayer = CALayer()
+        progressLayer.needsDisplayOnBoundsChange = true
+        progressLayer.frame = CGRect(x: 0, y: 0, width: 10, height: DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
+        downloadRoot.layer.addSublayer(progressLayer)
+        downloadRoot.layer.masksToBounds = true
+        
+        downloadRoot.addSubview(button)
+        
+        button.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
 
         mainImageView = DayNightImageView()
         mainImageView.clipsToBounds = true
         mainImageView.applyMask()
 
         self.contentView.addSubview(mainImageView)
-        self.contentView.addSubview(button)
+        self.contentView.addSubview(downloadRoot)
 
-        button.snp.makeConstraints { (maker) in
+        downloadRoot.snp.makeConstraints { (maker) in
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
             maker.bottom.equalToSuperview()
@@ -67,6 +89,10 @@ class DownloadItemCell: UICollectionViewCell {
 
     private var disposable: Disposable? = nil
     private var downloadItem: DownloadItem? = nil
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
 
     func bind(_ image: UnsplashImage) {
         guard let view = mainImageView else {
@@ -79,8 +105,9 @@ class DownloadItemCell: UICollectionViewCell {
             ImageIO.loadImage(url: url, intoView: view)
         }
 
-        button.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
-
+        downloadRoot.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
+        updateProgressLayer()
+        
         let isLight = image.themeColor.isLightColor()
 
         if isLight {
@@ -104,7 +131,29 @@ class DownloadItemCell: UICollectionViewCell {
 
             self.downloadItem = element
             self.button.updateStatus(element)
+            self.updateProgressLayer()
         }
+    }
+    
+    private func updateProgressLayer() {
+        let cellWidth = downloadRoot.bounds.width
+        var progress: Float
+        
+        if let downloadItem = self.downloadItem {
+            switch downloadItem.status {
+            case DownloadStatus.Downloading.rawValue:
+                progress = downloadItem.progress
+            default:
+                progress = 1.0
+            }
+            
+            progressLayer.backgroundColor = downloadItem.unsplashImage!.themeColor.cgColor
+        } else {
+            progress = 0.0
+        }
+        
+        let layerWidth = Int(ceil(cellWidth * CGFloat(progress)))
+        progressLayer.frame = CGRect(x: 0, y: 0, width: layerWidth, height: DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
     }
 
     func unbind() {

@@ -119,7 +119,7 @@ class DownloadManager: NSObject {
             AppDb.instance.insertToDb(item)
         }
 
-        dbQueue.async(execute: insertWork)
+        dbQueue.sync(execute: insertWork)
 
         insertWork.notify(queue: DispatchQueue.main, execute: {
             showToast(R.strings.download_in_background)

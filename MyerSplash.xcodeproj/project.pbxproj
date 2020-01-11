@@ -192,7 +192,6 @@
 				54A56B10293331F08D52173B /* ToastView.swift */,
 				54A56D5065F7E6CC380396F3 /* SettingsItem.swift */,
 				54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */,
-				54A560D859A7C4BEFD55ADD4 /* ImageDetailView.swift */,
 				1A54F6D86983A7220256314E /* DayNightImageView.swift */,
 				22E496B623C8CA0A00B836F0 /* DownloadButton.swift */,
 			);
@@ -202,6 +201,7 @@
 		54A56784A667D3A8D353B24A /* view */ = {
 			isa = PBXGroup;
 			children = (
+				54A560D859A7C4BEFD55ADD4 /* ImageDetailView.swift */,
 				54A5658DBD4340095B8030E9 /* widget */,
 				54A5614D781F22296CE77481 /* vcview */,
 				54A56CB57A8144BFC40E7E39 /* cell */,

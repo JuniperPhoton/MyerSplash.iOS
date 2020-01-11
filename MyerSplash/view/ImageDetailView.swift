@@ -19,11 +19,14 @@ class ImageDetailView: UIView {
     private var authorButton: UIButton!
     private var authorStack: UIStackView!
     private var downloadButton: DownloadButton!
+    private var downloadRoot: UIView!
 
     private var initFrame: CGRect? = nil
     private var bindImage: UnsplashImage? = nil
 
     weak var delegate: ImageDetailViewDelegate? = nil
+
+    private var progressLayer: CALayer!
 
     private var disposable: Disposable? = nil
 
@@ -87,11 +90,21 @@ class ImageDetailView: UIView {
         authorStack.axis = NSLayoutConstraint.Axis.vertical
         authorStack.spacing = 2
 
+        downloadRoot = UIView()
+        progressLayer = CALayer()
+        downloadRoot.layer.addSublayer(progressLayer)
+        downloadRoot.layer.masksToBounds = true
+        downloadRoot.layer.cornerRadius = CGFloat(Dimensions.SMALL_ROUND_CORNOR)
+        
         downloadButton = DownloadButton()
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
-
+        downloadRoot.addSubview(downloadButton)
+        downloadButton.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
+        
         extraInformationView.addSubview(authorStack)
-        extraInformationView.addSubview(downloadButton)
+        extraInformationView.addSubview(downloadRoot)
 
         addSubview(backgroundView)
         addSubview(extraInformationView)
@@ -110,11 +123,11 @@ class ImageDetailView: UIView {
 
         authorStack.snp.makeConstraints { maker in
             maker.left.equalTo(self.extraInformationView.snp.left).offset(12)
-            maker.right.lessThanOrEqualTo(downloadButton.snp.left).offset(-8)
+            maker.right.lessThanOrEqualTo(downloadRoot.snp.left).offset(-8)
             maker.centerY.equalTo(self.extraInformationView.snp.centerY)
         }
 
-        downloadButton.snp.makeConstraints { maker in
+        downloadRoot.snp.makeConstraints { maker in
             maker.width.equalTo(100)
             maker.centerY.equalTo(self.extraInformationView.snp.centerY)
             maker.right.equalTo(self.extraInformationView.snp.right).offset(-20)
@@ -203,6 +216,7 @@ class ImageDetailView: UIView {
             Log.info(tag: ImageDetailView.self.description(), "download status: \(item.status)")
 
             self.downloadButton.updateStatus(item)
+            self.updateProgressLayer()
         })
 
         mainImageView.frame = initFrame
@@ -230,7 +244,42 @@ class ImageDetailView: UIView {
         authorButton.setAttributedTitle(underlineAttributedString, for: .normal)
 
         downloadButton.setTitleColor(revertTextColor, for: .normal)
-        downloadButton.backgroundColor = textColor
+        downloadRoot.backgroundColor = textColor.withAlphaComponent(0.4)
+        
+        updateProgressLayer()
+    }
+    
+    private func updateProgressLayer() {
+        guard let image = self.bindImage else {
+            return
+        }
+        
+        guard let downloadItem = self.downloadItem else {
+            return
+        }
+        
+        let buttonWidth = downloadRoot.bounds.width
+        let buttonHeight = downloadRoot.bounds.height
+
+        var progress: Float
+        
+        switch downloadItem.status {
+        case DownloadStatus.Downloading.rawValue:
+            progress = downloadItem.progress
+        default:
+            progress = 1.0
+        }
+        
+        if image.themeColor.isLightColor() {
+            progressLayer.backgroundColor = UIColor.black.cgColor
+        } else {
+            progressLayer.backgroundColor = UIColor.white.cgColor
+        }
+                
+        let layerWidth = Int(ceil(buttonWidth * CGFloat(progress)))
+        progressLayer.frame = CGRect(x: 0, y: 0, width: layerWidth, height: Int(buttonHeight))
+        
+        Log.info(tag: "detailsview", "layer bounds is \(progressLayer.frame), progress: \(progress)")
     }
 
     private func resetExtraInformationConstraint() {
