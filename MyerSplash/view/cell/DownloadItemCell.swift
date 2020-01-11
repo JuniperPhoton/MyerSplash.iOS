@@ -27,6 +27,7 @@ class DownloadItemCell: UICollectionViewCell {
 
     var onClickEdit: ((UnsplashImage) -> Void)? = nil
     var onClickDownload: ((UnsplashImage) -> Void)? = nil
+    var onDownloadItemUpdated: ((DownloadItem) -> Void)? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -132,6 +133,8 @@ class DownloadItemCell: UICollectionViewCell {
             self.downloadItem = element
             self.button.updateStatus(element)
             self.updateProgressLayer()
+            
+            self.onDownloadItemUpdated?(element)
         }
     }
     
@@ -147,7 +150,7 @@ class DownloadItemCell: UICollectionViewCell {
                 progress = 1.0
             }
             
-            progressLayer.backgroundColor = downloadItem.unsplashImage!.themeColor.cgColor
+            progressLayer.backgroundColor = downloadItem.unsplashImage!.themeColor.mixBlackInDarkMode().cgColor
         } else {
             progress = 0.0
         }

@@ -228,7 +228,7 @@ class ImageDetailView: UIView {
         let themeColor = image.themeColor
         let isThemeLight = themeColor.isLightColor()
 
-        extraInformationView.backgroundColor = themeColor
+        extraInformationView.backgroundColor = themeColor.mixBlackInDarkMode()
 
         photoByLabel.text = image.isUnsplash ? R.strings.author : R.strings.recommend_by
 

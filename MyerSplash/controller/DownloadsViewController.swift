@@ -145,17 +145,24 @@ extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDe
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let downloadItem = downloadItems[indexPath.row]
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DownloadItemCell.ID, for: indexPath) as! DownloadItemCell
         
+        let downloadItem = self.downloadItems[indexPath.row]
+
         cell.bind(downloadItem.unsplashImage!)
         cell.onClickEdit = { [weak self] (image) in
-            self?.presentEdit(item: downloadItem)
+            guard let self = self else { return }
+            let downloadItem = self.downloadItems[indexPath.row]
+            self.presentEdit(item: downloadItem)
         }
         cell.onClickDownload = { [weak self] (image) in
             guard let self = self else { return }
             DownloadManager.instance.prepareToDownload(vc: self, image: image)
+        }
+        cell.onDownloadItemUpdated = { [weak self] (item) in
+            guard let self = self else { return }
+            self.downloadItems[indexPath.row] = item
+            Log.info(tag: "downloadcollection", "update item at row \(indexPath.row), filePath: \(item.fileURL ?? "")")
         }
         return cell
     }
