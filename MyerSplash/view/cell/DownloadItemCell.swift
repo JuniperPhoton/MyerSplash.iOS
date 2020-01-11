@@ -84,9 +84,9 @@ class DownloadItemCell: UICollectionViewCell {
         let isLight = image.themeColor.isLightColor()
 
         if isLight {
-            button.titleLabel?.textColor = .black
+            button.setTitleColor(.black, for: .normal)
         } else {
-            button.titleLabel?.textColor = .white
+            button.setTitleColor(.white, for: .normal)
         }
 
         unbind()

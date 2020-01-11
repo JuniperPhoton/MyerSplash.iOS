@@ -24,6 +24,7 @@
 
 "search_hint" = "Search in English";
 "cancel" = "CANCEL";
+"download_cancelled" = "Cancelled";
 
 "no_network" = "Network unavailable :(";
 

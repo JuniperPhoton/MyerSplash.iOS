@@ -23,6 +23,12 @@ class DownloadManager: NSObject {
     private override init() {
         // ignored
     }
+    
+    func markDownloadingToFailed () {
+        dbQueue.async {
+            AppDb.instance.updateItemsToFailed()
+        }
+    }
 
     func addObserver(_ image: UnsplashImage, _ observer: @escaping (Event<DownloadItem>) -> Void) -> Disposable {
         let disposable = publishSubject.observeOn(MainScheduler.instance).subscribe(observer)
@@ -49,6 +55,7 @@ class DownloadManager: NSObject {
     func cancel(id: String) {
         let request = downloadRecord[id]
         if request != nil {
+            showToast(R.strings.download_cancelled)
             Log.warn(tag: DownloadManager.TAG, "begin to cancel")
             request?.cancel()
         } else {

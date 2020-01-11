@@ -18,6 +18,8 @@ class DownloadButton: UIButton {
         titleLabel!.font = titleLabel!.font.with(traits: .traitBold,
                 fontSize: FontSizes.NORMAL)
 
+        adjustsImageWhenHighlighted = false
+        
         let inset = UIEdgeInsets.init(top: 8, left: 8, bottom: 8, right: 8);
         contentEdgeInsets = inset
 
@@ -35,7 +37,7 @@ class DownloadButton: UIButton {
         case DownloadStatus.Success.rawValue:
             self.setTitle(R.strings.edit, for: .normal)
         case DownloadStatus.Failed.rawValue:
-            self.setTitle(R.strings.download, for: .normal)
+            self.setTitle(R.strings.retry, for: .normal)
         default:
             self.setTitle(R.strings.download, for: .normal)
         }

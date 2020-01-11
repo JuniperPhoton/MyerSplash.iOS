@@ -6,6 +6,8 @@ class ToastView: UILabel {
     static let PADDING = CGFloat(10)
     static let SHOWING_HIDING_DURATION_SEC = 0.2
     static let STAYING_DURATION_SEC = 2.0
+    
+    private static var toast: ToastView? = nil
 
     /**
      Use the Builder of ToastView instead.
@@ -50,6 +52,9 @@ class ToastView: UILabel {
             guard let root = root else {
                 fatalError("Root view should not be nil")
             }
+            
+            ToastView.toast?.removeFromSuperview()
+            ToastView.toast = nil
 
             let tv = ToastView(frame: CGRect.zero)
             tv.text = text
@@ -61,6 +66,8 @@ class ToastView: UILabel {
                 maker.centerX.equalTo(root)
             }
 
+            ToastView.toast = tv
+            
             return tv
         }
     }
@@ -72,7 +79,7 @@ class ToastView: UILabel {
             return contentSize
         }
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         initUi()
@@ -101,6 +108,7 @@ class ToastView: UILabel {
                 },
                 completion: { [weak self] b in
                     self?.removeFromSuperview()
+                    ToastView.toast = nil
                 })
     }
 
@@ -108,8 +116,9 @@ class ToastView: UILabel {
         self.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
         self.layer.backgroundColor = UIColor.white.cgColor
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowRadius = 8
+        self.layer.shadowRadius = 5
         self.layer.shadowOpacity = 0.2
+        self.layer.shadowOffset = CGSize(width: 4, height: 8)
         self.textColor = UIColor.black
 
         self.alpha = 0.0
@@ -121,6 +130,6 @@ class ToastView: UILabel {
     }
 
     override func drawText(in rect: CGRect) {
-        super.drawText(in: rect.insetBy(dx: ToastView.PADDING, dy: 0))
+        super.drawText(in: rect.insetBy(dx: ToastView.PADDING, dy: 6))
     }
 }

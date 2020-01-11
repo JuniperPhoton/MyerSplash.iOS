@@ -31,6 +31,20 @@ class AppDb {
             try? db.create(table: AppDb.DOWNLOADS_TABLE, of: DownloadItem.self)
         }
     }
+    
+    func updateItemsToFailed() {
+        do {
+            let row: [ColumnCodableBase] = [DownloadStatus.Failed.rawValue]
+
+            try db.update(table: AppDb.DOWNLOADS_TABLE,
+                          on: [DownloadItem.Properties.status],
+                          with: [DownloadStatus.Failed.rawValue],
+                          where: DownloadItem.Properties.status == DownloadStatus.Downloading.rawValue,
+                          orderBy: nil, limit: nil, offset: nil)
+        } catch {
+            // do nothing
+        }
+    }
 
     func insertToDb(_ item: DownloadItem) {
         do {

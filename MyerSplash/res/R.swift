@@ -87,6 +87,8 @@ class R {
 
         static let metered_dialog_title = NSLocalizedString("metered_dialog_title", comment: "")
         static let metered_dialog_message = NSLocalizedString("metered_dialog_message", comment: "")
+        
+        static let download_cancelled = NSLocalizedString("download_cancelled", comment: "")
 
         private init() {
             

@@ -96,6 +96,8 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
                 height: UIScreen.main.bounds.height))
         imageDetailView.delegate = self
         self.view.addSubview(imageDetailView)
+        
+        DownloadManager.instance.markDownloadingToFailed()
     }
 
     func onRequestEdit(image: UnsplashImage) {

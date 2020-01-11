@@ -24,6 +24,7 @@
 
 "search_hint" = "请用英文搜索";
 "cancel" = "取消";
+"download_cancelled" = "下载取消了";
 
 "no_network" = "没有网络，请稍后再试";
 
