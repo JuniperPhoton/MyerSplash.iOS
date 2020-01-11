@@ -117,9 +117,8 @@ class UnsplashImage: ColumnJSONCodable {
 
     var fileName: String {
         get {
-            let name = user?.name ?? "author"
             let id = self.id ?? "id"
-            return "\(name)-\(id)-\(tagForDownload).jpg"
+            return "\(id)-\(tagForDownload).jpeg"
         }
     }
 

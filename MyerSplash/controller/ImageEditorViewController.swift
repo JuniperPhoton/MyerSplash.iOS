@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import MaterialComponents
 import Nuke
+import RxSwift
+import func AVFoundation.AVMakeRect
 
 class ImageEditorViewController: UIViewController {
     private static let TAG = "ImageEditViewController"
@@ -22,6 +24,7 @@ class ImageEditorViewController: UIViewController {
     }
 
     private var image: UnsplashImage!
+    private var item: DownloadItem!
 
     private var indicator: MDCActivityIndicator!
     private var exposureSlider: MDCSlider!
@@ -30,8 +33,9 @@ class ImageEditorViewController: UIViewController {
     private var maskView: UIView!
     private var homePreviewView: UIImageView!
 
-    init(image: UnsplashImage) {
-        self.image = image
+    init(item: DownloadItem) {
+        self.item = item
+        self.image = item.unsplashImage
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -181,7 +185,7 @@ class ImageEditorViewController: UIViewController {
             maker.height.equalTo(40)
         }
 
-        loadImage(image: image)
+        loadImage(item: item)
     }
 
     @objc
@@ -199,7 +203,13 @@ class ImageEditorViewController: UIViewController {
     }
 
     private func compose() {
-        guard let image = ImageCache.shared[getImageRequest(self.image.downloadUrl!)] else {
+        guard let relativePath = item.fileURL else {
+            return
+        }
+        
+        let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+
+        guard let image = UIImage(contentsOfFile: url.path) else {
             Log.warn(tag: ImageEditorViewController.TAG, "error on getting cached file")
             return
         }
@@ -216,7 +226,7 @@ class ImageEditorViewController: UIViewController {
         let foregroundMask = CIImage(color: foregroundCiColor)
 
         let context = CIContext()
-
+        
         if let currentFilter = CIFilter(name: "CISourceOverCompositing") {
             currentFilter.setValue(foregroundMask, forKey: kCIInputImageKey)
             currentFilter.setValue(ciImage, forKey: kCIInputBackgroundImageKey)
@@ -261,33 +271,57 @@ class ImageEditorViewController: UIViewController {
         maskView.backgroundColor = UIColor.black.withAlphaComponent(CGFloat(actualDimValue))
     }
 
-    private func getImageRequest(_ url: String) -> ImageRequest {
-        let screenBounds = UIScreen.main.bounds
-        return ImageRequest(url: URL(string: url)!,
-                processors: [ImageProcessor.Resize(size: CGSize(width: screenBounds.width, height: screenBounds.height))],
-                priority: .high)
-    }
-
-    private func loadImage(image: UnsplashImage) {
-        if let url = image.downloadUrl {
-            Nuke.loadImage(with: getImageRequest(url),
-                    options: ImageLoadingOptions(
-                            placeholder: nil,
-                            transition: .fadeIn(duration: 0.3),
-                            failureImage: nil,
-                            failureImageTransition: nil,
-                            contentModes: .init(success: .scaleAspectFill, failure: .center, placeholder: .center)),
-                    into: imageView, progress: nil, completion: { [weak self] (result) in
-                switch result {
-                case .success:
-                    Log.info(tag: ImageEditorViewController.TAG, "success on loading image")
-                    self?.indicator.isHidden = true
-                case .failure(let e):
-                    self?.indicator.isHidden = false
-                    Log.warn(tag: ImageEditorViewController.TAG, "error on loading image: \(e)")
+    private func loadImage(item: DownloadItem) {
+        if let relativePath = item.fileURL {
+            Log.info(tag: ImageEditorViewController.TAG, "about to load image of \(relativePath)")
+            
+            let screenBounds = UIScreen.main.bounds
+            
+            var width = item.unsplashImage!.width
+            if width == 0 {
+                width = 3
+            }
+            
+            var height = item.unsplashImage!.height
+            if height == 0 {
+                height = 2
+            }
+            
+            let imageRatio = CGFloat(width) / CGFloat(height)
+            let screenRatio = CGFloat(screenBounds.width) / CGFloat(screenBounds.height)
+            
+            var targetWidth = 0
+            var targetHeight = 0
+            
+            targetHeight = Int(max(screenBounds.height * (screenRatio) / imageRatio, screenBounds.height))
+            targetWidth = Int(targetHeight.toCGFloat() * imageRatio)
+                        
+            Log.info(tag: ImageEditorViewController.TAG, "target w: \(targetWidth), target h: \(targetHeight)")
+            
+            let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+            
+            DispatchQueue.global().async {
+                let resizedImage = ImageIO.resizedImage(at: url, for: CGSize(width: targetWidth, height: targetHeight))
+                
+                DispatchQueue.main.async {
+                    self.indicator.isHidden = true
+                    self.loadImage(resizedImage)
                 }
-            })
+            }
+        } else {
+            loadImage(nil)
         }
+    }
+    
+    private func loadImage(_ uiImage: UIImage?) {
+        if uiImage == nil {
+            showToast(R.strings.failed_to_load)
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = uiImage
     }
 
     @objc

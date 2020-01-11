@@ -156,8 +156,8 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
         }
     }
 
-    func onRequestEdit(image: UnsplashImage) {
-        presentEdit(image: image)
+    func onRequestEdit(item: DownloadItem) {
+        presentEdit(item: item)
     }
 
     func onRequestOpenUrl(urlString: String) {

@@ -63,3 +63,5 @@
 
 "shortcut_search" = "搜索";
 "shortcut_downloads" = "下载管理";
+
+"failed_to_load" = "加载失败 :(";

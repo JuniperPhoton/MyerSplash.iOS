@@ -99,8 +99,8 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         DownloadManager.instance.markDownloadingToFailed()
     }
 
-    func onRequestEdit(image: UnsplashImage) {
-        presentEdit(image: image)
+    func onRequestEdit(item: DownloadItem) {
+        presentEdit(item: item)
     }
 
     @objc

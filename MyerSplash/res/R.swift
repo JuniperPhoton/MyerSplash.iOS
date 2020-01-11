@@ -92,6 +92,8 @@ class R {
         static let shortcut_search = NSLocalizedString("shortcut_search", comment: "")
         static let shortcut_downloads = NSLocalizedString("shortcut_downloads", comment: "")
 
+        static let failed_to_load = NSLocalizedString("failed_to_load", comment: "")
+
         private init() {
             
         }

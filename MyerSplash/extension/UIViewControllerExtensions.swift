@@ -11,8 +11,8 @@ import UIKit
 import MaterialComponents
 
 extension UIViewController {
-    func presentEdit(image: UnsplashImage) {
-        let vc = ImageEditorViewController(image: image)
+    func presentEdit(item: DownloadItem) {
+        let vc = ImageEditorViewController(item: item)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

@@ -8,7 +8,7 @@ protocol ImageDetailViewDelegate: class {
     func onHidden()
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
-    func onRequestEdit(image: UnsplashImage)
+    func onRequestEdit(item: DownloadItem)
 }
 
 class ImageDetailView: UIView {
@@ -169,7 +169,7 @@ class ImageDetailView: UIView {
             break
         case DownloadStatus.Success.rawValue:
             Log.info(tag: ImageDetailView.self.description(), "click on success")
-            delegate?.onRequestEdit(image: bindImage)
+            delegate?.onRequestEdit(item: downloadItem!)
             break
         default:
             delegate?.onRequestImageDownload(image: bindImage)
