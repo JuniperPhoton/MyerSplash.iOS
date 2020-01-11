@@ -30,10 +30,10 @@
 		227D5D2423C23DEA00B2CC4A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227D5D2323C23DEA00B2CC4A /* Reachability.swift */; };
 		22E496B323C8B5A500B836F0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B223C8B5A500B836F0 /* Log.swift */; };
 		22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B623C8CA0A00B836F0 /* DownloadButton.swift */; };
+		22E496B923C9952200B836F0 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B823C9952200B836F0 /* R.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56061449C955941092B50 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D0B25C0DD1328A6C717 /* AppSettings.swift */; };
 		54A560A877C5BED1896FA8C5 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56F847E06CBA141699C1F /* StringExtension.swift */; };
-		54A56138C1DC0A93A94EE7D5 /* FloatingActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A567D34E47588666380237 /* FloatingActionButton.swift */; };
 		54A56163F93551D241697C6F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D82CB9E1C0EF954ECE2 /* BaseViewController.swift */; };
 		54A562670BEC508CD1903C49 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A563C64A027840336DE12B /* Keys.swift */; };
 		54A5633E122F31E30C40824D /* SettingsSwitchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A563330188B6094B9D072F /* SettingsSwitchItem.swift */; };
@@ -93,6 +93,7 @@
 		227D5D2323C23DEA00B2CC4A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		22E496B223C8B5A500B836F0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
+		22E496B823C9952200B836F0 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
 		54A560766AA522E37891C2A1 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
@@ -106,7 +107,6 @@
 		54A566581177A56512E3DE30 /* UnsplashImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsplashImage.swift; sourceTree = "<group>"; };
 		54A567873B60B294584A7F5A /* UIFontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
 		54A567940B6AD767A48580B6 /* FontSizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontSizes.swift; sourceTree = "<group>"; };
-		54A567D34E47588666380237 /* FloatingActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingActionButton.swift; sourceTree = "<group>"; };
 		54A568C6D6C5849AEBC6D6C0 /* ErrorHintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHintView.swift; sourceTree = "<group>"; };
 		54A568D0616F40376A967B11 /* UserDefaultsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsExtension.swift; sourceTree = "<group>"; };
 		54A56933262294E2EBAE4EBF /* SettingsGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsGroup.swift; sourceTree = "<group>"; };
@@ -183,7 +183,6 @@
 		54A5658DBD4340095B8030E9 /* widget */ = {
 			isa = PBXGroup;
 			children = (
-				54A567D34E47588666380237 /* FloatingActionButton.swift */,
 				54A568C6D6C5849AEBC6D6C0 /* ErrorHintView.swift */,
 				54A56933262294E2EBAE4EBF /* SettingsGroup.swift */,
 				54A563330188B6094B9D072F /* SettingsSwitchItem.swift */,
@@ -280,6 +279,7 @@
 				54A567940B6AD767A48580B6 /* FontSizes.swift */,
 				54A56C275843D1B6C0016A44 /* Dimensions.swift */,
 				54A5610ACB2BC8B7B3465EE3 /* Values.swift */,
+				22E496B823C9952200B836F0 /* R.swift */,
 			);
 			path = res;
 			sourceTree = "<group>";
@@ -507,7 +507,6 @@
 				54A560A877C5BED1896FA8C5 /* StringExtension.swift in Sources */,
 				54A56894511BAF5E3DC295F6 /* UnsplashUser.swift in Sources */,
 				54A56720CE788E9F16E9E2E2 /* Request.swift in Sources */,
-				54A56138C1DC0A93A94EE7D5 /* FloatingActionButton.swift in Sources */,
 				2268722D23C61F2D00F921F4 /* AppDb.swift in Sources */,
 				22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */,
 				54A56DCFEF6798D1187393D4 /* Colors.swift in Sources */,
@@ -519,6 +518,7 @@
 				54A5673F06B3997A1D9F10B5 /* SettingsGroup.swift in Sources */,
 				54A5633E122F31E30C40824D /* SettingsSwitchItem.swift in Sources */,
 				54A5665E01B66E0F80499903 /* UserDefaultsExtension.swift in Sources */,
+				22E496B923C9952200B836F0 /* R.swift in Sources */,
 				54A562670BEC508CD1903C49 /* Keys.swift in Sources */,
 				54A56BF05F180815B938D111 /* ToastView.swift in Sources */,
 				54A56709576E7FF86A3B5D92 /* SettingsItem.swift in Sources */,
@@ -682,12 +682,12 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 100;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -705,12 +705,12 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 100;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

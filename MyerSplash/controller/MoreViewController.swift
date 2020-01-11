@@ -47,7 +47,7 @@ class MoreViewController: TabmanViewController {
         addBar(bar, dataSource: self, at: .top)
 
         let closeButton = UIButton()
-        let closeImage = UIImage.init(named: "ic_clear_white")!.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(named: R.ic_clear)!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         closeButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()

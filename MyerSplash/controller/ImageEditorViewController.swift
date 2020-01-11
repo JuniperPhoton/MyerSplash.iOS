@@ -23,7 +23,6 @@ class ImageEditorViewController: UIViewController {
 
     private var image: UnsplashImage!
 
-    private var closeRippleController: MDCRippleTouchController!
     private var indicator: MDCActivityIndicator!
     private var exposureSlider: MDCSlider!
 
@@ -65,7 +64,7 @@ class ImageEditorViewController: UIViewController {
         self.view.addSubview(closeButton)
 
         // MARK: HOME SCREEN
-        let homeIcon = UIImage(named: "ic_launcher")
+        let homeIcon = UIImage(named: R.ic_launcher)
         homePreviewView = UIImageView(image: homeIcon)
         homePreviewView.contentMode = .top
         homePreviewView.isHidden = true
@@ -77,16 +76,12 @@ class ImageEditorViewController: UIViewController {
 
         // MARK: CLOSE BUTTON
 
-        let closeImage = UIImage.init(named: "ic_clear_white")!.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(named: R.ic_clear)!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = .black
         closeButton.setShadowColor(UIColor.black.withAlphaComponent(0.3), for: .normal)
         closeButton.setBackgroundColor(.white)
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
-
-        closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
-                withColor: UIColor.white.withAlphaComponent(0.3),
-                maxRadius: 25)
 
         closeButton.snp.makeConstraints { (maker) in
             maker.top.equalToSuperview().offset(UIView.topInset)
@@ -124,7 +119,7 @@ class ImageEditorViewController: UIViewController {
         }
 
         // MARK: EXPOSURE ICON
-        let exposureIcon = UIImage(named: "ic_exposure")!.withRenderingMode(.alwaysTemplate)
+        let exposureIcon = UIImage(named: R.ic_exposure)!.withRenderingMode(.alwaysTemplate)
         let exposureImageView = UIImageView(image: exposureIcon)
         exposureImageView.tintColor = .white
         exposureImageView.contentMode = .scaleAspectFit
@@ -154,7 +149,7 @@ class ImageEditorViewController: UIViewController {
 
         // MARK: COMPOSE FAB
         let fab = MDCFloatingButton()
-        let doneImage = UIImage.init(named: "ic_done")?.withRenderingMode(.alwaysTemplate)
+        let doneImage = UIImage(named: R.ic_done)?.withRenderingMode(.alwaysTemplate)
         fab.setImage(doneImage, for: .normal)
         fab.tintColor = .white
         fab.backgroundColor = Colors.THEME.asUIColor()
@@ -171,7 +166,7 @@ class ImageEditorViewController: UIViewController {
 
         // MARK: HOME FAB
         let homeFab = MDCFloatingButton()
-        let homeImage = UIImage.init(named: "ic_home")?.withRenderingMode(.alwaysTemplate)
+        let homeImage = UIImage(named: R.ic_launcher)?.withRenderingMode(.alwaysTemplate)
         homeFab.setImage(homeImage, for: .normal)
         homeFab.tintColor = UIColor.black
         homeFab.backgroundColor = UIColor.white

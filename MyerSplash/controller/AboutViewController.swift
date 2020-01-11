@@ -42,7 +42,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
 
         let logo = UIImageView()
         logo.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        logo.image = UIImage.init(named: "Image")
+        logo.image = UIImage(named: R.ic_app_icon)
         logo.contentMode = .scaleAspectFit
         logo.clipsToBounds = true
 

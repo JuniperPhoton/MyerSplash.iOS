@@ -35,7 +35,7 @@ class SettingsView: UIView {
         self.setDefaultBackgroundColor()
 
         closeView = UIButton(type: .system)
-        closeView.setImage(UIImage(named: "ic_clear_white"), for: .normal)
+        closeView.setImage(UIImage(named: R.ic_clear), for: .normal)
         closeView.addTarget(self, action: #selector(onClickCloseButton), for: .touchUpInside)
         closeView.tintColor = UIColor.getDefaultLabelUIColor()
 

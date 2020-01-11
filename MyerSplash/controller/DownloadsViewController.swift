@@ -48,7 +48,7 @@ class DownloadsViewController: UIViewController {
         
         // MARK: FAB
         let fab = MDCFloatingButton()
-        let searchImage = UIImage.init(named: "ic_delete")?.withRenderingMode(.alwaysTemplate)
+        let searchImage = UIImage(named: R.ic_delete)?.withRenderingMode(.alwaysTemplate)
         fab.setImage(searchImage, for: .normal)
         fab.tintColor = UIColor.black
         fab.backgroundColor = UIColor.white

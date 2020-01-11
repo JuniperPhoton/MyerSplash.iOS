@@ -55,11 +55,11 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         // MARK: statusBarPlaceholder
         let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
         statusBarPlaceholder.backgroundColor = UIColor.getDefaultBackgroundUIColor()
-        self.view.addSubview(statusBarPlaceholder)
-
+        self.view.addSubview(statusBarPlaceholder)        
+        
         // MARK: MORE
         let moreButton = UIButton()
-        let moreImage = UIImage.init(named: "ic_more_horiz_white")!.withRenderingMode(.alwaysTemplate)
+        let moreImage = UIImage(named: R.ic_more)!.withRenderingMode(.alwaysTemplate)
         moreButton.setImage(moreImage, for: .normal)
         moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         moreButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -78,7 +78,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
         // MARK: FAB
         let fab = MDCFloatingButton()
-        let searchImage = UIImage.init(named: "round_search")?.withRenderingMode(.alwaysTemplate)
+        let searchImage = UIImage(named: R.ic_search)?.withRenderingMode(.alwaysTemplate)
         fab.setImage(searchImage, for: .normal)
         fab.tintColor = UIColor.black
         fab.backgroundColor = UIColor.white
