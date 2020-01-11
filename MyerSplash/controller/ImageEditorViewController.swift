@@ -32,6 +32,7 @@ class ImageEditorViewController: UIViewController {
     private var imageView: UIImageView!
     private var maskView: UIView!
     private var homePreviewView: UIImageView!
+    private var scrollView: UIScrollView!
 
     init(item: DownloadItem) {
         self.item = item
@@ -48,11 +49,17 @@ class ImageEditorViewController: UIViewController {
 
         self.view.backgroundColor = .black
 
+        scrollView = UIScrollView()
         imageView = UIImageView()
-
-        self.view.addSubview(imageView)
-
+        
+        scrollView.addSubview(imageView)
         imageView.snp.makeConstraints { (maker) in
+            maker.height.equalToSuperview()
+        }
+
+        self.view.addSubview(scrollView)
+
+        scrollView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
 
@@ -63,6 +70,7 @@ class ImageEditorViewController: UIViewController {
         maskView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
+        maskView.isUserInteractionEnabled = false
 
         let closeButton = MDCFloatingButton()
         self.view.addSubview(closeButton)
@@ -295,6 +303,13 @@ class ImageEditorViewController: UIViewController {
             
             targetHeight = Int(max(screenBounds.height * (screenRatio) / imageRatio, screenBounds.height))
             targetWidth = Int(targetHeight.toCGFloat() * imageRatio)
+            
+            scrollView.contentSize = CGSize(width: targetWidth, height: targetHeight)
+            
+            if targetWidth > Int(screenBounds.width) {
+                let point = CGPoint(x: Int((targetWidth.toCGFloat() - screenBounds.width) / 2), y: 0)
+                scrollView.setContentOffset(point, animated: false)
+            }
                         
             Log.info(tag: ImageEditorViewController.TAG, "target w: \(targetWidth), target h: \(targetHeight)")
             
