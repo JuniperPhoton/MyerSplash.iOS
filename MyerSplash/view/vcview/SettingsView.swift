@@ -55,18 +55,18 @@ class SettingsView: UIView {
         qualityGroup.label = "QUALITY"
 
         loadingQualityItem = SettingsItem(frame: CGRect.zero)
-        loadingQualityItem.title = "Browsing Quality (WIP)"
-        loadingQualityItem.content = AppSettings.LOADING_OPTIONS[AppSettings.loadingQuality()]
+        loadingQualityItem.title = "Browsing Quality"
         loadingQualityItem.onClicked = {
             self.popupListQualityChosenDialog()
         }
 
         savingQualityItem = SettingsItem(frame: CGRect.zero)
-        savingQualityItem.title = "Download Quality (WIP)"
-        savingQualityItem.content = AppSettings.SAVING_OPTIONS[AppSettings.savingQuality()]
+        savingQualityItem.title = "Download Quality"
         savingQualityItem.onClicked = {
             self.popupSavingQualityChosenDialog()
         }
+        
+        updateSingleChoiseItem()
 
         let clearItem = SettingsItem(frame: CGRect.zero)
         clearItem.title = "Clear cache"
@@ -103,18 +103,15 @@ class SettingsView: UIView {
             maker.top.equalToSuperview()
         }
     }
+    
+    private func updateSingleChoiseItem() {
+        loadingQualityItem.content = AppSettings.LOADING_OPTIONS[AppSettings.loadingQuality()]
+        savingQualityItem.content = AppSettings.SAVING_OPTIONS[AppSettings.savingQuality()]
+    }
 
     private func clearCache() {
         Nuke.ImageCache.shared.removeAll()
         self.showToast("Cleared")
-    }
-
-    func updatingSingleChoiceSelected(selectedIndex: Int, key: String) {
-        if (key == Keys.SAVING_QUALITY) {
-            savingQualityItem.content = AppSettings.SAVING_OPTIONS[selectedIndex]
-        } else {
-            loadingQualityItem.content = AppSettings.LOADING_OPTIONS[selectedIndex]
-        }
     }
 
     private func popupListQualityChosenDialog() {
@@ -123,7 +120,10 @@ class SettingsView: UIView {
                 title: loadingQualityItem.title,
                 options: AppSettings.LOADING_OPTIONS,
                 selected: selected)
-        presentBottomSheet(content)
+        presentBottomSheet(content,{ [weak self] i in
+            UserDefaults.standard.setValue(i, forKey: Keys.LOADING_QUALITY)
+            self?.updateSingleChoiseItem()
+        })
     }
 
     private func popupSavingQualityChosenDialog() {
@@ -132,14 +132,21 @@ class SettingsView: UIView {
                 title: savingQualityItem.title,
                 options: AppSettings.SAVING_OPTIONS,
                 selected: selected)
-        presentBottomSheet(content)
+        presentBottomSheet(content) { [weak self] i in
+            UserDefaults.standard.setValue(i, forKey: Keys.SAVING_QUALITY)
+            self?.updateSingleChoiseItem()
+        }
     }
 
-    private func presentBottomSheet(_ content: SingleChoiceDialog) {
+    private let transitionController = MDCDialogTransitionController()
+    
+    private func presentBottomSheet(_ content: SingleChoiceDialog, _ onSelected: @escaping (Int)->Void) {
         let targetController = DialogViewController(dialogContent: content)
-        let sheetController = MDCBottomSheetController(contentViewController: targetController)
-        sheetController.makeNormalDialogSize()
-        delegate?.present(vc: sheetController)
+        targetController.modalPresentationStyle = .custom;
+        targetController.transitioningDelegate = self.transitionController;
+        targetController.makeNormalDialogSize()
+        targetController.onItemSelected = onSelected
+        delegate?.present(vc: targetController)
     }
 
     @objc
@@ -148,7 +155,7 @@ class SettingsView: UIView {
     }
 }
 
-extension MDCBottomSheetController {
+extension DialogViewController {
     func makeNormalDialogSize() {
         self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 230)
     }

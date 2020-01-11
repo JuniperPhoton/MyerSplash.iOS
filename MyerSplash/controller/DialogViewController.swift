@@ -6,10 +6,6 @@ protocol DialogContent {
     var title: String? { get set }
 }
 
-protocol SingleChoiceDelegate: class {
-    func onItemSelected(index: Int)
-}
-
 class SingleChoiceDialog: DialogContent {
     private (set) var options: [String]? = nil
     private (set) var selected: Int = 0
@@ -36,8 +32,8 @@ class DialogViewController: BaseViewController {
     private var dialogContentView: UIView!
 
     private var dialogContent: DialogContent?
-
-    weak var delegate: SingleChoiceDelegate? = nil
+    
+    var onItemSelected: ((Int)->Void)? = nil
 
     init(dialogContent: DialogContent) {
         super.init(nibName: nil, bundle: nil)
@@ -55,11 +51,7 @@ class DialogViewController: BaseViewController {
 
         dialogContentView = UIView()
         dialogContentView.backgroundColor = UIView.getDefaultDialogBackgroundUIColor()
-        dialogContentView.addGestureRecognizer(UITapGestureRecognizer())
-        dialogContentView.layer.cornerRadius = 12
-        dialogContentView.clipsToBounds = true
-        dialogContentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-
+        
         titleView = UILabel()
         titleView.text = dialogContent.title?.uppercased()
         titleView.textColor = UIColor.getDefaultLabelUIColor()
@@ -87,8 +79,10 @@ class DialogViewController: BaseViewController {
             let radioGroup = RadioButtonGroup(
                     options: choiceContent.options!,
                     selected: choiceContent.selected)
-            radioGroup.onItemClicked = { i in
-                self.delegate?.onItemSelected(index: i)
+            radioGroup.onItemClicked = { [weak self] i in
+                guard let self = self else { return }
+                
+                self.onItemSelected?(i)
                 self.dismiss(animated: true)
             }
             dialogContentView.addSubview(radioGroup)
