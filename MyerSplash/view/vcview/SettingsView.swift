@@ -65,7 +65,7 @@ class SettingsView: UIView {
         savingQualityItem.onClicked = {
             self.popupSavingQualityChosenDialog()
         }
-        
+
         updateSingleChoiseItem()
 
         let clearItem = SettingsItem(frame: CGRect.zero)
@@ -103,7 +103,7 @@ class SettingsView: UIView {
             maker.top.equalToSuperview()
         }
     }
-    
+
     private func updateSingleChoiseItem() {
         loadingQualityItem.content = AppSettings.LOADING_OPTIONS[AppSettings.loadingQuality()]
         savingQualityItem.content = AppSettings.SAVING_OPTIONS[AppSettings.savingQuality()]
@@ -120,7 +120,7 @@ class SettingsView: UIView {
                 title: loadingQualityItem.title,
                 options: AppSettings.LOADING_OPTIONS,
                 selected: selected)
-        presentBottomSheet(content,{ [weak self] i in
+        presentBottomSheet(content, { [weak self] i in
             UserDefaults.standard.setValue(i, forKey: Keys.LOADING_QUALITY)
             self?.updateSingleChoiseItem()
         })
@@ -139,8 +139,8 @@ class SettingsView: UIView {
     }
 
     private let transitionController = MDCDialogTransitionController()
-    
-    private func presentBottomSheet(_ content: SingleChoiceDialog, _ onSelected: @escaping (Int)->Void) {
+
+    private func presentBottomSheet(_ content: SingleChoiceDialog, _ onSelected: @escaping (Int) -> Void) {
         let targetController = DialogViewController(dialogContent: content)
         targetController.modalPresentationStyle = .custom;
         targetController.transitioningDelegate = self.transitionController;

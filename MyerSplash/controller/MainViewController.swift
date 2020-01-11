@@ -20,7 +20,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
                                    ImagesViewController(DeveloperImageRepo())]
 
     private var imageDetailView: ImageDetailView!
-    
+
     private var moreRippleController: MDCRippleTouchController!
 
     required init?(coder aDecoder: NSCoder) {
@@ -34,7 +34,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
     override func viewDidLoad() {
         self.automaticallyAdjustsChildInsets = true
-        
+
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -48,10 +48,10 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         let bar = createTopTabBar()
         bar.fadesContentEdges = true
         addBar(bar, dataSource: self, at: .top)
-        
+
         let an = self.barInsets
         print("ancor is ", an)
-        
+
         // MARK: statusBarPlaceholder
         let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
         statusBarPlaceholder.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -100,7 +100,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         imageDetailView.delegate = self
         self.view.addSubview(imageDetailView)
     }
-    
+
     func onRequestEdit(image: UnsplashImage) {
         presentEdit(image: image)
     }
@@ -114,7 +114,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
 
     // MARK: ImagesViewControllerDelegate
-    func onClickImage(rect: CGRect, image: UnsplashImage)-> Bool {
+    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool {
         imageDetailView?.show(initFrame: rect, image: image)
         return true
     }

@@ -13,7 +13,7 @@ import Alamofire
 import MaterialComponents.MaterialActivityIndicator
 
 protocol ImagesViewControllerDelegate: class {
-    func onClickImage(rect: CGRect, image: UnsplashImage)-> Bool
+    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool
     func onRequestDownload(image: UnsplashImage)
 }
 
@@ -39,18 +39,18 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     private var tableView: UITableView!
     private var refreshControl: UIRefreshControl!
-    
+
     private var errorHintView: ErrorHintView!
 
     private var imageRepo: ImageRepo? = nil
 
     private var indicator: MDCActivityIndicator!
     private var noItemView: UIView!
-    
+
     private var animateCellFinished = false
-    
+
     weak var delegate: ImagesViewControllerDelegate? = nil
-    
+
     var repoTitle: String? {
         get {
             return imageRepo?.title
@@ -101,25 +101,25 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             maker.width.equalTo(view)
             maker.top.equalTo(view)
         }
-        
+
         loadingFooterView = MDCActivityIndicator(frame: CGRect(x: 0,
                 y: 0,
                 width: UIScreen.main.bounds.width,
                 height: 100))
         loadingFooterView.cycleColors = [.getDefaultLabelUIColor()]
-        
+
         tableView.tableFooterView = loadingFooterView
 
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
         tableView.separatorStyle = .none
-                
+
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
         indicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
         view.addSubview(indicator)
-        
+
         errorHintView = ErrorHintView()
         errorHintView.onClickRetry = { [weak self] in
             self?.refreshData()
@@ -127,7 +127,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         errorHintView.isHidden = true
 
         view.addSubview(errorHintView)
-        
+
         errorHintView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
@@ -135,7 +135,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         indicator.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
         }
-        
+
         let noItemView = UILabel()
         noItemView.isHidden = true
         noItemView.text = "No Items :("
@@ -143,14 +143,14 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         noItemView.font = noItemView.font.with(traits: .traitBold).withSize(32)
         self.view.addSubview(noItemView)
         self.noItemView = noItemView
-        
+
         noItemView.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
         }
 
         refreshData()
     }
-    
+
     private func updateHintViews(_ success: Bool) {
         if !success {
             self.errorHintView.isHidden = false
@@ -158,16 +158,16 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             self.noItemView.isHidden = false
         }
     }
-    
+
     private func customRefreshControl() {
         refreshControl.tintColor = .clear
 
         let refreshIndicator = MDCActivityIndicator()
         refreshIndicator.startAnimating()
         refreshIndicator.cycleColors = [UIColor.getDefaultLabelUIColor()]
-        
+
         refreshControl.addSubview(refreshIndicator)
-        
+
         refreshIndicator.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
@@ -180,10 +180,10 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     @objc
     private func refreshData() {
         print("refresh data")
-        
+
         errorHintView.isHidden = true
         noItemView.isHidden = true
-        
+
         paging = 1
         loadData(true)
     }
@@ -208,7 +208,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         if (!canLoadMore) {
             return
         }
-        
+
         loadingFooterView.startAnimating()
         paging = paging + 1
         loadData(false)
@@ -221,7 +221,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     @objc
     private func onRefreshData() {
         print("onRefreshData")
-        
+
         self.refreshData()
 
         if (refreshControl.isRefreshing) {
@@ -245,7 +245,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         }
         cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage) -> Void in
             print("rect is ", rect)
-            
+
             if self?.delegate?.onClickImage(rect: rect, image: image) == true {
                 cell.isHidden = true
                 self?.tappedCell = cell
@@ -272,9 +272,9 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         if (animateCellFinished || maxCount < 0 || indexPath.row >= maxCount) {
             return
         }
-        
+
         let index = indexPath.row
-        
+
         if (index == maxCount - 1) {
             animateCellFinished = true
         }
@@ -301,19 +301,19 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             initialMaxVisibleCellCount = -1
             return
         }
-        
+
         let tableViewFrame = tableView.frame
         let refreshFrame = tableView.refreshControl?.frame
-        
+
         let tableViewBound = tableView.bounds
         let refreshBound = tableView.refreshControl?.bounds
-        
+
         print("tableViewFrame frame is ", tableViewFrame)
         print("tableViewFrame bounds is ", tableViewBound)
-        
+
         print("refreshFrame frame is ", refreshFrame ?? "")
         print("refreshFrame bounds is ", refreshBound ?? "")
-        
+
         print("contentInset is ", tableView.contentInset)
         print("contentOffset is ", tableView.contentOffset)
 

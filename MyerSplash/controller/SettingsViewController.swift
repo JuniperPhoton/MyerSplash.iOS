@@ -31,7 +31,7 @@ extension SettingsViewController: SettingsViewDelegate {
         vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         present(vc, animated: true)
     }
-    
+
     func onClickClose(shouldRefreshWhenDismiss: Bool) {
         print("onclick close")
         self.dismiss(animated: true)
@@ -39,7 +39,7 @@ extension SettingsViewController: SettingsViewDelegate {
             self.delegate?.refresh()
         }
     }
-    
+
     func present(vc: UIViewController) {
         self.present(vc, animated: true, completion: nil)
     }

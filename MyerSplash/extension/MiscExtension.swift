@@ -20,11 +20,11 @@ func showToast(_ text: String) {
         return
     }
     ToastView.Builder.init()
-        .attachTo(view)
-        .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
-        .setText(text)
-        .build()
-        .show()
+            .attachTo(view)
+            .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
+            .setText(text)
+            .build()
+            .show()
 }
 
 extension UIView {

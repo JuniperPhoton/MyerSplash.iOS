@@ -32,8 +32,8 @@ class DialogViewController: BaseViewController {
     private var dialogContentView: UIView!
 
     private var dialogContent: DialogContent?
-    
-    var onItemSelected: ((Int)->Void)? = nil
+
+    var onItemSelected: ((Int) -> Void)? = nil
 
     init(dialogContent: DialogContent) {
         super.init(nibName: nil, bundle: nil)
@@ -51,7 +51,7 @@ class DialogViewController: BaseViewController {
 
         dialogContentView = UIView()
         dialogContentView.backgroundColor = UIView.getDefaultDialogBackgroundUIColor()
-        
+
         titleView = UILabel()
         titleView.text = dialogContent.title?.uppercased()
         titleView.textColor = UIColor.getDefaultLabelUIColor()
@@ -80,8 +80,10 @@ class DialogViewController: BaseViewController {
                     options: choiceContent.options!,
                     selected: choiceContent.selected)
             radioGroup.onItemClicked = { [weak self] i in
-                guard let self = self else { return }
-                
+                guard let self = self else {
+                    return
+                }
+
                 self.onItemSelected?(i)
                 self.dismiss(animated: true)
             }

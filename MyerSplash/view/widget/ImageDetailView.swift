@@ -24,7 +24,7 @@ class ImageDetailView: UIView {
     private var bindImage: UnsplashImage? = nil
 
     weak var delegate: ImageDetailViewDelegate? = nil
-    
+
     private var disposable: Disposable? = nil
 
     private var finalFrame: CGRect {
@@ -149,7 +149,7 @@ class ImageDetailView: UIView {
         guard let bindImage = bindImage else {
             return
         }
-        
+
         switch downloadItem?.status {
         case DownloadStatus.Downloading.rawValue:
             DownloadManager.instance.cancel(id: bindImage.id!)
@@ -175,7 +175,7 @@ class ImageDetailView: UIView {
     @objc private func onClickBackground() {
         hideInternal()
     }
-    
+
     private var downloadItem: DownloadItem? = nil
 
     // MARK: Bind
@@ -184,23 +184,27 @@ class ImageDetailView: UIView {
               let image = bindImage else {
             return
         }
-        
+
         disposable?.dispose()
         disposable = DownloadManager.instance.addObserver(image, { [weak self] (e) in
-            guard let item = e.element else { return }
-            guard let self = self else { return }
+            guard let item = e.element else {
+                return
+            }
+            guard let self = self else {
+                return
+            }
 
             if item.id != image.id {
                 return
             }
-            
+
             self.downloadItem = item
-            
+
             Log.info(tag: ImageDetailView.self.description(), "download status: \(item.status)")
-            
+
             self.downloadButton.updateStatus(item)
         })
-        
+
         mainImageView.frame = initFrame
 
         if let listUrl = image.listUrl {
@@ -274,7 +278,7 @@ class ImageDetailView: UIView {
 
     private func hideInternal() {
         disposable?.dispose()
-        
+
         if (!self.extraInformationView.isHidden) {
             hideExtraInformationView {
                 self.hideImage()

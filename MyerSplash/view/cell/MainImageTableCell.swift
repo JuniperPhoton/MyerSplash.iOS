@@ -33,7 +33,7 @@ public class MainImageTableCell: UITableViewCell {
         downloadView = UIButton()
         downloadView.setImage(UIImage(
                 named: "ic_file_download_white")?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)),
-                              for: .normal)
+                for: .normal)
         downloadView.adjustsImageWhenHighlighted = false
         downloadView.addTarget(self, action: #selector(clickDownloadButton), for: .touchUpInside)
 

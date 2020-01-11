@@ -16,22 +16,22 @@ class DownloadManager: NSObject {
     static let instance = DownloadManager()
 
     private var publishSubject = PublishSubject<DownloadItem>()
-    private var downloadRecord = [String:DownloadRequest]()
-    
+    private var downloadRecord = [String: DownloadRequest]()
+
     private static let TAG = "DownloadManager"
 
     private override init() {
         // ignored
     }
 
-    func addObserver(_ image: UnsplashImage, _ observer: @escaping (Event<DownloadItem>) -> Void)-> Disposable {
+    func addObserver(_ image: UnsplashImage, _ observer: @escaping (Event<DownloadItem>) -> Void) -> Disposable {
         let disposable = publishSubject.observeOn(MainScheduler.instance).subscribe(observer)
-        
+
         checkDownloadStatusFirst(image)
-        
+
         return disposable
     }
-    
+
     private func checkDownloadStatusFirst(_ image: UnsplashImage) {
         dbQueue.async {
             guard let item = AppDb.instance.queryItemById(id: image.id!) else {
@@ -40,12 +40,12 @@ class DownloadManager: NSObject {
                 self.publishSubject.onNext(fakeItem)
                 return
             }
-            
+
             print("found download item in \(Thread.current)")
             self.publishSubject.onNext(item)
         }
     }
-    
+
     func cancel(id: String) {
         let request = downloadRecord[id]
         if request != nil {
@@ -124,19 +124,19 @@ class DownloadManager: NSObject {
             }
 
             Events.trackBeginDownloadEvent()
-            
+
             self.publishSubject.onNext(item)
 
             let request = Alamofire.download(unsplashImage.downloadUrl!, to: destination).downloadProgress(closure: { (progress) in
                 self.notifyProgress(downloadItem: item, progress: Float(progress.fractionCompleted))
             }).response { response in
                 self.downloadRecord.removeValue(forKey: item.id!)
-                
+
                 if response.error == nil, let imagePath = response.destinationURL?.path {
                     Log.info(tag: DownloadManager.TAG, "image downloaded!")
 
                     Events.trackDownloadEvent(true)
-                    
+
                     self.notifySuccess(downloadItem: item, imagePath: imagePath)
                     UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
                 } else {
@@ -145,11 +145,11 @@ class DownloadManager: NSObject {
                     Events.trackDownloadEvent(false, response.error?.localizedDescription)
                 }
             }
-            
+
             self.downloadRecord[unsplashImage.id!] = request
         })
     }
-    
+
     @objc
     private func onSavedOrError(_ image: UIImage,
                                 didFinishSavingWithError error: Error?,

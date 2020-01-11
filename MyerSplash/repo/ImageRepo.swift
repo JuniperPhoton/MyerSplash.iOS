@@ -120,7 +120,7 @@ class NewImageRepo: ImageRepo {
 
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
         return json(.get, Request.PHOTO_URL,
-                    parameters: Request.getDefaultParams(paging: page)).mapToList(appendTodayImage: page == 1)
+                parameters: Request.getDefaultParams(paging: page)).mapToList(appendTodayImage: page == 1)
     }
 }
 
@@ -153,7 +153,7 @@ class DeveloperImageRepo: ImageRepo {
 
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
         return json(.get, Request.DEVELOPER_PHOTOS_URL,
-                    parameters: Request.getDefaultParams(paging: page)).mapToList()
+                parameters: Request.getDefaultParams(paging: page)).mapToList()
     }
 }
 
@@ -166,9 +166,9 @@ class SearchImageRepo: ImageRepo {
             // read only
         }
     }
-    
+
     private var query: String? = nil
-    
+
     init(query: String?) {
         self.query = query
         super.init()
@@ -181,16 +181,16 @@ class SearchImageRepo: ImageRepo {
 
         var params = Request.getDefaultParams(paging: page)
         params["query"] = query
-        
+
         return json(.get, Request.SEARCH_URL, parameters: params)
-            .map { jsonResponse in
-                let json = JSON(jsonResponse)
-                let images = json["results"]
-                
-                return images.compactMap { s, json -> UnsplashImage? in
-                    UnsplashImage(json)
+                .map { jsonResponse in
+                    let json = JSON(jsonResponse)
+                    let images = json["results"]
+
+                    return images.compactMap { s, json -> UnsplashImage? in
+                        UnsplashImage(json)
+                    }
                 }
-        }
     }
 }
 
