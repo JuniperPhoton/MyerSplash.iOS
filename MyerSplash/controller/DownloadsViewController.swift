@@ -48,7 +48,7 @@ class DownloadsViewController: UIViewController {
         
         // MARK: FAB
         let fab = MDCFloatingButton()
-        let searchImage = UIImage(named: R.ic_delete)?.withRenderingMode(.alwaysTemplate)
+        let searchImage = UIImage(named: R.icons.ic_delete)?.withRenderingMode(.alwaysTemplate)
         fab.setImage(searchImage, for: .normal)
         fab.tintColor = UIColor.black
         fab.backgroundColor = UIColor.white
@@ -66,7 +66,7 @@ class DownloadsViewController: UIViewController {
         
         noItemView = UILabel()
         noItemView.isHidden = true
-        noItemView.text = "No Items"
+        noItemView.text = R.strings.no_items
         noItemView.textColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
         noItemView.font = noItemView.font.withSize(24)
         self.view.addSubview(noItemView)
@@ -91,12 +91,12 @@ class DownloadsViewController: UIViewController {
     
     @objc
     private func onClickDelete() {
-        let vc = MDCAlertController(title: "Delete download history?", message: "This operation won't delete photos in your devices")
+        let vc = MDCAlertController(title: R.strings.delete_dialog_title, message: R.strings.delete_dialog_message)
         vc.applyColors()
-        vc.addAction(MDCAlertAction(title: "CANCEL", emphasis: .high, handler: {(action) in
+        vc.addAction(MDCAlertAction(title: R.strings.cancel, emphasis: .high, handler: {(action) in
             vc.dismiss(animated: true, completion: nil)
         }))
-        vc.addAction(MDCAlertAction(title: "DELETE", handler: { [weak self] (action) in
+        vc.addAction(MDCAlertAction(title: R.strings.delete_dialog_action_delete, handler: { [weak self] (action) in
             self?.deleteItems()
         }))
         self.present(vc, animated: true, completion: nil)

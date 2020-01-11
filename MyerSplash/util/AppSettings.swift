@@ -1,8 +1,12 @@
 import Foundation
 
 class AppSettings {
-    static let SAVING_OPTIONS = ["Raw", "High (Default)", "Medium (Not recommended)"]
-    static let LOADING_OPTIONS = ["Large (Recommended)", "Small", "Thumbnail"]
+    static let SAVING_OPTIONS = [R.strings.settings_quality_download_large,
+                                 R.strings.settings_quality_download_small,
+                                 R.strings.settings_quality_download_thumb]
+    static let LOADING_OPTIONS = [R.strings.settings_quality_browsing_large,
+                                  R.strings.settings_quality_browsing_small,
+                                  R.strings.settings_quality_browsing_thumb]
 
     static let LOADING_QUALITY_DEFAULT = 0
     static let SAVING_QUALITY_DEFAULT = 1

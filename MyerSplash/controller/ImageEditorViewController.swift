@@ -64,7 +64,7 @@ class ImageEditorViewController: UIViewController {
         self.view.addSubview(closeButton)
 
         // MARK: HOME SCREEN
-        let homeIcon = UIImage(named: R.ic_launcher)
+        let homeIcon = UIImage(named: R.icons.ic_launcher)
         homePreviewView = UIImageView(image: homeIcon)
         homePreviewView.contentMode = .top
         homePreviewView.isHidden = true
@@ -76,7 +76,7 @@ class ImageEditorViewController: UIViewController {
 
         // MARK: CLOSE BUTTON
 
-        let closeImage = UIImage(named: R.ic_clear)!.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = .black
         closeButton.setShadowColor(UIColor.black.withAlphaComponent(0.3), for: .normal)
@@ -119,7 +119,7 @@ class ImageEditorViewController: UIViewController {
         }
 
         // MARK: EXPOSURE ICON
-        let exposureIcon = UIImage(named: R.ic_exposure)!.withRenderingMode(.alwaysTemplate)
+        let exposureIcon = UIImage(named: R.icons.ic_exposure)!.withRenderingMode(.alwaysTemplate)
         let exposureImageView = UIImageView(image: exposureIcon)
         exposureImageView.tintColor = .white
         exposureImageView.contentMode = .scaleAspectFit
@@ -149,7 +149,7 @@ class ImageEditorViewController: UIViewController {
 
         // MARK: COMPOSE FAB
         let fab = MDCFloatingButton()
-        let doneImage = UIImage(named: R.ic_done)?.withRenderingMode(.alwaysTemplate)
+        let doneImage = UIImage(named: R.icons.ic_done)?.withRenderingMode(.alwaysTemplate)
         fab.setImage(doneImage, for: .normal)
         fab.tintColor = .white
         fab.backgroundColor = Colors.THEME.asUIColor()
@@ -166,7 +166,7 @@ class ImageEditorViewController: UIViewController {
 
         // MARK: HOME FAB
         let homeFab = MDCFloatingButton()
-        let homeImage = UIImage(named: R.ic_launcher)?.withRenderingMode(.alwaysTemplate)
+        let homeImage = UIImage(named: R.icons.ic_home)?.withRenderingMode(.alwaysTemplate)
         homeFab.setImage(homeImage, for: .normal)
         homeFab.tintColor = UIColor.black
         homeFab.backgroundColor = UIColor.white
@@ -243,9 +243,9 @@ class ImageEditorViewController: UIViewController {
                                 didFinishSavingWithError error: Error?,
                                 contextInfo: UnsafeRawPointer) {
         if error == nil {
-            self.view.showToast("Saved to your album :D")
+            self.view.showToast(R.strings.saved_album)
         } else {
-            self.view.showToast("Failed to process image :(")
+            self.view.showToast(R.strings.failed_process)
         }
     }
 

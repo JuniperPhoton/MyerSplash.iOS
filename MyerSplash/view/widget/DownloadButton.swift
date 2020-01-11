@@ -13,7 +13,7 @@ class DownloadButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
 
-        setTitle("DOWNLOAD", for: .normal)
+        setTitle(R.strings.download, for: .normal)
         layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
         titleLabel!.font = titleLabel!.font.with(traits: .traitBold,
                 fontSize: FontSizes.NORMAL)
@@ -33,11 +33,11 @@ class DownloadButton: UIButton {
         case DownloadStatus.Downloading.rawValue:
             self.setTitle("\(Int(item.progress * 100))%", for: .normal)
         case DownloadStatus.Success.rawValue:
-            self.setTitle("EDIT", for: .normal)
+            self.setTitle(R.strings.edit, for: .normal)
         case DownloadStatus.Failed.rawValue:
-            self.setTitle("DOWNLOAD", for: .normal)
+            self.setTitle(R.strings.download, for: .normal)
         default:
-            self.setTitle("DOWNLOAD", for: .normal)
+            self.setTitle(R.strings.download, for: .normal)
         }
     }
 }

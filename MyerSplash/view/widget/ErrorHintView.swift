@@ -12,18 +12,18 @@ class ErrorHintView: UIView {
         super.init(frame: frame)
         
         let title = UILabel()
-        title.text = "Uh oh :-("
+        title.text = R.strings.uh_oh
         title.textColor = UIColor.getDefaultLabelUIColor()
         title.font = title.font.with(traits: .traitBold).withSize(32)
         
         let desc = UILabel()
-        desc.text = "Something went wrong."
+        desc.text = R.strings.something_wrong
         desc.textColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.7)
         desc.font = desc.font.withSize(17)
         desc.numberOfLines = 10
         
         mdcButton = MDCFlatButton()
-        mdcButton.setTitle("RETRY", for: .normal)
+        mdcButton.setTitle(R.strings.retry, for: .normal)
         mdcButton.setTitleColor(.getDefaultLabelUIColor(), for: .normal)
         mdcButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
         mdcButton.addTarget(self, action: #selector(invokeRetry), for: .touchUpInside)

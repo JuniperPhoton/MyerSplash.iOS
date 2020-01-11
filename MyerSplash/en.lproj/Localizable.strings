@@ -1,0 +1,61 @@
+
+"tab_new" = "NEW";
+"tab_highlights" = "HIGHLIGHTS";
+"tab_random" = "RANDOM";
+"tab_developer" = "Developer";
+
+"tab_downloads" = "DOWNLOADS";
+"tab_settings" = "SETTINGS";
+"tab_about" = "ABOUT";
+
+"recommend_by" = "recommended by";
+"author" = "photo by";
+"download" = "DOWNLOAD";
+"today" = "TODAY";
+"edit" = "EDIT";
+"no_items" = "No Items";
+"uh_oh" = "Uh oh :-(";
+"something_wrong" = "Something went wrong";
+"retry" = "RETRY";
+
+"saved_album" = "Saved to your album :D";
+"failed_process" = "Failed to process your photo, sorry";
+"failed_save" = "Failed to save your photo, sorry";
+
+"search_hint" = "Search in English";
+"cancel" = "CANCEL";
+
+"no_network" = "Network unavailable :(";
+
+"delete_dialog_title" = "Delete download history?";
+"delete_dialog_message" = "This operation won't delete photos in your devices";
+"delete_dialog_action_delete" = "DELETE";
+
+"metered_dialog_title" = "ALERT";
+"metered_dialog_message" = "You are using meterred network, continue to download?";
+
+"about_credit" = "CREDIT";
+"about_credit_content" = "Photos are from Unsplash, an amazing website providing free high-resolution photos.";
+"about_feedback" = "FEEDBACK";
+"about_feedback_email" = "EMAIL ME";
+"about_feedback_email_body" = "Hello developer: ";
+
+"settings_personalization" = "PERSONALIZATION";
+"settings_metered" = "Metered network warning";
+"settings_metered_message" = "Notice you before downloading";
+"settings_quality" = "QUALITY";
+"settings_quality_browsing" = "Browsing Quality";
+"settings_quality_browsing_large" = "Large (Recommended)";
+"settings_quality_browsing_small" = "Small";
+"settings_quality_browsing_thumb" = "Thumbnail";
+
+"settings_quality_download" = "Download Quality";
+"settings_quality_download_large" = "Raw";
+"settings_quality_download_small" = "High (Default)";
+"settings_quality_download_thumb" = "Medium (Not recommended)";
+
+"settings_clear" = "Clear cache";
+"settings_clear_cache" = "Remove all cached images";
+"cleared" = "Cleared";
+
+"download_in_background" = "Downloading in background...";

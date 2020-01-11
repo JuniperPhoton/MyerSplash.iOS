@@ -115,7 +115,7 @@ class ImageDetailView: UIView {
         }
 
         downloadButton.snp.makeConstraints { maker in
-            maker.width.equalTo(self.downloadButton.frame.width)
+            maker.width.equalTo(100)
             maker.centerY.equalTo(self.extraInformationView.snp.centerY)
             maker.right.equalTo(self.extraInformationView.snp.right).offset(-20)
         }
@@ -216,7 +216,7 @@ class ImageDetailView: UIView {
 
         extraInformationView.backgroundColor = themeColor
 
-        photoByLabel.text = image.isUnsplash ? "photo by" : "recommended by"
+        photoByLabel.text = image.isUnsplash ? R.strings.author : R.strings.recommend_by
 
         let textColor = isThemeLight ? UIColor.black : UIColor.white
         let revertTextColor = isThemeLight ? UIColor.white : UIColor.black

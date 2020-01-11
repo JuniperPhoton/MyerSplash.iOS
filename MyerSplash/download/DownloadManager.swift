@@ -72,19 +72,21 @@ class DownloadManager: NSObject {
             print("isReachable")
         } else {
             print("is NOT Reachable")
-            vc.view.showToast("Network unavailable :(")
+            vc.view.showToast(R.strings.no_network)
             return
         }
 
         if reachability.connection != .wifi {
             print("NOT using wifi")
             if AppSettings.isMeteredEnabled() {
-                let alertController = MDCAlertController(title: "Alert", message: "You are using meterred network, continue to download?")
+                let alertController = MDCAlertController(
+                    title: R.strings.metered_dialog_title,
+                    message: R.strings.metered_dialog_message)
                 alertController.applyColors()
-                let ok = MDCAlertAction(title: "OK") { (action) in
+                let ok = MDCAlertAction(title: R.strings.download) { (action) in
                     self.doDownload(image)
                 }
-                let cancel = MDCAlertAction(title: "CANCEL") { (action) in
+                let cancel = MDCAlertAction(title: R.strings.cancel) { (action) in
                     alertController.dismiss(animated: true, completion: nil)
                 }
                 alertController.addAction(ok)
@@ -113,7 +115,7 @@ class DownloadManager: NSObject {
         dbQueue.async(execute: insertWork)
 
         insertWork.notify(queue: DispatchQueue.main, execute: {
-            showToast("Downloading in background...")
+            showToast(R.strings.download_in_background)
 
             let documentsURL
                     = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -195,9 +197,9 @@ class DownloadManager: NSObject {
 
     static func showSavedToastOnVC(success: Bool) {
         if success {
-            showToast("Saved to your album :D")
+            showToast(R.strings.saved_album)
         } else {
-            showToast("Failed to download :(")
+            showToast(R.strings.failed_save)
         }
     }
 }

@@ -138,7 +138,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
         let noItemView = UILabel()
         noItemView.isHidden = true
-        noItemView.text = "No Items :("
+        noItemView.text = R.strings.no_items
         noItemView.textColor = .getDefaultLabelUIColor()
         noItemView.font = noItemView.font.with(traits: .traitBold).withSize(32)
         self.view.addSubview(noItemView)
@@ -190,7 +190,7 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     private func loadData(_ refresh: Bool) {
         if (loading) {
-            NSLog("@string", "loading...")
+            Log.warn(tag: "imageview", "loading already, skip loading data")
             return
         }
         loading = true
@@ -303,20 +303,6 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         }
 
         let tableViewFrame = tableView.frame
-        let refreshFrame = tableView.refreshControl?.frame
-
-        let tableViewBound = tableView.bounds
-        let refreshBound = tableView.refreshControl?.bounds
-
-        print("tableViewFrame frame is ", tableViewFrame)
-        print("tableViewFrame bounds is ", tableViewBound)
-
-        print("refreshFrame frame is ", refreshFrame ?? "")
-        print("refreshFrame bounds is ", refreshBound ?? "")
-
-        print("contentInset is ", tableView.contentInset)
-        print("contentOffset is ", tableView.contentOffset)
-
         let visibleHeight = tableViewFrame.height + tableView.contentOffset.y
         let visibleWidth = tableViewFrame.width
 

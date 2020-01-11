@@ -47,7 +47,7 @@ class MoreViewController: TabmanViewController {
         addBar(bar, dataSource: self, at: .top)
 
         let closeButton = UIButton()
-        let closeImage = UIImage(named: R.ic_clear)!.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         closeButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -88,11 +88,11 @@ extension MoreViewController: PageboyViewControllerDataSource, TMBarDataSource {
         let title: String!
         switch index {
         case 0:
-            title = "DOWNLOADS"
+            title = R.strings.tab_downloads
         case 1:
-            title = "SETTINGS"
+            title = R.strings.tab_settings
         case 2:
-            title = "ABOUT"
+            title = R.strings.tab_about
         default:
             title = ""
         }

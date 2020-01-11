@@ -49,9 +49,6 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         bar.fadesContentEdges = true
         addBar(bar, dataSource: self, at: .top)
 
-        let an = self.barInsets
-        print("ancor is ", an)
-
         // MARK: statusBarPlaceholder
         let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
         statusBarPlaceholder.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -59,7 +56,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         
         // MARK: MORE
         let moreButton = UIButton()
-        let moreImage = UIImage(named: R.ic_more)!.withRenderingMode(.alwaysTemplate)
+        let moreImage = UIImage(named: R.icons.ic_more)!.withRenderingMode(.alwaysTemplate)
         moreButton.setImage(moreImage, for: .normal)
         moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         moreButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -78,7 +75,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
         // MARK: FAB
         let fab = MDCFloatingButton()
-        let searchImage = UIImage(named: R.ic_search)?.withRenderingMode(.alwaysTemplate)
+        let searchImage = UIImage(named: R.icons.ic_search)?.withRenderingMode(.alwaysTemplate)
         fab.setImage(searchImage, for: .normal)
         fab.tintColor = UIColor.black
         fab.backgroundColor = UIColor.white

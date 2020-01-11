@@ -42,7 +42,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
 
         let logo = UIImageView()
         logo.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        logo.image = UIImage(named: R.ic_app_icon)
+        logo.image = UIImage(named: R.icons.ic_app_icon)
         logo.contentMode = .scaleAspectFit
         logo.clipsToBounds = true
 
@@ -79,20 +79,20 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
             maker.bottom.equalToSuperview().offset(-margin)
         }
 
-        let creditLabel = createTitleLabel("CREDIT")
+        let creditLabel = createTitleLabel(R.strings.about_credit)
 
         let creditText = UILabel()
-        creditText.text = "Photos are from Unsplash, an amazing website providing free high-resolution photos."
+        creditText.text = R.strings.about_credit_content
         creditText.textColor = UIColor.getDefaultLabelUIColor()
         creditText.font = platformsLabel.font.withSize(13)
         creditText.lineBreakMode = .byTruncatingTail
         creditText.numberOfLines = 100
         creditText.textAlignment = .center
 
-        let feedbackLabel = createTitleLabel("FEEDBACK")
+        let feedbackLabel = createTitleLabel(R.strings.about_feedback)
 
         let feedBackButton = MDCFlatButton()
-        feedBackButton.setTitle("Email me", for: .normal)
+        feedBackButton.setTitle(R.strings.about_feedback_email, for: .normal)
         feedBackButton.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
         feedBackButton.addTarget(self, action: #selector(sendFeedback), for: .touchUpInside)
         feedBackButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
@@ -129,7 +129,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         composeVC.mailComposeDelegate = self
         composeVC.setToRecipients(["dengweichao@hotmail.com"])
         composeVC.setSubject("MyerSplash iOS feedback")
-        composeVC.setMessageBody("Hello from developer. Please write you suggestions below. Thanks!", isHTML: false)
+        composeVC.setMessageBody(R.strings.about_feedback_email_body, isHTML: false)
 
         self.present(composeVC, animated: true, completion: nil)
     }

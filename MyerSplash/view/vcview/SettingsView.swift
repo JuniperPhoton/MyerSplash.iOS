@@ -35,7 +35,7 @@ class SettingsView: UIView {
         self.setDefaultBackgroundColor()
 
         closeView = UIButton(type: .system)
-        closeView.setImage(UIImage(named: R.ic_clear), for: .normal)
+        closeView.setImage(UIImage(named: R.icons.ic_clear), for: .normal)
         closeView.addTarget(self, action: #selector(onClickCloseButton), for: .touchUpInside)
         closeView.tintColor = UIColor.getDefaultLabelUIColor()
 
@@ -43,25 +43,25 @@ class SettingsView: UIView {
         scrollView.alwaysBounceVertical = true
 
         let personalizationGroup = SettingsGroup()
-        personalizationGroup.label = "PERSONALIZATION"
+        personalizationGroup.label = R.strings.settings_personalization
 
         let quickDownload = SettingsSwitchItem(Keys.METERED)
-        quickDownload.title = "Metered network warning"
-        quickDownload.content = "Notice you before downloading"
+        quickDownload.title = R.strings.settings_metered
+        quickDownload.content = R.strings.settings_metered_message
 
         personalizationGroup.addArrangedSubview(quickDownload)
 
         let qualityGroup = SettingsGroup()
-        qualityGroup.label = "QUALITY"
+        qualityGroup.label = R.strings.settings_quality
 
         loadingQualityItem = SettingsItem(frame: CGRect.zero)
-        loadingQualityItem.title = "Browsing Quality"
+        loadingQualityItem.title = R.strings.settings_quality_browsing
         loadingQualityItem.onClicked = {
             self.popupListQualityChosenDialog()
         }
 
         savingQualityItem = SettingsItem(frame: CGRect.zero)
-        savingQualityItem.title = "Download Quality"
+        savingQualityItem.title = R.strings.settings_quality_download
         savingQualityItem.onClicked = {
             self.popupSavingQualityChosenDialog()
         }
@@ -69,8 +69,8 @@ class SettingsView: UIView {
         updateSingleChoiseItem()
 
         let clearItem = SettingsItem(frame: CGRect.zero)
-        clearItem.title = "Clear cache"
-        clearItem.content = "Remove all cached images"
+        clearItem.title = R.strings.settings_clear
+        clearItem.content = R.strings.settings_clear_cache
         clearItem.onClicked = {
             self.clearCache()
         }
@@ -111,7 +111,7 @@ class SettingsView: UIView {
 
     private func clearCache() {
         Nuke.ImageCache.shared.removeAll()
-        self.showToast("Cleared")
+        self.showToast(R.strings.cleared)
     }
 
     private func popupListQualityChosenDialog() {

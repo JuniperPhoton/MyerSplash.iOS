@@ -1,0 +1,62 @@
+
+"tab_new" = "编辑推荐";
+"tab_highlights" = "每日推荐";
+"tab_random" = "随机";
+"tab_developer" = "开发者";
+
+"tab_downloads" = "下载管理";
+"tab_settings" = "设置";
+"tab_about" = "关于";
+
+"recommend_by" = "推荐者";
+"author" = "摄影师";
+"download" = "下载";
+"today" = "今日推荐";
+"edit" = "编辑图片";
+"no_items" = "没有内容";
+"uh_oh" = "Uh oh :-(";
+"something_wrong" = "似乎出了些问题";
+"retry" = "重试";
+
+"saved_album" = "成功保存到相册了 :D";
+"failed_process" = "处理失败，抱歉";
+"failed_save" = "保存失败，抱歉";
+
+"search_hint" = "请用英文搜索";
+"cancel" = "取消";
+
+"no_network" = "没有网络，请稍后再试";
+
+"metered_dialog_title" = "注意";
+"metered_dialog_message" = "你正在使用流量，你确定要下载吗？";
+
+"delete_dialog_title" = "确认要删除下载记录吗？";
+"delete_dialog_message" = "放心，此操作不会删除你手机相册里的图片";
+"delete_dialog_action_delete" = "删除";
+
+"about_credit" = "鸣谢";
+"about_credit_content" = "图片来自 Unsplash，一个无版权可免费商用的网站。“每日推荐” 里，有部分照片来自我自己的摄影作品 :P";
+"about_feedback" = "反馈";
+"about_feedback_email" = "发邮件";
+"about_feedback_email_body" = "开发者你好哇：";
+
+"settings_personalization" = "个性化";
+"settings_metered" = "流量提示";
+"settings_metered_message" = "非 WIFI 下载会进行提醒";
+"settings_quality" = "下载设置";
+"settings_quality_browsing" = "浏览质量";
+"settings_quality_browsing_large" = "高 (推荐)";
+"settings_quality_browsing_small" = "低";
+"settings_quality_browsing_thumb" = "非常低";
+
+"settings_quality_download" = "保存质量";
+"settings_quality_download_large" = "原图";
+"settings_quality_download_small" = "高 (默认)";
+"settings_quality_download_thumb" = "低 (不推荐)";
+
+"settings_clear" = "清理缓存";
+"settings_clear_cache" = "清理所有图片缓存";
+"cleared" = "清理完毕";
+
+"download_in_background" = "后台下载中...";
+

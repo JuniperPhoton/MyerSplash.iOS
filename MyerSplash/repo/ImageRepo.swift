@@ -79,7 +79,7 @@ class ImageRepo {
 class HighlightsImageRepo: ImageRepo {
     override var title: String {
         get {
-            return "HIGHLIGHTS"
+            return R.strings.tab_highlights
         }
         set {
             // read only
@@ -111,7 +111,7 @@ class HighlightsImageRepo: ImageRepo {
 class NewImageRepo: ImageRepo {
     override var title: String {
         get {
-            return "NEW"
+            return R.strings.tab_new
         }
         set {
             // read only
@@ -127,7 +127,7 @@ class NewImageRepo: ImageRepo {
 class RandomImageRepo: ImageRepo {
     override var title: String {
         get {
-            return "RANDOM"
+            return R.strings.tab_random
         }
         set {
             // read only
@@ -144,7 +144,7 @@ class RandomImageRepo: ImageRepo {
 class DeveloperImageRepo: ImageRepo {
     override var title: String {
         get {
-            return "DEVELOPER"
+            return R.strings.tab_developer
         }
         set {
             // read only

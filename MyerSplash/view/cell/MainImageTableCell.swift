@@ -32,7 +32,7 @@ public class MainImageTableCell: UITableViewCell {
 
         downloadView = UIButton()
         downloadView.setImage(UIImage(
-            named: R.ic_download)?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)),
+            named: R.icons.ic_download)?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)),
                 for: .normal)
         downloadView.adjustsImageWhenHighlighted = false
         downloadView.addTarget(self, action: #selector(clickDownloadButton), for: .touchUpInside)
@@ -40,11 +40,11 @@ public class MainImageTableCell: UITableViewCell {
         downloadRippleController = MDCRippleTouchController.load(
                 intoView: downloadView, withColor: UIColor.white.withAlphaComponent(0.3), maxRadius: 30)
 
-        todayTag = UIImageView(image: UIImage(named: R.ic_star))
+        todayTag = UIImageView(image: UIImage(named: R.icons.ic_star))
         todayTag.isHidden = true
 
         todayTextTag = UILabel()
-        todayTextTag.text = "Today"
+        todayTextTag.text = R.strings.today
         todayTextTag.textColor = UIColor.white
         todayTextTag.font = todayTextTag.font.with(traits: .traitBold).withSize(14)
 

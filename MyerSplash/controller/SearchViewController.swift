@@ -40,7 +40,7 @@ class SearchViewController: UIViewController {
         }
 
         searchView = UISearchBar()
-        searchView.placeholder = "Search in English"
+        searchView.placeholder = R.strings.search_hint
         searchView.searchBarStyle = .minimal
         searchView.delegate = self
         searchView.becomeFirstResponder()
@@ -51,7 +51,7 @@ class SearchViewController: UIViewController {
         view.addSubview(searchView)
 
         let closeButton = UIButton()
-        let closeImage = UIImage(named: R.ic_clear)!.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
