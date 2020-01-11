@@ -1,18 +1,8 @@
 # MyerSplash.iOS
 iOS version of MyerSplash app([UWP](https://github.com/JuniperPhoton/MyerSplash.UWP) & [Android](https://github.com/JuniperPhoton/MyerSplash.Android)). Written in pure swift.
 
-![](https://github.com/JuniperPhoton/MyerSplash.iOS/raw/develop/design/demo.png)
+![](./design/hero.jpg)
 
-Currently this project is in alpha stage. I have completed these base features:
+Currently this project is in Pre-Release stage and has lined-up most of the features introduced in Android and Windows.
 
-- [x] Display the list of NEW category.
-- [x] Support download image in background by tapping the download button in cell.
-- [x] Support base settings. e.g. Loading and saving quality.
-
-The working-on features are:
-
-- [ ] Detail page for image after tapping image in list.
-- [ ] Viewpager like navigaion for switching NEW/FEATURES/RANDOM category;
-- [ ] Search feature.
-- [ ] Download management.
-- [ ] About page.
+Feel free to build it by your self and see what's happenning: D
