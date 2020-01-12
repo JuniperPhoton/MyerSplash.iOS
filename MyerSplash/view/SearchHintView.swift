@@ -88,5 +88,7 @@ class SearchHintView: UIView {
         }
         let keyword = builtInKeywords[index]
         onClickKeyword?(keyword)
+        
+        Events.trackClickSearchItem(name: keyword.query)
     }
 }

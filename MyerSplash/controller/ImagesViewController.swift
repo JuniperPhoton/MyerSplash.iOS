@@ -222,6 +222,8 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     private func onRefreshData() {
         print("onRefreshData")
 
+        Events.trackRefresh(name: self.repoTitle ?? "")
+        
         self.refreshData()
 
         if (refreshControl.isRefreshing) {

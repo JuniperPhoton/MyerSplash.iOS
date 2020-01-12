@@ -66,6 +66,8 @@ class DownloadManager: NSObject {
     // MARK: Check first
     func prepareToDownload(vc: UIViewController,
                            image: UnsplashImage) {
+        Events.trackBeginDownloadEvent()
+        
         var reachability: Reachability!
         
         do {
@@ -140,9 +142,7 @@ class DownloadManager: NSObject {
             let destination: DownloadRequest.DownloadFileDestination = { _, _ in
                 return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
             }
-            
-            Events.trackBeginDownloadEvent()
-            
+                        
             self.publishSubject.onNext(item)
             
             let request = Alamofire.download(unsplashImage.downloadUrl!, to: destination).downloadProgress(closure: { (progress) in
@@ -153,14 +153,14 @@ class DownloadManager: NSObject {
                 if response.error == nil, let imagePath = response.destinationURL?.path {
                     Log.info(tag: DownloadManager.TAG, "image downloaded!")
                     
-                    Events.trackDownloadEvent(true)
+                    Events.trackDownloadSuccessEvent()
                     
                     self.notifySuccess(downloadItem: item, imagePath: relativePath)
                     UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
                 } else {
                     Log.info(tag: DownloadManager.TAG, "error while download image: \(response.error?.localizedDescription ?? "null error")")
                     self.notifyFailed(downloadItem: item)
-                    Events.trackDownloadEvent(false, response.error?.localizedDescription)
+                    Events.trackDownloadFailedEvent(false, response.error?.localizedDescription)
                 }
             }
             

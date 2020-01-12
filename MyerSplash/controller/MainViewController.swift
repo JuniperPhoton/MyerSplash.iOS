@@ -105,6 +105,8 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
     @objc
     func onClickSearch() {
+        Events.trackClickSearch()
+        
         let vc = SearchViewController()
         self.present(vc, animated: true, completion: nil)
     }
@@ -136,6 +138,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
 
     @objc
     private func onClickSettings() {
+        Events.trackClickMore()
         let controller = MoreViewController()
         self.present(controller, animated: true, completion: nil)
     }
@@ -156,6 +159,13 @@ extension MainViewController: PageboyViewControllerDataSource, TMBarDataSource {
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         let item = TMBarItem(title: (viewControllers[index].repoTitle!))
         return item
+    }
+    
+    override func show(_ vc: UIViewController, sender: Any?) {
+        if let imageVc = vc as? ImagesViewController,
+            let title = imageVc.repoTitle {
+            Events.trackTabSelected(name: title)
+        }
     }
 
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {

@@ -48,6 +48,8 @@ class ImageEditorViewController: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = .black
+        
+        Events.trackEdit()
 
         scrollView = UIScrollView()
         imageView = UIImageView()
@@ -204,6 +206,8 @@ class ImageEditorViewController: UIViewController {
 
     @objc
     private func onClickCompose() {
+        Events.trackEditOk()
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.indicator.isHidden = true
         }

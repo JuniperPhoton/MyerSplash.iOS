@@ -144,6 +144,8 @@ class ImageDetailView: UIView {
 
         switch gesture.state {
         case UIGestureRecognizerState.began:
+            Events.trackImagDetailBeginDrag()
+            
             startX = mainImageView.center.x
             startY = mainImageView.center.y
             resetExtraInformationConstraint()
@@ -179,6 +181,7 @@ class ImageDetailView: UIView {
 
     @objc
     private func onClickAuthorName() {
+        Events.trackClickAuthor()
         guard let url = bindImage?.userHomePage else {
             return
         }
@@ -186,6 +189,7 @@ class ImageDetailView: UIView {
     }
 
     @objc private func onClickBackground() {
+        Events.trackImagDetailTapToDismiss()
         hideInternal()
     }
 
@@ -292,6 +296,8 @@ class ImageDetailView: UIView {
     }
 
     private func showInternal() {
+        Events.trackImagDetailShown()
+        
         self.backgroundView.alpha = 0.0
         isHidden = false
 

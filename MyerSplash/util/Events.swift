@@ -14,11 +14,55 @@ class Events {
         MSAnalytics.trackEvent("Begin download")
     }
 
-    static func trackDownloadEvent(_ success: Bool, _ message: String? = nil) {
-        MSAnalytics.trackEvent("Begin download", withProperties: ["Success": String(success), "Message": message ?? ""])
+    static func trackImagDetailShown() {
+        MSAnalytics.trackEvent("Image detail shown")
+    }
+    
+    static func trackImagDetailBeginDrag() {
+        MSAnalytics.trackEvent("Image detail begin drag")
+    }
+    
+    static func trackImagDetailTapToDismiss() {
+        MSAnalytics.trackEvent("Image detail tap to dismiss")
+    }
+    
+    static func trackDownloadSuccessEvent() {
+        MSAnalytics.trackEvent("Download success")
+    }
+    
+    static func trackDownloadFailedEvent(_ success: Bool, _ message: String? = nil) {
+        MSAnalytics.trackEvent("Download failed", withProperties: ["Success": String(success), "Message": message ?? ""])
+    }
+    
+    static func trackTabSelected(name: String) {
+        MSAnalytics.trackEvent("Tab selected", withProperties: ["name": name])
+    }
+    
+    static func trackClickSearch() {
+        MSAnalytics.trackEvent("Search clicked")
+    }
+    
+    static func trackClickSearchItem(name: String) {
+        MSAnalytics.trackEvent("Search item clicked", withProperties: ["item": name])
+    }
+    
+    static func trackClickAuthor() {
+        MSAnalytics.trackEvent("Author clicked")
+    }
+    
+    static func trackEdit() {
+        MSAnalytics.trackEvent("Edit entered")
+    }
+    
+    static func trackEditOk() {
+        MSAnalytics.trackEvent("Edit composed")
     }
 
-    static func trackRefresh() {
-        MSAnalytics.trackEvent("Refresh")
+    static func trackClickMore() {
+        MSAnalytics.trackEvent("More entered")
+    }
+    
+    static func trackRefresh(name: String) {
+        MSAnalytics.trackEvent("Refresh", withProperties: ["title": name])
     }
 }
