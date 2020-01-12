@@ -15,11 +15,7 @@ class UIs {
     }
 
     static func setBackgroundColor(_ uiView: UIView) {
-        if #available(iOS 13.0, *) {
-            uiView.backgroundColor = UIColor.systemBackground
-        } else {
-            uiView.backgroundColor = UIColor.black
-        }
+        uiView.backgroundColor = UIColor.getDefaultBackgroundUIColor()
     }
 }
 
@@ -28,7 +24,7 @@ extension UILabel {
         if #available(iOS 13.0, *) {
             self.textColor = UIColor.label
         } else {
-            self.textColor = UIColor.white
+            self.textColor = UIColor.black
         }
     }
 }
@@ -38,7 +34,7 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.label
         } else {
-            return UIColor.white
+            return UIColor.black
         }
     }
 
@@ -46,7 +42,7 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.systemBackground
         } else {
-            return UIColor.black
+            return UIColor.white
         }
     }
 }

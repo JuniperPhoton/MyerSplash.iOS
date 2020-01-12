@@ -78,12 +78,14 @@ class ImageEditorViewController: UIViewController {
         // MARK: HOME SCREEN
         let homeIcon = UIImage(named: R.icons.ic_launcher)
         homePreviewView = UIImageView(image: homeIcon)
-        homePreviewView.contentMode = .top
+        homePreviewView.contentMode = .scaleAspectFit
         homePreviewView.isHidden = true
+        homePreviewView.clipsToBounds = true
         self.view.addSubview(homePreviewView)
         homePreviewView.snp.makeConstraints { (maker) in
             maker.top.equalTo(closeButton.snp.bottom).offset(12)
-            maker.left.right.equalToSuperview()
+            maker.left.right.equalToSuperview().inset(24)
+            maker.aspectRatioByWidth(1003.0, by: 1464.0, self: homePreviewView)
         }
 
         // MARK: CLOSE BUTTON
@@ -96,7 +98,7 @@ class ImageEditorViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
 
         closeButton.snp.makeConstraints { (maker) in
-            maker.top.equalToSuperview().offset(UIView.topInset)
+            maker.top.equalToSuperview().offset(UIView.topInset + 12)
             maker.right.equalToSuperview().offset(-12)
             maker.width.equalTo(35)
             maker.height.equalTo(35)
@@ -185,6 +187,10 @@ class ImageEditorViewController: UIViewController {
 
         homeFab.addTarget(self, action: #selector(onClickHome), for: .touchUpInside)
         self.view.addSubview(homeFab)
+        
+        if UIDevice.current.userInterfaceIdiom != .phone {
+            homeFab.isHidden = true
+        }
 
         homeFab.snp.makeConstraints { (maker) in
             maker.right.equalTo(fab.snp.left).offset(-14)

@@ -25,7 +25,8 @@ class SearchViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.modalPresentationStyle = .fullScreen
+        self.modalPresentationStyle = .overCurrentContext
+        self.modalTransitionStyle = .crossDissolve
     }
     
     required init?(coder: NSCoder) {
@@ -73,7 +74,6 @@ class SearchViewController: UIViewController {
             self?.searchView.resignFirstResponder()
         }
         searchHintView.isUserInteractionEnabled = true
-        searchHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickClose)))
         self.view.addSubview(searchHintView)
 
         let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)

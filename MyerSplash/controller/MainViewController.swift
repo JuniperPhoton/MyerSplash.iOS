@@ -106,8 +106,6 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     @objc
     func onClickSearch() {
         let vc = SearchViewController()
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true, completion: nil)
     }
 

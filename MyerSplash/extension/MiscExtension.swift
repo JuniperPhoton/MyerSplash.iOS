@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import Nuke
+import SnapKit
 import MaterialComponents.MDCRippleTouchController
 
 extension ImageCache {
@@ -35,6 +36,16 @@ extension UIView {
                 .setText(text)
                 .build()
                 .show()
+    }
+}
+
+extension ConstraintMaker {
+    public func aspectRatioByWidth(_ x: CGFloat, by y: CGFloat, self instance: ConstraintView) {
+        self.height.equalTo(instance.snp.width).multipliedBy(y / x)
+    }
+    
+    public func aspectRatioByHeight(_ x: CGFloat, by y: CGFloat, self instance: ConstraintView) {
+        self.width.equalTo(instance.snp.height).multipliedBy(x / y)
     }
 }
 

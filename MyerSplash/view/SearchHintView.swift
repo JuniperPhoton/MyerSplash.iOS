@@ -44,7 +44,7 @@ class SearchHintView: UIView {
     fileprivate let rootFlexContainer = UIView()
 
     var onClickKeyword: ((Keyword) -> Void)? = nil
-    
+
     init() {
         super.init(frame: .zero)
         
