@@ -4,17 +4,6 @@ import Nuke
 import SnapKit
 import MaterialComponents.MDCRippleTouchController
 
-extension ImageCache {
-    static func isCached(urlString: String?) -> Bool {
-        guard let url = urlString else {
-            return false
-        }
-
-        let request = Nuke.ImageRequest(url: URL(string: url)!)
-        return ImageCache.shared[request] != nil
-    }
-}
-
 func showToast(_ text: String) {
     guard let view = UIApplication.shared.keyWindow?.rootViewController?.view else {
         Log.warn(tag: "showtoast", "no active view")

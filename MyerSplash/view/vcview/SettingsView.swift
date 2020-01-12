@@ -70,9 +70,10 @@ class SettingsView: UIView {
 
         let clearItem = SettingsItem(frame: CGRect.zero)
         clearItem.title = R.strings.settings_clear
-        clearItem.content = R.strings.settings_clear_cache
-        clearItem.onClicked = {
-            self.clearCache()
+        clearItem.content = ImageIO.getFormattedDiskCacheSize()
+        clearItem.onClicked = { [weak self] in
+            self?.clearCache()
+            clearItem.content = "0.0MB"
         }
 
         qualityGroup.addArrangedSubview(loadingQualityItem)
@@ -110,7 +111,7 @@ class SettingsView: UIView {
     }
 
     private func clearCache() {
-        Nuke.ImageCache.shared.removeAll()
+        ImageIO.clearCaches(includingDownloads: true)
         self.showToast(R.strings.cleared)
     }
 

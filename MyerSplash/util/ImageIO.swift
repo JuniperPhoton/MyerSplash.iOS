@@ -9,6 +9,48 @@ import Nuke
 class ImageIO {
     private static let TAG = "ImageIO"
     
+    static func isImageCached(_ url: String)-> Bool {
+        guard let uri = URL(string: url) else {
+            return false
+        }
+        
+        let request = ImageRequest(url: uri)
+        
+        let diskCached = DataLoader.sharedUrlCache.cachedResponse(for: request.urlRequest) != nil
+        let memoryCached = Nuke.ImageCache.shared[request] != nil
+        
+        print("disk cached: \(diskCached), memory cached: \(memoryCached)")
+        return diskCached || memoryCached
+    }
+    
+    static func getDiskCacheSizeBytes()-> Int {
+        return DataLoader.sharedUrlCache.currentDiskUsage
+    }
+    
+    static func getFormattedDiskCacheSize()-> String {
+        return String(format: "%.2fMB", DataLoader.sharedUrlCache.currentDiskUsage.toCGFloat() / 1024.0 / 1024.0)
+    }
+    
+    static func clearCaches(includingDownloads: Bool) {
+        DataLoader.sharedUrlCache.removeAllCachedResponses()
+        
+        if includingDownloads {
+            clearDownloadFiles()
+        }
+    }
+    
+    static func clearDownloadFiles() {
+        DispatchQueue.global().async {
+            do {
+                var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                url.appendPathComponent("unsplash/")
+                try FileManager.default.removeItem(at: url)
+            } catch let e {
+                Log.warn(tag: ImageIO.TAG, "error on clear disk: \(e.localizedDescription)")
+            }
+        }
+    }
+    
     static func loadImage(url: String, intoView: ImageDisplayingView) {
         let request = ImageRequest(url: URL(string: url)!)
         loadImage(request: request, intoView: intoView)

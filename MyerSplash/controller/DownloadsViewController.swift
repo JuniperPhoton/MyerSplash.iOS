@@ -93,7 +93,7 @@ class DownloadsViewController: UIViewController {
     private func onClickDelete() {
         let vc = MDCAlertController(title: R.strings.delete_dialog_title, message: R.strings.delete_dialog_message)
         vc.applyColors()
-        vc.addAction(MDCAlertAction(title: R.strings.cancel, emphasis: .high, handler: {(action) in
+        vc.addAction(MDCAlertAction(title: R.strings.cancel, emphasis: .high, handler: { (action) in
             vc.dismiss(animated: true, completion: nil)
         }))
         vc.addAction(MDCAlertAction(title: R.strings.delete_dialog_action_delete, handler: { [weak self] (action) in
@@ -105,6 +105,7 @@ class DownloadsViewController: UIViewController {
     private func deleteItems() {
         DispatchQueue.global().async {
             AppDb.instance.deleteAll()
+            ImageIO.clearDownloadFiles()
             
             DispatchQueue.main.async {
                 self.downloadItems.removeAll()

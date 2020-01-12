@@ -101,17 +101,19 @@ public class MainImageTableCell: UITableViewCell {
               let url = bindImage.listUrl else {
             return false
         }
-        return ImageCache.isCached(urlString: url)
+        return ImageIO.isImageCached(url)
     }
 
     @objc
     private func onClickImage() {
         guard let bindImage = bindImage,
               let superView = superview else {
+            print("bindImage is nil or superview is nil")
             return
         }
 
         if (!isImageCached()) {
+            print("image not cached, skip showing details")
             return
         }
 
