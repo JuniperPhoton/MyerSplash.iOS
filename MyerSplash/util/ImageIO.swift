@@ -51,16 +51,17 @@ class ImageIO {
         }
     }
     
-    static func loadImage(url: String, intoView: ImageDisplayingView) {
+    static func loadImage(url: String, intoView: ImageDisplayingView, fade: Bool = true) {
         let request = ImageRequest(url: URL(string: url)!)
         loadImage(request: request, intoView: intoView)
     }
     
-    static func loadImage(request: ImageRequest, intoView: ImageDisplayingView) {
+    static func loadImage(request: ImageRequest, intoView: ImageDisplayingView, fade: Bool = true) {
+        let transition = fade ? ImageLoadingOptions.Transition.fadeIn(duration: 0.3) : nil
         Nuke.loadImage(with: request,
                        options: ImageLoadingOptions(
                             placeholder: nil,
-                            transition: .fadeIn(duration: 0.3),
+                            transition: transition,
                             failureImage: nil,
                             failureImageTransition: nil,
                             contentModes: .init(success: .scaleAspectFill, failure: .center, placeholder: .center)),

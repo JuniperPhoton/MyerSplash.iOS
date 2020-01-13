@@ -226,7 +226,7 @@ class ImageDetailView: UIView {
         mainImageView.frame = initFrame
 
         if let listUrl = image.listUrl {
-            ImageIO.loadImage(url: listUrl, intoView: mainImageView)
+            ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }
 
         let themeColor = image.themeColor
@@ -319,7 +319,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.width.equalTo(UIScreen.main.bounds.width)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
-            maker.top.equalTo(self.mainImageView.snp.bottom)
+            maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
         }
 
         UIView.animate(withDuration: 0.4,
