@@ -66,7 +66,9 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
                 withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
 
         moreButton.snp.makeConstraints { (maker) in
-            maker.top.equalTo(statusBarPlaceholder.snp.bottom)
+            maker.top.equalTo(bar.layout.view.subviews.first(where: { (view) -> Bool in
+                view is UIStackView
+                })!.snp.top)
             maker.right.equalTo(self.view.snp.right).offset(-10)
             maker.bottom.equalTo(bar.snp.bottom).offset(-15)
             maker.width.equalTo(50)

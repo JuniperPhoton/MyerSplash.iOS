@@ -112,7 +112,7 @@ class UnsplashImage: ColumnJSONCodable {
         user = UnsplashUser(json["user"])
     }
     
-    func getAspectRatioF(viewWidth: Int, viewHeight: Int)-> CGFloat {
+    func getAspectRatioF(viewWidth: CGFloat, viewHeight: CGFloat)-> CGFloat {
         let r = getAspectRatio(viewWidth: viewWidth, viewHeight: viewHeight)
         let splited = r.split(separator: ":")
         let first = String(splited[0])
@@ -120,7 +120,7 @@ class UnsplashImage: ColumnJSONCodable {
         return CGFloat(Double(first) ?? 3) / CGFloat(Double(second) ?? 2)
     }
     
-    func getAspectRatio(viewWidth: Int, viewHeight: Int)-> String {
+    func getAspectRatio(viewWidth: CGFloat, viewHeight: CGFloat)-> String {
         let rawRatio: CGFloat
         if width == 0 || height == 0 {
             rawRatio = 3.0 / 2.0
@@ -132,8 +132,8 @@ class UnsplashImage: ColumnJSONCodable {
 
         let fixedMargin = CGFloat(100)
 
-        let decorViewWidth = UIScreen.main.bounds.width
-        let decorViewHeight = UIScreen.main.bounds.height
+        let decorViewWidth = viewWidth
+        let decorViewHeight = viewHeight
 
         let availableHeight = decorViewHeight - fixedMargin * CGFloat(2)
 

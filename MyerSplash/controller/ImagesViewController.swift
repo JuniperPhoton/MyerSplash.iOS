@@ -265,7 +265,7 @@ class ImagesViewController: UIViewController {
 
         for index in 0..<repo.images.count {
             let image = repo.images[index]
-            let ratio = image.getAspectRatioF(viewWidth: Int(tableView.bounds.width), viewHeight: Int(tableView.bounds.height))
+            let ratio = image.getAspectRatioF(viewWidth: tableView.bounds.width, viewHeight: tableView.bounds.height)
             accHeight += visibleWidth / ratio
 
             if (accHeight >= visibleHeight) {
@@ -285,7 +285,7 @@ class ImagesViewController: UIViewController {
         let space = waterfallLayout.hItemSpace * CGFloat(waterfallLayout.lineCount - 1) + waterfallLayout.edge.left + waterfallLayout.edge.right
         let width = CGFloat(collectionView.bounds.width) / CGFloat(waterfallLayout.lineCount) - space
 
-        let ratio = image.getAspectRatioF(viewWidth: Int(collectionView.bounds.width), viewHeight: Int(collectionView.bounds.height))
+        let ratio = image.getAspectRatioF(viewWidth: collectionView.bounds.width, viewHeight: collectionView.bounds.height)
         let height = width / ratio
         return floor(height)
     }
