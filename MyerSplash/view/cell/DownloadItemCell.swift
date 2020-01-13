@@ -167,12 +167,16 @@ class DownloadItemCell: UICollectionViewCell {
     private func handleClickedSetAs() {
         guard let image = self.image,
               let item = self.downloadItem else {
+            Log.error(tag: DownloadItemCell.TAG, "image or download item is null")
             return
         }
 
         switch item.status {
         case DownloadStatus.Downloading.rawValue:
             DownloadManager.instance.cancel(id: image.id!)
+        case DownloadStatus.Pending.rawValue:
+            Log.error(tag: DownloadItemCell.TAG, "fallthrough pending status")
+            fallthrough
         case DownloadStatus.Failed.rawValue:
             onClickDownload?(image)
         case DownloadStatus.Success.rawValue:
