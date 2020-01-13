@@ -48,7 +48,7 @@ class DialogViewController: BaseViewController {
         guard let dialogContent = dialogContent else {
             return
         }
-
+        
         dialogContentView = UIView()
         dialogContentView.backgroundColor = UIView.getDefaultDialogBackgroundUIColor()
 

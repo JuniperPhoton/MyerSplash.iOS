@@ -53,10 +53,13 @@ class SearchViewController: UIViewController {
         searchView.placeholder = R.strings.search_hint
         searchView.searchBarStyle = .minimal
         searchView.delegate = self
-        searchView.becomeFirstResponder()
         searchView.tintColor = UIColor.getDefaultLabelUIColor()
-        searchView.searchTextField.keyboardType = .asciiCapable
-        searchView.searchTextField.font = searchView.searchTextField.font?.withSize(16)
+        searchView.keyboardType = .asciiCapable
+        searchView.becomeFirstResponder()
+
+        if #available(iOS 13.0, *) {
+            searchView.searchTextField.font = searchView.searchTextField.font?.withSize(16)
+        }
 
         view.addSubview(searchView)
 

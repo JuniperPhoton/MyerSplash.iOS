@@ -31,7 +31,7 @@ extension UIViewController {
                     return UIStatusBarStyle.darkContent
                 }
             } else {
-                return UIStatusBarStyle.lightContent
+                return UIStatusBarStyle.default
             }
         }
     }

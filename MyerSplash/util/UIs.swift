@@ -62,7 +62,7 @@ extension UIView {
             if #available(iOS 13.0, *) {
                 blurEffect = UIBlurEffect(style: .systemChromeMaterial)
             } else {
-                blurEffect = UIBlurEffect(style: .light)
+                blurEffect = UIBlurEffect(style: .extraLight)
             }
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
 
@@ -92,7 +92,7 @@ extension UIView {
                 }
             }
         } else {
-            return "1e1e1e".asUIColor()
+            return "f4f4f4".asUIColor()
         }
     }
 
