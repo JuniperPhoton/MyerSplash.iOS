@@ -29,10 +29,20 @@ class DownloadsViewController: UIViewController {
         
         waterfallLayout.delegate = self
         waterfallLayout.scrollDirection = .vertical
-        waterfallLayout.lineCount = 2
-        waterfallLayout.vItemSpace = 12
-        waterfallLayout.hItemSpace = 12
-        waterfallLayout.edge = UIEdgeInsets.zero
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            print("run for pad")
+            waterfallLayout.lineCount = 3
+            waterfallLayout.vItemSpace = 12
+            waterfallLayout.hItemSpace = 12
+            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        } else {
+            print("run for phone")
+            waterfallLayout.lineCount = 2
+            waterfallLayout.vItemSpace = 12
+            waterfallLayout.hItemSpace = 12
+            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        }
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -41,8 +51,8 @@ class DownloadsViewController: UIViewController {
         collectionView.register(DownloadItemCell.self, forCellWithReuseIdentifier: DownloadItemCell.ID)
         
         collectionView.snp.makeConstraints { (maker) in
-            maker.left.top.equalToSuperview().offset(12)
-            maker.right.equalToSuperview().offset(-12)
+            maker.left.top.equalToSuperview()
+            maker.right.equalToSuperview()
             maker.bottom.equalToSuperview()
         }
         
@@ -129,7 +139,9 @@ class DownloadsViewController: UIViewController {
 
 extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDelegate, UICollectionViewDataSource {
     func el_flowLayout(_ flowLayout: ELWaterFlowLayout, heightForRowAt index: Int) -> CGFloat {
-        let width = (collectionView.bounds.width - 10) / 2
+        let space = waterfallLayout.hItemSpace * CGFloat(waterfallLayout.lineCount - 1) + waterfallLayout.edge.left + waterfallLayout.edge.right
+        let width = CGFloat(collectionView.bounds.width) / CGFloat(waterfallLayout.lineCount) - space
+        
         let aspectRatio = downloadItems[index].unsplashImage!.rawAspectRatioF
         let height = width / aspectRatio
         return height + CGFloat(DownloadItemCell.BOTTOM_BUTTON_HEIGHT)

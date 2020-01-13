@@ -4,7 +4,7 @@ import SnapKit
 import Nuke
 import MaterialComponents.MaterialRipple
 
-public class MainImageTableCell: UITableViewCell {
+public class MainImageTableCell: UICollectionViewCell {
     static let ID = "MainImageTableCell"
 
     private var downloadView: UIButton!
@@ -18,10 +18,10 @@ public class MainImageTableCell: UITableViewCell {
 
     var onClickMainImage: ((CGRect, UnsplashImage) -> Void)?
     var onClickDownload: ((UnsplashImage) -> Void)?
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
-
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         mainImageView = DayNightImageView()
         mainImageView.applyMask()
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill

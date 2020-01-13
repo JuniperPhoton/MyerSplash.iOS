@@ -11,13 +11,14 @@ import UIKit
 import SnapKit
 import Alamofire
 import MaterialComponents.MaterialActivityIndicator
+import ELWaterFallLayout
 
 protocol ImagesViewControllerDelegate: class {
     func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool
     func onRequestDownload(image: UnsplashImage)
 }
 
-class ImagesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ImagesViewController: UIViewController {
     static let CELL_ANIMATE_OFFSET_X: CGFloat = 50.0
     static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.1
     static let CELL_ANIMATE_DURATION_SEC = 0.4
@@ -26,6 +27,8 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
 
     private var loadingFooterView: MDCActivityIndicator!
 
+    fileprivate let waterfallLayout = ELWaterFlowLayout()
+
     private var paging = 1
     private var loading = false
     private var canLoadMore = false
@@ -33,11 +36,11 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
     private var calculatedCellHeight: CGFloat = -1.0
     private var initialMaxVisibleCellCount = -1
 
-    private var tappedCell: UITableViewCell? = nil
+    private var tappedCell: UICollectionViewCell? = nil
 
     private var startY: CGFloat = -1
 
-    private var tableView: UITableView!
+    private var collectionView: UICollectionView!
     private var refreshControl: UIRefreshControl!
 
     private var errorHintView: ErrorHintView!
@@ -83,20 +86,36 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
                 if self.imageRepo!.images.isEmpty {
                     self.updateHintViews(success)
                 }
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             }
         }
 
         refreshControl = UIRefreshControl(frame: CGRect.zero)
         refreshControl.addTarget(self, action: #selector(onRefreshData), for: .valueChanged)
+    
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: waterfallLayout)
+        collectionView.backgroundColor = .clear
+        collectionView.refreshControl = refreshControl
 
-        tableView = UITableView(frame: CGRect.zero)
-        tableView.backgroundColor = .clear
-        tableView.refreshControl = refreshControl
+        view.addSubview(collectionView)
+        
+        waterfallLayout.delegate = self
+        waterfallLayout.scrollDirection = .vertical
 
-        view.addSubview(tableView)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            print("run for pad")
+            waterfallLayout.lineCount = 3
+            waterfallLayout.vItemSpace = 12
+            waterfallLayout.hItemSpace = 12
+            waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
+        } else {
+            print("run for phone")
+            waterfallLayout.lineCount = 1
+            waterfallLayout.vItemSpace = 0
+            waterfallLayout.hItemSpace = 0
+        }
 
-        tableView.snp.makeConstraints { (maker) in
+        collectionView.snp.makeConstraints { (maker) in
             maker.height.equalTo(view)
             maker.width.equalTo(view)
             maker.top.equalTo(view)
@@ -108,12 +127,12 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
                 height: 100))
         loadingFooterView.cycleColors = [.getDefaultLabelUIColor()]
 
-        tableView.tableFooterView = loadingFooterView
+        // todo
+        //tableView.tableFooterView = loadingFooterView
 
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(MainImageTableCell.self, forCellReuseIdentifier: MainImageTableCell.ID)
-        tableView.separatorStyle = .none
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(MainImageTableCell.self, forCellWithReuseIdentifier: MainImageTableCell.ID)
 
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
@@ -231,74 +250,8 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
 
-    // MARK: UITableViewDelegate
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageRepo!.images.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: MainImageTableCell.ID, for: indexPath) as? MainImageTableCell else {
-            fatalError()
-        }
-        cell.onClickDownload = { [weak self] unsplashImage in
-            self?.delegate?.onRequestDownload(image: unsplashImage)
-        }
-        cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage) -> Void in
-            print("rect is ", rect)
-
-            if self?.delegate?.onClickImage(rect: rect, image: image) == true {
-                cell.isHidden = true
-                self?.tappedCell = cell
-            }
-        }
-        cell.bind(image: self.imageRepo!.images[indexPath.row])
-        return cell
-    }
-
-    // For iOS 11, this method must be conform to provide estimated height.
-    // After calling table view's reloadData(), all the items' contents size will be re-calculated,
-    // and the table view use estimated height as content size at first,
-    // which leads to the incorrect content size of table view.
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return calculateCellHeight(indexPath.row)
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return calculateCellHeight(indexPath.row)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let maxCount = initialMaxVisibleCellCount
-        if (animateCellFinished || maxCount < 0 || indexPath.row >= maxCount) {
-            return
-        }
-
-        let index = indexPath.row
-
-        if (index == maxCount - 1) {
-            animateCellFinished = true
-        }
-
-        let startX = cell.center.x
-        cell.alpha = 0.0
-        cell.center.x += ImagesViewController.CELL_ANIMATE_OFFSET_X
-
-        let delaySec = Double(index + 1) * ImagesViewController.CELL_ANIMATE_DELAY_UNIT_SEC
-
-        UIView.animate(withDuration: ImagesViewController.CELL_ANIMATE_DURATION_SEC,
-                delay: delaySec,
-                options: UIView.AnimationOptions.curveEaseOut,
-                animations: {
-                    cell.alpha = 1.0
-                    cell.center.x = startX
-                },
-                completion: nil)
-    }
-
     private func calculateInitialMaxVisibleCellCount() {
-        guard let tableView = tableView,
+        guard let tableView = collectionView,
               let repo = imageRepo else {
             initialMaxVisibleCellCount = -1
             return
@@ -329,8 +282,10 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
             return 3 / 2.0
         }
 
+        let space = waterfallLayout.hItemSpace * CGFloat(waterfallLayout.lineCount - 1) + waterfallLayout.edge.left + waterfallLayout.edge.right
+        let width = CGFloat(collectionView.bounds.width) / CGFloat(waterfallLayout.lineCount) - space
+
         let ratio = image.aspectRatioF
-        let width = UIScreen.main.bounds.width
         let height = width / ratio
         return floor(height)
     }
@@ -363,5 +318,74 @@ class ImagesViewController: UIViewController, UITableViewDataSource, UITableView
         if (scrollView.contentOffset.y <= 0) {
             //print("prepare to showNavigationElements")
         }
+    }
+}
+
+extension ImagesViewController: ELWaterFlowLayoutDelegate {
+    func el_flowLayout(_ flowLayout: ELWaterFlowLayout, heightForRowAt index: Int) -> CGFloat {
+        return calculateCellHeight(index)
+    }
+}
+
+extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageRepo!.images.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: MainImageTableCell.ID, for: indexPath) as? MainImageTableCell else {
+            fatalError()
+        }
+        cell.onClickDownload = { [weak self] unsplashImage in
+            self?.delegate?.onRequestDownload(image: unsplashImage)
+        }
+        cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage) -> Void in
+            print("rect is ", rect)
+
+            if self?.delegate?.onClickImage(rect: rect, image: image) == true {
+                cell.isHidden = true
+                self?.tappedCell = cell
+            }
+        }
+        cell.bind(image: self.imageRepo!.images[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return
+        }
+        
+        let maxCount = initialMaxVisibleCellCount
+        if (animateCellFinished || maxCount < 0 || indexPath.row >= maxCount) {
+            return
+        }
+
+        let index = indexPath.row
+
+        if (index == maxCount - 1) {
+            animateCellFinished = true
+        }
+
+        let startX = cell.center.x
+        cell.alpha = 0.0
+        cell.center.x += ImagesViewController.CELL_ANIMATE_OFFSET_X
+
+        let delaySec = Double(index + 1) * ImagesViewController.CELL_ANIMATE_DELAY_UNIT_SEC
+
+        UIView.animate(withDuration: ImagesViewController.CELL_ANIMATE_DURATION_SEC,
+                delay: delaySec,
+                options: UIView.AnimationOptions.curveEaseOut,
+                animations: {
+                    cell.alpha = 1.0
+                    cell.center.x = startX
+                },
+                completion: nil)
     }
 }

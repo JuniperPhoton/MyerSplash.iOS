@@ -19,8 +19,14 @@ func createTopTabBar() -> TMBar.ButtonBar {
     bar.fadesContentEdges = true
     
     let isEnglish = NSLocalizedString("lang_code", comment: "") == "en_us"
-    let fontSize = isEnglish ? 13 : 14
-    let spacing = isEnglish ? 8 : 12
+    var fontSize = isEnglish ? 13 : 14
+    var spacing = isEnglish ? 8 : 12
+    
+    if UIDevice.current.userInterfaceIdiom == .pad {
+        fontSize = Int(fontSize.toCGFloat() * 1.5)
+        spacing = Int(spacing.toCGFloat() * 2)
+        bar.layout.contentInset = UIEdgeInsets(top: 30, left: 20, bottom: 15, right: 60)
+    }
 
     bar.layout.interButtonSpacing = CGFloat(spacing)
     bar.buttons.customize { (button) in
