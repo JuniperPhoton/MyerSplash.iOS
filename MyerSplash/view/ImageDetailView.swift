@@ -34,7 +34,7 @@ class ImageDetailView: UIView {
         get {
             let width = self.frame.width
 
-            let ratio = bindImage!.aspectRatioF
+            let ratio = bindImage!.getAspectRatioF(viewWidth: Int(self.frame.width), viewHeight: Int(self.frame.height))
             let height = width / ratio
 
             let x: CGFloat = 0.0

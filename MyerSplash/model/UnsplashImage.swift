@@ -23,50 +23,6 @@ class UnsplashImage: ColumnJSONCodable {
         }
     }
 
-    var aspectRatioF: CGFloat {
-        get {
-            let r = aspectRatio
-            let splited = r.split(separator: ":")
-            let first = String(splited[0])
-            let second = String(splited[1])
-            return CGFloat(Double(first) ?? 3) / CGFloat(Double(second) ?? 2)
-        }
-    }
-
-    var aspectRatio: String {
-        get {
-            let rawRatio: CGFloat
-            if width == 0 || height == 0 {
-                rawRatio = 3.0 / 2.0
-            } else {
-                rawRatio = CGFloat(width) / CGFloat(height)
-            }
-
-            let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
-
-            let fixedMargin = CGFloat(100)
-
-            let decorViewWidth = UIScreen.main.bounds.width
-            let decorViewHeight = UIScreen.main.bounds.height
-
-            let availableHeight = decorViewHeight - fixedMargin * CGFloat(2)
-
-            let imageRatio = rawRatio
-            let wantedWidth = decorViewWidth
-            let wantedHeight = (wantedWidth / imageRatio) + fixedInfoHeight
-
-            let targetWidth = wantedWidth
-            var targetHeight = wantedHeight
-            if (wantedHeight > availableHeight) {
-                targetHeight = CGFloat(availableHeight) - fixedInfoHeight
-            } else {
-                targetHeight -= fixedInfoHeight
-            }
-
-            return "\(targetWidth):\(targetHeight)"
-        }
-    }
-
     var fileNameForDownload: String {
         get {
             return "\(user!.name!) - \(id!) - \(tagForDownload)"
@@ -154,6 +110,46 @@ class UnsplashImage: ColumnJSONCodable {
 
         urls = ImageUrl(json["urls"])
         user = UnsplashUser(json["user"])
+    }
+    
+    func getAspectRatioF(viewWidth: Int, viewHeight: Int)-> CGFloat {
+        let r = getAspectRatio(viewWidth: viewWidth, viewHeight: viewHeight)
+        let splited = r.split(separator: ":")
+        let first = String(splited[0])
+        let second = String(splited[1])
+        return CGFloat(Double(first) ?? 3) / CGFloat(Double(second) ?? 2)
+    }
+    
+    func getAspectRatio(viewWidth: Int, viewHeight: Int)-> String {
+        let rawRatio: CGFloat
+        if width == 0 || height == 0 {
+            rawRatio = 3.0 / 2.0
+        } else {
+            rawRatio = CGFloat(width) / CGFloat(height)
+        }
+
+        let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
+
+        let fixedMargin = CGFloat(100)
+
+        let decorViewWidth = UIScreen.main.bounds.width
+        let decorViewHeight = UIScreen.main.bounds.height
+
+        let availableHeight = decorViewHeight - fixedMargin * CGFloat(2)
+
+        let imageRatio = rawRatio
+        let wantedWidth = decorViewWidth
+        let wantedHeight = (wantedWidth / imageRatio) + fixedInfoHeight
+
+        let targetWidth = wantedWidth
+        var targetHeight = wantedHeight
+        if (wantedHeight > availableHeight) {
+            targetHeight = CGFloat(availableHeight) - fixedInfoHeight
+        } else {
+            targetHeight -= fixedInfoHeight
+        }
+
+        return "\(targetWidth):\(targetHeight)"
     }
 
     static func isToday(_ image: UnsplashImage) -> Bool {
