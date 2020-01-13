@@ -1,7 +1,4 @@
 import UIKit
-import AppCenter
-import AppCenterAnalytics
-import AppCenterCrashes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,10 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = controller
         window!.makeKeyAndVisible()
         
-        MSAppCenter.start(AppKeys.getAppCenterKey(), withServices:[
-            MSAnalytics.self,
-            MSCrashes.self
-        ])
+        Events.initialize()
         
         setupShortcuts(application)
         

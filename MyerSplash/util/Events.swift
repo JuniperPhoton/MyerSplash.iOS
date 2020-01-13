@@ -8,61 +8,75 @@
 
 import Foundation
 import AppCenterAnalytics
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
 
 class Events {
+    static func initialize() {
+        MSAppCenter.start(AppKeys.getAppCenterKey(), withServices:[
+            MSAnalytics.self,
+            MSCrashes.self
+        ])
+    }
+    
     static func trackBeginDownloadEvent() {
-        MSAnalytics.trackEvent("Begin download")
+        trackMSEvents("Begin download")
     }
 
     static func trackImagDetailShown() {
-        MSAnalytics.trackEvent("Image detail shown")
+        trackMSEvents("Image detail shown")
     }
     
     static func trackImagDetailBeginDrag() {
-        MSAnalytics.trackEvent("Image detail begin drag")
+        trackMSEvents("Image detail begin drag")
     }
     
     static func trackImagDetailTapToDismiss() {
-        MSAnalytics.trackEvent("Image detail tap to dismiss")
+        trackMSEvents("Image detail tap to dismiss")
     }
     
     static func trackDownloadSuccessEvent() {
-        MSAnalytics.trackEvent("Download success")
+        trackMSEvents("Download success")
     }
     
     static func trackDownloadFailedEvent(_ success: Bool, _ message: String? = nil) {
-        MSAnalytics.trackEvent("Download failed", withProperties: ["Success": String(success), "Message": message ?? ""])
+        trackMSEvents("Download failed", withProperties: ["Success": String(success), "Message": message ?? ""])
     }
     
     static func trackTabSelected(name: String) {
-        MSAnalytics.trackEvent("Tab selected", withProperties: ["name": name])
+        trackMSEvents("Tab selected", withProperties: ["name": name])
     }
     
     static func trackClickSearch() {
-        MSAnalytics.trackEvent("Search clicked")
+        trackMSEvents("Search clicked")
     }
     
     static func trackClickSearchItem(name: String) {
-        MSAnalytics.trackEvent("Search item clicked", withProperties: ["item": name])
+        trackMSEvents("Search item clicked", withProperties: ["item": name])
     }
     
     static func trackClickAuthor() {
-        MSAnalytics.trackEvent("Author clicked")
+        trackMSEvents("Author clicked")
     }
     
     static func trackEdit() {
-        MSAnalytics.trackEvent("Edit entered")
+        trackMSEvents("Edit entered")
     }
     
     static func trackEditOk() {
-        MSAnalytics.trackEvent("Edit composed")
+        trackMSEvents("Edit composed")
     }
 
     static func trackClickMore() {
-        MSAnalytics.trackEvent("More entered")
+        trackMSEvents("More entered")
     }
     
     static func trackRefresh(name: String) {
-        MSAnalytics.trackEvent("Refresh", withProperties: ["title": name])
+        trackMSEvents("Refresh", withProperties: ["title": name])
+    }
+    
+    private static func trackMSEvents(_ name: String, withProperties: [String: String]? = nil){
+        MSAnalytics.trackEvent(name, withProperties: withProperties)
     }
 }
