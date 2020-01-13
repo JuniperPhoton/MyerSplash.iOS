@@ -112,9 +112,9 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         self.view.addSubview(rootStack)
 
         rootStack.snp.makeConstraints { (maker) in
-            maker.left.equalToSuperview().offset(20)
-            maker.right.equalToSuperview().offset(-20)
+            maker.width.equalTo(300)
             maker.centerY.equalToSuperview()
+            maker.centerX.equalToSuperview()
         }
     }
 
