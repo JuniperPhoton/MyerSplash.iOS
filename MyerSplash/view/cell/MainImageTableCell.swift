@@ -86,14 +86,16 @@ public class MainImageTableCell: UICollectionViewCell {
     func bind(image: UnsplashImage) {
         bindImage = image
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
-        mainImageView.image = nil
 
         todayTag.isHidden = !UnsplashImage.isToday(image)
         todayTextTag.isHidden = !UnsplashImage.isToday(image)
-
-        if let url = image.listUrl {
-            ImageIO.loadImage(url: url, intoView: mainImageView)
+    }
+    
+    func loadImage(fade: Bool) {
+        guard let url = bindImage?.listUrl else {
+            return
         }
+        ImageIO.loadImage(url: url, intoView: mainImageView, fade: fade)
     }
 
     private func isImageCached() -> Bool {

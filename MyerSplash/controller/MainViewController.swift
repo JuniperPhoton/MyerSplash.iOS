@@ -170,7 +170,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     @objc
     private func onClickMore() {
         Events.trackClickMore()
-        let controller = MoreViewController(selectedIndex: 1)
+        let controller = MoreViewController(selectedIndex: UIDevice.current.userInterfaceIdiom == .pad ? 1 : 0)
         self.present(controller, animated: true, completion: nil)
     }
     
