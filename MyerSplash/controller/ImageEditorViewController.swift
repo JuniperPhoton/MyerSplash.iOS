@@ -55,9 +55,6 @@ class ImageEditorViewController: UIViewController {
         imageView = UIImageView()
         
         scrollView.addSubview(imageView)
-        imageView.snp.makeConstraints { (maker) in
-            maker.height.equalToSuperview()
-        }
 
         self.view.addSubview(scrollView)
 
@@ -316,8 +313,21 @@ class ImageEditorViewController: UIViewController {
             
             scrollView.contentSize = CGSize(width: targetWidth, height: targetHeight)
             
+            imageView.snp.makeConstraints { (maker) in
+                if targetWidth.toCGFloat() == screenBounds.width {
+                    maker.width.equalToSuperview()
+                } else if targetHeight.toCGFloat() == screenBounds.height {
+                    maker.height.equalToSuperview()
+                }
+            }
+            
             if targetWidth > Int(screenBounds.width) {
                 let point = CGPoint(x: Int((targetWidth.toCGFloat() - screenBounds.width) / 2), y: 0)
+                scrollView.setContentOffset(point, animated: false)
+            }
+            
+            if targetHeight > Int(screenBounds.height) {
+                let point = CGPoint(x: 0, y: Int((targetHeight.toCGFloat() - screenBounds.height) / 2))
                 scrollView.setContentOffset(point, animated: false)
             }
                         
