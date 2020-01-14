@@ -3,6 +3,7 @@ import UIKit
 import SnapKit
 import Nuke
 import RxSwift
+import AVFoundation.AVUtilities
 
 protocol ImageDetailViewDelegate: class {
     func onHidden()
@@ -32,14 +33,27 @@ class ImageDetailView: UIView {
 
     private var finalFrame: CGRect {
         get {
-            let width = self.frame.width
+            let rawRatio = bindImage!.getAspectRatioF(viewWidth: self.frame.width, viewHeight: self.frame.height)
 
-            let ratio = bindImage!.getAspectRatioF(viewWidth: self.frame.width, viewHeight: self.frame.height)
-            let height = width / ratio
+            let fixedHorizontalMargin: CGFloat
+            let fixedVerticalMargin: CGFloat
+            
+            let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
 
-            let x: CGFloat = 0.0
-            let y: CGFloat = (self.frame.height - height - Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT) / 2.0
-            return CGRect(x: x, y: y, width: width, height: height)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                fixedHorizontalMargin = 50
+                fixedVerticalMargin = 70
+            } else {
+                fixedHorizontalMargin = 0
+                fixedVerticalMargin = 0
+            }
+            
+            let rect = AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
+                                  insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
+                                                     width: self.frame.width - fixedHorizontalMargin * 2,
+                                                     height: self.frame.height - fixedVerticalMargin * 2 - fixedInfoHeight))
+            
+            return rect
         }
     }
 
@@ -111,12 +125,12 @@ class ImageDetailView: UIView {
         addSubview(mainImageView)
 
         backgroundView.snp.makeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
-            maker.height.equalTo(UIScreen.main.bounds.height)
+            maker.edges.equalToSuperview()
         }
 
         extraInformationView.snp.makeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
@@ -289,7 +303,8 @@ class ImageDetailView: UIView {
     private func resetExtraInformationConstraint() {
         extraInformationView.isHidden = true
         extraInformationView.snp.remakeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
@@ -317,7 +332,8 @@ class ImageDetailView: UIView {
         extraInformationView.isHidden = false
 
         extraInformationView.snp.remakeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
             maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
         }

@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import SwiftyJSON
 import WCDBSwift
+import AVFoundation.AVUtilities
 
 class UnsplashImage: ColumnJSONCodable {
     private (set) var id: String?
@@ -113,14 +114,11 @@ class UnsplashImage: ColumnJSONCodable {
     }
     
     func getAspectRatioF(viewWidth: CGFloat, viewHeight: CGFloat)-> CGFloat {
-        let r = getAspectRatio(viewWidth: viewWidth, viewHeight: viewHeight)
-        let splited = r.split(separator: ":")
-        let first = String(splited[0])
-        let second = String(splited[1])
-        return CGFloat(Double(first) ?? 3) / CGFloat(Double(second) ?? 2)
+        let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
+        return rect.width / rect.height
     }
     
-    func getAspectRatio(viewWidth: CGFloat, viewHeight: CGFloat)-> String {
+    func getTargetRect(viewWidth: CGFloat, viewHeight: CGFloat)-> CGRect {
         let rawRatio: CGFloat
         if width == 0 || height == 0 {
             rawRatio = 3.0 / 2.0
@@ -130,26 +128,29 @@ class UnsplashImage: ColumnJSONCodable {
 
         let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
 
-        let fixedMargin = CGFloat(100)
-
         let decorViewWidth = viewWidth
         let decorViewHeight = viewHeight
-
-        let availableHeight = decorViewHeight - fixedMargin * CGFloat(2)
-
-        let imageRatio = rawRatio
-        let wantedWidth = decorViewWidth
-        let wantedHeight = (wantedWidth / imageRatio) + fixedInfoHeight
-
-        let targetWidth = wantedWidth
-        var targetHeight = wantedHeight
-        if (wantedHeight > availableHeight) {
-            targetHeight = CGFloat(availableHeight) - fixedInfoHeight
+        
+        let fixedHorizontalMargin: CGFloat
+        let fixedVerticalMargin: CGFloat
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            fixedHorizontalMargin = 50
+            fixedVerticalMargin = 70
         } else {
-            targetHeight -= fixedInfoHeight
+            fixedHorizontalMargin = 0
+            fixedVerticalMargin = 0
         }
-
-        return "\(targetWidth):\(targetHeight)"
+        
+        return AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
+                              insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
+                                                 width: decorViewWidth - fixedHorizontalMargin * 2,
+                                                 height: decorViewHeight - fixedVerticalMargin * 2 - fixedInfoHeight))
+    }
+    
+    func getAspectRatio(viewWidth: CGFloat, viewHeight: CGFloat)-> String {
+        let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
+        return "\(rect.width):\(rect.height)"
     }
 
     static func isToday(_ image: UnsplashImage) -> Bool {

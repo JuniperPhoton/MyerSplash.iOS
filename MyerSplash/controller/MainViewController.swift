@@ -22,6 +22,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     private var imageDetailView: ImageDetailView!
 
     private var moreRippleController: MDCRippleTouchController!
+    private var downloadsRippleController: MDCRippleTouchController!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -49,9 +50,14 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         addBar(bar, dataSource: self, at: .top)
 
         // MARK: statusBarPlaceholder
-        let statusBarPlaceholder = UIView(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIView.topInset))
+        let statusBarPlaceholder = UIView()
         statusBarPlaceholder.backgroundColor = UIColor.getDefaultBackgroundUIColor()
-        self.view.addSubview(statusBarPlaceholder)        
+        self.view.addSubview(statusBarPlaceholder)
+        
+        statusBarPlaceholder.snp.makeConstraints { (maker) in
+            maker.width.equalToSuperview()
+            maker.height.equalTo(UIView.topInset)
+        }
         
         // MARK: MORE
         let moreButton = UIButton()
@@ -59,7 +65,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         moreButton.setImage(moreImage, for: .normal)
         moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         moreButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
-        moreButton.addTarget(self, action: #selector(onClickSettings), for: .touchUpInside)
+        moreButton.addTarget(self, action: #selector(onClickMore), for: .touchUpInside)
         self.view.addSubview(moreButton)
 
         moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
@@ -72,6 +78,28 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
             maker.right.equalTo(self.view.snp.right).offset(-10)
             maker.bottom.equalTo(bar.snp.bottom).offset(-15)
             maker.width.equalTo(50)
+        }
+        
+        // MARK: DOWNLOADS
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            let downloadsButton = UIButton()
+            let downloadImage = UIImage(named: R.icons.ic_download)!.withRenderingMode(.alwaysTemplate)
+            downloadsButton.setImage(downloadImage, for: .normal)
+            downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+            downloadsButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
+            downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
+            self.view.addSubview(downloadsButton)
+
+            downloadsRippleController = MDCRippleTouchController.load(intoView: downloadsButton,
+                    withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
+
+            downloadsButton.snp.makeConstraints { (maker) in
+                maker.top.equalTo(moreButton.snp.top)
+                maker.right.equalTo(moreButton.snp.left).offset(-10)
+                maker.bottom.equalTo(moreButton.snp.bottom)
+                maker.width.equalTo(50)
+            }
         }
 
         // MARK: FAB
@@ -91,12 +119,13 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         }
 
         // MARK: ImageDetailView
-        imageDetailView = ImageDetailView(frame: CGRect(x: 0,
-                y: 0,
-                width: UIScreen.main.bounds.width,
-                height: UIScreen.main.bounds.height))
+        imageDetailView = ImageDetailView()
         imageDetailView.delegate = self
         self.view.addSubview(imageDetailView)
+        
+        imageDetailView.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
         
         DownloadManager.instance.markDownloadingToFailed()
     }
@@ -139,9 +168,16 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
 
     @objc
-    private func onClickSettings() {
+    private func onClickMore() {
         Events.trackClickMore()
-        let controller = MoreViewController()
+        let controller = MoreViewController(selectedIndex: 1)
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    @objc
+    private func onClickDownloads() {
+        Events.trackClickMore()
+        let controller = MoreViewController(selectedIndex: 0)
         self.present(controller, animated: true, completion: nil)
     }
 

@@ -23,7 +23,7 @@ func createTopTabBar() -> TMBar.ButtonBar {
     var spacing = isEnglish ? 8 : 12
     
     if UIDevice.current.userInterfaceIdiom == .pad {
-        fontSize = Int(fontSize.toCGFloat() * 1.5)
+        fontSize = Int(fontSize.toCGFloat() * 1.3)
         spacing = Int(spacing.toCGFloat() * 2)
         bar.layout.contentInset = UIEdgeInsets(top: 30, left: 20, bottom: 15, right: 60)
     }

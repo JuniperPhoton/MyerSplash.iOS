@@ -31,9 +31,7 @@ class DownloadItemCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.backgroundColor = .black
-        
+                
         downloadRoot = UIView()
         downloadRoot.backgroundColor = .getDefaultLabelUIColor()
 

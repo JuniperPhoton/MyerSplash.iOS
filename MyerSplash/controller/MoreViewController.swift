@@ -25,8 +25,11 @@ class MoreViewController: TabmanViewController {
                                    SettingsViewController(),
                                    AboutViewController()]
     
-    init() {
+    private var selectedIndex = 0
+    
+    init(selectedIndex: Int) {
         super.init(nibName: nil, bundle: nil)
+        self.selectedIndex = selectedIndex
         self.modalPresentationStyle = .pageSheet
     }
 
@@ -115,6 +118,6 @@ extension MoreViewController: PageboyViewControllerDataSource, TMBarDataSource {
     }
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        nil
+        .at(index: selectedIndex)
     }
 }
