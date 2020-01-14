@@ -361,7 +361,8 @@ class ImageDetailView: UIView {
 
     private func hideExtraInformationView(_ completion: (() -> Void)? = nil) {
         extraInformationView.snp.remakeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
