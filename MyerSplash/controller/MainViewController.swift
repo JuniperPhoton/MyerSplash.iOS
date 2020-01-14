@@ -9,6 +9,9 @@ import RxSwift
 
 func getTopBarHeight()-> CGFloat {
     if UIDevice.current.userInterfaceIdiom == .pad {
+        #if targetEnvironment(macCatalyst)
+        return 110
+        #endif
         return 90
     } else {
         return 60
@@ -47,7 +50,11 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         super.viewDidLoad()
         
         viewControllers.forEach { (controller) in
+            #if targetEnvironment(macCatalyst)
+            (controller as ImagesViewController).collectionTopOffset = getTopBarHeight() - 20
+            #else
             (controller as ImagesViewController).collectionTopOffset = getTopBarHeight()
+            #endif
         }
         
         self.view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
@@ -143,6 +150,13 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         }
         
         DownloadManager.instance.markDownloadingToFailed()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.viewControllers.forEach { (controller) in
+            controller.viewWillTransition(to: size, with: coordinator)
+        }
+        imageDetailView.invalidate()
     }
     
     func onRequestEdit(item: DownloadItem) {

@@ -17,7 +17,7 @@ func createTopTabBar() -> TMBar.ButtonBar {
     bar.layout.contentInset = UIEdgeInsets(top: 0, left: 20.0, bottom: 12.0, right: 60)
     bar.backgroundView.style = .flat(color: .clear)
     bar.fadesContentEdges = true
-    
+
     let isEnglish = NSLocalizedString("lang_code", comment: "") == "en_us"
     var fontSize = isEnglish ? 13 : 14
     var spacing = isEnglish ? 8 : 12

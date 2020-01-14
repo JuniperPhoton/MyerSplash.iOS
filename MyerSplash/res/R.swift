@@ -93,6 +93,7 @@ class R {
         static let shortcut_downloads = NSLocalizedString("shortcut_downloads", comment: "")
 
         static let failed_to_load = NSLocalizedString("failed_to_load", comment: "")
+        static let saved_mac = NSLocalizedString("saved_mac", comment: "")
 
         private init() {
             
