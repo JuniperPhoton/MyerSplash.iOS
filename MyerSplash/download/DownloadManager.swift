@@ -24,7 +24,7 @@ class DownloadManager: NSObject {
         // ignored
     }
     
-    func markDownloadingToFailed () {
+    func markDownloadingToFailed() {
         dbQueue.async {
             AppDb.instance.updateItemsToFailed()
         }
@@ -142,7 +142,7 @@ class DownloadManager: NSObject {
             let destination: DownloadRequest.DownloadFileDestination = { _, _ in
                 return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
             }
-                        
+            
             self.publishSubject.onNext(item)
             
             let request = Alamofire.download(unsplashImage.downloadUrl!, to: destination).downloadProgress(closure: { (progress) in

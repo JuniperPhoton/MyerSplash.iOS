@@ -14,6 +14,10 @@ class UnsplashImage: ColumnJSONCodable {
     private (set) var user: UnsplashUser?
     private (set) var isUnsplash = true
     
+    enum CodingKeys: String, CodingKey {
+        case id, color, likes, width, height, urls, user
+    }
+    
     var rawAspectRatioF: CGFloat {
         get {
             if width == 0 || height == 0 {
@@ -90,34 +94,11 @@ class UnsplashImage: ColumnJSONCodable {
         }
     }
 
-    init() {
-    }
-
-    init?(_ j: JSON?) {
-        guard let json = j else {
-            return nil
-        }
-
-        id = json["id"].string
-
-        if (id == nil) {
-            return nil
-        }
-
-        color = json["color"].string
-        likes = json["likes"].intValue
-        width = json["width"].intValue
-        height = json["height"].intValue
-
-        urls = ImageUrl(json["urls"])
-        user = UnsplashUser(json["user"])
-    }
-    
     func getAspectRatioF(viewWidth: CGFloat, viewHeight: CGFloat)-> CGFloat {
         let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
         return rect.width / rect.height
     }
-    
+
     func getTargetRect(viewWidth: CGFloat, viewHeight: CGFloat)-> CGRect {
         let rawRatio: CGFloat
         if width == 0 || height == 0 {
@@ -130,10 +111,10 @@ class UnsplashImage: ColumnJSONCodable {
 
         let decorViewWidth = viewWidth
         let decorViewHeight = viewHeight
-        
+
         let fixedHorizontalMargin: CGFloat
         let fixedVerticalMargin: CGFloat
-        
+
         if UIDevice.current.userInterfaceIdiom == .pad {
             fixedHorizontalMargin = 50
             fixedVerticalMargin = 70
@@ -141,13 +122,13 @@ class UnsplashImage: ColumnJSONCodable {
             fixedHorizontalMargin = 0
             fixedVerticalMargin = 0
         }
-        
+
         return AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
                               insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
                                                  width: decorViewWidth - fixedHorizontalMargin * 2,
                                                  height: decorViewHeight - fixedVerticalMargin * 2 - fixedInfoHeight))
     }
-    
+
     func getAspectRatio(viewWidth: CGFloat, viewHeight: CGFloat)-> String {
         let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
         return "\(rect.width):\(rect.height)"
@@ -215,18 +196,4 @@ class ImageUrl: ColumnJSONCodable {
     var regular: String?
     var small: String?
     var thumb: String?
-
-    init() {
-    }
-
-    init?(_ j: JSON?) {
-        guard let json = j else {
-            return nil
-        }
-        raw = json["raw"].string
-        full = json["full"].string
-        regular = json["regular"].string
-        small = json["small"].string
-        thumb = json["thumb"].string
-    }
 }

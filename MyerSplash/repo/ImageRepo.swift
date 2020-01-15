@@ -157,6 +157,8 @@ class DeveloperImageRepo: ImageRepo {
     }
 }
 
+let decoder = JSONDecoder()
+
 class SearchImageRepo: ImageRepo {
     override var title: String {
         get {
@@ -187,8 +189,9 @@ class SearchImageRepo: ImageRepo {
                     let json = JSON(jsonResponse)
                     let images = json["results"]
 
-                    return images.compactMap { s, json -> UnsplashImage? in
-                        UnsplashImage(json)
+                    return images.compactMap { element in
+                        let json = element.1.rawString()
+                        return try? decoder.decode(UnsplashImage.self, from: json!.data(using: .utf8)!)
                     }
                 }
     }
@@ -198,14 +201,19 @@ extension Observable {
     func mapToList(appendTodayImage: Bool = false) -> Observable<[UnsplashImage]> {
         return self.map { jsonResponse in
             let json = JSON(jsonResponse)
-            var images: [UnsplashImage] = json.compactMap { s, json -> UnsplashImage? in
-                UnsplashImage(json)
+            var images: [UnsplashImage]? = json.compactMap { element in
+                let json = element.1.rawString()
+                return try? decoder.decode(UnsplashImage.self, from: json!.data(using: .utf8)!)
+            }
+            
+            if images == nil {
+                images = [UnsplashImage]()
             }
 
             if appendTodayImage {
-                images.insert(UnsplashImage.createToday(), at: 0)
+                images?.insert(UnsplashImage.createToday(), at: 0)
             }
-            return images
+            return images!
         }
     }
 }
