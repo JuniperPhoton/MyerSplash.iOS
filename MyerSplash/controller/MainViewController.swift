@@ -62,9 +62,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         let statusBarPlaceholder = UIView()
         
         let blurView = UIView.makeBlurBackgroundView()
-        if let blurView = blurView {
-            statusBarPlaceholder.addSubview(blurView)
-        }
+        statusBarPlaceholder.addSubview(blurView)
         
         self.view.addSubview(statusBarPlaceholder)
         

@@ -56,22 +56,19 @@ extension UIView {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
     
-    static func makeBlurBackgroundView()-> UIView? {
-        if !UIAccessibility.isReduceTransparencyEnabled {
-            let blurEffect: UIBlurEffect!
-            if #available(iOS 13.0, *) {
-                blurEffect = UIBlurEffect(style: .systemMaterial)
-            } else {
-                blurEffect = UIBlurEffect(style: .extraLight)
-            }
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-            return blurEffectView
+    static func makeBlurBackgroundView()-> UIView {
+        let blurEffect: UIBlurEffect!
+        if #available(iOS 13.0, *) {
+            blurEffect = UIBlurEffect(style: .systemMaterial)
         } else {
-            return nil
+            blurEffect = UIBlurEffect(style: .extraLight)
         }
+        
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        return blurEffectView
     }
 
     static func getDefaultLabelUIColor() -> UIColor {

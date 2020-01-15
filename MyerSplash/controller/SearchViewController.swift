@@ -41,12 +41,11 @@ class SearchViewController: UIViewController {
         }
 
         let blurEffectView = UIView.makeBlurBackgroundView()
-        if let blurView = blurEffectView {
-            view.backgroundColor = .clear
-            blurView.frame = view.bounds
-            view.addSubview(blurView)
-        } else {
-            view.backgroundColor = .getDefaultBackgroundUIColor()
+        view.backgroundColor = .clear
+        view.addSubview(blurEffectView)
+        
+        blurEffectView.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
         }
 
         searchView = UISearchBar()

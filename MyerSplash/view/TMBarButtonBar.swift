@@ -15,11 +15,7 @@ func createTopTabBar() -> TMBar.ButtonBar {
     bar.layout.transitionStyle = .snap
     bar.layout.alignment = .leading
     bar.layout.contentInset = UIEdgeInsets(top: 0, left: 20.0, bottom: 12.0, right: 60)
-    if #available(iOS 13.0, *) {
-        bar.backgroundView.style = .flat(color: .clear)
-    } else {
-        bar.backgroundView.style = .blur(style: .extraLight)
-    }
+    bar.backgroundView.style = .flat(color: .clear)
     bar.fadesContentEdges = true
     
     let isEnglish = NSLocalizedString("lang_code", comment: "") == "en_us"
