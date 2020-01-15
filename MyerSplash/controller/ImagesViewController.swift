@@ -19,15 +19,16 @@ protocol ImagesViewControllerDelegate: class {
 }
 
 class ImagesViewController: UIViewController {
+    static let TAG = "ImagesViewController"
     static let CELL_ANIMATE_OFFSET_X: CGFloat = 50.0
     static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.1
     static let CELL_ANIMATE_DURATION_SEC = 0.4
     
+    static let FOOTER_HEIGHT = 100
+    
     static let HIGHLIGHTS_DELAY_SEC = 0.2
     
-    private var loadingFooterView: MDCActivityIndicator!
-    
-    fileprivate let waterfallLayout = ELWaterFlowLayout()
+    private let waterfallLayout = ELWaterFlowLayout()
     
     private var paging = 1
     private var loading = false
@@ -49,7 +50,7 @@ class ImagesViewController: UIViewController {
     
     private var indicator: MDCActivityIndicator!
     private var noItemView: UIView!
-    
+    private var loadingFooterView: MDCActivityIndicator!
     private var animateCellFinished = false
     
     weak var delegate: ImagesViewControllerDelegate? = nil
@@ -74,9 +75,14 @@ class ImagesViewController: UIViewController {
         
         imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int) in
             if let self = self {
+                if !success {
+                    showToast(R.strings.something_wrong)
+                }
+                
                 self.indicator.stopAnimating()
                 self.loading = false
                 self.canLoadMore = !self.imageRepo!.images.isEmpty
+                self.loadingFooterView.stopAnimating()
                 self.stopRefresh()
                 
                 if page == 1 {
@@ -122,18 +128,15 @@ class ImagesViewController: UIViewController {
             maker.top.equalTo(view)
         }
         
-        loadingFooterView = MDCActivityIndicator(frame: CGRect(x: 0,
-                                                               y: 0,
-                                                               width: UIScreen.main.bounds.width,
-                                                               height: 100))
-        loadingFooterView.cycleColors = [.getDefaultLabelUIColor()]
-        
-        // todo
-        //tableView.tableFooterView = loadingFooterView
-        
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         collectionView.register(MainImageTableCell.self, forCellWithReuseIdentifier: MainImageTableCell.ID)
+        
+        loadingFooterView = MDCActivityIndicator()
+        loadingFooterView.cycleColors = [.getDefaultLabelUIColor()]
+        
+        collectionView.addSubview(loadingFooterView)
         
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
@@ -210,7 +213,7 @@ class ImagesViewController: UIViewController {
     
     private func loadData(_ refresh: Bool) {
         if (loading) {
-            Log.warn(tag: "imageview", "loading already, skip loading data")
+            Log.warn(tag: ImagesViewController.TAG, "loading already, skip loading data")
             return
         }
         loading = true
@@ -229,7 +232,6 @@ class ImagesViewController: UIViewController {
             return
         }
         
-        loadingFooterView.startAnimating()
         paging = paging + 1
         loadData(false)
     }
@@ -293,8 +295,6 @@ class ImagesViewController: UIViewController {
     
     // MARK: scroll
     
-    private var lastScrollOffset: CGPoint = CGPoint(x: 0, y: 0)
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // We don't want the over-scrolling takes any showing & hiding effect.
         if (scrollView.contentOffset.y <= 0) {
@@ -305,14 +305,14 @@ class ImagesViewController: UIViewController {
             loadMore()
         }
         
-        let dy = scrollView.contentOffset.y - lastScrollOffset.y
-        if (dy > 10) {
-            //print("prepare to hideNavigationElements")
-        } else if (dy < -10) {
-            //print("prepare to showNavigationElements")
+        if (scrollView.contentSize.height > scrollView.frame.size.height) {
+            let frame = CGRect(x: 0,
+                               y: scrollView.contentSize.height,
+                               width: collectionView.frame.size.width,
+                               height: ImagesViewController.FOOTER_HEIGHT.toCGFloat());
+            self.loadingFooterView.frame = frame;
+            self.loadingFooterView.startAnimating()
         }
-        
-        lastScrollOffset = scrollView.contentOffset
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -367,7 +367,7 @@ extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
     
-    private func willCellPerformEnterAnimation(indexPath: IndexPath)-> Bool {
+    private func willCellPerformEnterAnimation(indexPath: IndexPath) -> Bool {
         if UIDevice.current.userInterfaceIdiom == .pad {
             return false
         }
