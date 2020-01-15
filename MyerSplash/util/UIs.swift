@@ -60,7 +60,7 @@ extension UIView {
         if !UIAccessibility.isReduceTransparencyEnabled {
             let blurEffect: UIBlurEffect!
             if #available(iOS 13.0, *) {
-                blurEffect = UIBlurEffect(style: .systemChromeMaterial)
+                blurEffect = UIBlurEffect(style: .systemMaterial)
             } else {
                 blurEffect = UIBlurEffect(style: .extraLight)
             }

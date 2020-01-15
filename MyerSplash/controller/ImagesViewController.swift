@@ -53,6 +53,8 @@ class ImagesViewController: UIViewController {
     private var loadingFooterView: MDCActivityIndicator!
     private var animateCellFinished = false
     
+    var collectionTopOffset: CGFloat = 0
+    
     weak var delegate: ImagesViewControllerDelegate? = nil
     
     var repoTitle: String? {
@@ -130,7 +132,7 @@ class ImagesViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: collectionTopOffset, left: 0, bottom: 100, right: 0)
         collectionView.register(MainImageTableCell.self, forCellWithReuseIdentifier: MainImageTableCell.ID)
         
         loadingFooterView = MDCActivityIndicator()
