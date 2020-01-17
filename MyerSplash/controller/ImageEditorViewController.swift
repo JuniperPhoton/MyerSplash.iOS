@@ -53,6 +53,7 @@ class ImageEditorViewController: UIViewController {
 
         scrollView = UIScrollView()
         imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
         
         scrollView.addSubview(imageView)
 

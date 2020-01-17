@@ -309,6 +309,20 @@ class ImageDetailView: UIView {
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
     }
+    
+    func invalidate() {
+        if self.isHidden {
+            return
+        }
+        
+        self.mainImageView.frame = self.finalFrame
+        extraInformationView.snp.remakeConstraints { maker in
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
+            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
+        }
+    }
 
     private func showInternal() {
         Events.trackImagDetailShown()

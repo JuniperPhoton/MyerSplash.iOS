@@ -27,6 +27,10 @@ class DayNightImageView: UIImageView {
     }
 
     func applyMask() {
+        #if targetEnvironment(macCatalyst)
+        return
+        #endif
+        
         let maskView = UIView()
         maskView.backgroundColor = maskColor
         self.addSubview(maskView)

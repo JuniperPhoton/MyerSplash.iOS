@@ -8,16 +8,21 @@
 
 import Foundation
 import AppCenterAnalytics
+
+#if !targetEnvironment(macCatalyst)
 import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
+#endif
 
 class Events {
     static func initialize() {
+        #if !targetEnvironment(macCatalyst)
         MSAppCenter.start(AppKeys.getAppCenterKey(), withServices:[
             MSAnalytics.self,
             MSCrashes.self
         ])
+        #endif
     }
     
     static func trackBeginDownloadEvent() {
@@ -76,7 +81,9 @@ class Events {
         trackMSEvents("Refresh", withProperties: ["title": name])
     }
     
-    private static func trackMSEvents(_ name: String, withProperties: [String: String]? = nil){
+    private static func trackMSEvents(_ name: String, withProperties: [String: String]? = nil) {
+        #if !targetEnvironment(macCatalyst)
         MSAnalytics.trackEvent(name, withProperties: withProperties)
+        #endif
     }
 }
