@@ -16,6 +16,9 @@
 		1A54FD1D9B7E93F3367E6C10 /* DayNightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54F6D86983A7220256314E /* DayNightImageView.swift */; };
 		2219372A23C999BD00A58BE5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2219372C23C999BD00A58BE5 /* Localizable.strings */; };
 		221D26A623D21502003BE444 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D26A523D21502003BE444 /* SettingsView.swift */; };
+		221D26AB23D216F3003BE444 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */; };
+		221D26AC23D216F3003BE444 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26A923D216F3003BE444 /* AppCenterCrashes.framework */; };
+		221D26AD23D216F3003BE444 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26AA23D216F3003BE444 /* AppCenter.framework */; };
 		222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46AF23C1081B003C754B /* ImagesViewController.swift */; };
 		222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46B223C10CAA003C754B /* ImageRepo.swift */; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
@@ -81,6 +84,9 @@
 		2219372E23C99AF000A58BE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2219372F23C99C1B00A58BE5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		221D26A523D21502003BE444 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = MyerSplash/SettingsView.swift; sourceTree = SOURCE_ROOT; };
+		221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCenterAnalytics.framework; sourceTree = "<group>"; };
+		221D26A923D216F3003BE444 /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCenterCrashes.framework; sourceTree = "<group>"; };
+		221D26AA23D216F3003BE444 /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCenter.framework; sourceTree = "<group>"; };
 		222D46AF23C1081B003C754B /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
 		2268721D23C369AB00F921F4 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +148,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */,
+				221D26AD23D216F3003BE444 /* AppCenter.framework in Frameworks */,
+				221D26AC23D216F3003BE444 /* AppCenterCrashes.framework in Frameworks */,
+				221D26AB23D216F3003BE444 /* AppCenterAnalytics.framework in Frameworks */,
 				71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,6 +158,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		221D26A723D216B0003BE444 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				221D26AA23D216F3003BE444 /* AppCenter.framework */,
+				221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */,
+				221D26A923D216F3003BE444 /* AppCenterCrashes.framework */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
 		222D46B123C10C9B003C754B /* repo */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +320,7 @@
 		F0D247B01FF7C35000BB8076 = {
 			isa = PBXGroup;
 			children = (
+				221D26A723D216B0003BE444 /* Vendor */,
 				F0D247BB1FF7C35000BB8076 /* MyerSplash */,
 				F0D247BA1FF7C35000BB8076 /* Products */,
 				CC5B4A83DCADE02770A06C2E /* Pods */,
@@ -692,6 +712,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 221;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor",
+				);
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -715,6 +739,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 221;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor",
+				);
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

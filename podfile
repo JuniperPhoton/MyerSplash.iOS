@@ -10,7 +10,6 @@ target 'MyerSplash' do
   pod 'RxAlamofire'
   pod 'SwiftyJSON'
   pod 'Nuke', '~> 8.4'
-  pod 'AppCenter'
   pod 'MaterialComponents/Buttons'
   pod 'MaterialComponents/ActivityIndicator'
   pod 'MaterialComponents/BottomSheet'
