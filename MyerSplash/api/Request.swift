@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class Request {
     static let BASE_URL = "https://api.unsplash.com/"
@@ -20,10 +21,13 @@ class Request {
     private static let CLIENT_ID_KEY = "client_id"
 
     static func getDefaultParams(paging: Int) -> Dictionary<String, Any> {
-        return [
+        var dic = [
             CLIENT_ID_KEY: AppKeys.getClientId(),
-            Request.PER_PAGE_PARAM: Request.DEFAULT_PER_PAGE,
             Request.PAGING_PARAM: paging
-        ]
+            ] as [String : Any]
+        
+        dic[Request.PER_PAGE_PARAM] = UIDevice.current.userInterfaceIdiom == .pad ? 30 : Request.DEFAULT_PER_PAGE
+
+        return dic
     }
 }

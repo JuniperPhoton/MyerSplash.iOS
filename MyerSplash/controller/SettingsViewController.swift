@@ -32,14 +32,6 @@ extension SettingsViewController: SettingsViewDelegate {
         present(vc, animated: true)
     }
 
-    func onClickClose(shouldRefreshWhenDismiss: Bool) {
-        print("onclick close")
-        self.dismiss(animated: true)
-        if (shouldRefreshWhenDismiss) {
-            self.delegate?.refresh()
-        }
-    }
-
     func present(vc: UIViewController) {
         self.present(vc, animated: true, completion: nil)
     }

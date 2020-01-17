@@ -27,12 +27,11 @@ class DownloadItemCell: UICollectionViewCell {
 
     var onClickEdit: ((UnsplashImage) -> Void)? = nil
     var onClickDownload: ((UnsplashImage) -> Void)? = nil
+    var onDownloadItemUpdated: ((DownloadItem) -> Void)? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.backgroundColor = .black
-        
+                
         downloadRoot = UIView()
         downloadRoot.backgroundColor = .getDefaultLabelUIColor()
 
@@ -132,6 +131,8 @@ class DownloadItemCell: UICollectionViewCell {
             self.downloadItem = element
             self.button.updateStatus(element)
             self.updateProgressLayer()
+            
+            self.onDownloadItemUpdated?(element)
         }
     }
     
@@ -147,7 +148,7 @@ class DownloadItemCell: UICollectionViewCell {
                 progress = 1.0
             }
             
-            progressLayer.backgroundColor = downloadItem.unsplashImage!.themeColor.cgColor
+            progressLayer.backgroundColor = downloadItem.unsplashImage!.themeColor.mixBlackInDarkMode().cgColor
         } else {
             progress = 0.0
         }
@@ -164,12 +165,16 @@ class DownloadItemCell: UICollectionViewCell {
     private func handleClickedSetAs() {
         guard let image = self.image,
               let item = self.downloadItem else {
+            Log.error(tag: DownloadItemCell.TAG, "image or download item is null")
             return
         }
 
         switch item.status {
         case DownloadStatus.Downloading.rawValue:
             DownloadManager.instance.cancel(id: image.id!)
+        case DownloadStatus.Pending.rawValue:
+            Log.error(tag: DownloadItemCell.TAG, "fallthrough pending status")
+            fallthrough
         case DownloadStatus.Failed.rawValue:
             onClickDownload?(image)
         case DownloadStatus.Success.rawValue:

@@ -3,12 +3,13 @@ import UIKit
 import SnapKit
 import Nuke
 import RxSwift
+import AVFoundation.AVUtilities
 
 protocol ImageDetailViewDelegate: class {
     func onHidden()
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
-    func onRequestEdit(image: UnsplashImage)
+    func onRequestEdit(item: DownloadItem)
 }
 
 class ImageDetailView: UIView {
@@ -32,14 +33,27 @@ class ImageDetailView: UIView {
 
     private var finalFrame: CGRect {
         get {
-            let width = self.frame.width
+            let rawRatio = bindImage!.getAspectRatioF(viewWidth: self.frame.width, viewHeight: self.frame.height)
 
-            let ratio = bindImage!.aspectRatioF
-            let height = width / ratio
+            let fixedHorizontalMargin: CGFloat
+            let fixedVerticalMargin: CGFloat
+            
+            let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
 
-            let x: CGFloat = 0.0
-            let y: CGFloat = (self.frame.height - height - Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT) / 2.0
-            return CGRect(x: x, y: y, width: width, height: height)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                fixedHorizontalMargin = 50
+                fixedVerticalMargin = 70
+            } else {
+                fixedHorizontalMargin = 0
+                fixedVerticalMargin = 0
+            }
+            
+            let rect = AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
+                                  insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
+                                                     width: self.frame.width - fixedHorizontalMargin * 2,
+                                                     height: self.frame.height - fixedVerticalMargin * 2 - fixedInfoHeight))
+            
+            return rect
         }
     }
 
@@ -111,12 +125,12 @@ class ImageDetailView: UIView {
         addSubview(mainImageView)
 
         backgroundView.snp.makeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
-            maker.height.equalTo(UIScreen.main.bounds.height)
+            maker.edges.equalToSuperview()
         }
 
         extraInformationView.snp.makeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
@@ -144,6 +158,8 @@ class ImageDetailView: UIView {
 
         switch gesture.state {
         case UIGestureRecognizerState.began:
+            Events.trackImagDetailBeginDrag()
+            
             startX = mainImageView.center.x
             startY = mainImageView.center.y
             resetExtraInformationConstraint()
@@ -169,7 +185,7 @@ class ImageDetailView: UIView {
             break
         case DownloadStatus.Success.rawValue:
             Log.info(tag: ImageDetailView.self.description(), "click on success")
-            delegate?.onRequestEdit(image: bindImage)
+            delegate?.onRequestEdit(item: downloadItem!)
             break
         default:
             delegate?.onRequestImageDownload(image: bindImage)
@@ -179,6 +195,7 @@ class ImageDetailView: UIView {
 
     @objc
     private func onClickAuthorName() {
+        Events.trackClickAuthor()
         guard let url = bindImage?.userHomePage else {
             return
         }
@@ -186,6 +203,7 @@ class ImageDetailView: UIView {
     }
 
     @objc private func onClickBackground() {
+        Events.trackImagDetailTapToDismiss()
         hideInternal()
     }
 
@@ -222,13 +240,13 @@ class ImageDetailView: UIView {
         mainImageView.frame = initFrame
 
         if let listUrl = image.listUrl {
-            ImageIO.loadImage(url: listUrl, intoView: mainImageView)
+            ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }
 
         let themeColor = image.themeColor
         let isThemeLight = themeColor.isLightColor()
 
-        extraInformationView.backgroundColor = themeColor
+        extraInformationView.backgroundColor = themeColor.mixBlackInDarkMode()
 
         photoByLabel.text = image.isUnsplash ? R.strings.author : R.strings.recommend_by
 
@@ -285,13 +303,16 @@ class ImageDetailView: UIView {
     private func resetExtraInformationConstraint() {
         extraInformationView.isHidden = true
         extraInformationView.snp.remakeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
     }
 
     private func showInternal() {
+        Events.trackImagDetailShown()
+        
         self.backgroundView.alpha = 0.0
         isHidden = false
 
@@ -311,9 +332,10 @@ class ImageDetailView: UIView {
         extraInformationView.isHidden = false
 
         extraInformationView.snp.remakeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
-            maker.top.equalTo(self.mainImageView.snp.bottom)
+            maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
         }
 
         UIView.animate(withDuration: 0.4,
@@ -339,7 +361,8 @@ class ImageDetailView: UIView {
 
     private func hideExtraInformationView(_ completion: (() -> Void)? = nil) {
         extraInformationView.snp.remakeConstraints { maker in
-            maker.width.equalTo(UIScreen.main.bounds.width)
+            maker.left.equalTo(mainImageView.snp.left)
+            maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }

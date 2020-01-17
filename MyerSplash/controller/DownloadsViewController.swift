@@ -29,10 +29,20 @@ class DownloadsViewController: UIViewController {
         
         waterfallLayout.delegate = self
         waterfallLayout.scrollDirection = .vertical
-        waterfallLayout.lineCount = 2
-        waterfallLayout.vItemSpace = 12
-        waterfallLayout.hItemSpace = 12
-        waterfallLayout.edge = UIEdgeInsets.zero
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            print("run for pad")
+            waterfallLayout.lineCount = 3
+            waterfallLayout.vItemSpace = 12
+            waterfallLayout.hItemSpace = 12
+            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        } else {
+            print("run for phone")
+            waterfallLayout.lineCount = 2
+            waterfallLayout.vItemSpace = 12
+            waterfallLayout.hItemSpace = 12
+            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        }
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -41,8 +51,8 @@ class DownloadsViewController: UIViewController {
         collectionView.register(DownloadItemCell.self, forCellWithReuseIdentifier: DownloadItemCell.ID)
         
         collectionView.snp.makeConstraints { (maker) in
-            maker.left.top.equalToSuperview().offset(12)
-            maker.right.equalToSuperview().offset(-12)
+            maker.left.top.equalToSuperview()
+            maker.right.equalToSuperview()
             maker.bottom.equalToSuperview()
         }
         
@@ -93,7 +103,7 @@ class DownloadsViewController: UIViewController {
     private func onClickDelete() {
         let vc = MDCAlertController(title: R.strings.delete_dialog_title, message: R.strings.delete_dialog_message)
         vc.applyColors()
-        vc.addAction(MDCAlertAction(title: R.strings.cancel, emphasis: .high, handler: {(action) in
+        vc.addAction(MDCAlertAction(title: R.strings.cancel, emphasis: .high, handler: { (action) in
             vc.dismiss(animated: true, completion: nil)
         }))
         vc.addAction(MDCAlertAction(title: R.strings.delete_dialog_action_delete, handler: { [weak self] (action) in
@@ -105,6 +115,7 @@ class DownloadsViewController: UIViewController {
     private func deleteItems() {
         DispatchQueue.global().async {
             AppDb.instance.deleteAll()
+            ImageIO.clearDownloadFiles()
             
             DispatchQueue.main.async {
                 self.downloadItems.removeAll()
@@ -128,7 +139,9 @@ class DownloadsViewController: UIViewController {
 
 extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDelegate, UICollectionViewDataSource {
     func el_flowLayout(_ flowLayout: ELWaterFlowLayout, heightForRowAt index: Int) -> CGFloat {
-        let width = (collectionView.bounds.width - 10) / 2
+        let space = waterfallLayout.hItemSpace * CGFloat(waterfallLayout.lineCount - 1) + waterfallLayout.edge.left + waterfallLayout.edge.right
+        let width = CGFloat(collectionView.bounds.width) / CGFloat(waterfallLayout.lineCount) - space
+        
         let aspectRatio = downloadItems[index].unsplashImage!.rawAspectRatioF
         let height = width / aspectRatio
         return height + CGFloat(DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
@@ -146,13 +159,23 @@ extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDe
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DownloadItemCell.ID, for: indexPath) as! DownloadItemCell
-        cell.bind(downloadItems[indexPath.row].unsplashImage!)
+        
+        let downloadItem = self.downloadItems[indexPath.row]
+
+        cell.bind(downloadItem.unsplashImage!)
         cell.onClickEdit = { [weak self] (image) in
-            self?.presentEdit(image: image)
+            guard let self = self else { return }
+            let downloadItem = self.downloadItems[indexPath.row]
+            self.presentEdit(item: downloadItem)
         }
         cell.onClickDownload = { [weak self] (image) in
             guard let self = self else { return }
             DownloadManager.instance.prepareToDownload(vc: self, image: image)
+        }
+        cell.onDownloadItemUpdated = { [weak self] (item) in
+            guard let self = self else { return }
+            self.downloadItems[indexPath.row] = item
+            Log.info(tag: "downloadcollection", "update item at row \(indexPath.row), filePath: \(item.fileURL ?? "")")
         }
         return cell
     }

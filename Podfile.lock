@@ -92,7 +92,7 @@ PODS:
   - MotionAnimator (2.8.1):
     - MotionInterchange (~> 1.6)
   - MotionInterchange (1.6.0)
-  - Nuke (8.3.1)
+  - Nuke (8.4.0)
   - Pageboy (3.5.0)
   - PinLayout (1.8.13)
   - RxAlamofire (5.1.0):
@@ -123,7 +123,7 @@ DEPENDENCIES:
   - MaterialComponents/Dialogs
   - MaterialComponents/Ripple
   - MaterialComponents/Slider
-  - Nuke (~> 8.3.1)
+  - Nuke (~> 8.4)
   - Pageboy
   - PinLayout
   - RxAlamofire
@@ -165,7 +165,7 @@ SPEC CHECKSUMS:
   MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   MotionAnimator: ee16aa30567c5bae0fb2750c132915829cfaaf8a
   MotionInterchange: ead0e3ae1f3a5fb539e289debbc7ae036160a10d
-  Nuke: 85fb80f8df0cb26c28d2f4e0cb7fb93bcd6548d3
+  Nuke: fa6f784c4f7e1c0f9313668510186c68b7af2509
   Pageboy: 3794c578aae5fcce06e90b3ed4a0ad6b807d75bb
   PinLayout: e41a50260a76508b7a7fcee8955c76639adc69bc
   RxAlamofire: a2d7621de4c23a0c6e7b476b504acc32838ee341
@@ -177,6 +177,6 @@ SPEC CHECKSUMS:
   WCDB.swift: 05d509d7a0e60fb6e11c34eb7e4027c0fab5849f
   WCDBOptimizedSQLCipher: baf44493b0c7a3d49e97bc5b64a3856f6428ddd1
 
-PODFILE CHECKSUM: 64c565b285a93f1462da958bd39082347b272f18
+PODFILE CHECKSUM: 01c0434df1b8e7116ef8c935eef0edfdb8931b7b
 
 COCOAPODS: 1.8.4

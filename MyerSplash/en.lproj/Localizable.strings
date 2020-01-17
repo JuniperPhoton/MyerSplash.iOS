@@ -63,3 +63,7 @@
 
 "shortcut_search" = "Search";
 "shortcut_downloads" = "Downloads";
+
+"failed_to_load" = "Failed to load image :(";
+
+"lang_code" = "en_us";

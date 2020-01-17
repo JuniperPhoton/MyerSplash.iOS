@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import SwiftyJSON
 import WCDBSwift
+import AVFoundation.AVUtilities
 
 class UnsplashImage: ColumnJSONCodable {
     private (set) var id: String?
@@ -13,6 +14,10 @@ class UnsplashImage: ColumnJSONCodable {
     private (set) var user: UnsplashUser?
     private (set) var isUnsplash = true
     
+    enum CodingKeys: String, CodingKey {
+        case id, color, likes, width, height, urls, user
+    }
+    
     var rawAspectRatioF: CGFloat {
         get {
             if width == 0 || height == 0 {
@@ -20,50 +25,6 @@ class UnsplashImage: ColumnJSONCodable {
             } else {
                 return CGFloat(width) / CGFloat(height)
             }
-        }
-    }
-
-    var aspectRatioF: CGFloat {
-        get {
-            let r = aspectRatio
-            let splited = r.split(separator: ":")
-            let first = String(splited[0])
-            let second = String(splited[1])
-            return CGFloat(Double(first) ?? 3) / CGFloat(Double(second) ?? 2)
-        }
-    }
-
-    var aspectRatio: String {
-        get {
-            let rawRatio: CGFloat
-            if width == 0 || height == 0 {
-                rawRatio = 3.0 / 2.0
-            } else {
-                rawRatio = CGFloat(width) / CGFloat(height)
-            }
-
-            let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
-
-            let fixedMargin = CGFloat(100)
-
-            let decorViewWidth = UIScreen.main.bounds.width
-            let decorViewHeight = UIScreen.main.bounds.height
-
-            let availableHeight = decorViewHeight - fixedMargin * CGFloat(2)
-
-            let imageRatio = rawRatio
-            let wantedWidth = decorViewWidth
-            let wantedHeight = (wantedWidth / imageRatio) + fixedInfoHeight
-
-            let targetWidth = wantedWidth
-            var targetHeight = wantedHeight
-            if (wantedHeight > availableHeight) {
-                targetHeight = CGFloat(availableHeight) - fixedInfoHeight
-            } else {
-                targetHeight -= fixedInfoHeight
-            }
-
-            return "\(targetWidth):\(targetHeight)"
         }
     }
 
@@ -117,9 +78,8 @@ class UnsplashImage: ColumnJSONCodable {
 
     var fileName: String {
         get {
-            let name = user?.name ?? "author"
             let id = self.id ?? "id"
-            return "\(name)-\(id)-\(tagForDownload).jpg"
+            return "\(id)-\(tagForDownload).jpeg"
         }
     }
 
@@ -134,27 +94,44 @@ class UnsplashImage: ColumnJSONCodable {
         }
     }
 
-    init() {
+    func getAspectRatioF(viewWidth: CGFloat, viewHeight: CGFloat)-> CGFloat {
+        let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
+        return rect.width / rect.height
     }
 
-    init?(_ j: JSON?) {
-        guard let json = j else {
-            return nil
+    func getTargetRect(viewWidth: CGFloat, viewHeight: CGFloat)-> CGRect {
+        let rawRatio: CGFloat
+        if width == 0 || height == 0 {
+            rawRatio = 3.0 / 2.0
+        } else {
+            rawRatio = CGFloat(width) / CGFloat(height)
         }
 
-        id = json["id"].string
+        let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
 
-        if (id == nil) {
-            return nil
+        let decorViewWidth = viewWidth
+        let decorViewHeight = viewHeight
+
+        let fixedHorizontalMargin: CGFloat
+        let fixedVerticalMargin: CGFloat
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            fixedHorizontalMargin = 50
+            fixedVerticalMargin = 70
+        } else {
+            fixedHorizontalMargin = 0
+            fixedVerticalMargin = 0
         }
 
-        color = json["color"].string
-        likes = json["likes"].intValue
-        width = json["width"].intValue
-        height = json["height"].intValue
+        return AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
+                              insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
+                                                 width: decorViewWidth - fixedHorizontalMargin * 2,
+                                                 height: decorViewHeight - fixedVerticalMargin * 2 - fixedInfoHeight))
+    }
 
-        urls = ImageUrl(json["urls"])
-        user = UnsplashUser(json["user"])
+    func getAspectRatio(viewWidth: CGFloat, viewHeight: CGFloat)-> String {
+        let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
+        return "\(rect.width):\(rect.height)"
     }
 
     static func isToday(_ image: UnsplashImage) -> Bool {
@@ -219,18 +196,4 @@ class ImageUrl: ColumnJSONCodable {
     var regular: String?
     var small: String?
     var thumb: String?
-
-    init() {
-    }
-
-    init?(_ j: JSON?) {
-        guard let json = j else {
-            return nil
-        }
-        raw = json["raw"].string
-        full = json["full"].string
-        regular = json["regular"].string
-        small = json["small"].string
-        thumb = json["thumb"].string
-    }
 }

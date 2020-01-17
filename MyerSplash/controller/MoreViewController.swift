@@ -25,8 +25,11 @@ class MoreViewController: TabmanViewController {
                                    SettingsViewController(),
                                    AboutViewController()]
     
-    init() {
+    private var selectedIndex = 0
+    
+    init(selectedIndex: Int) {
         super.init(nibName: nil, bundle: nil)
+        self.selectedIndex = selectedIndex
         self.modalPresentationStyle = .pageSheet
     }
 
@@ -47,15 +50,19 @@ class MoreViewController: TabmanViewController {
         self.dataSource = self
 
         let bar = createTopTabBar()
-        bar.layout.contentInset = UIEdgeInsets(top: 20, left: 20.0, bottom: 0.0, right: 50)
-
+        bar.layout.contentInset = UIEdgeInsets(top: 20, left: 20.0, bottom: 12.0, right: 50)
+        if #available(iOS 13.0, *) {
+            bar.backgroundView.style = .blur(style: .systemMaterial)
+        } else {
+            bar.backgroundView.style = .blur(style: .extraLight)
+        }
+        
         addBar(bar, dataSource: self, at: .top)
 
         let closeButton = UIButton()
         let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
-        closeButton.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
         self.view.addSubview(closeButton)
 
@@ -115,6 +122,6 @@ extension MoreViewController: PageboyViewControllerDataSource, TMBarDataSource {
     }
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        nil
+        .at(index: selectedIndex)
     }
 }

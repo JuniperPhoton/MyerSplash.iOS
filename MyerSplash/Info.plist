@@ -24,6 +24,11 @@
 	<string>Request to save photos in album.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Request to save photos in album.</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen2</string>
 	<key>UIRequiredDeviceCapabilities</key>

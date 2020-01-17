@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import MaterialComponents
 import Nuke
+import RxSwift
+import func AVFoundation.AVMakeRect
 
 class ImageEditorViewController: UIViewController {
     private static let TAG = "ImageEditViewController"
@@ -22,6 +24,7 @@ class ImageEditorViewController: UIViewController {
     }
 
     private var image: UnsplashImage!
+    private var item: DownloadItem!
 
     private var indicator: MDCActivityIndicator!
     private var exposureSlider: MDCSlider!
@@ -29,9 +32,11 @@ class ImageEditorViewController: UIViewController {
     private var imageView: UIImageView!
     private var maskView: UIView!
     private var homePreviewView: UIImageView!
+    private var scrollView: UIScrollView!
 
-    init(image: UnsplashImage) {
-        self.image = image
+    init(item: DownloadItem) {
+        self.item = item
+        self.image = item.unsplashImage
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -43,12 +48,17 @@ class ImageEditorViewController: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = .black
+        
+        Events.trackEdit()
 
+        scrollView = UIScrollView()
         imageView = UIImageView()
+        
+        scrollView.addSubview(imageView)
 
-        self.view.addSubview(imageView)
+        self.view.addSubview(scrollView)
 
-        imageView.snp.makeConstraints { (maker) in
+        scrollView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
 
@@ -59,6 +69,7 @@ class ImageEditorViewController: UIViewController {
         maskView.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
+        maskView.isUserInteractionEnabled = false
 
         let closeButton = MDCFloatingButton()
         self.view.addSubview(closeButton)
@@ -66,12 +77,14 @@ class ImageEditorViewController: UIViewController {
         // MARK: HOME SCREEN
         let homeIcon = UIImage(named: R.icons.ic_launcher)
         homePreviewView = UIImageView(image: homeIcon)
-        homePreviewView.contentMode = .top
+        homePreviewView.contentMode = .scaleAspectFit
         homePreviewView.isHidden = true
+        homePreviewView.clipsToBounds = true
         self.view.addSubview(homePreviewView)
         homePreviewView.snp.makeConstraints { (maker) in
             maker.top.equalTo(closeButton.snp.bottom).offset(12)
-            maker.left.right.equalToSuperview()
+            maker.left.right.equalToSuperview().inset(24)
+            maker.aspectRatioByWidth(1003.0, by: 1464.0, self: homePreviewView)
         }
 
         // MARK: CLOSE BUTTON
@@ -84,7 +97,7 @@ class ImageEditorViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
 
         closeButton.snp.makeConstraints { (maker) in
-            maker.top.equalToSuperview().offset(UIView.topInset)
+            maker.top.equalToSuperview().offset(UIView.topInset + 12)
             maker.right.equalToSuperview().offset(-12)
             maker.width.equalTo(35)
             maker.height.equalTo(35)
@@ -173,6 +186,10 @@ class ImageEditorViewController: UIViewController {
 
         homeFab.addTarget(self, action: #selector(onClickHome), for: .touchUpInside)
         self.view.addSubview(homeFab)
+        
+        if UIDevice.current.userInterfaceIdiom != .phone {
+            homeFab.isHidden = true
+        }
 
         homeFab.snp.makeConstraints { (maker) in
             maker.right.equalTo(fab.snp.left).offset(-14)
@@ -181,11 +198,13 @@ class ImageEditorViewController: UIViewController {
             maker.height.equalTo(40)
         }
 
-        loadImage(image: image)
+        loadImage(item: item)
     }
 
     @objc
     private func onClickCompose() {
+        Events.trackEditOk()
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.indicator.isHidden = true
         }
@@ -199,7 +218,13 @@ class ImageEditorViewController: UIViewController {
     }
 
     private func compose() {
-        guard let image = ImageCache.shared[getImageRequest(self.image.downloadUrl!)] else {
+        guard let relativePath = item.fileURL else {
+            return
+        }
+        
+        let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+
+        guard let image = UIImage(contentsOfFile: url.path) else {
             Log.warn(tag: ImageEditorViewController.TAG, "error on getting cached file")
             return
         }
@@ -216,7 +241,7 @@ class ImageEditorViewController: UIViewController {
         let foregroundMask = CIImage(color: foregroundCiColor)
 
         let context = CIContext()
-
+        
         if let currentFilter = CIFilter(name: "CISourceOverCompositing") {
             currentFilter.setValue(foregroundMask, forKey: kCIInputImageKey)
             currentFilter.setValue(ciImage, forKey: kCIInputBackgroundImageKey)
@@ -261,33 +286,77 @@ class ImageEditorViewController: UIViewController {
         maskView.backgroundColor = UIColor.black.withAlphaComponent(CGFloat(actualDimValue))
     }
 
-    private func getImageRequest(_ url: String) -> ImageRequest {
-        let screenBounds = UIScreen.main.bounds
-        return ImageRequest(url: URL(string: url)!,
-                processors: [ImageProcessor.Resize(size: CGSize(width: screenBounds.width, height: screenBounds.height))],
-                priority: .high)
-    }
-
-    private func loadImage(image: UnsplashImage) {
-        if let url = image.downloadUrl {
-            Nuke.loadImage(with: getImageRequest(url),
-                    options: ImageLoadingOptions(
-                            placeholder: nil,
-                            transition: .fadeIn(duration: 0.3),
-                            failureImage: nil,
-                            failureImageTransition: nil,
-                            contentModes: .init(success: .scaleAspectFill, failure: .center, placeholder: .center)),
-                    into: imageView, progress: nil, completion: { [weak self] (result) in
-                switch result {
-                case .success:
-                    Log.info(tag: ImageEditorViewController.TAG, "success on loading image")
-                    self?.indicator.isHidden = true
-                case .failure(let e):
-                    self?.indicator.isHidden = false
-                    Log.warn(tag: ImageEditorViewController.TAG, "error on loading image: \(e)")
+    private func loadImage(item: DownloadItem) {
+        if let relativePath = item.fileURL {
+            Log.info(tag: ImageEditorViewController.TAG, "about to load image of \(relativePath)")
+            
+            let screenBounds = UIScreen.main.bounds
+            
+            var width = item.unsplashImage!.width
+            if width == 0 {
+                width = 3
+            }
+            
+            var height = item.unsplashImage!.height
+            if height == 0 {
+                height = 2
+            }
+            
+            let imageRatio = CGFloat(width) / CGFloat(height)
+            let screenRatio = CGFloat(screenBounds.width) / CGFloat(screenBounds.height)
+            
+            var targetWidth = 0
+            var targetHeight = 0
+            
+            targetHeight = Int(max(screenBounds.height * (screenRatio) / imageRatio, screenBounds.height))
+            targetWidth = Int(targetHeight.toCGFloat() * imageRatio)
+            
+            scrollView.contentSize = CGSize(width: targetWidth, height: targetHeight)
+            
+            imageView.snp.makeConstraints { (maker) in
+                if targetWidth.toCGFloat() == screenBounds.width {
+                    maker.width.equalToSuperview()
+                } else if targetHeight.toCGFloat() == screenBounds.height {
+                    maker.height.equalToSuperview()
                 }
-            })
+            }
+            
+            if targetWidth > Int(screenBounds.width) {
+                let point = CGPoint(x: Int((targetWidth.toCGFloat() - screenBounds.width) / 2), y: 0)
+                scrollView.setContentOffset(point, animated: false)
+            }
+            
+            if targetHeight > Int(screenBounds.height) {
+                let point = CGPoint(x: 0, y: Int((targetHeight.toCGFloat() - screenBounds.height) / 2))
+                scrollView.setContentOffset(point, animated: false)
+            }
+                        
+            Log.info(tag: ImageEditorViewController.TAG, "target w: \(targetWidth), target h: \(targetHeight)")
+            
+            let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+            
+            DispatchQueue.global().async {
+                let resizedImage = ImageIO.resizedImage(at: url, for: CGSize(width: targetWidth, height: targetHeight))
+                
+                DispatchQueue.main.async {
+                    self.indicator.isHidden = true
+                    self.loadImage(resizedImage)
+                }
+            }
+        } else {
+            loadImage(nil)
         }
+    }
+    
+    private func loadImage(_ uiImage: UIImage?) {
+        if uiImage == nil {
+            showToast(R.strings.failed_to_load)
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = uiImage
     }
 
     @objc

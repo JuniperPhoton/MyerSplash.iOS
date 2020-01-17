@@ -15,11 +15,7 @@ class UIs {
     }
 
     static func setBackgroundColor(_ uiView: UIView) {
-        if #available(iOS 13.0, *) {
-            uiView.backgroundColor = UIColor.systemBackground
-        } else {
-            uiView.backgroundColor = UIColor.black
-        }
+        uiView.backgroundColor = UIColor.getDefaultBackgroundUIColor()
     }
 }
 
@@ -28,7 +24,7 @@ extension UILabel {
         if #available(iOS 13.0, *) {
             self.textColor = UIColor.label
         } else {
-            self.textColor = UIColor.white
+            self.textColor = UIColor.black
         }
     }
 }
@@ -38,7 +34,7 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.label
         } else {
-            return UIColor.white
+            return UIColor.black
         }
     }
 
@@ -46,7 +42,7 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.systemBackground
         } else {
-            return UIColor.black
+            return UIColor.white
         }
     }
 }
@@ -60,22 +56,19 @@ extension UIView {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
     
-    static func makeBlurBackgroundView()-> UIView? {
-        if !UIAccessibility.isReduceTransparencyEnabled {
-            let blurEffect: UIBlurEffect!
-            if #available(iOS 13.0, *) {
-                blurEffect = UIBlurEffect(style: .systemChromeMaterial)
-            } else {
-                blurEffect = UIBlurEffect(style: .light)
-            }
-            let blurEffectView = UIVisualEffectView(effect: blurEffect)
-
-            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-            return blurEffectView
+    static func makeBlurBackgroundView()-> UIView {
+        let blurEffect: UIBlurEffect!
+        if #available(iOS 13.0, *) {
+            blurEffect = UIBlurEffect(style: .systemMaterial)
         } else {
-            return nil
+            blurEffect = UIBlurEffect(style: .extraLight)
         }
+        
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        return blurEffectView
     }
 
     static func getDefaultLabelUIColor() -> UIColor {
@@ -96,7 +89,7 @@ extension UIView {
                 }
             }
         } else {
-            return "1e1e1e".asUIColor()
+            return "f4f4f4".asUIColor()
         }
     }
 

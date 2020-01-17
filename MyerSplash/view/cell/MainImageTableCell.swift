@@ -4,7 +4,7 @@ import SnapKit
 import Nuke
 import MaterialComponents.MaterialRipple
 
-public class MainImageTableCell: UITableViewCell {
+public class MainImageTableCell: UICollectionViewCell {
     static let ID = "MainImageTableCell"
 
     private var downloadView: UIButton!
@@ -18,10 +18,10 @@ public class MainImageTableCell: UITableViewCell {
 
     var onClickMainImage: ((CGRect, UnsplashImage) -> Void)?
     var onClickDownload: ((UnsplashImage) -> Void)?
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: UITableViewCell.CellStyle.default, reuseIdentifier: reuseIdentifier)
-
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         mainImageView = DayNightImageView()
         mainImageView.applyMask()
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
@@ -86,14 +86,16 @@ public class MainImageTableCell: UITableViewCell {
     func bind(image: UnsplashImage) {
         bindImage = image
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
-        mainImageView.image = nil
 
         todayTag.isHidden = !UnsplashImage.isToday(image)
         todayTextTag.isHidden = !UnsplashImage.isToday(image)
-
-        if let url = image.listUrl {
-            ImageIO.loadImage(url: url, intoView: mainImageView)
+    }
+    
+    func loadImage(fade: Bool) {
+        guard let url = bindImage?.listUrl else {
+            return
         }
+        ImageIO.loadImage(url: url, intoView: mainImageView, fade: fade)
     }
 
     private func isImageCached() -> Bool {
@@ -101,17 +103,19 @@ public class MainImageTableCell: UITableViewCell {
               let url = bindImage.listUrl else {
             return false
         }
-        return ImageCache.isCached(urlString: url)
+        return ImageIO.isImageCached(url)
     }
 
     @objc
     private func onClickImage() {
         guard let bindImage = bindImage,
               let superView = superview else {
+            print("bindImage is nil or superview is nil")
             return
         }
 
         if (!isImageCached()) {
+            print("image not cached, skip showing details")
             return
         }
 

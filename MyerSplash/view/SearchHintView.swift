@@ -44,21 +44,24 @@ class SearchHintView: UIView {
     fileprivate let rootFlexContainer = UIView()
 
     var onClickKeyword: ((Keyword) -> Void)? = nil
-    
+
     init() {
         super.init(frame: .zero)
         
+        let margin: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 24 : 12
+        let fontSize: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 16 : 12
+
         rootFlexContainer.flex.direction(.row).justifyContent(.start).wrap(.wrap).padding(12).define { (flex) in
             var index = 0
             builtInKeywords.forEach { (keyword) in
                 let uiLabel = UIButton()
                 uiLabel.setTitle(keyword.displayTitle, for: .normal)
-                uiLabel.titleLabel?.font = uiLabel.titleLabel?.font.withSize(12)
+                uiLabel.titleLabel?.font = uiLabel.titleLabel?.font.withSize(fontSize)
                 uiLabel.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
                 uiLabel.tag = index
                 uiLabel.addTarget(self, action: #selector(onClickItem(button:)), for: .touchUpInside)
                 
-                flex.addItem(uiLabel).margin(8)
+                flex.addItem(uiLabel).margin(margin)
                 
                 index = index + 1
             }
@@ -88,5 +91,7 @@ class SearchHintView: UIView {
         }
         let keyword = builtInKeywords[index]
         onClickKeyword?(keyword)
+        
+        Events.trackClickSearchItem(name: keyword.query)
     }
 }

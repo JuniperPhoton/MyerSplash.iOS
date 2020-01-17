@@ -251,10 +251,10 @@
 				54A560BD8B67160A59D237A6 /* DialogViewController.swift */,
 				54A56D82CB9E1C0EF954ECE2 /* BaseViewController.swift */,
 				222D46AF23C1081B003C754B /* ImagesViewController.swift */,
+				2268722523C4CFD300F921F4 /* SearchViewController.swift */,
 				2268721D23C369AB00F921F4 /* MoreViewController.swift */,
 				2268721F23C369E600F921F4 /* DownloadsViewController.swift */,
 				2268722123C36A1100F921F4 /* AboutViewController.swift */,
-				2268722523C4CFD300F921F4 /* SearchViewController.swift */,
 				2268723023C64A1F00F921F4 /* ImageEditorViewController.swift */,
 			);
 			path = controller;
@@ -698,18 +698,18 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 120;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -721,18 +721,18 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 120;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

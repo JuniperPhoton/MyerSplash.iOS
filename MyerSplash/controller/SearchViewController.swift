@@ -25,7 +25,8 @@ class SearchViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        self.modalPresentationStyle = .fullScreen
+        self.modalPresentationStyle = .overCurrentContext
+        self.modalTransitionStyle = .crossDissolve
     }
     
     required init?(coder: NSCoder) {
@@ -40,22 +41,24 @@ class SearchViewController: UIViewController {
         }
 
         let blurEffectView = UIView.makeBlurBackgroundView()
-        if let blurView = blurEffectView {
-            view.backgroundColor = .clear
-            blurView.frame = view.bounds
-            view.addSubview(blurView)
-        } else {
-            view.backgroundColor = .getDefaultBackgroundUIColor()
+        view.backgroundColor = .clear
+        view.addSubview(blurEffectView)
+        
+        blurEffectView.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
         }
 
         searchView = UISearchBar()
         searchView.placeholder = R.strings.search_hint
         searchView.searchBarStyle = .minimal
         searchView.delegate = self
-        searchView.becomeFirstResponder()
         searchView.tintColor = UIColor.getDefaultLabelUIColor()
-        searchView.searchTextField.keyboardType = .asciiCapable
-        searchView.searchTextField.font = searchView.searchTextField.font?.withSize(16)
+        searchView.keyboardType = .asciiCapable
+        searchView.becomeFirstResponder()
+
+        if #available(iOS 13.0, *) {
+            searchView.searchTextField.font = searchView.searchTextField.font?.withSize(16)
+        }
 
         view.addSubview(searchView)
 
@@ -73,7 +76,6 @@ class SearchViewController: UIViewController {
             self?.searchView.resignFirstResponder()
         }
         searchHintView.isUserInteractionEnabled = true
-        searchHintView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onClickClose)))
         self.view.addSubview(searchHintView)
 
         let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
@@ -156,8 +158,8 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
         }
     }
 
-    func onRequestEdit(image: UnsplashImage) {
-        presentEdit(image: image)
+    func onRequestEdit(item: DownloadItem) {
+        presentEdit(item: item)
     }
 
     func onRequestOpenUrl(urlString: String) {

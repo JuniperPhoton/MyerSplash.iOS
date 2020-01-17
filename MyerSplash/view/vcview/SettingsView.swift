@@ -7,12 +7,10 @@ import MaterialComponents.MaterialDialogs
 
 protocol SettingsViewDelegate: class {
     func showDialog(content: DialogContent, key: String)
-    func onClickClose(shouldRefreshWhenDismiss: Bool)
     func present(vc: UIViewController)
 }
 
 class SettingsView: UIView {
-    private var closeView: UIButton!
     private var loadingQualityItem: SettingsItem!
     private var savingQualityItem: SettingsItem!
 
@@ -33,11 +31,6 @@ class SettingsView: UIView {
 
     private func initUi() {
         self.setDefaultBackgroundColor()
-
-        closeView = UIButton(type: .system)
-        closeView.setImage(UIImage(named: R.icons.ic_clear), for: .normal)
-        closeView.addTarget(self, action: #selector(onClickCloseButton), for: .touchUpInside)
-        closeView.tintColor = UIColor.getDefaultLabelUIColor()
 
         scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
@@ -70,9 +63,10 @@ class SettingsView: UIView {
 
         let clearItem = SettingsItem(frame: CGRect.zero)
         clearItem.title = R.strings.settings_clear
-        clearItem.content = R.strings.settings_clear_cache
-        clearItem.onClicked = {
-            self.clearCache()
+        clearItem.content = ImageIO.getFormattedDiskCacheSize()
+        clearItem.onClicked = { [weak self] in
+            self?.clearCache()
+            clearItem.content = "0.0MB"
         }
 
         qualityGroup.addArrangedSubview(loadingQualityItem)
@@ -82,14 +76,8 @@ class SettingsView: UIView {
         scrollView.addSubview(personalizationGroup)
         scrollView.addSubview(qualityGroup)
 
-        addSubview(closeView)
         addSubview(scrollView)
 
-        closeView.snp.makeConstraints { maker in
-            maker.width.height.equalTo(Dimensions.NAVIGATION_ICON_SIZE)
-            maker.right.equalTo(self.snp.right).offset(-12)
-            maker.top.equalToSuperview()
-        }
         personalizationGroup.snp.makeConstraints { (maker) in
             maker.left.right.equalTo(self)
             maker.top.equalTo(scrollView.snp.top).offset(Dimensions.TITLE_MARGIN)
@@ -110,7 +98,7 @@ class SettingsView: UIView {
     }
 
     private func clearCache() {
-        Nuke.ImageCache.shared.removeAll()
+        ImageIO.clearCaches(includingDownloads: true)
         self.showToast(R.strings.cleared)
     }
 
@@ -147,11 +135,6 @@ class SettingsView: UIView {
         targetController.makeNormalDialogSize()
         targetController.onItemSelected = onSelected
         delegate?.present(vc: targetController)
-    }
-
-    @objc
-    private func onClickCloseButton() {
-        delegate?.onClickClose(shouldRefreshWhenDismiss: shouldRefreshWhenDismiss)
     }
 }
 
