@@ -98,7 +98,7 @@ class SettingsView: UIView {
     }
 
     private func clearCache() {
-        ImageIO.clearCaches(includingDownloads: true)
+        ImageIO.clearCaches(includingDownloads: false)
         self.showToast(R.strings.cleared)
     }
 

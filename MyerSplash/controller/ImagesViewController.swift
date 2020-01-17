@@ -112,8 +112,14 @@ class ImagesViewController: UIViewController {
         waterfallLayout.scrollDirection = .vertical
         
         if UIDevice.current.userInterfaceIdiom == .pad {
+            #if targetEnvironment(macCatalyst)
+            print("run for macCatalyst")
+            waterfallLayout.lineCount = UInt(calculateSpanCount(view.frame.width))
+            #else
             print("run for pad")
             waterfallLayout.lineCount = 3
+            #endif
+            
             waterfallLayout.vItemSpace = 12
             waterfallLayout.hItemSpace = 12
             waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
@@ -174,6 +180,35 @@ class ImagesViewController: UIViewController {
         }
         
         refreshData()
+    }
+    
+    private func calculateSpanCount(_ width: CGFloat)-> uint {
+        let newSpan: uint
+        switch width {
+        case 0..<1000:
+            newSpan = 2
+        case 1000..<1600:
+            newSpan = 3
+        case 1600..<2200:
+            newSpan = 4
+        default:
+            newSpan = 5
+        }
+        
+        return newSpan
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if collectionView?.superview == nil {
+            return
+        }
+        let currentSpan = waterfallLayout.lineCount
+        let newSpan = calculateSpanCount(size.width)
+        
+        if newSpan != currentSpan {
+            waterfallLayout.lineCount = UInt(newSpan)
+            collectionView.setNeedsLayout()
+        }
     }
     
     private func updateHintViews(_ success: Bool) {

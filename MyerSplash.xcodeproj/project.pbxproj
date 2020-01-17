@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,10 @@
 		1A54F971BD73985ECBEB3BA1 /* DownloadItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54F9E0833C69F3D6955493 /* DownloadItem.swift */; };
 		1A54FD1D9B7E93F3367E6C10 /* DayNightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54F6D86983A7220256314E /* DayNightImageView.swift */; };
 		2219372A23C999BD00A58BE5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2219372C23C999BD00A58BE5 /* Localizable.strings */; };
+		221D26A623D21502003BE444 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D26A523D21502003BE444 /* SettingsView.swift */; };
+		221D26AB23D216F3003BE444 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */; platformFilter = ios; };
+		221D26AC23D216F3003BE444 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26A923D216F3003BE444 /* AppCenterCrashes.framework */; platformFilter = ios; };
+		221D26AD23D216F3003BE444 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26AA23D216F3003BE444 /* AppCenter.framework */; platformFilter = ios; };
 		222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46AF23C1081B003C754B /* ImagesViewController.swift */; };
 		222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46B223C10CAA003C754B /* ImageRepo.swift */; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
@@ -52,7 +56,6 @@
 		54A56894511BAF5E3DC295F6 /* UnsplashUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56ABD120FB1828A5DCFC3 /* UnsplashUser.swift */; };
 		54A56B2BF448D4545E0B1795 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C275843D1B6C0016A44 /* Dimensions.swift */; };
 		54A56BF05F180815B938D111 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56B10293331F08D52173B /* ToastView.swift */; };
-		54A56CBA5A033F3AD5BED0EF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A560766AA522E37891C2A1 /* SettingsView.swift */; };
 		54A56D1346731D1233230A54 /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A567873B60B294584A7F5A /* UIFontExtension.swift */; };
 		54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5607B141B4AF5F592908D /* MainImageTableCell.swift */; };
 		54A56D875EF9B6AA93186403 /* FontSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A567940B6AD767A48580B6 /* FontSizes.swift */; };
@@ -80,6 +83,10 @@
 		2219372B23C999BD00A58BE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2219372E23C99AF000A58BE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2219372F23C99C1B00A58BE5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		221D26A523D21502003BE444 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = MyerSplash/SettingsView.swift; sourceTree = SOURCE_ROOT; };
+		221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCenterAnalytics.framework; sourceTree = "<group>"; };
+		221D26A923D216F3003BE444 /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCenterCrashes.framework; sourceTree = "<group>"; };
+		221D26AA23D216F3003BE444 /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCenter.framework; sourceTree = "<group>"; };
 		222D46AF23C1081B003C754B /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
 		2268721D23C369AB00F921F4 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
@@ -99,7 +106,6 @@
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
 		22E496B823C9952200B836F0 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
-		54A560766AA522E37891C2A1 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
 		54A560BD8B67160A59D237A6 /* DialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogViewController.swift; sourceTree = "<group>"; };
 		54A560D859A7C4BEFD55ADD4 /* ImageDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailView.swift; sourceTree = "<group>"; };
@@ -142,6 +148,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */,
+				221D26AD23D216F3003BE444 /* AppCenter.framework in Frameworks */,
+				221D26AC23D216F3003BE444 /* AppCenterCrashes.framework in Frameworks */,
+				221D26AB23D216F3003BE444 /* AppCenterAnalytics.framework in Frameworks */,
 				71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,6 +158,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		221D26A723D216B0003BE444 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				221D26AA23D216F3003BE444 /* AppCenter.framework */,
+				221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */,
+				221D26A923D216F3003BE444 /* AppCenterCrashes.framework */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
 		222D46B123C10C9B003C754B /* repo */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,14 +194,6 @@
 			path = api;
 			sourceTree = "<group>";
 		};
-		54A5614D781F22296CE77481 /* vcview */ = {
-			isa = PBXGroup;
-			children = (
-				54A560766AA522E37891C2A1 /* SettingsView.swift */,
-			);
-			path = vcview;
-			sourceTree = "<group>";
-		};
 		54A5658DBD4340095B8030E9 /* widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,9 +212,9 @@
 		54A56784A667D3A8D353B24A /* view */ = {
 			isa = PBXGroup;
 			children = (
+				221D26A523D21502003BE444 /* SettingsView.swift */,
 				54A560D859A7C4BEFD55ADD4 /* ImageDetailView.swift */,
 				54A5658DBD4340095B8030E9 /* widget */,
-				54A5614D781F22296CE77481 /* vcview */,
 				54A56CB57A8144BFC40E7E39 /* cell */,
 				2268722323C36AAB00F921F4 /* TMBarButtonBar.swift */,
 				2268722723C4DF8B00F921F4 /* SearchHintView.swift */,
@@ -309,6 +320,7 @@
 		F0D247B01FF7C35000BB8076 = {
 			isa = PBXGroup;
 			children = (
+				221D26A723D216B0003BE444 /* Vendor */,
 				F0D247BB1FF7C35000BB8076 /* MyerSplash */,
 				F0D247BA1FF7C35000BB8076 /* Products */,
 				CC5B4A83DCADE02770A06C2E /* Pods */,
@@ -525,6 +537,7 @@
 				54A5665E01B66E0F80499903 /* UserDefaultsExtension.swift in Sources */,
 				22E496B923C9952200B836F0 /* R.swift in Sources */,
 				54A562670BEC508CD1903C49 /* Keys.swift in Sources */,
+				221D26A623D21502003BE444 /* SettingsView.swift in Sources */,
 				54A56BF05F180815B938D111 /* ToastView.swift in Sources */,
 				54A56709576E7FF86A3B5D92 /* SettingsItem.swift in Sources */,
 				2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */,
@@ -539,7 +552,6 @@
 				54A564FF41C576E8871B455C /* Values.swift in Sources */,
 				54A56061449C955941092B50 /* AppSettings.swift in Sources */,
 				54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */,
-				54A56CBA5A033F3AD5BED0EF /* SettingsView.swift in Sources */,
 				2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */,
 				2268722F23C632B100F921F4 /* DownloadItemCell.swift in Sources */,
 				54A5646DE8E2778738D9664F /* ImageDetailView.swift in Sources */,
@@ -685,7 +697,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -699,15 +712,23 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 220;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor",
+				);
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -722,15 +743,23 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 220;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor",
+				);
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

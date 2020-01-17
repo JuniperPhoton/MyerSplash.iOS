@@ -104,6 +104,7 @@ class DownloadItemCell: UICollectionViewCell {
             ImageIO.loadImage(url: url, intoView: view)
         }
 
+        mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         downloadRoot.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         updateProgressLayer()
         

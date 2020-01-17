@@ -20,6 +20,8 @@ class DownloadManager: NSObject {
     
     private static let TAG = "DownloadManager"
     
+    static let DOWNLOAD_DIR = "MyerSplash"
+
     private override init() {
         // ignored
     }
@@ -110,8 +112,13 @@ class DownloadManager: NSObject {
     }
     
     func createAbsolutePathForImage(_ relativePath: String)-> URL {
+        #if targetEnvironment(macCatalyst)
+        let documentsURL = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0]
+        return documentsURL.appendingPathComponent(relativePath)
+        #else
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         return documentsURL.appendingPathComponent(relativePath)
+        #endif
     }
     
     private func doDownload(_ unsplashImage: UnsplashImage) {
@@ -136,7 +143,7 @@ class DownloadManager: NSObject {
         insertWork.notify(queue: DispatchQueue.main, execute: {
             showToast(R.strings.download_in_background)
             
-            let relativePath = "unsplash/\(unsplashImage.fileName)"
+            let relativePath = "\(DownloadManager.DOWNLOAD_DIR)/\(unsplashImage.fileName)"
             let fileURL = self.createAbsolutePathForImage(relativePath)
             
             let destination: DownloadRequest.DownloadFileDestination = { _, _ in
@@ -156,7 +163,12 @@ class DownloadManager: NSObject {
                     Events.trackDownloadSuccessEvent()
                     
                     self.notifySuccess(downloadItem: item, imagePath: relativePath)
+
+                    #if !targetEnvironment(macCatalyst)
                     UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
+                    #else
+                    showToast(R.strings.saved_mac)
+                    #endif
                 } else {
                     Log.info(tag: DownloadManager.TAG, "error while download image: \(response.error?.localizedDescription ?? "null error")")
                     self.notifyFailed(downloadItem: item)
