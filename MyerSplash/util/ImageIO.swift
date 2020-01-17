@@ -43,7 +43,7 @@ class ImageIO {
         DispatchQueue.global().async {
             do {
                 var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                url.appendPathComponent("unsplash/")
+                url.appendPathComponent(DownloadManager.DOWNLOAD_DIR)
                 try FileManager.default.removeItem(at: url)
             } catch let e {
                 Log.warn(tag: ImageIO.TAG, "error on clear disk: \(e.localizedDescription)")

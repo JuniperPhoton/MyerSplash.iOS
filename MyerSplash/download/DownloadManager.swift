@@ -20,6 +20,8 @@ class DownloadManager: NSObject {
     
     private static let TAG = "DownloadManager"
     
+    static let DOWNLOAD_DIR = "MyerSplash"
+
     private override init() {
         // ignored
     }
@@ -136,7 +138,7 @@ class DownloadManager: NSObject {
         insertWork.notify(queue: DispatchQueue.main, execute: {
             showToast(R.strings.download_in_background)
             
-            let relativePath = "unsplash/\(unsplashImage.fileName)"
+            let relativePath = "\(DownloadManager.DOWNLOAD_DIR)/\(unsplashImage.fileName)"
             let fileURL = self.createAbsolutePathForImage(relativePath)
             
             let destination: DownloadRequest.DownloadFileDestination = { _, _ in

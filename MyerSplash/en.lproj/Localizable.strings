@@ -29,7 +29,7 @@
 "no_network" = "Network unavailable :(";
 
 "delete_dialog_title" = "Delete download history?";
-"delete_dialog_message" = "This operation won't delete photos in your devices";
+"delete_dialog_message" = "This operation won't delete photos in your devices.";
 "delete_dialog_action_delete" = "DELETE";
 
 "metered_dialog_title" = "ALERT";
