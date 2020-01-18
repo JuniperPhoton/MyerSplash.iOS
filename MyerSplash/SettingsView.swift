@@ -139,7 +139,18 @@ class SettingsView: UIView {
 }
 
 extension DialogViewController {
+    private static let MAX_WIDTH: CGFloat = 400
+    private static let MAX_HEIGHT: CGFloat = 230
+
     func makeNormalDialogSize() {
-        self.preferredContentSize = CGSize(width: UIScreen.main.bounds.width, height: 230)
+        var width = UIScreen.main.bounds.width
+        
+        if UIDevice.current.userInterfaceIdiom == .pad && width > DialogViewController.MAX_WIDTH {
+            width = DialogViewController.MAX_WIDTH
+        }
+        self.preferredContentSize = CGSize(
+            width: width,
+            height: DialogViewController.MAX_HEIGHT
+        )
     }
 }
