@@ -92,7 +92,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         self.view.addSubview(moreButton)
         
         moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
-                                                             withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
+                                                              withColor: R.colors.rippleColor, maxRadius: 25)
         
         moreButton.snp.makeConstraints { (maker) in
             maker.top.equalTo(bar.layout.view.subviews.first(where: { (view) -> Bool in

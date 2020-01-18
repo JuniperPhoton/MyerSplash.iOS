@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 class R {
+    class colors {
+        static let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.2)
+    }
+    
     class icons {
         static let ic_clear = "ic_clear"
         static let ic_delete = "ic_delete"

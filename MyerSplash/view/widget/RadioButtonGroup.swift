@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import MaterialComponents
 
 class RadioButtonGroup: UIStackView {
     var onItemClicked: ((Int) -> Void)? = nil
@@ -52,6 +53,7 @@ class RadioButton: UIView {
     }
 
     private var content: String? = nil
+    private var rippleController: MDCRippleTouchController!
 
     convenience init(_ text: String) {
         self.init(frame: CGRect.zero)
@@ -88,5 +90,9 @@ class RadioButton: UIView {
         self.snp.makeConstraints { maker in
             maker.height.equalTo(Dimensions.SINGLE_CHOICE_OPTION_HEIGHT)
         }
+        
+        rippleController = MDCRippleTouchController()
+        rippleController.addRipple(to: self)
+        rippleController.rippleView.rippleColor = R.colors.rippleColor
     }
 }

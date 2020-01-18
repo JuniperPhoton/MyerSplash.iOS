@@ -97,6 +97,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         feedBackButton.addTarget(self, action: #selector(sendFeedback), for: .touchUpInside)
         feedBackButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
         feedBackButton.showsTouchWhenHighlighted = false
+        feedBackButton.inkColor = R.colors.rippleColor
 
         rootStack.addArrangedSubview(appNameStack)
         rootStack.addArrangedSubview(platformsLabel)
