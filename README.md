@@ -3,6 +3,6 @@ iOS version of MyerSplash app([UWP](https://github.com/JuniperPhoton/MyerSplash.
 
 ![](./design/hero.jpg)
 
-Currently this project is in Pre-Release stage and has lined-up most of the features introduced in Android and Windows.
+Download it on AppStore: https://apps.apple.com/cn/app/myersplash/id1486017120.
 
 Feel free to build it by your self and see what's happenning: D
