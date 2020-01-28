@@ -27,6 +27,7 @@ class R {
         static let ic_star = "ic_star"
         static let ic_app_icon = "ic_app_icon"
         static let ic_home = "ic_home"
+        static let ic_retry = "ic_retry"
 
         private init() {
             
