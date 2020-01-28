@@ -12,9 +12,14 @@ import MaterialComponents
 
 extension UIViewController {
     func presentEdit(item: DownloadItem) {
+        #if !targetEnvironment(macCatalyst)
         let vc = ImageEditorViewController(item: item)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
+        #else
+        let path = DownloadManager.instance.createSavingDir()
+        UIApplication.shared.open(path)
+        #endif
     }
 }
 

@@ -99,6 +99,7 @@ class R {
 
         static let failed_to_load = NSLocalizedString("failed_to_load", comment: "")
         static let saved_mac = NSLocalizedString("saved_mac", comment: "")
+        static let open_in_folder = NSLocalizedString("open_in_folder", comment: "")
 
         private init() {
             
