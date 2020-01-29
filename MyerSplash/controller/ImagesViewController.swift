@@ -96,6 +96,7 @@ class ImagesViewController: UIViewController {
                 }
                 
                 self.collectionView.reloadData()
+                self.waterfallLayout.invalidateLayout()
             }
         }
         
