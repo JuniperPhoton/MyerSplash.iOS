@@ -93,7 +93,10 @@ class UnsplashImage: ColumnJSONCodable {
             }
         }
     }
+}
 
+// MARK: Aspect ratio
+extension UnsplashImage {
     func getAspectRatioF(viewWidth: CGFloat, viewHeight: CGFloat)-> CGFloat {
         let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
         return rect.width / rect.height
@@ -133,6 +136,11 @@ class UnsplashImage: ColumnJSONCodable {
         let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
         return "\(rect.width):\(rect.height)"
     }
+}
+
+// MARK: Today image
+extension UnsplashImage {
+    private static var createdImageCount = 0
 
     static func isToday(_ image: UnsplashImage) -> Bool {
         return image.id == createDateString(Date())
@@ -151,9 +159,7 @@ class UnsplashImage: ColumnJSONCodable {
         df.dateFormat = "yyyyMMdd"
         return df.string(from: date)
     }
-
-    private static var createdImageCount = 0
-
+    
     static func create(_ date: Date) -> UnsplashImage {
         let image = UnsplashImage()
         let urls = ImageUrl()
@@ -179,6 +185,8 @@ class UnsplashImage: ColumnJSONCodable {
         image.urls = urls
         image.user = user
         image.isUnsplash = false
+        image.width = 3
+        image.height = 2
 
         createdImageCount += 1
 

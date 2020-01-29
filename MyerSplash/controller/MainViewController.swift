@@ -159,6 +159,10 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         imageDetailView.invalidate()
     }
     
+    func onRequestShare(item: UnsplashImage) {
+        self.presentShare(item)
+    }
+    
     func onRequestEdit(item: DownloadItem) {
         presentEdit(item: item)
     }

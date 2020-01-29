@@ -69,3 +69,5 @@
 "lang_code" = "en_us";
 "saved_mac" = "Images have been saved into /Pictures/MyerSplash folder";
 "open_in_folder" = "OPEN";
+"share_content" = "Share %@'s amazing photo with you in MyerSplash.";
+"share_content_highlight" = "Share this amazing photo with you in MyerSplash.";

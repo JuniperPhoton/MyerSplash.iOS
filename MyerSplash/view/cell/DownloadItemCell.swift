@@ -23,11 +23,20 @@ class DownloadItemCell: UICollectionViewCell {
     private var button: DownloadButton!
     private var downloadRoot: UIView!
     
+    private lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: R.icons.ic_share), for: .normal)
+        button.alpha = 0.3
+        button.addTarget(self, action: #selector(shareImage), for: .touchUpInside)
+        return button
+    }()
+    
     private var progressLayer: CALayer!
 
     var onClickEdit: ((UnsplashImage) -> Void)? = nil
     var onClickDownload: ((UnsplashImage) -> Void)? = nil
     var onDownloadItemUpdated: ((DownloadItem) -> Void)? = nil
+    var onClickShare: ((UnsplashImage) -> Void)? = nil
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,9 +60,16 @@ class DownloadItemCell: UICollectionViewCell {
         downloadRoot.layer.masksToBounds = true
         
         downloadRoot.addSubview(button)
+        downloadRoot.addSubview(shareButton)
         
         button.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
+        }
+        
+        shareButton.snp.makeConstraints { (maker) in
+            maker.right.equalToSuperview()
+            maker.top.bottom.equalToSuperview()
+            maker.width.equalTo(shareButton.snp.height)
         }
 
         mainImageView = DayNightImageView()
@@ -92,6 +108,14 @@ class DownloadItemCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
+    @objc
+    private func shareImage() {
+        guard let image = self.image else {
+            return
+        }
+        onClickShare?(image)
+    }
 
     func bind(_ image: UnsplashImage) {
         guard let view = mainImageView else {
@@ -106,15 +130,15 @@ class DownloadItemCell: UICollectionViewCell {
 
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         downloadRoot.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
+
         updateProgressLayer()
         
         let isLight = image.themeColor.isLightColor()
 
-        if isLight {
-            button.setTitleColor(.black, for: .normal)
-        } else {
-            button.setTitleColor(.white, for: .normal)
-        }
+        let contentColor = isLight ? UIColor.black : UIColor.white
+        
+        button.setTitleColor(contentColor, for: .normal)
+        shareButton.tintColor = contentColor
 
         unbind()
         disposable = DownloadManager.instance.addObserver(image) { [weak self] (e) in

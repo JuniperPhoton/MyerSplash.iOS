@@ -62,7 +62,6 @@ class ImageRepo {
                     self.images.append(image)
                 }
                 
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 self.onLoadFinished?.self(true, page)
             }, onError: { (e) in
                 print("Error on loading image: %s", e.localizedDescription)
@@ -187,12 +186,7 @@ class SearchImageRepo: ImageRepo {
         return json(.get, Request.SEARCH_URL, parameters: params)
             .map { jsonResponse in
                 let json = JSON(jsonResponse)
-                let images = json["results"]
-                
-                return images.compactMap { element in
-                    let json = element.1.rawString()
-                    return try? decoder.decode(UnsplashImage.self, from: json!.data(using: .utf8)!)
-                }
+                return json["results"].createList() ?? [UnsplashImage]()
         }
     }
 }
@@ -201,10 +195,7 @@ extension Observable {
     func mapToList(appendTodayImage: Bool = false) -> Observable<[UnsplashImage]> {
         return self.map { jsonResponse in
             let json = JSON(jsonResponse)
-            var images: [UnsplashImage]? = json.compactMap { element in
-                let json = element.1.rawString()
-                return try? decoder.decode(UnsplashImage.self, from: json!.data(using: .utf8)!)
-            }
+            var images: [UnsplashImage]? = json.createList()
             
             if images == nil {
                 images = [UnsplashImage]()
@@ -214,6 +205,16 @@ extension Observable {
                 images?.insert(UnsplashImage.createToday(), at: 0)
             }
             return images!
+        }
+    }
+}
+
+extension JSON {
+    fileprivate func createList()-> [UnsplashImage]? {
+        return self.compactMap { element in
+            let json = element.1.rawString()
+            let image = try? decoder.decode(UnsplashImage.self, from: json!.data(using: .utf8)!)
+            return image
         }
     }
 }

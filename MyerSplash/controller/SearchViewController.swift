@@ -161,6 +161,10 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
     func onRequestEdit(item: DownloadItem) {
         presentEdit(item: item)
     }
+    
+    func onRequestShare(item: UnsplashImage) {
+        self.presentShare(item)
+    }
 
     func onRequestOpenUrl(urlString: String) {
         UIApplication.shared.open(URL(string: urlString)!)

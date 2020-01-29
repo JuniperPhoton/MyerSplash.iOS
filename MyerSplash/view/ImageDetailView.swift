@@ -10,6 +10,7 @@ protocol ImageDetailViewDelegate: class {
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
     func onRequestEdit(item: DownloadItem)
+    func onRequestShare(item: UnsplashImage)
 }
 
 class ImageDetailView: UIView {
@@ -21,6 +22,14 @@ class ImageDetailView: UIView {
     private var authorStack: UIStackView!
     private var downloadButton: DownloadButton!
     private var downloadRoot: UIView!
+    
+    private lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: R.icons.ic_share), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(onClickShare), for: .touchUpInside)
+        return button
+    }()
 
     private var initFrame: CGRect? = nil
     private var bindImage: UnsplashImage? = nil
@@ -119,6 +128,7 @@ class ImageDetailView: UIView {
         
         extraInformationView.addSubview(authorStack)
         extraInformationView.addSubview(downloadRoot)
+        extraInformationView.addSubview(shareButton)
 
         addSubview(backgroundView)
         addSubview(extraInformationView)
@@ -137,14 +147,20 @@ class ImageDetailView: UIView {
 
         authorStack.snp.makeConstraints { maker in
             maker.left.equalTo(self.extraInformationView.snp.left).offset(12)
-            maker.right.lessThanOrEqualTo(downloadRoot.snp.left).offset(-8)
+            maker.right.lessThanOrEqualTo(shareButton.snp.left).offset(-8)
             maker.centerY.equalTo(self.extraInformationView.snp.centerY)
         }
 
         downloadRoot.snp.makeConstraints { maker in
             maker.width.equalTo(100)
             maker.centerY.equalTo(self.extraInformationView.snp.centerY)
-            maker.right.equalTo(self.extraInformationView.snp.right).offset(-20)
+            maker.right.equalTo(self.extraInformationView.snp.right).offset(-12)
+        }
+        
+        shareButton.snp.makeConstraints { (maker) in
+            maker.right.equalTo(downloadRoot.snp.left).offset(-12)
+            maker.top.equalTo(downloadRoot.snp.top)
+            maker.bottom.equalTo(downloadRoot.snp.bottom)
         }
     }
 
@@ -263,8 +279,17 @@ class ImageDetailView: UIView {
 
         downloadButton.setTitleColor(revertTextColor, for: .normal)
         downloadRoot.backgroundColor = textColor.withAlphaComponent(0.4)
-        
+        shareButton.tintColor = textColor
+
         updateProgressLayer()
+    }
+    
+    @objc
+    private func onClickShare() {
+        guard let item = bindImage else {
+            return
+        }
+        delegate?.onRequestShare(item: item)
     }
     
     private func updateProgressLayer() {

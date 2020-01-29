@@ -69,3 +69,6 @@
 "lang_code" = "zh_cn";
 "saved_mac" = "图片已经成功保存到 /Pictures/MyerSplash 文件夹了";
 "open_in_folder" = "打开文件夹";
+"share_content" = "通过 MyerSplash 分享 %@ 的这张超赞的图片。";
+"share_content_highlight" = "通过 MyerSplash 分享这张超赞的图片。";
+

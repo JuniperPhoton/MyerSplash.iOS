@@ -21,6 +21,22 @@ extension UIViewController {
         UIApplication.shared.open(path)
         #endif
     }
+    
+    func presentShare(_ unsplashImage: UnsplashImage) {
+        let url = unsplashImage.downloadUrl!
+        let image = ImageIO.getCachedImage(unsplashImage.listUrl)
+        
+        let content: String!
+        if unsplashImage.userName != nil && unsplashImage.isUnsplash {
+            content = String(format: R.strings.share_content, arguments: [unsplashImage.userName!])
+        } else {
+            content = R.strings.share_content_highlight
+        }
+
+        let items = [content, URL(string: url)!, image] as [Any?]
+        let ac = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
+        present(ac, animated: true)
+    }
 }
 
 extension MDCAlertController {

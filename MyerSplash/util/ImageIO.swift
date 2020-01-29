@@ -23,6 +23,30 @@ class ImageIO {
         return diskCached || memoryCached
     }
     
+    static func getCachedImage(_ url: String?)-> UIImage? {
+        if url == nil {
+            return nil
+        }
+        
+        guard let uri = URL(string: url!) else {
+            return nil
+        }
+        let request = ImageRequest(url: uri)
+        let image = Nuke.ImageCache.shared[request]
+        
+        if image != nil {
+            return image
+        }
+        
+        let data = DataLoader.sharedUrlCache.cachedResponse(for: request.urlRequest)?.data
+        
+        if data != nil {
+            return UIImage(data: data!)
+        }
+        
+        return nil
+    }
+    
     static func getDiskCacheSizeBytes()-> Int {
         return DataLoader.sharedUrlCache.currentDiskUsage
     }
