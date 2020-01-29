@@ -35,7 +35,6 @@ public class MainImageTableCell: UICollectionViewCell {
         super.init(frame: frame)
         
         mainImageView = DayNightImageView()
-        mainImageView.applyMask()
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true
@@ -110,6 +109,8 @@ public class MainImageTableCell: UICollectionViewCell {
 
         todayTag.isHidden = !UnsplashImage.isToday(image)
         todayTextTag.isHidden = !UnsplashImage.isToday(image)
+        
+        mainImageView.applyMask()
     }
     
     func loadImage(fade: Bool) {

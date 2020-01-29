@@ -66,6 +66,11 @@ class ImagesViewController: UIViewController {
     init(_ repo: ImageRepo) {
         self.imageRepo = repo
         super.init(nibName: nil, bundle: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onReceiveReload), name: NSNotification.Name(AppNotification.KEY_RELOAD), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder: NSCoder) {
@@ -181,6 +186,12 @@ class ImagesViewController: UIViewController {
         }
         
         refreshData()
+    }
+    
+    @objc
+    private func onReceiveReload() {
+        collectionView?.reloadData()
+        waterfallLayout.invalidateLayout()
     }
     
     private func calculateSpanCount(_ width: CGFloat)-> uint {

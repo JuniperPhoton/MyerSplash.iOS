@@ -90,7 +90,6 @@ class ImageDetailView: UIView {
                 action: #selector(onClickBackground)))
 
         mainImageView = DayNightImageView()
-        mainImageView.applyMask()
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true
@@ -253,7 +252,8 @@ class ImageDetailView: UIView {
         })
 
         mainImageView.frame = initFrame
-
+        mainImageView.applyMask()
+        
         if let listUrl = image.listUrl {
             ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }

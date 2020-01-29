@@ -41,8 +41,16 @@ class SettingsView: UIView {
         let quickDownload = SettingsSwitchItem(Keys.METERED)
         quickDownload.title = R.strings.settings_metered
         quickDownload.content = R.strings.settings_metered_message
+        
+        let darkMaskSwitch = SettingsSwitchItem(Keys.DAKR_MASK)
+        darkMaskSwitch.title = R.strings.settings_dark_mask_title
+        darkMaskSwitch.content = R.strings.settings_dark_mask_content
+        darkMaskSwitch.onCheckedChanged = { checked in
+            NotificationCenter.default.post(name: NSNotification.Name(AppNotification.KEY_RELOAD), object: nil)
+        }
 
         personalizationGroup.addArrangedSubview(quickDownload)
+        personalizationGroup.addArrangedSubview(darkMaskSwitch)
 
         let qualityGroup = SettingsGroup()
         qualityGroup.label = R.strings.settings_quality

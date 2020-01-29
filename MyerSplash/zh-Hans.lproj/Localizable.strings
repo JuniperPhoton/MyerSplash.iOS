@@ -72,3 +72,5 @@
 "share_content" = "通过 MyerSplash 分享 %@ 的这张超赞的图片。";
 "share_content_highlight" = "通过 MyerSplash 分享这张超赞的图片。";
 
+"settings_dark_mask_title" = "夜间遮罩";
+"settings_dark_mask_content" = "夜间模式下降低图片亮度";

@@ -20,6 +20,19 @@ class DownloadsViewController: UIViewController {
     private var noItemView: UILabel!
     private var deleteFab: MDCFloatingButton!
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onReceiveReload), name: NSNotification.Name(AppNotification.KEY_RELOAD), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -97,6 +110,12 @@ class DownloadsViewController: UIViewController {
                 self.reloadData()
             }
         }
+    }
+    
+    @objc
+    private func onReceiveReload() {
+        collectionView.reloadData()
+        waterfallLayout.invalidateLayout()
     }
     
     @objc

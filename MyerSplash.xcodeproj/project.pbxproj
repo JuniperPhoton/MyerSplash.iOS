@@ -33,6 +33,7 @@
 		2268723123C64A1F00F921F4 /* ImageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268723023C64A1F00F921F4 /* ImageEditorViewController.swift */; };
 		227D5D2123C2346400B2CC4A /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */; };
 		227D5D2423C23DEA00B2CC4A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227D5D2323C23DEA00B2CC4A /* Reachability.swift */; };
+		228F8E2D23E1AD23002BA1E5 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */; };
 		22E496B323C8B5A500B836F0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B223C8B5A500B836F0 /* Log.swift */; };
 		22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B623C8CA0A00B836F0 /* DownloadButton.swift */; };
 		22E496B923C9952200B836F0 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B823C9952200B836F0 /* R.swift */; };
@@ -102,6 +103,7 @@
 		227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen2.storyboard; sourceTree = "<group>"; };
 		227D5D2223C239BA00B2CC4A /* MyerSplash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyerSplash.entitlements; sourceTree = "<group>"; };
 		227D5D2323C23DEA00B2CC4A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		22E496B223C8B5A500B836F0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
 		22E496B823C9952200B836F0 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 				227D5D2323C23DEA00B2CC4A /* Reachability.swift */,
 				1A54F03AD19D14182EA816F0 /* ImageIO.swift */,
 				22E496B223C8B5A500B836F0 /* Log.swift */,
+				228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				54A56894511BAF5E3DC295F6 /* UnsplashUser.swift in Sources */,
 				54A56720CE788E9F16E9E2E2 /* Request.swift in Sources */,
 				2268722D23C61F2D00F921F4 /* AppDb.swift in Sources */,
+				228F8E2D23E1AD23002BA1E5 /* AppNotification.swift in Sources */,
 				22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */,
 				54A56DCFEF6798D1187393D4 /* Colors.swift in Sources */,
 				54A56436968DEEDE565A1488 /* ErrorHintView.swift in Sources */,

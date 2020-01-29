@@ -74,7 +74,6 @@ class DownloadItemCell: UICollectionViewCell {
 
         mainImageView = DayNightImageView()
         mainImageView.clipsToBounds = true
-        mainImageView.applyMask()
 
         self.contentView.addSubview(mainImageView)
         self.contentView.addSubview(downloadRoot)
@@ -130,6 +129,8 @@ class DownloadItemCell: UICollectionViewCell {
 
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         downloadRoot.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
+
+        mainImageView.applyMask()
 
         updateProgressLayer()
         
