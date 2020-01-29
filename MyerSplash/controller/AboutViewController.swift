@@ -55,7 +55,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         }
 
         let platformsLabel = UILabel()
-        platformsLabel.text = "for Windows 10, Android and iOS"
+        platformsLabel.text = "for Windows 10, macOS, iOS and Android"
         platformsLabel.textColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         platformsLabel.font = platformsLabel.font.withSize(13)
 
