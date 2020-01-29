@@ -55,10 +55,7 @@ class SearchViewController: UIViewController {
         searchView.tintColor = UIColor.getDefaultLabelUIColor()
         searchView.keyboardType = .asciiCapable
         searchView.becomeFirstResponder()
-
-        if #available(iOS 13.0, *) {
-            searchView.searchTextField.font = searchView.searchTextField.font?.withSize(16)
-        }
+        searchView.textField?.font = searchView.textField?.font?.withSize(16)
 
         view.addSubview(searchView)
 
@@ -182,5 +179,21 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
 
     func onRequestDownload(image: UnsplashImage) {
         DownloadManager.instance.prepareToDownload(vc: self, image: image)
+    }
+}
+
+extension UISearchBar {
+    var textField : UITextField? {
+        if #available(iOS 13.0, *) {
+            return self.searchTextField
+        } else {
+            // Fallback on earlier versions
+            for view : UIView in (self.subviews[0]).subviews {
+                if let textField = view as? UITextField {
+                    return textField
+                }
+            }
+        }
+        return nil
     }
 }

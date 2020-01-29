@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 class R {
+    class colors {
+        static let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.2)
+    }
+    
     class icons {
         static let ic_clear = "ic_clear"
         static let ic_delete = "ic_delete"
@@ -23,6 +27,9 @@ class R {
         static let ic_star = "ic_star"
         static let ic_app_icon = "ic_app_icon"
         static let ic_home = "ic_home"
+        static let ic_retry = "ic_retry"
+        static let ic_share = "ic_share"
+        static let ic_save = "ic_save"
 
         private init() {
             
@@ -94,6 +101,9 @@ class R {
 
         static let failed_to_load = NSLocalizedString("failed_to_load", comment: "")
         static let saved_mac = NSLocalizedString("saved_mac", comment: "")
+        static let open_in_folder = NSLocalizedString("open_in_folder", comment: "")
+        static let share_content = NSLocalizedString("share_content", comment: "")
+        static let share_content_highlight = NSLocalizedString("share_content_highlight", comment: "")
 
         private init() {
             

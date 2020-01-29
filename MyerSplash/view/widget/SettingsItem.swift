@@ -1,10 +1,13 @@
 import Foundation
 import UIKit
 import SnapKit
+import MaterialComponents
 
 class SettingsItem: UIView {
     private var label: UILabel!
     private var contentView: UILabel!
+    
+    private var rippleController: MDCRippleTouchController!
 
     var title: String? {
         didSet {
@@ -51,13 +54,15 @@ class SettingsItem: UIView {
         uiStack.snp.makeConstraints { maker in
             maker.centerY.equalTo(self)
             maker.left.equalTo(self).offset(Dimensions.TITLE_MARGIN)
-        }
-
-        self.snp.makeConstraints { maker in
-            maker.height.equalTo(Dimensions.SETTING_ITEM_HEIGHT)
+            maker.topMargin.equalTo(10)
+            maker.bottomMargin.equalTo(10)
         }
 
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onClick)))
+        
+        rippleController = MDCRippleTouchController()
+        rippleController.addRipple(to: self)
+        rippleController.rippleView.rippleColor = R.colors.rippleColor
     }
 
     @objc

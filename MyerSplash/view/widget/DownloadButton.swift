@@ -35,7 +35,11 @@ class DownloadButton: UIButton {
         case DownloadStatus.Downloading.rawValue:
             self.setTitle("\(Int(item.progress * 100))%", for: .normal)
         case DownloadStatus.Success.rawValue:
+            #if !targetEnvironment(macCatalyst)
             self.setTitle(R.strings.edit, for: .normal)
+            #else
+            self.setTitle(R.strings.open_in_folder, for: .normal)
+            #endif
         case DownloadStatus.Failed.rawValue:
             self.setTitle(R.strings.retry, for: .normal)
         default:

@@ -46,6 +46,10 @@ class SettingsSwitchItem: SettingsItem {
         super.onClick()
         switchButton.setOn(!switchButton.isOn, animated: true)
         onSwitchStatusChanged()
+        
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        generator.impactOccurred()
     }
 
     @objc

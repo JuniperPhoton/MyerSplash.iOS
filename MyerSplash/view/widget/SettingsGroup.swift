@@ -22,7 +22,6 @@ class SettingsGroup: UIStackView {
         super.init(frame: frame)
 
         axis = NSLayoutConstraint.Axis.vertical
-        spacing = 20.0
 
         groupTitleView = UILabel()
         groupTitleView.textColor = Colors.THEME.asUIColor()
@@ -34,6 +33,8 @@ class SettingsGroup: UIStackView {
             maker.left.equalTo(self).offset(Dimensions.TITLE_MARGIN)
             maker.top.equalTo(self).offset(12)
         }
+        
+        setCustomSpacing(12, after: groupTitleView)
     }
 
     required init(coder aDecoder: NSCoder) {

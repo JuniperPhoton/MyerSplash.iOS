@@ -177,6 +177,10 @@ extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDe
             self.downloadItems[indexPath.row] = item
             Log.info(tag: "downloadcollection", "update item at row \(indexPath.row), filePath: \(item.fileURL ?? "")")
         }
+        cell.onClickShare = { [weak self] (item) in
+            guard let self = self else { return }
+            self.presentShare(item, cell.shareButton)
+        }
         return cell
     }
     

@@ -55,7 +55,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         }
 
         let platformsLabel = UILabel()
-        platformsLabel.text = "for Windows 10, Android and iOS"
+        platformsLabel.text = "for Windows 10, macOS, iOS and Android"
         platformsLabel.textColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         platformsLabel.font = platformsLabel.font.withSize(13)
 
@@ -97,6 +97,15 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         feedBackButton.addTarget(self, action: #selector(sendFeedback), for: .touchUpInside)
         feedBackButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
         feedBackButton.showsTouchWhenHighlighted = false
+        feedBackButton.inkColor = R.colors.rippleColor
+        
+        let gitHubButton = MDCFlatButton()
+        gitHubButton.setTitle("GitHub", for: .normal)
+        gitHubButton.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
+        gitHubButton.addTarget(self, action: #selector(openGitHub), for: .touchUpInside)
+        gitHubButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
+        gitHubButton.showsTouchWhenHighlighted = false
+        gitHubButton.inkColor = R.colors.rippleColor
 
         rootStack.addArrangedSubview(appNameStack)
         rootStack.addArrangedSubview(platformsLabel)
@@ -105,6 +114,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         rootStack.addArrangedSubview(creditText)
         rootStack.addArrangedSubview(feedbackLabel)
         rootStack.addArrangedSubview(feedBackButton)
+        rootStack.addArrangedSubview(gitHubButton)
 
         rootStack.setCustomSpacing(20, after: versionsRoot)
         rootStack.setCustomSpacing(20, after: creditText)
@@ -116,6 +126,12 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
             maker.centerY.equalToSuperview()
             maker.centerX.equalToSuperview()
         }
+    }
+    
+    @objc
+    private func openGitHub() {
+        UIApplication.shared.open(URL(string: "https://github.com/JuniperPhoton/MyerSplash.iOS")!,
+                                  options: [:], completionHandler: nil)
     }
 
     @objc

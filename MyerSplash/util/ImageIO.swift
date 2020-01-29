@@ -23,6 +23,30 @@ class ImageIO {
         return diskCached || memoryCached
     }
     
+    static func getCachedImage(_ url: String?)-> UIImage? {
+        if url == nil {
+            return nil
+        }
+        
+        guard let uri = URL(string: url!) else {
+            return nil
+        }
+        let request = ImageRequest(url: uri)
+        let image = Nuke.ImageCache.shared[request]
+        
+        if image != nil {
+            return image
+        }
+        
+        let data = DataLoader.sharedUrlCache.cachedResponse(for: request.urlRequest)?.data
+        
+        if data != nil {
+            return UIImage(data: data!)
+        }
+        
+        return nil
+    }
+    
     static func getDiskCacheSizeBytes()-> Int {
         return DataLoader.sharedUrlCache.currentDiskUsage
     }
@@ -51,12 +75,18 @@ class ImageIO {
         }
     }
     
-    static func loadImage(url: String, intoView: ImageDisplayingView, fade: Bool = true) {
+    static func loadImage(url: String,
+                          intoView: ImageDisplayingView,
+                          fade: Bool = true,
+                          completion: ImageTask.Completion? = nil) {
         let request = ImageRequest(url: URL(string: url)!)
-        loadImage(request: request, intoView: intoView, fade: fade)
+        loadImage(request: request, intoView: intoView, fade: fade, completion: completion)
     }
     
-    static func loadImage(request: ImageRequest, intoView: ImageDisplayingView, fade: Bool = true) {
+    static func loadImage(request: ImageRequest,
+                          intoView: ImageDisplayingView,
+                          fade: Bool = true,
+                          completion: ImageTask.Completion? = nil) {
         let transition = fade ? ImageLoadingOptions.Transition.fadeIn(duration: 0.3) : nil
                 
         Nuke.loadImage(with: request,
@@ -66,7 +96,7 @@ class ImageIO {
                             failureImage: nil,
                             failureImageTransition: nil,
                             contentModes: .init(success: .scaleAspectFill, failure: .center, placeholder: .center)),
-                       into: intoView, progress: nil, completion: nil)
+                       into: intoView, progress: nil, completion: completion)
     }
     
     static func resizedImage(at url: URL, for size: CGSize) -> UIImage? {

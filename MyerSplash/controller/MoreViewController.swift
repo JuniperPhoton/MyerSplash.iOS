@@ -30,7 +30,12 @@ class MoreViewController: TabmanViewController {
     init(selectedIndex: Int) {
         super.init(nibName: nil, bundle: nil)
         self.selectedIndex = selectedIndex
+        
+        #if targetEnvironment(macCatalyst)
+        self.modalPresentationStyle = .fullScreen
+        #else
         self.modalPresentationStyle = .pageSheet
+        #endif
     }
 
     required init?(coder aDecoder: NSCoder) {

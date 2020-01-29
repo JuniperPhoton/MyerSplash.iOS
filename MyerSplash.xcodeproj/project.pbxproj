@@ -236,13 +236,13 @@
 			path = util;
 			sourceTree = "<group>";
 		};
-		54A56C127081B830968B197A /* model */ = {
+		54A56C127081B830968B197A /* entity */ = {
 			isa = PBXGroup;
 			children = (
 				54A566581177A56512E3DE30 /* UnsplashImage.swift */,
 				54A56ABD120FB1828A5DCFC3 /* UnsplashUser.swift */,
 			);
-			path = model;
+			path = entity;
 			sourceTree = "<group>";
 		};
 		54A56CB57A8144BFC40E7E39 /* cell */ = {
@@ -348,7 +348,7 @@
 				54A56DDFB155912867287711 /* controller */,
 				222D46B123C10C9B003C754B /* repo */,
 				54A56784A667D3A8D353B24A /* view */,
-				54A56C127081B830968B197A /* model */,
+				54A56C127081B830968B197A /* entity */,
 				54A56E5AE6F22DD0D908D31E /* extension */,
 				54A5610203E1DD4A590B39A2 /* api */,
 				54A56F8FB5119EC6900E1F23 /* res */,
@@ -711,7 +711,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 220;
+				CURRENT_PROJECT_VERSION = 240;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -724,7 +724,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -742,7 +742,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 220;
+				CURRENT_PROJECT_VERSION = 240;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -755,7 +755,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

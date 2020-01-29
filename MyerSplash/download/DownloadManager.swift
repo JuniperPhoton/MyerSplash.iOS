@@ -111,14 +111,24 @@ class DownloadManager: NSObject {
         doDownload(image)
     }
     
-    func createAbsolutePathForImage(_ relativePath: String)-> URL {
+    func createSavingDir()-> URL {
         #if targetEnvironment(macCatalyst)
-        let documentsURL = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0]
-        return documentsURL.appendingPathComponent(relativePath)
+        return FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0].appendingPathComponent(DownloadManager.DOWNLOAD_DIR)
         #else
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return documentsURL.appendingPathComponent(relativePath)
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(DownloadManager.DOWNLOAD_DIR)
         #endif
+    }
+    
+    func createSavingRootPath()-> URL {
+        #if targetEnvironment(macCatalyst)
+        return FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0]
+        #else
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        #endif
+    }
+    
+    func createAbsolutePathForImage(_ relativePath: String)-> URL {
+        return createSavingRootPath().appendingPathComponent(relativePath)
     }
     
     private func doDownload(_ unsplashImage: UnsplashImage) {
@@ -144,7 +154,7 @@ class DownloadManager: NSObject {
             showToast(R.strings.download_in_background)
             
             let relativePath = "\(DownloadManager.DOWNLOAD_DIR)/\(unsplashImage.fileName)"
-            let fileURL = self.createAbsolutePathForImage(relativePath)
+            let fileURL = DownloadManager.instance.createAbsolutePathForImage(relativePath)
             
             let destination: DownloadRequest.DownloadFileDestination = { _, _ in
                 return (fileURL, [.removePreviousFile, .createIntermediateDirectories])

@@ -6,13 +6,25 @@ import MaterialComponents.MaterialRipple
 
 public class MainImageTableCell: UICollectionViewCell {
     static let ID = "MainImageTableCell"
-
+    
+    private var downloadRippleController: MDCRippleTouchController!
+    
+    // todo: use new code style
     private var downloadView: UIButton!
     private var todayTag: UIView!
     private var todayTextTag: UILabel!
     private var bindImage: UnsplashImage?
-
-    private var downloadRippleController: MDCRippleTouchController!
+    
+    private lazy var retryButton: UIButton = {
+        let button = UIButton()
+        let image = UIImage(named: R.icons.ic_retry)
+        button.setImage(UIImage(named: R.icons.ic_retry), for: .normal)
+        button.adjustsImageWhenHighlighted = false
+        button.isHidden = true
+        button.tintColor = UIColor.white.withAlphaComponent(0.3)
+        button.addTarget(self, action: #selector(onClickRetry), for: .touchUpInside)
+        return button
+    }()
 
     var mainImageView: DayNightImageView!
 
@@ -35,10 +47,9 @@ public class MainImageTableCell: UICollectionViewCell {
             named: R.icons.ic_download)?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)),
                 for: .normal)
         downloadView.adjustsImageWhenHighlighted = false
-        downloadView.addTarget(self, action: #selector(clickDownloadButton), for: .touchUpInside)
+        downloadView.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
 
-        downloadRippleController = MDCRippleTouchController.load(
-                intoView: downloadView, withColor: UIColor.white.withAlphaComponent(0.3), maxRadius: 30)
+        downloadRippleController = createRippleController(intoView: downloadView)
 
         todayTag = UIImageView(image: UIImage(named: R.icons.ic_star))
         todayTag.isHidden = true
@@ -52,6 +63,7 @@ public class MainImageTableCell: UICollectionViewCell {
         contentView.addSubview(downloadView)
         contentView.addSubview(todayTag)
         contentView.addSubview(todayTextTag)
+        contentView.addSubview(retryButton)
 
         mainImageView.snp.makeConstraints { (maker) in
             maker.left.equalTo(contentView.snp.left)
@@ -77,10 +89,19 @@ public class MainImageTableCell: UICollectionViewCell {
             maker.top.equalTo(todayTag.snp.top)
             maker.bottom.equalTo(todayTag.snp.bottom)
         }
+        
+        retryButton.snp.makeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    private func createRippleController(intoView: UIView)-> MDCRippleTouchController {
+        return MDCRippleTouchController.load(intoView: intoView,
+                                             withColor: UIColor.white.withAlphaComponent(0.3), maxRadius: 30)
     }
 
     func bind(image: UnsplashImage) {
@@ -95,7 +116,11 @@ public class MainImageTableCell: UICollectionViewCell {
         guard let url = bindImage?.listUrl else {
             return
         }
-        ImageIO.loadImage(url: url, intoView: mainImageView, fade: fade)
+        ImageIO.loadImage(url: url, intoView: mainImageView, fade: fade, completion: { [weak self] result in
+            guard let self = self else { return }
+            let response = try? result.get()
+            self.retryButton.isHidden = response != nil
+        })
     }
 
     private func isImageCached() -> Bool {
@@ -124,10 +149,16 @@ public class MainImageTableCell: UICollectionViewCell {
     }
 
     @objc
-    private func clickDownloadButton() {
+    private func onClickDownloadButton() {
         if let image = bindImage {
             onClickDownload?(image)
         }
+    }
+    
+    @objc
+    private func onClickRetry() {
+        loadImage(fade: true)
+        retryButton.isHidden = true
     }
 
     private func animateDownloadButton() {
