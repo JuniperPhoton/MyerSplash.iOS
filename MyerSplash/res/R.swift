@@ -29,6 +29,7 @@ class R {
         static let ic_home = "ic_home"
         static let ic_retry = "ic_retry"
         static let ic_share = "ic_share"
+        static let ic_save = "ic_save"
 
         private init() {
             

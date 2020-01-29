@@ -26,13 +26,42 @@ class ImageEditorViewController: UIViewController {
     private var image: UnsplashImage!
     private var item: DownloadItem!
 
-    private var indicator: MDCActivityIndicator!
+    private var loadingIndicator: MDCActivityIndicator!
     private var exposureSlider: MDCSlider!
 
     private var imageView: UIImageView!
     private var maskView: UIView!
     private var homePreviewView: UIImageView!
     private var scrollView: UIScrollView!
+    
+    private var composeFab: MDCFloatingButton = {
+        let composeFab = MDCFloatingButton()
+        let doneImage = UIImage(named: R.icons.ic_save)?.withRenderingMode(.alwaysTemplate)
+        composeFab.setImage(doneImage, for: .normal)
+        composeFab.tintColor = .white
+        composeFab.backgroundColor = Colors.THEME.asUIColor()
+        composeFab.addTarget(self, action: #selector(onClickCompose), for: .touchUpInside)
+        return composeFab
+    }()
+    
+    private var homeFab: MDCFloatingButton = {
+        let homeFab = MDCFloatingButton()
+        let homeImage = UIImage(named: R.icons.ic_home)?.withRenderingMode(.alwaysTemplate)
+        homeFab.setImage(homeImage, for: .normal)
+        homeFab.tintColor = UIColor.black
+        homeFab.backgroundColor = UIColor.white
+        homeFab.addTarget(self, action: #selector(onClickHome), for: .touchUpInside)
+        return homeFab
+    }()
+    
+    private var composeIndicator: MDCActivityIndicator = {
+        let indicator = MDCActivityIndicator()
+        indicator.sizeToFit()
+        indicator.cycleColors = [UIColor.white]
+        indicator.startAnimating()
+        indicator.isHidden = true
+        return indicator
+    }()
 
     init(item: DownloadItem) {
         self.item = item
@@ -105,13 +134,13 @@ class ImageEditorViewController: UIViewController {
         }
 
         // MARK: INDICATOR
-        indicator = MDCActivityIndicator()
-        indicator.sizeToFit()
-        indicator.cycleColors = [UIColor.white]
-        indicator.startAnimating()
-        view.addSubview(indicator)
+        loadingIndicator = MDCActivityIndicator()
+        loadingIndicator.sizeToFit()
+        loadingIndicator.cycleColors = [UIColor.white]
+        loadingIndicator.startAnimating()
+        view.addSubview(loadingIndicator)
 
-        indicator.snp.makeConstraints { (maker) in
+        loadingIndicator.snp.makeConstraints { (maker) in
             maker.center.equalToSuperview()
         }
 
@@ -162,30 +191,22 @@ class ImageEditorViewController: UIViewController {
         }
 
         // MARK: COMPOSE FAB
-        let fab = MDCFloatingButton()
-        let doneImage = UIImage(named: R.icons.ic_done)?.withRenderingMode(.alwaysTemplate)
-        fab.setImage(doneImage, for: .normal)
-        fab.tintColor = .white
-        fab.backgroundColor = Colors.THEME.asUIColor()
+        self.view.addSubview(composeFab)
 
-        fab.addTarget(self, action: #selector(onClickCompose), for: .touchUpInside)
-        self.view.addSubview(fab)
-
-        fab.snp.makeConstraints { (maker) in
+        composeFab.snp.makeConstraints { (maker) in
             maker.right.equalTo(self.view).offset(-16)
             maker.bottom.equalTo(editPanel.snp.top).offset(25)
             maker.width.equalTo(50)
             maker.height.equalTo(50)
         }
+        
+        // MARK: COMPOSE INDICATOR
+        self.view.addSubview(composeIndicator)
+        composeIndicator.snp.makeConstraints { (maker) in
+            maker.edges.equalTo(composeFab)
+        }
 
         // MARK: HOME FAB
-        let homeFab = MDCFloatingButton()
-        let homeImage = UIImage(named: R.icons.ic_home)?.withRenderingMode(.alwaysTemplate)
-        homeFab.setImage(homeImage, for: .normal)
-        homeFab.tintColor = UIColor.black
-        homeFab.backgroundColor = UIColor.white
-
-        homeFab.addTarget(self, action: #selector(onClickHome), for: .touchUpInside)
         self.view.addSubview(homeFab)
         
         if UIDevice.current.userInterfaceIdiom != .phone {
@@ -193,7 +214,7 @@ class ImageEditorViewController: UIViewController {
         }
 
         homeFab.snp.makeConstraints { (maker) in
-            maker.right.equalTo(fab.snp.left).offset(-14)
+            maker.right.equalTo(composeFab.snp.left).offset(-14)
             maker.bottom.equalTo(editPanel.snp.top).offset(20)
             maker.width.equalTo(40)
             maker.height.equalTo(40)
@@ -207,14 +228,25 @@ class ImageEditorViewController: UIViewController {
         Events.trackEditOk()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.indicator.isHidden = true
+            self.composeIndicator.isHidden = true
+            self.toggleComposeFabIcon(true)
         }
 
-        indicator.isHidden = false
-        indicator.startAnimating()
+        composeIndicator.isHidden = false
+        composeIndicator.startAnimating()
+        toggleComposeFabIcon(false)
 
         DispatchQueue.global().async {
             self.compose()
+        }
+    }
+    
+    private func toggleComposeFabIcon(_ show: Bool) {
+        if show {
+            let doneImage = UIImage(named: R.icons.ic_save)?.withRenderingMode(.alwaysTemplate)
+            composeFab.setImage(doneImage, for: .normal)
+        } else {
+            composeFab.setImage(nil, for: .normal)
         }
     }
 
@@ -340,7 +372,7 @@ class ImageEditorViewController: UIViewController {
                 let resizedImage = ImageIO.resizedImage(at: url, for: CGSize(width: targetWidth, height: targetHeight))
                 
                 DispatchQueue.main.async {
-                    self.indicator.isHidden = true
+                    self.loadingIndicator.isHidden = true
                     self.loadImage(resizedImage)
                 }
             }
