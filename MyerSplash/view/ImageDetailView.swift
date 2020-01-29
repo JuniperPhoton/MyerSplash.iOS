@@ -10,7 +10,6 @@ protocol ImageDetailViewDelegate: class {
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
     func onRequestEdit(item: DownloadItem)
-    func onRequestShare(item: UnsplashImage)
 }
 
 class ImageDetailView: UIView {
@@ -23,7 +22,7 @@ class ImageDetailView: UIView {
     private var downloadButton: DownloadButton!
     private var downloadRoot: UIView!
     
-    private lazy var shareButton: UIButton = {
+    private(set) lazy var shareButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: R.icons.ic_share), for: .normal)
         button.tintColor = .white
@@ -286,10 +285,12 @@ class ImageDetailView: UIView {
     
     @objc
     private func onClickShare() {
-        guard let item = bindImage else {
+        guard let item = bindImage,
+            let vc = UIApplication.shared.keyWindow?.rootViewController else {
             return
         }
-        delegate?.onRequestShare(item: item)
+        
+        vc.presentShare(item, shareButton)
     }
     
     private func updateProgressLayer() {

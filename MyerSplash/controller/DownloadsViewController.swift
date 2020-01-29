@@ -179,7 +179,7 @@ extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDe
         }
         cell.onClickShare = { [weak self] (item) in
             guard let self = self else { return }
-            self.presentShare(item)
+            self.presentShare(item, cell.shareButton)
         }
         return cell
     }

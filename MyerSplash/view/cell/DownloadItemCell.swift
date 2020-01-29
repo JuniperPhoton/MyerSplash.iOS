@@ -23,7 +23,7 @@ class DownloadItemCell: UICollectionViewCell {
     private var button: DownloadButton!
     private var downloadRoot: UIView!
     
-    private lazy var shareButton: UIButton = {
+    private(set) lazy var shareButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: R.icons.ic_share), for: .normal)
         button.alpha = 0.3

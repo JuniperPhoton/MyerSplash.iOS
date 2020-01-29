@@ -22,9 +22,8 @@ extension UIViewController {
         #endif
     }
     
-    func presentShare(_ unsplashImage: UnsplashImage) {
+    func presentShare(_ unsplashImage: UnsplashImage, _ anchorView: UIView) {
         let url = unsplashImage.downloadUrl!
-        let image = ImageIO.getCachedImage(unsplashImage.listUrl)
         
         let content: String!
         if unsplashImage.userName != nil && unsplashImage.isUnsplash {
@@ -33,9 +32,21 @@ extension UIViewController {
             content = R.strings.share_content_highlight
         }
 
-        let items = [content, URL(string: url)!, image] as [Any?]
-        let ac = UIActivityViewController(activityItems: items as [Any], applicationActivities: nil)
+        var items = [content!, URL(string: url)!] as [Any]
+        
+        let image = ImageIO.getCachedImage(unsplashImage.listUrl)
+        if image != nil {
+            items.append(image!)
+        }
+        
+        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        ac.modalPresentationStyle = .fullScreen
         present(ac, animated: true)
+
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            ac.popoverPresentationController?.sourceView = anchorView
+            ac.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.any
+        }
     }
 }
 
