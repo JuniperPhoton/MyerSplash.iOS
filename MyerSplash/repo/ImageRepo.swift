@@ -85,18 +85,34 @@ class HighlightsImageRepo: ImageRepo {
         }
     }
     
+    private let endDate: Date = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        return formatter.date(from: "2018/03/20")!
+    }()
+    
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
         return Single.create { (e) -> Disposable in
             var result = [UnsplashImage]()
-            let calendar = Calendar(identifier: Calendar.Identifier.republicOfChina)
+            let calendar = NSCalendar.autoupdatingCurrent
             let startDate = calendar.date(byAdding: Calendar.Component.day,
-                                          value: -(page - 1) * ImageRepo.DEFAULT_HIGHLIGHTS_COUNT, to: Date())!
+                                          value: -(page - 1) * ImageRepo.DEFAULT_HIGHLIGHTS_COUNT,
+                                          to: Date())!
             
             for i in (0..<ImageRepo.DEFAULT_HIGHLIGHTS_COUNT) {
                 let date = calendar.date(byAdding: Calendar.Component.day,
                                          value: -i,
                                          to: startDate)!
-                result.append(UnsplashImage.create(date))
+                
+                if date > self.endDate {
+                    result.append(UnsplashImage.create(date))
+                } else {
+                    let dateFormatterPrint = DateFormatter()
+                    dateFormatterPrint.dateFormat = "yyyy/MM/dd"
+                    let endString = dateFormatterPrint.string(from: date)
+                    print("end date string is \(endString)")
+                    break
+                }
             }
             
             e(.success(result))

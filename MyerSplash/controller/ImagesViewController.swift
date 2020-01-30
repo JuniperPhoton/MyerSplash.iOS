@@ -301,7 +301,7 @@ class ImagesViewController: UIViewController {
     }
     
     private func loadMore() {
-        if (!canLoadMore) {
+        if (!canLoadMore || loading) {
             return
         }
         
