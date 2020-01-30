@@ -90,22 +90,35 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         creditText.textAlignment = .center
 
         let feedbackLabel = createTitleLabel(R.strings.about_feedback)
+        
+        let feedbackInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
 
         let feedBackButton = MDCFlatButton()
         feedBackButton.setTitle(R.strings.about_feedback_email, for: .normal)
         feedBackButton.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
         feedBackButton.addTarget(self, action: #selector(sendFeedback), for: .touchUpInside)
-        feedBackButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
+        feedBackButton.contentEdgeInsets = feedbackInsets
         feedBackButton.showsTouchWhenHighlighted = false
         feedBackButton.inkColor = R.colors.rippleColor
+        feedBackButton.setTitleFont(platformsLabel.font.withSize(13), for: .normal)
         
         let gitHubButton = MDCFlatButton()
         gitHubButton.setTitle("GitHub", for: .normal)
         gitHubButton.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
         gitHubButton.addTarget(self, action: #selector(openGitHub), for: .touchUpInside)
-        gitHubButton.contentEdgeInsets = UIEdgeInsets(top: 12, left: 50, bottom: 12, right: 50)
+        gitHubButton.contentEdgeInsets = feedbackInsets
         gitHubButton.showsTouchWhenHighlighted = false
         gitHubButton.inkColor = R.colors.rippleColor
+        gitHubButton.setTitleFont(platformsLabel.font.withSize(13), for: .normal)
+
+        let webButton = MDCFlatButton()
+        webButton.setTitle(R.strings.about_website, for: .normal)
+        webButton.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
+        webButton.addTarget(self, action: #selector(openWebsite), for: .touchUpInside)
+        webButton.contentEdgeInsets = feedbackInsets
+        webButton.showsTouchWhenHighlighted = false
+        webButton.inkColor = R.colors.rippleColor
+        webButton.setTitleFont(platformsLabel.font.withSize(13), for: .normal)
 
         rootStack.addArrangedSubview(appNameStack)
         rootStack.addArrangedSubview(platformsLabel)
@@ -115,9 +128,13 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         rootStack.addArrangedSubview(feedbackLabel)
         rootStack.addArrangedSubview(feedBackButton)
         rootStack.addArrangedSubview(gitHubButton)
+        rootStack.addArrangedSubview(webButton)
 
         rootStack.setCustomSpacing(20, after: versionsRoot)
         rootStack.setCustomSpacing(20, after: creditText)
+        rootStack.setCustomSpacing(0, after: feedBackButton)
+        rootStack.setCustomSpacing(0, after: gitHubButton)
+        rootStack.setCustomSpacing(0, after: webButton)
 
         self.view.addSubview(rootStack)
 
@@ -131,6 +148,12 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     @objc
     private func openGitHub() {
         UIApplication.shared.open(URL(string: "https://github.com/JuniperPhoton/MyerSplash.iOS")!,
+                                  options: [:], completionHandler: nil)
+    }
+    
+    @objc
+    private func openWebsite() {
+        UIApplication.shared.open(URL(string: "https://juniperphoton.dev/myersplash/")!,
                                   options: [:], completionHandler: nil)
     }
 

@@ -107,7 +107,7 @@ class R {
         static let open_in_folder = NSLocalizedString("open_in_folder", comment: "")
         static let share_content = NSLocalizedString("share_content", comment: "")
         static let share_content_highlight = NSLocalizedString("share_content_highlight", comment: "")
-
+        static let about_website = NSLocalizedString("about_website", comment: "")
 
         private init() {
             
