@@ -22,9 +22,9 @@ class AppSettings {
     static func isMeteredEnabled() -> Bool {
         return isSettingsEnabled(key: Keys.METERED)
     }
-
-    static func setMeteredEnabled(_ enabled: Bool) {
-        UserDefaults.standard.set(enabled, forKey: Keys.METERED)
+    
+    static func isDarkMaskEnabled() -> Bool {
+        return isSettingsEnabled(key: Keys.DAKR_MASK)
     }
 
     static func loadingQuality() -> Int {

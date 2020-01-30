@@ -18,6 +18,24 @@ protocol ImagesViewControllerDelegate: class {
     func onRequestDownload(image: UnsplashImage)
 }
 
+extension ELWaterFlowLayout {
+    static func calculateSpanCount(_ width: CGFloat)-> uint {
+        let newSpan: uint
+        switch width {
+        case 0..<1000:
+            newSpan = 2
+        case 1000..<1600:
+            newSpan = 3
+        case 1600..<2200:
+            newSpan = 4
+        default:
+            newSpan = 5
+        }
+        
+        return newSpan
+    }
+}
+
 class ImagesViewController: UIViewController {
     static let TAG = "ImagesViewController"
     static let CELL_ANIMATE_OFFSET_X: CGFloat = 50.0
@@ -28,6 +46,7 @@ class ImagesViewController: UIViewController {
     
     static let HIGHLIGHTS_DELAY_SEC = 0.2
     
+
     private let waterfallLayout = ELWaterFlowLayout()
     
     private var paging = 1
@@ -53,6 +72,17 @@ class ImagesViewController: UIViewController {
     private var loadingFooterView: MDCActivityIndicator!
     private var animateCellFinished = false
     
+    private var noMoreItemView: UIView = {
+        let label = UILabel()
+        label.text = R.strings.no_more_items
+        label.font = label.font.with(traits: .traitBold).withSize(16)
+        label.textColor = .getDefaultLabelUIColor()
+        label.sizeToFit()
+        label.isHidden = true
+        label.textAlignment = .center
+        return label
+    }()
+    
     var collectionTopOffset: CGFloat = 0
     
     weak var delegate: ImagesViewControllerDelegate? = nil
@@ -66,6 +96,11 @@ class ImagesViewController: UIViewController {
     init(_ repo: ImageRepo) {
         self.imageRepo = repo
         super.init(nibName: nil, bundle: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onReceiveReload), name: NSNotification.Name(AppNotification.KEY_RELOAD), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder: NSCoder) {
@@ -75,7 +110,7 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         let view = self.view!
         
-        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int) in
+        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int, _ size: Int) in
             if let self = self {
                 if !success {
                     showToast(R.strings.something_wrong)
@@ -83,7 +118,7 @@ class ImagesViewController: UIViewController {
                 
                 self.indicator.stopAnimating()
                 self.loading = false
-                self.canLoadMore = !self.imageRepo!.images.isEmpty
+                self.canLoadMore = size != 0
                 self.loadingFooterView.stopAnimating()
                 self.stopRefresh()
                 
@@ -91,8 +126,15 @@ class ImagesViewController: UIViewController {
                     self.calculateInitialMaxVisibleCellCount()
                 }
                 
+                if !self.canLoadMore {
+                    self.loadingFooterView.isHidden = true
+                    self.noMoreItemView.isHidden = false
+                }
+                
                 if self.imageRepo!.images.isEmpty {
                     self.updateHintViews(success)
+                    self.loadingFooterView.isHidden = true
+                    self.noMoreItemView.isHidden = true
                 }
                 
                 self.collectionView.reloadData()
@@ -111,11 +153,12 @@ class ImagesViewController: UIViewController {
         
         waterfallLayout.delegate = self
         waterfallLayout.scrollDirection = .vertical
+
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             #if targetEnvironment(macCatalyst)
             print("run for macCatalyst")
-            waterfallLayout.lineCount = UInt(calculateSpanCount(view.frame.width))
+            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(view.frame.width))
             #else
             print("run for pad")
             waterfallLayout.lineCount = 3
@@ -131,6 +174,10 @@ class ImagesViewController: UIViewController {
             waterfallLayout.hItemSpace = 0
         }
         
+        waterfallLayout.vItemSpace = 12
+        waterfallLayout.hItemSpace = 12
+        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
+        
         collectionView.snp.makeConstraints { (maker) in
             maker.height.equalTo(view)
             maker.width.equalTo(view)
@@ -139,13 +186,19 @@ class ImagesViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.contentInset = UIEdgeInsets(top: collectionTopOffset, left: 0, bottom: 100, right: 0)
+        collectionView.contentInset = UIEdgeInsets(
+            top: collectionTopOffset,
+            left: 0,
+            bottom: ImagesViewController.FOOTER_HEIGHT.toCGFloat(),
+            right: 0
+        )
         collectionView.register(MainImageTableCell.self, forCellWithReuseIdentifier: MainImageTableCell.ID)
         
         loadingFooterView = MDCActivityIndicator()
         loadingFooterView.cycleColors = [.getDefaultLabelUIColor()]
         
         collectionView.addSubview(loadingFooterView)
+        collectionView.addSubview(noMoreItemView)
         
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
@@ -183,20 +236,10 @@ class ImagesViewController: UIViewController {
         refreshData()
     }
     
-    private func calculateSpanCount(_ width: CGFloat)-> uint {
-        let newSpan: uint
-        switch width {
-        case 0..<1000:
-            newSpan = 2
-        case 1000..<1600:
-            newSpan = 3
-        case 1600..<2200:
-            newSpan = 4
-        default:
-            newSpan = 5
-        }
-        
-        return newSpan
+    @objc
+    private func onReceiveReload() {
+        collectionView?.reloadData()
+        waterfallLayout.invalidateLayout()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -204,11 +247,17 @@ class ImagesViewController: UIViewController {
             return
         }
         let currentSpan = waterfallLayout.lineCount
-        let newSpan = calculateSpanCount(size.width)
+        let newSpan = ELWaterFlowLayout.calculateSpanCount(size.width)
         
         if newSpan != currentSpan {
             waterfallLayout.lineCount = UInt(newSpan)
             collectionView.setNeedsLayout()
+        }
+        
+        collectionView.subviews.forEach { (view) in
+            if let cell = view as? MainImageTableCell {
+                cell.invalidateLayer()
+            }
         }
     }
     
@@ -266,9 +315,11 @@ class ImagesViewController: UIViewController {
     }
     
     private func loadMore() {
-        if (!canLoadMore) {
+        if (!canLoadMore || loading) {
             return
         }
+        
+        noMoreItemView.isHidden = true
         
         paging = paging + 1
         loadData(false)
@@ -350,6 +401,7 @@ class ImagesViewController: UIViewController {
                                height: ImagesViewController.FOOTER_HEIGHT.toCGFloat());
             self.loadingFooterView.frame = frame;
             self.loadingFooterView.startAnimating()
+            self.noMoreItemView.frame = frame;
         }
     }
     

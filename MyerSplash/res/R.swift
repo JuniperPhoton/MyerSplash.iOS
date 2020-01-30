@@ -55,6 +55,7 @@ class R {
         static let uh_oh = NSLocalizedString("uh_oh", comment: "")
         static let retry = NSLocalizedString("retry", comment: "")
         static let something_wrong = NSLocalizedString("something_wrong", comment: "")
+        static let no_more_items = NSLocalizedString("no_more_items", comment: "")
 
         static let saved_album = NSLocalizedString("saved_album", comment: "")
         static let failed_process = NSLocalizedString("failed_process", comment: "")
@@ -87,7 +88,10 @@ class R {
         static let settings_quality_download_thumb = NSLocalizedString("settings_quality_download_thumb", comment: "")
         static let settings_clear = NSLocalizedString("settings_clear", comment: "")
         static let settings_clear_cache = NSLocalizedString("settings_clear_cache", comment: "")
-
+        
+        static let settings_dark_mask_title = NSLocalizedString("settings_dark_mask_title", comment: "")
+        static let settings_dark_mask_content = NSLocalizedString("settings_dark_mask_content", comment: "")
+        
         static let cleared = NSLocalizedString("cleared", comment: "")
         static let download_in_background = NSLocalizedString("download_in_background", comment: "")
         static let no_network = NSLocalizedString("no_network", comment: "")
@@ -104,6 +108,7 @@ class R {
         static let open_in_folder = NSLocalizedString("open_in_folder", comment: "")
         static let share_content = NSLocalizedString("share_content", comment: "")
         static let share_content_highlight = NSLocalizedString("share_content_highlight", comment: "")
+        static let about_website = NSLocalizedString("about_website", comment: "")
 
         private init() {
             

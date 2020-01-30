@@ -177,7 +177,7 @@ class DownloadManager: NSObject {
                     #if !targetEnvironment(macCatalyst)
                     UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
                     #else
-                    showToast(R.strings.saved_mac)
+                    showToast(R.strings.saved_mac, time: 4)
                     #endif
                 } else {
                     Log.info(tag: DownloadManager.TAG, "error while download image: \(response.error?.localizedDescription ?? "null error")")

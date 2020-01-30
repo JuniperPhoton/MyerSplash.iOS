@@ -33,6 +33,8 @@
 		2268723123C64A1F00F921F4 /* ImageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268723023C64A1F00F921F4 /* ImageEditorViewController.swift */; };
 		227D5D2123C2346400B2CC4A /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */; };
 		227D5D2423C23DEA00B2CC4A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227D5D2323C23DEA00B2CC4A /* Reachability.swift */; };
+		228F8E2D23E1AD23002BA1E5 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */; };
+		22DC52B523E2D5A700CFD177 /* UICollectionViewCellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */; };
 		22E496B323C8B5A500B836F0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B223C8B5A500B836F0 /* Log.swift */; };
 		22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B623C8CA0A00B836F0 /* DownloadButton.swift */; };
 		22E496B923C9952200B836F0 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B823C9952200B836F0 /* R.swift */; };
@@ -102,6 +104,8 @@
 		227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen2.storyboard; sourceTree = "<group>"; };
 		227D5D2223C239BA00B2CC4A /* MyerSplash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyerSplash.entitlements; sourceTree = "<group>"; };
 		227D5D2323C23DEA00B2CC4A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
+		22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCellExtensions.swift; sourceTree = "<group>"; };
 		22E496B223C8B5A500B836F0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
 		22E496B823C9952200B836F0 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 				227D5D2323C23DEA00B2CC4A /* Reachability.swift */,
 				1A54F03AD19D14182EA816F0 /* ImageIO.swift */,
 				22E496B223C8B5A500B836F0 /* Log.swift */,
+				228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				54A568D0616F40376A967B11 /* UserDefaultsExtension.swift */,
 				54A56435B1C59D948C33519E /* MiscExtension.swift */,
 				A02FA5BB50846102410E0BC4 /* UIViewControllerExtensions.swift */,
+				22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -525,6 +531,7 @@
 				54A56894511BAF5E3DC295F6 /* UnsplashUser.swift in Sources */,
 				54A56720CE788E9F16E9E2E2 /* Request.swift in Sources */,
 				2268722D23C61F2D00F921F4 /* AppDb.swift in Sources */,
+				228F8E2D23E1AD23002BA1E5 /* AppNotification.swift in Sources */,
 				22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */,
 				54A56DCFEF6798D1187393D4 /* Colors.swift in Sources */,
 				54A56436968DEEDE565A1488 /* ErrorHintView.swift in Sources */,
@@ -558,6 +565,7 @@
 				2268722823C4DF8B00F921F4 /* SearchHintView.swift in Sources */,
 				2268722423C36AAB00F921F4 /* TMBarButtonBar.swift in Sources */,
 				54A56452EA2B7115BF2CDBA6 /* MiscExtension.swift in Sources */,
+				22DC52B523E2D5A700CFD177 /* UICollectionViewCellExtensions.swift in Sources */,
 				2268723123C64A1F00F921F4 /* ImageEditorViewController.swift in Sources */,
 				1A54F0004F33742176D613EF /* ImageIO.swift in Sources */,
 				1A54FD1D9B7E93F3367E6C10 /* DayNightImageView.swift in Sources */,
@@ -711,7 +719,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 240;
+				CURRENT_PROJECT_VERSION = 400;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -724,7 +732,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 4.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -742,7 +750,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 240;
+				CURRENT_PROJECT_VERSION = 400;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -755,7 +763,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 4.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

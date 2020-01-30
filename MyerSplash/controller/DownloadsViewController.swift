@@ -20,6 +20,19 @@ class DownloadsViewController: UIViewController {
     private var noItemView: UILabel!
     private var deleteFab: MDCFloatingButton!
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onReceiveReload), name: NSNotification.Name(AppNotification.KEY_RELOAD), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -32,7 +45,7 @@ class DownloadsViewController: UIViewController {
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             print("run for pad")
-            waterfallLayout.lineCount = 3
+            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(UIScreen.main.bounds.width))
             waterfallLayout.vItemSpace = 12
             waterfallLayout.hItemSpace = 12
             waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
@@ -94,8 +107,37 @@ class DownloadsViewController: UIViewController {
             print("collections in db, count is ", self.downloadItems.count)
 
             DispatchQueue.main.sync {
-                self.reloadData()
+                UIView.performWithoutAnimation {
+                    self.reloadData()
+                }
             }
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if collectionView?.superview == nil {
+            return
+        }
+        let currentSpan = waterfallLayout.lineCount
+        let newSpan = ELWaterFlowLayout.calculateSpanCount(size.width)
+        
+        if newSpan != currentSpan {
+            waterfallLayout.lineCount = UInt(newSpan)
+            collectionView.setNeedsLayout()
+        }
+        
+        collectionView.subviews.forEach { (view) in
+            if let cell = view as? DownloadItemCell {
+                cell.invalidateLayer()
+            }
+        }
+    }
+    
+    @objc
+    private func onReceiveReload() {
+        UIView.performWithoutAnimation {
+            collectionView?.reloadData()
+            waterfallLayout.invalidateLayout()
         }
     }
     

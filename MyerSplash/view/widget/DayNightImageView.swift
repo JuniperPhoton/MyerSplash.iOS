@@ -7,8 +7,6 @@ import Foundation
 import UIKit
 
 class DayNightImageView: UIImageView {
-    private var foregroundMaskView: UIView? = nil
-
     private var maskColor: UIColor {
         get {
             let maskColor: UIColor!
@@ -25,21 +23,26 @@ class DayNightImageView: UIImageView {
             return maskColor
         }
     }
-
-    func applyMask() {
-        #if targetEnvironment(macCatalyst)
-        return
-        #endif
-        
+    
+    private lazy var foregroundMaskView: UIView! = {
         let maskView = UIView()
         maskView.backgroundColor = maskColor
-        self.addSubview(maskView)
+        return maskView
+    }()
 
-        maskView.snp.makeConstraints { maker in
-            maker.edges.equalToSuperview()
+    func applyMask() {
+        if !AppSettings.isDarkMaskEnabled() {
+            if foregroundMaskView.superview != nil {
+                foregroundMaskView.removeFromSuperview()
+            }
+        } else {
+            if foregroundMaskView.superview == nil {
+                self.addSubview(foregroundMaskView)
+                foregroundMaskView.snp.makeConstraints { (maker) in
+                    maker.edges.equalToSuperview()
+                }
+            }
         }
-
-        self.foregroundMaskView = maskView
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -52,6 +55,6 @@ class DayNightImageView: UIImageView {
             return
         }
 
-        foregroundMaskView?.backgroundColor = maskColor
+        foregroundMaskView.backgroundColor = maskColor
     }
 }

@@ -326,11 +326,18 @@ class ImageEditorViewController: UIViewController {
             let screenBounds = UIScreen.main.bounds
             
             var width = item.unsplashImage!.width
+            var height = item.unsplashImage!.height
+            
+            let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+            let size = ImageIO.getImageSize(at: url)
+            
+            width = Int(size.width)
+            height = Int(size.height)
+
             if width == 0 {
                 width = 3
             }
             
-            var height = item.unsplashImage!.height
             if height == 0 {
                 height = 2
             }
@@ -365,9 +372,7 @@ class ImageEditorViewController: UIViewController {
             }
                         
             Log.info(tag: ImageEditorViewController.TAG, "target w: \(targetWidth), target h: \(targetHeight)")
-            
-            let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
-            
+                        
             DispatchQueue.global().async {
                 let resizedImage = ImageIO.resizedImage(at: url, for: CGSize(width: targetWidth, height: targetHeight))
                 

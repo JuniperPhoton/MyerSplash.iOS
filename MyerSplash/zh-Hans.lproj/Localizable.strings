@@ -40,6 +40,7 @@
 "about_feedback" = "反馈";
 "about_feedback_email" = "发邮件";
 "about_feedback_email_body" = "开发者你好哇：";
+"about_website" = "官方网站";
 
 "settings_personalization" = "个性化";
 "settings_metered" = "流量提示";
@@ -72,3 +73,6 @@
 "share_content" = "通过 MyerSplash 分享 %@ 的这张超赞的图片。";
 "share_content_highlight" = "通过 MyerSplash 分享这张超赞的图片。";
 
+"settings_dark_mask_title" = "夜间遮罩";
+"settings_dark_mask_content" = "夜间模式下降低图片亮度";
+"no_more_items" = "🚧 你已经到了列表的尽头了";

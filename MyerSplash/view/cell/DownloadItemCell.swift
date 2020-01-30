@@ -55,7 +55,7 @@ class DownloadItemCell: UICollectionViewCell {
         
         progressLayer = CALayer()
         progressLayer.needsDisplayOnBoundsChange = true
-        progressLayer.frame = CGRect(x: 0, y: 0, width: 10, height: DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
+        progressLayer.frame = CGRect(x: 0, y: 0, width: 0, height: DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
         downloadRoot.layer.addSublayer(progressLayer)
         downloadRoot.layer.masksToBounds = true
         
@@ -74,7 +74,6 @@ class DownloadItemCell: UICollectionViewCell {
 
         mainImageView = DayNightImageView()
         mainImageView.clipsToBounds = true
-        mainImageView.applyMask()
 
         self.contentView.addSubview(mainImageView)
         self.contentView.addSubview(downloadRoot)
@@ -131,6 +130,8 @@ class DownloadItemCell: UICollectionViewCell {
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         downloadRoot.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
 
+        mainImageView.applyMask()
+
         updateProgressLayer()
         
         let isLight = image.themeColor.isLightColor()
@@ -159,6 +160,11 @@ class DownloadItemCell: UICollectionViewCell {
             
             self.onDownloadItemUpdated?(element)
         }
+        
+        contentView.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
+        contentView.layer.masksToBounds = true
+        
+        invalidateLayer()
     }
     
     private func updateProgressLayer() {
@@ -179,7 +185,18 @@ class DownloadItemCell: UICollectionViewCell {
         }
         
         let layerWidth = Int(ceil(cellWidth * CGFloat(progress)))
-        progressLayer.frame = CGRect(x: 0, y: 0, width: layerWidth, height: DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
+        
+        let targetFrame = CGRect(x: 0, y: 0, width: layerWidth, height: DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
+        
+        // First init, skip animation
+        if progressLayer.frame.width == 0 && progress == 1 {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            progressLayer.frame = targetFrame
+            CATransaction.commit()
+        } else {
+            progressLayer.frame = targetFrame
+        }
     }
 
     func unbind() {

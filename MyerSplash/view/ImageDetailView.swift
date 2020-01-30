@@ -90,7 +90,6 @@ class ImageDetailView: UIView {
                 action: #selector(onClickBackground)))
 
         mainImageView = DayNightImageView()
-        mainImageView.applyMask()
         mainImageView.contentMode = UIView.ContentMode.scaleAspectFill
         mainImageView.clipsToBounds = true
         mainImageView.isUserInteractionEnabled = true
@@ -253,7 +252,8 @@ class ImageDetailView: UIView {
         })
 
         mainImageView.frame = initFrame
-
+        mainImageView.applyMask()
+        
         if let listUrl = image.listUrl {
             ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }
@@ -285,12 +285,11 @@ class ImageDetailView: UIView {
     
     @objc
     private func onClickShare() {
-        guard let item = bindImage,
-            let vc = UIApplication.shared.keyWindow?.rootViewController else {
+        guard let item = bindImage else {
             return
         }
-        
-        vc.presentShare(item, shareButton)
+
+        UIApplication.shared.getTopViewController()?.presentShare(item, shareButton)
     }
     
     private func updateProgressLayer() {
@@ -342,6 +341,7 @@ class ImageDetailView: UIView {
         }
         
         self.mainImageView.frame = self.finalFrame
+        
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
@@ -426,6 +426,9 @@ class ImageDetailView: UIView {
                 animations: {
                     self.backgroundView.alpha = 0.0
                     self.mainImageView.frame = self.initFrame!
+                    
+                    // Make sure the subview can layout according to the superview's frame changes
+                    self.mainImageView.layoutIfNeeded()
                 },
                 completion: { b in
                     self.isHidden = true

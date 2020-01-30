@@ -21,6 +21,11 @@ class Dimensions {
 
     static let FAB_RADIUS = 50
     static let FAB_ICON_SIZE = 20
+    
+    static let SHADOW_OFFSET_Y = 2
+    static let SHADOW_RADIUS = 4
+    static let SHADOW_OPACITY: Float = 0.2
+
 }
 
 extension Int {

@@ -99,6 +99,17 @@ class ImageIO {
                        into: intoView, progress: nil, completion: completion)
     }
     
+    static func getImageSize(at url: URL) -> CGSize {
+        let exist = FileManager.default.fileExists(atPath: url.path)
+        if !exist {
+            return CGSize.zero
+        }
+        
+        let image = UIImage(contentsOfFile: url.path)
+        
+        return image?.size ?? CGSize.zero
+    }
+    
     static func resizedImage(at url: URL, for size: CGSize) -> UIImage? {
         let exist = FileManager.default.fileExists(atPath: url.path)
         
