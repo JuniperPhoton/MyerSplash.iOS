@@ -88,7 +88,7 @@ class SettingsView: UIView {
 
         personalizationGroup.snp.makeConstraints { (maker) in
             maker.left.right.equalTo(self)
-            maker.top.equalTo(scrollView.snp.top).offset(Dimensions.TITLE_MARGIN)
+            maker.top.equalTo(scrollView.snp.top).offset(8)
         }
         qualityGroup.snp.makeConstraints { (maker) in
             maker.left.right.equalTo(self)
