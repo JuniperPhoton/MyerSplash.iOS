@@ -285,12 +285,11 @@ class ImageDetailView: UIView {
     
     @objc
     private func onClickShare() {
-        guard let item = bindImage,
-            let vc = UIApplication.shared.keyWindow?.rootViewController else {
+        guard let item = bindImage else {
             return
         }
-        
-        vc.presentShare(item, shareButton)
+
+        UIApplication.shared.getTopViewController()?.presentShare(item, shareButton)
     }
     
     private func updateProgressLayer() {

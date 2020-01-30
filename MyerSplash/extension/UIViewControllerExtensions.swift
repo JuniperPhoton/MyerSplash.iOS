@@ -40,7 +40,6 @@ extension UIViewController {
         }
         
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        ac.modalPresentationStyle = .fullScreen
         present(ac, animated: true)
 
         if UIDevice.current.userInterfaceIdiom == .pad {

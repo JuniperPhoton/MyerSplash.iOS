@@ -5,7 +5,7 @@ import SnapKit
 import MaterialComponents.MDCRippleTouchController
 
 func showToast(_ text: String, time: TimeInterval = ToastView.STAYING_DURATION_SEC) {
-    guard let view = UIApplication.shared.keyWindow?.rootViewController?.view else {
+    guard let view = UIApplication.shared.getTopViewController()?.view else {
         Log.warn(tag: "showtoast", "no active view")
         return
     }
@@ -96,5 +96,11 @@ extension UIViewController {
         willMove(toParent: nil)
         view.removeFromSuperview()
         removeFromParent()
+    }
+}
+
+extension UIApplication {
+    func getTopViewController() -> UIViewController? {
+        return self.keyWindow?.rootViewController?.presentedViewController ?? self.keyWindow?.rootViewController
     }
 }
