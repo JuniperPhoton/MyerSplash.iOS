@@ -5,7 +5,7 @@
 ## Introduction
 Yet anothor simple and elegant photos & wallpaper app for all platforms.
 
-Welcome to visit the [Android](https://github.com/JuniperPhoton/MyerSplash.Android) and [iOS](https://github.com/JuniperPhoton/MyerSplash.iOS) version :)
+Welcome to visit the [Android](https://github.com/JuniperPhoton/MyerSplash.Android) and [UWP](https://github.com/JuniperPhoton/MyerSplash.UWP) version :)
 
 ## Download
 
