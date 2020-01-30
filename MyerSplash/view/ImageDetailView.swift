@@ -341,6 +341,7 @@ class ImageDetailView: UIView {
         }
         
         self.mainImageView.frame = self.finalFrame
+        
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
@@ -425,6 +426,9 @@ class ImageDetailView: UIView {
                 animations: {
                     self.backgroundView.alpha = 0.0
                     self.mainImageView.frame = self.initFrame!
+                    
+                    // Make sure the subview can layout according to the superview's frame changes
+                    self.mainImageView.layoutIfNeeded()
                 },
                 completion: { b in
                     self.isHidden = true

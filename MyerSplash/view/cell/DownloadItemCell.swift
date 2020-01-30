@@ -163,14 +163,8 @@ class DownloadItemCell: UICollectionViewCell {
         
         contentView.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
         contentView.layer.masksToBounds = true
-
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: Dimensions.SHADOW_OFFSET_Y)
-        layer.shadowRadius = Dimensions.SHADOW_RADIUS.toCGFloat()
-        layer.shadowOpacity = Dimensions.SHADOW_OPACITY
-        layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
-        layer.backgroundColor = UIColor.clear.cgColor
+        
+        invalidateLayer()
     }
     
     private func updateProgressLayer() {

@@ -45,7 +45,7 @@ class DownloadsViewController: UIViewController {
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             print("run for pad")
-            waterfallLayout.lineCount = 3
+            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(UIScreen.main.bounds.width))
             waterfallLayout.vItemSpace = 12
             waterfallLayout.hItemSpace = 12
             waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
@@ -110,6 +110,25 @@ class DownloadsViewController: UIViewController {
                 UIView.performWithoutAnimation {
                     self.reloadData()
                 }
+            }
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if collectionView?.superview == nil {
+            return
+        }
+        let currentSpan = waterfallLayout.lineCount
+        let newSpan = ELWaterFlowLayout.calculateSpanCount(size.width)
+        
+        if newSpan != currentSpan {
+            waterfallLayout.lineCount = UInt(newSpan)
+            collectionView.setNeedsLayout()
+        }
+        
+        collectionView.subviews.forEach { (view) in
+            if let cell = view as? DownloadItemCell {
+                cell.invalidateLayer()
             }
         }
     }

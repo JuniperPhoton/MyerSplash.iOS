@@ -111,6 +111,11 @@ public class MainImageTableCell: UICollectionViewCell {
         todayTextTag.isHidden = !UnsplashImage.isToday(image)
         
         mainImageView.applyMask()
+        
+        contentView.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
+        contentView.layer.masksToBounds = true
+
+        invalidateLayer()
     }
     
     func loadImage(fade: Bool) {

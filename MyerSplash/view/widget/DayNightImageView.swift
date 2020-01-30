@@ -36,9 +36,11 @@ class DayNightImageView: UIImageView {
                 foregroundMaskView.removeFromSuperview()
             }
         } else {
-            self.addSubview(foregroundMaskView)
-            foregroundMaskView.snp.makeConstraints { maker in
-                maker.edges.equalToSuperview()
+            if foregroundMaskView.superview == nil {
+                self.addSubview(foregroundMaskView)
+                foregroundMaskView.snp.makeConstraints { (maker) in
+                    maker.edges.equalToSuperview()
+                }
             }
         }
     }
