@@ -114,7 +114,7 @@ class DownloadsViewController: UIViewController {
     
     @objc
     private func onReceiveReload() {
-        collectionView.reloadData()
+        collectionView?.reloadData()
         waterfallLayout.invalidateLayout()
     }
     
