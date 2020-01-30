@@ -55,6 +55,7 @@ class R {
         static let uh_oh = NSLocalizedString("uh_oh", comment: "")
         static let retry = NSLocalizedString("retry", comment: "")
         static let something_wrong = NSLocalizedString("something_wrong", comment: "")
+        static let no_more_items = NSLocalizedString("no_more_items", comment: "")
 
         static let saved_album = NSLocalizedString("saved_album", comment: "")
         static let failed_process = NSLocalizedString("failed_process", comment: "")

@@ -53,6 +53,17 @@ class ImagesViewController: UIViewController {
     private var loadingFooterView: MDCActivityIndicator!
     private var animateCellFinished = false
     
+    private var noMoreItemView: UIView = {
+        let label = UILabel()
+        label.text = R.strings.no_more_items
+        label.font = label.font.with(traits: .traitBold).withSize(16)
+        label.textColor = .getDefaultLabelUIColor()
+        label.sizeToFit()
+        label.isHidden = true
+        label.textAlignment = .center
+        return label
+    }()
+    
     var collectionTopOffset: CGFloat = 0
     
     weak var delegate: ImagesViewControllerDelegate? = nil
@@ -80,7 +91,7 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         let view = self.view!
         
-        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int) in
+        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int, _ size: Int) in
             if let self = self {
                 if !success {
                     showToast(R.strings.something_wrong)
@@ -88,7 +99,7 @@ class ImagesViewController: UIViewController {
                 
                 self.indicator.stopAnimating()
                 self.loading = false
-                self.canLoadMore = !self.imageRepo!.images.isEmpty
+                self.canLoadMore = size != 0
                 self.loadingFooterView.stopAnimating()
                 self.stopRefresh()
                 
@@ -96,8 +107,15 @@ class ImagesViewController: UIViewController {
                     self.calculateInitialMaxVisibleCellCount()
                 }
                 
+                if !self.canLoadMore {
+                    self.loadingFooterView.isHidden = true
+                    self.noMoreItemView.isHidden = false
+                }
+                
                 if self.imageRepo!.images.isEmpty {
                     self.updateHintViews(success)
+                    self.loadingFooterView.isHidden = true
+                    self.noMoreItemView.isHidden = true
                 }
                 
                 self.collectionView.reloadData()
@@ -144,13 +162,19 @@ class ImagesViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.contentInset = UIEdgeInsets(top: collectionTopOffset, left: 0, bottom: 100, right: 0)
+        collectionView.contentInset = UIEdgeInsets(
+            top: collectionTopOffset,
+            left: 0,
+            bottom: ImagesViewController.FOOTER_HEIGHT.toCGFloat(),
+            right: 0
+        )
         collectionView.register(MainImageTableCell.self, forCellWithReuseIdentifier: MainImageTableCell.ID)
         
         loadingFooterView = MDCActivityIndicator()
         loadingFooterView.cycleColors = [.getDefaultLabelUIColor()]
         
         collectionView.addSubview(loadingFooterView)
+        collectionView.addSubview(noMoreItemView)
         
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
@@ -281,6 +305,8 @@ class ImagesViewController: UIViewController {
             return
         }
         
+        noMoreItemView.isHidden = true
+        
         paging = paging + 1
         loadData(false)
     }
@@ -361,6 +387,7 @@ class ImagesViewController: UIViewController {
                                height: ImagesViewController.FOOTER_HEIGHT.toCGFloat());
             self.loadingFooterView.frame = frame;
             self.loadingFooterView.startAnimating()
+            self.noMoreItemView.frame = frame;
         }
     }
     

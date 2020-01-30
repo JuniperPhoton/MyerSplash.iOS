@@ -47,7 +47,7 @@ class ImageRepo {
     
     private var disposeBag = DisposeBag()
     
-    var onLoadFinished: ((_ success: Bool, _ page: Int) -> Void)? = nil
+    var onLoadFinished: ((_ success: Bool, _ page: Int, _ loadedSize: Int) -> Void)? = nil
     
     func loadImage(_ page: Int) {
         loadImagesInternal(page)
@@ -62,10 +62,10 @@ class ImageRepo {
                     self.images.append(image)
                 }
                 
-                self.onLoadFinished?.self(true, page)
+                self.onLoadFinished?.self(true, page, list.count)
             }, onError: { (e) in
                 print("Error on loading image: %s", e.localizedDescription)
-                self.onLoadFinished?.self(false, page)
+                self.onLoadFinished?.self(false, page, 0)
             })
             .disposed(by: disposeBag)
     }
