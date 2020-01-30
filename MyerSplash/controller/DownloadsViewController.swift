@@ -107,15 +107,19 @@ class DownloadsViewController: UIViewController {
             print("collections in db, count is ", self.downloadItems.count)
 
             DispatchQueue.main.sync {
-                self.reloadData()
+                UIView.performWithoutAnimation {
+                    self.reloadData()
+                }
             }
         }
     }
     
     @objc
     private func onReceiveReload() {
-        collectionView?.reloadData()
-        waterfallLayout.invalidateLayout()
+        UIView.performWithoutAnimation {
+            collectionView?.reloadData()
+            waterfallLayout.invalidateLayout()
+        }
     }
     
     @objc
