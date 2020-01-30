@@ -116,9 +116,9 @@ class ToastView: UILabel {
         self.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
         self.layer.backgroundColor = UIColor.white.cgColor
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowRadius = 5
-        self.layer.shadowOpacity = 0.2
-        self.layer.shadowOffset = CGSize(width: 4, height: 8)
+        self.layer.shadowRadius = Dimensions.SHADOW_RADIUS.toCGFloat()
+        self.layer.shadowOpacity = Dimensions.SHADOW_OPACITY
+        self.layer.shadowOffset = CGSize(width: 0, height: Dimensions.SHADOW_OFFSET_Y)
         self.textColor = UIColor.black
 
         self.alpha = 0.0
