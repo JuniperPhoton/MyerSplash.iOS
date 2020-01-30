@@ -4,17 +4,17 @@ import Nuke
 import SnapKit
 import MaterialComponents.MDCRippleTouchController
 
-func showToast(_ text: String) {
+func showToast(_ text: String, time: TimeInterval = ToastView.STAYING_DURATION_SEC) {
     guard let view = UIApplication.shared.keyWindow?.rootViewController?.view else {
         Log.warn(tag: "showtoast", "no active view")
         return
     }
-    ToastView.Builder.init()
+    ToastView.Builder()
             .attachTo(view)
             .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
             .setText(text)
             .build()
-            .show()
+            .show(time)
 }
 
 extension UIView {
