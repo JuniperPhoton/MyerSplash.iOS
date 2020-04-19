@@ -217,6 +217,12 @@ extension Observable {
                 images = [UnsplashImage]()
             }
             
+            if (AppSettings.isNoSponsorshipEnabled()) {
+                images?.removeAll(where: { (image) -> Bool in
+                    return image.sponsorship != nil
+                })
+            }
+            
             if appendTodayImage {
                 images?.insert(UnsplashImage.createToday(), at: 0)
             }

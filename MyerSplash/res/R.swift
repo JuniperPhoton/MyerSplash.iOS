@@ -92,6 +92,9 @@ class R {
         static let settings_dark_mask_title = NSLocalizedString("settings_dark_mask_title", comment: "")
         static let settings_dark_mask_content = NSLocalizedString("settings_dark_mask_content", comment: "")
         
+        static let settings_no_sponsorship_title = NSLocalizedString("settings_no_sponsorship_title", comment: "")
+        static let settings_no_sponsorship_content = NSLocalizedString("settings_no_sponsorship_content", comment: "")
+        
         static let cleared = NSLocalizedString("cleared", comment: "")
         static let download_in_background = NSLocalizedString("download_in_background", comment: "")
         static let no_network = NSLocalizedString("no_network", comment: "")

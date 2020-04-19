@@ -48,9 +48,14 @@ class SettingsView: UIView {
         darkMaskSwitch.onCheckedChanged = { checked in
             NotificationCenter.default.post(name: NSNotification.Name(AppNotification.KEY_RELOAD), object: nil)
         }
+        
+        let noSponsorSwitch = SettingsSwitchItem(Keys.SHOW_SPONSORSHIP)
+        noSponsorSwitch.title = R.strings.settings_no_sponsorship_title
+        noSponsorSwitch.content = R.strings.settings_no_sponsorship_content
 
         personalizationGroup.addArrangedSubview(quickDownload)
         personalizationGroup.addArrangedSubview(darkMaskSwitch)
+        personalizationGroup.addArrangedSubview(noSponsorSwitch)
 
         let qualityGroup = SettingsGroup()
         qualityGroup.label = R.strings.settings_quality

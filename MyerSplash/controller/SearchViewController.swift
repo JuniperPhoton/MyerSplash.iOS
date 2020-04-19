@@ -134,7 +134,11 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.searchTextField.resignFirstResponder()
+        if #available(iOS 13.0, *) {
+            searchBar.searchTextField.resignFirstResponder()
+        } else {
+            // Fallback on earlier versions
+        }
 
         let query = searchBar.text ?? ""
         print("begin search: \(query)")
