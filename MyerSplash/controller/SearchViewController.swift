@@ -40,7 +40,21 @@ class SearchViewController: UIViewController {
             return
         }
 
-        let blurEffectView = UIView.makeBlurBackgroundView()
+        let blurEffect: UIBlurEffect!
+        if #available(iOS 13.0, *) {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                blurEffect = UIBlurEffect(style: .systemThickMaterial)
+            } else {
+                blurEffect = UIBlurEffect(style: .systemMaterial)
+            }
+        } else {
+            blurEffect = UIBlurEffect(style: .extraLight)
+        }
+        
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         view.backgroundColor = .clear
         view.addSubview(blurEffectView)
         
@@ -78,18 +92,34 @@ class SearchViewController: UIViewController {
         let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
         closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
                 withColor: rippleColor, maxRadius: 25)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            searchView.snp.makeConstraints { (maker) in
+                maker.left.equalToSuperview().offset(12)
+                maker.top.equalToSuperview().offset(UIView.topInset + 12)
+                maker.width.equalTo(400)
+            }
+            
+            closeButton.snp.makeConstraints { (maker) in
+                maker.top.equalTo(searchView.snp.top)
+                maker.bottom.equalTo(searchView.snp.bottom)
+                maker.left.equalTo(searchView.snp.right)
+                maker.width.equalTo(50)
+            }
+        } else {
+            closeButton.snp.makeConstraints { (maker) in
+                maker.top.equalTo(searchView.snp.top)
+                maker.bottom.equalTo(searchView.snp.bottom)
+                maker.left.equalTo(searchView.snp.right)
+                maker.right.equalToSuperview()
+                maker.width.equalTo(50)
+            }
 
-        closeButton.snp.makeConstraints { (maker) in
-            maker.top.equalTo(searchView.snp.top)
-            maker.bottom.equalTo(searchView.snp.bottom)
-            maker.right.equalToSuperview().offset(-10)
-            maker.width.equalTo(50)
-        }
-
-        searchView.snp.makeConstraints { (maker) in
-            maker.left.equalToSuperview().offset(12)
-            maker.right.equalTo(closeButton.snp.left)
-            maker.top.equalToSuperview().offset(UIView.topInset)
+            searchView.snp.makeConstraints { (maker) in
+                maker.left.equalToSuperview().offset(12)
+                maker.right.equalTo(closeButton.snp.left)
+                maker.top.equalToSuperview().offset(UIView.topInset)
+            }
         }
 
         searchHintView.snp.makeConstraints { (maker) in
