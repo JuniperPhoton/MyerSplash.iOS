@@ -111,7 +111,7 @@ extension UnsplashImage {
             rawRatio = CGFloat(width) / CGFloat(height)
         }
 
-        let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
+        let fixedInfoHeight = Dimensions.ImageDetailExtraHeight
 
         let decorViewWidth = viewWidth
         let decorViewHeight = viewHeight

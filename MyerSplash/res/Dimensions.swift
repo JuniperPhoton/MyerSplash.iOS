@@ -2,30 +2,22 @@ import Foundation
 import UIKit
 
 class Dimensions {
-    static let TOAST_HEIGHT: CGFloat = 36
-    static let SETTING_ITEM_HEIGHT: CGFloat = 50
-    static let SINGLE_CHOICE_OPTION_HEIGHT: CGFloat = 50
-    static let FAB_SIZE: CGFloat = 70
-    static let NAVIGATION_VIEW_HEIGHT: CGFloat = 100
-    static let NAVIGATION_ICON_SIZE: CGFloat = 50
-    static let IMAGE_DETAIL_EXTRA_HEIGHT: CGFloat = 80
-    static let DUMMY_HEADER_HEIGHT: CGFloat = 80
+    static let ToastHeight: CGFloat = 36
+    static let SingleChoiceItemHeight: CGFloat = 50
+    static let ImageDetailExtraHeight: CGFloat = 80
     
-    static let SMALL_ROUND_CORNOR = 4
+    static let SmallRoundCornor = 4
 
-    static let TOP_NAVIGATION_BAR_HEIGHT: CGFloat = 50
+    static let TitleMargin = 20
 
-    static let TITLE_MARGIN = 20
+    static let ToastMarginBottom = 30
 
-    static let TOAST_MARGIN_BOTTOM = 30
-
-    static let FAB_RADIUS = 50
-    static let FAB_ICON_SIZE = 20
+    static let FabRadius = 50
+    static let FabIconSize = 20
     
-    static let SHADOW_OFFSET_Y = 2
-    static let SHADOW_RADIUS = 4
-    static let SHADOW_OPACITY: Float = 0.2
-
+    static let ShadowOffsetY = 2
+    static let ShadowRadius = 4
+    static let ShadowOpacity: Float = 0.2
 }
 
 extension Int {

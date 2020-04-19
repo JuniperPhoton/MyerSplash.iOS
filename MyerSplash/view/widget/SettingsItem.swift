@@ -35,11 +35,11 @@ class SettingsItem: UIView {
     open func initUi() {
         label = UILabel()
         label.setDefaultLabelColor()
-        label.font = label.font.withSize(FontSizes.NORMAL)
+        label.font = label.font.withSize(FontSizes.contentFontSize)
 
         contentView = UILabel()
         contentView.setDefaultLabelColor()
-        contentView.font = label.font.withSize(FontSizes.NORMAL)
+        contentView.font = label.font.withSize(FontSizes.contentFontSize)
         contentView.alpha = 0.3
 
         let uiStack = UIStackView()
@@ -53,7 +53,7 @@ class SettingsItem: UIView {
 
         uiStack.snp.makeConstraints { maker in
             maker.centerY.equalTo(self)
-            maker.left.equalTo(self).offset(Dimensions.TITLE_MARGIN)
+            maker.left.equalTo(self).offset(Dimensions.TitleMargin)
             maker.topMargin.equalTo(10)
             maker.bottomMargin.equalTo(10)
         }

@@ -46,7 +46,7 @@ class ImageDetailView: UIView {
             let fixedHorizontalMargin: CGFloat
             let fixedVerticalMargin: CGFloat
             
-            let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
+            let fixedInfoHeight = Dimensions.ImageDetailExtraHeight
 
             if UIDevice.current.userInterfaceIdiom == .pad {
                 fixedHorizontalMargin = 50
@@ -100,10 +100,10 @@ class ImageDetailView: UIView {
         extraInformationView.isHidden = true
 
         photoByLabel = UILabel()
-        photoByLabel.font = photoByLabel.font.withSize(FontSizes.SMALL)
+        photoByLabel.font = photoByLabel.font.withSize(FontSizes.Large)
 
         authorButton = UIButton()
-        authorButton.titleLabel!.font = authorButton.titleLabel!.font.with(traits: .traitBold, fontSize: FontSizes.LARGE)
+        authorButton.titleLabel!.font = authorButton.titleLabel!.font.with(traits: .traitBold, fontSize: FontSizes.Large)
         authorButton.titleLabel!.lineBreakMode = NSLineBreakMode.byTruncatingTail
         authorButton.addTarget(self, action: #selector(onClickAuthorName), for: .touchUpInside)
 
@@ -115,7 +115,7 @@ class ImageDetailView: UIView {
         progressLayer = CALayer()
         downloadRoot.layer.addSublayer(progressLayer)
         downloadRoot.layer.masksToBounds = true
-        downloadRoot.layer.cornerRadius = CGFloat(Dimensions.SMALL_ROUND_CORNOR)
+        downloadRoot.layer.cornerRadius = CGFloat(Dimensions.SmallRoundCornor)
         
         downloadButton = DownloadButton()
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
@@ -139,7 +139,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.makeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
 
@@ -330,7 +330,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
     }
@@ -345,7 +345,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
         }
     }
@@ -374,7 +374,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
         }
 
@@ -403,7 +403,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
 

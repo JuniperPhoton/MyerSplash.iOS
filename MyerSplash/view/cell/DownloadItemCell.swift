@@ -161,7 +161,7 @@ class DownloadItemCell: UICollectionViewCell {
             self.onDownloadItemUpdated?(element)
         }
         
-        contentView.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
+        contentView.layer.cornerRadius = Dimensions.SmallRoundCornor.toCGFloat()
         contentView.layer.masksToBounds = true
         
         invalidateLayer()

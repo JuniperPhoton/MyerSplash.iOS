@@ -12,6 +12,12 @@ import MessageUI
 import MaterialComponents.MDCRippleTouchController
 
 class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate {
+    #if targetEnvironment(macCatalyst)
+    private let space = CGFloat(30)
+    #else
+    private let space = CGFloat(20)
+    #endif
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,21 +33,27 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         appNameStack.axis = .horizontal
         appNameStack.alignment = .center
         appNameStack.distribution = .fill
+        
+        #if targetEnvironment(macCatalyst)
+        let largeTitleFontSize = CGFloat(50)
+        #else
+        let largeTitleFontSize = CGFloat(32)
+        #endif
 
         let myerLabel = UILabel()
         myerLabel.text = "Myer"
         myerLabel.textColor = UIColor.getDefaultLabelUIColor()
-        myerLabel.font = myerLabel.font.withSize(32)
+        myerLabel.font = myerLabel.font.with(traits: .traitBold).withSize(largeTitleFontSize)
         myerLabel.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 
         let splashLabel = UILabel()
         splashLabel.text = "Splash"
         splashLabel.textColor = UIColor.getDefaultLabelUIColor()
-        splashLabel.font = splashLabel.font.with(traits: .traitBold).withSize(32)
+        splashLabel.font = splashLabel.font.with(traits: .traitBold).withSize(largeTitleFontSize)
         splashLabel.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
 
         let logo = UIImageView()
-        logo.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        logo.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         logo.image = UIImage(named: R.icons.ic_app_icon)
         logo.contentMode = .scaleAspectFit
         logo.clipsToBounds = true
@@ -57,22 +69,22 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         let platformsLabel = UILabel()
         platformsLabel.text = "for Windows 10, macOS, iOS and Android"
         platformsLabel.textColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
-        platformsLabel.font = platformsLabel.font.withSize(13)
+        platformsLabel.font = platformsLabel.font.withSize(FontSizes.contentFontSize)
 
         let versionsRoot = UIView()
         versionsRoot.backgroundColor = Colors.THEME.asUIColor()
-        versionsRoot.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat();
+        versionsRoot.layer.cornerRadius = Dimensions.SmallRoundCornor.toCGFloat();
         versionsRoot.clipsToBounds = true
 
         let versionsLabel = UILabel()
         versionsLabel.text = "Versions \(UIApplication.shared.appVersion())"
         versionsLabel.textColor = UIColor.white
-        versionsLabel.font = platformsLabel.font.with(traits: .traitBold).withSize(13)
+        versionsLabel.font = platformsLabel.font.with(traits: .traitBold).withSize(FontSizes.contentFontSize)
 
         versionsRoot.addSubview(versionsLabel)
 
         versionsLabel.snp.makeConstraints { (maker) in
-            let margin = 5
+            let margin = 7
             maker.left.equalToSuperview().offset(margin)
             maker.right.equalToSuperview().offset(-margin)
             maker.top.equalToSuperview().offset(margin)
@@ -84,7 +96,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         let creditText = UILabel()
         creditText.text = R.strings.about_credit_content
         creditText.textColor = UIColor.getDefaultLabelUIColor()
-        creditText.font = platformsLabel.font.withSize(13)
+        creditText.font = platformsLabel.font.withSize(FontSizes.contentFontSize)
         creditText.lineBreakMode = .byTruncatingTail
         creditText.numberOfLines = 100
         creditText.textAlignment = .center
@@ -100,7 +112,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         feedBackButton.contentEdgeInsets = feedbackInsets
         feedBackButton.showsTouchWhenHighlighted = false
         feedBackButton.inkColor = R.colors.rippleColor
-        feedBackButton.setTitleFont(platformsLabel.font.withSize(13), for: .normal)
+        feedBackButton.setTitleFont(platformsLabel.font.withSize(FontSizes.contentFontSize), for: .normal)
         
         let gitHubButton = MDCFlatButton()
         gitHubButton.setTitle("GitHub", for: .normal)
@@ -109,7 +121,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         gitHubButton.contentEdgeInsets = feedbackInsets
         gitHubButton.showsTouchWhenHighlighted = false
         gitHubButton.inkColor = R.colors.rippleColor
-        gitHubButton.setTitleFont(platformsLabel.font.withSize(13), for: .normal)
+        gitHubButton.setTitleFont(platformsLabel.font.withSize(FontSizes.contentFontSize), for: .normal)
 
         let webButton = MDCFlatButton()
         webButton.setTitle(R.strings.about_website, for: .normal)
@@ -118,7 +130,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         webButton.contentEdgeInsets = feedbackInsets
         webButton.showsTouchWhenHighlighted = false
         webButton.inkColor = R.colors.rippleColor
-        webButton.setTitleFont(platformsLabel.font.withSize(13), for: .normal)
+        webButton.setTitleFont(platformsLabel.font.withSize(FontSizes.contentFontSize), for: .normal)
 
         rootStack.addArrangedSubview(appNameStack)
         rootStack.addArrangedSubview(platformsLabel)
@@ -130,8 +142,8 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         rootStack.addArrangedSubview(gitHubButton)
         rootStack.addArrangedSubview(webButton)
 
-        rootStack.setCustomSpacing(20, after: versionsRoot)
-        rootStack.setCustomSpacing(20, after: creditText)
+        rootStack.setCustomSpacing(space, after: versionsRoot)
+        rootStack.setCustomSpacing(space, after: creditText)
         rootStack.setCustomSpacing(0, after: feedBackButton)
         rootStack.setCustomSpacing(0, after: gitHubButton)
         rootStack.setCustomSpacing(0, after: webButton)
@@ -139,7 +151,11 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         self.view.addSubview(rootStack)
 
         rootStack.snp.makeConstraints { (maker) in
+            #if targetEnvironment(macCatalyst)
+            maker.width.equalTo(600)
+            #else
             maker.width.equalTo(300)
+            #endif
             maker.centerY.equalToSuperview()
             maker.centerX.equalToSuperview()
         }
@@ -182,7 +198,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         let title = UILabel()
         title.text = text
         title.textColor = Colors.THEME.asUIColor()
-        title.font = title.font.with(traits: .traitBold).withSize(17)
+        title.font = title.font.with(traits: .traitBold).withSize(FontSizes.titleFontSize)
 
         return title
     }

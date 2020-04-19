@@ -113,19 +113,19 @@ class ToastView: UILabel {
     }
 
     private func initUi() {
-        self.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
+        self.layer.cornerRadius = Dimensions.SmallRoundCornor.toCGFloat()
         self.layer.backgroundColor = UIColor.white.cgColor
         self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowRadius = Dimensions.SHADOW_RADIUS.toCGFloat()
-        self.layer.shadowOpacity = Dimensions.SHADOW_OPACITY
-        self.layer.shadowOffset = CGSize(width: 0, height: Dimensions.SHADOW_OFFSET_Y)
+        self.layer.shadowRadius = Dimensions.ShadowRadius.toCGFloat()
+        self.layer.shadowOpacity = Dimensions.ShadowOpacity
+        self.layer.shadowOffset = CGSize(width: 0, height: Dimensions.ShadowOffsetY)
         self.textColor = UIColor.black
 
         self.alpha = 0.0
-        self.font = self.font.withSize(FontSizes.NORMAL)
+        self.font = self.font.withSize(FontSizes.Normal)
 
         self.snp.makeConstraints { maker in
-            maker.height.equalTo(Dimensions.TOAST_HEIGHT)
+            maker.height.equalTo(Dimensions.ToastHeight)
         }
     }
 
