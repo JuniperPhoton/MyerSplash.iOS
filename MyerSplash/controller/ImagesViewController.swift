@@ -38,7 +38,7 @@ extension ELWaterFlowLayout {
     }
 }
 
-class ImagesViewController: UIViewController, UICollectionViewDragDelegate {
+class ImagesViewController: UIViewController {
     static let TAG = "ImagesViewController"
     static let CELL_ANIMATE_OFFSET_X: CGFloat = 50.0
     static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.1
@@ -502,7 +502,7 @@ extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-extension ImagesViewController {
+extension ImagesViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         itemsForBeginning session: UIDragSession,
                         at indexPath: IndexPath) -> [UIDragItem] {

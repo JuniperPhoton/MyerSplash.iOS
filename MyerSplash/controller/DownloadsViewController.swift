@@ -80,6 +80,8 @@ class DownloadsViewController: UIViewController {
         fab.addTarget(self, action: #selector(onClickDelete), for: .touchUpInside)
         self.view.addSubview(fab)
         self.deleteFab = fab
+        
+        self.collectionView.dragDelegate = self
 
         fab.snp.makeConstraints { (maker) in
             maker.right.equalTo(self.view).offset(-16)
@@ -228,5 +230,43 @@ extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDe
         }
         
         cell.unbind()
+    }
+}
+
+extension DownloadsViewController: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        itemsForBeginning session: UIDragSession,
+                        at indexPath: IndexPath) -> [UIDragItem] {
+        let row = indexPath.row
+        
+        if row < 0 || row >= downloadItems.count {
+            return []
+        }
+        
+        let image = downloadItems[row]
+        
+        // Use downloaded image if possible
+        if image.status == DownloadStatus.Success.rawValue, let path = image.fileURL {
+            let url = DownloadManager.instance.createAbsolutePathForImage(path).path
+
+            if let image = UIImage(contentsOfFile: url) {
+                let provider = NSItemProvider(object: image)
+                return [UIDragItem(itemProvider: provider)]
+            }
+        }
+        
+        guard let url = image.unsplashImage?.listUrl else {
+            return []
+        }
+        
+        if !ImageIO.isImageCached(url) {
+            return []
+        }
+        
+        let provider = NSItemProvider(object: ImageIO.getCachedImage(url)!)
+        
+        return [
+            UIDragItem(itemProvider: provider)
+        ]
     }
 }
