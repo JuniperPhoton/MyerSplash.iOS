@@ -2,7 +2,6 @@ import Foundation
 import Tabman
 import Pageboy
 import UIKit
-import SnapKit
 import Alamofire
 import MaterialComponents.MaterialButtons
 import RxSwift
@@ -89,12 +88,6 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         fab.backgroundColor = UIColor.white
         fab.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
         self.view.addSubview(fab)
-        
-        fab.snp.makeConstraints { (maker) in
-            maker.right.equalTo(self.view).offset(-16)
-            maker.bottom.equalTo(self.view).offset(UIView.hasTopNotch ? -24 : -16)
-            maker.size.equalTo(MainViewController.BAR_BUTTON_SIZE)
-        }
         return fab
     }()
 
@@ -169,6 +162,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         statusBarPlaceholder.pin.height(UIView.topInset + getTopBarHeight()).width(of: self.view)
         moreButton.pin.right(MainViewController.BAR_BUTTON_RIGHT_MARGIN).vCenter(to: barLayout.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
         downloadsButton.pin.before(of: moreButton).vCenter(to: moreButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        fab.pin.right(16).bottom(UIView.hasTopNotch ? 24.cgFloat : 16.cgFloat).size(MainViewController.BAR_BUTTON_SIZE)
         imageDetailView.pin.all()
     }
     
