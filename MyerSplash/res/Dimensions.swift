@@ -24,4 +24,10 @@ extension Int {
     func toCGFloat() -> CGFloat {
         return CGFloat(self)
     }
+    
+    var cgFloat: CGFloat {
+        get {
+            return CGFloat(self)
+        }
+    }
 }

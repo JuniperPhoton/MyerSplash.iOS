@@ -34,6 +34,7 @@
 		227D5D2123C2346400B2CC4A /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */; };
 		227D5D2423C23DEA00B2CC4A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227D5D2323C23DEA00B2CC4A /* Reachability.swift */; };
 		228F8E2D23E1AD23002BA1E5 /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */; };
+		22A3E01F249F2FB0008159F0 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A3E01E249F2FB0008159F0 /* UIViewExtensions.swift */; };
 		22DC52B523E2D5A700CFD177 /* UICollectionViewCellExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */; };
 		22E496B323C8B5A500B836F0 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B223C8B5A500B836F0 /* Log.swift */; };
 		22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B623C8CA0A00B836F0 /* DownloadButton.swift */; };
@@ -105,6 +106,7 @@
 		227D5D2223C239BA00B2CC4A /* MyerSplash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyerSplash.entitlements; sourceTree = "<group>"; };
 		227D5D2323C23DEA00B2CC4A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
+		22A3E01E249F2FB0008159F0 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCellExtensions.swift; sourceTree = "<group>"; };
 		22E496B223C8B5A500B836F0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				54A56435B1C59D948C33519E /* MiscExtension.swift */,
 				A02FA5BB50846102410E0BC4 /* UIViewControllerExtensions.swift */,
 				22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */,
+				22A3E01E249F2FB0008159F0 /* UIViewExtensions.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				228F8E2D23E1AD23002BA1E5 /* AppNotification.swift in Sources */,
 				22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */,
 				54A56DCFEF6798D1187393D4 /* Colors.swift in Sources */,
+				22A3E01F249F2FB0008159F0 /* UIViewExtensions.swift in Sources */,
 				54A56436968DEEDE565A1488 /* ErrorHintView.swift in Sources */,
 				2268722623C4CFD300F921F4 /* SearchViewController.swift in Sources */,
 				2268722B23C4F69800F921F4 /* DownloadManager.swift in Sources */,

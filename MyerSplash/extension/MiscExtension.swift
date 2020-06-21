@@ -104,3 +104,11 @@ extension UIApplication {
         return self.keyWindow?.rootViewController?.presentedViewController ?? self.keyWindow?.rootViewController
     }
 }
+
+extension MDCRippleTouchController {
+    static func load(view: UIView) -> MDCRippleTouchController {
+        return MDCRippleTouchController.load(intoView: view,
+                                             withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3),
+                                             maxRadius: 25)
+    }
+}
