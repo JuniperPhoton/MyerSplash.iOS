@@ -110,12 +110,19 @@ class SearchViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         let windowWidth = self.view.window?.bounds.width ?? UIScreen.main.bounds.width
+        
+        #if targetEnvironment(macCatalyst)
+        let topInset = 30.cgFloat
+        #else
+        let topInset = UIView.topInset
+        #endif
+        
         if windowWidth > Dimensions.MIN_MODE_WIDTH {
-            searchView.pin.width(Dimensions.MIN_MODE_WIDTH).top(UIView.topInset).hCenter().sizeToFit(.width)
+            searchView.pin.width(Dimensions.MIN_MODE_WIDTH).top(topInset).hCenter().sizeToFit(.width)
             closeButton.pin.after(of: searchView, aligned: .center).size(50)
         } else {
             closeButton.pin.topRight().size(50).marginTop(UIView.topInset).marginRight(12)
-            searchView.pin.left(12).before(of: closeButton, aligned: .center).top(UIView.topInset).sizeToFit(.width)
+            searchView.pin.left(12).before(of: closeButton, aligned: .center).top(topInset).sizeToFit(.width)
         }
         
         searchHintView.pin.below(of: searchView).left().right().bottom()
