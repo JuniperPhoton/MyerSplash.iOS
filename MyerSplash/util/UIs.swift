@@ -47,12 +47,34 @@ extension UIColor {
     }
 }
 
+func getTopBarHeight() -> CGFloat {
+    if UIDevice.current.userInterfaceIdiom == .pad {
+        #if targetEnvironment(macCatalyst)
+        return 110
+        #endif
+        return 90
+    } else {
+        return 60
+    }
+}
+
+func getContentTopInsets() -> CGFloat {
+    #if targetEnvironment(macCatalyst)
+    return getTopBarHeight() - 26
+    #else
+    return getTopBarHeight() + UIView.topInset
+    #endif
+}
+
 extension UIView {
     static var hasTopNotch: Bool {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
     }
 
     static var topInset: CGFloat {
+        #if targetEnvironment(macCatalyst)
+        return 0
+        #endif
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
     

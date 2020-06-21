@@ -42,7 +42,7 @@ class DownloadsViewController: UIViewController {
         
         waterfallLayout.delegate = self
         waterfallLayout.scrollDirection = .vertical
-        
+                
         if UIDevice.current.userInterfaceIdiom == .pad {
             print("run for pad")
             waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(
@@ -57,6 +57,8 @@ class DownloadsViewController: UIViewController {
             waterfallLayout.hItemSpace = 12
             waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         }
+        
+        collectionView.contentInset = UIEdgeInsets(top: getContentTopInsets(), left: 0, bottom: 0, right: 0)
         
         collectionView.dataSource = self
         collectionView.delegate = self

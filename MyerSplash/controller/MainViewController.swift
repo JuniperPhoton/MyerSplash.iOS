@@ -6,20 +6,9 @@ import Alamofire
 import MaterialComponents.MaterialButtons
 import RxSwift
 
-func getTopBarHeight()-> CGFloat {
-    if UIDevice.current.userInterfaceIdiom == .pad {
-        #if targetEnvironment(macCatalyst)
-        return 110
-        #endif
-        return 90
-    } else {
-        return 60
-    }
-}
-
 class MainViewController: TabmanViewController {
-    private static let BAR_BUTTON_SIZE = 50.cgFloat
-    private static let BAR_BUTTON_RIGHT_MARGIN = 12.cgFloat
+    public static let BAR_BUTTON_SIZE = 50.cgFloat
+    public static let BAR_BUTTON_RIGHT_MARGIN = 12.cgFloat
     
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         get {
@@ -101,13 +90,13 @@ class MainViewController: TabmanViewController {
     }
     
     override func viewDidLoad() {
-        self.automaticallyAdjustsChildInsets = true
+        self.automaticallyAdjustsChildInsets = false
         
         super.viewDidLoad()
         
         viewControllers.forEach { (controller) in
             #if targetEnvironment(macCatalyst)
-            (controller as ImagesViewController).collectionTopOffset = getTopBarHeight() - 20
+            (controller as ImagesViewController).collectionTopOffset = getContentTopInsets()
             #else
             (controller as ImagesViewController).collectionTopOffset = getTopBarHeight()
             #endif
@@ -148,7 +137,7 @@ class MainViewController: TabmanViewController {
         removeBar(bar)
         
         addBar(bar, dataSource: self, at: .custom(view: statusBarPlaceholder, layout: { v in
-            v.frame = CGRect(x: 0, y: UIView.topInset, width: size.width - self.getTabBarMaringRight(), height: getTopBarHeight())
+            v.frame = CGRect(x: 0, y: CGFloat(UIView.topInset), width: size.width - self.getTabBarMaringRight(), height: getTopBarHeight())
         }))
     }
     
@@ -161,7 +150,9 @@ class MainViewController: TabmanViewController {
             return
         }
         
-        statusBarPlaceholder.pin.height(UIView.topInset + getTopBarHeight()).width(of: self.view)
+        let statusBarHeight = getTopBarHeight() + UIView.topInset
+        
+        statusBarPlaceholder.pin.height(statusBarHeight).width(of: self.view)
         moreButton.pin.right(MainViewController.BAR_BUTTON_RIGHT_MARGIN).vCenter(to: barLayout.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
         downloadsButton.pin.before(of: moreButton).vCenter(to: moreButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
         fab.pin.right(16).bottom(UIView.hasTopNotch ? 24.cgFloat : 16.cgFloat).size(MainViewController.BAR_BUTTON_SIZE)

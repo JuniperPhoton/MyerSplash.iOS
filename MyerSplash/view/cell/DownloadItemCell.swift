@@ -106,8 +106,6 @@ class DownloadItemCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        print("dwc \(self.bounds.width)")
         invalidateLayer()
         updateProgressLayer()
     }

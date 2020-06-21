@@ -34,6 +34,7 @@ class SettingsView: UIView {
 
         scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
+        scrollView.contentInset = UIEdgeInsets(top: getContentTopInsets(), left: 0, bottom: 0, right: 0)
 
         let personalizationGroup = SettingsGroup()
         personalizationGroup.label = R.strings.settings_personalization

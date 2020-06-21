@@ -14,10 +14,10 @@ func createTopTabBar() -> TMBar.ButtonBar {
     let bar = TMBar.ButtonBar()
     bar.layout.transitionStyle = .snap
     bar.layout.alignment = .leading
-    bar.layout.contentInset = UIEdgeInsets(top: 0, left: 20.0, bottom: 12.0, right: 60)
+    bar.layout.contentInset = UIEdgeInsets(top: 0, left: 20.0, bottom: 20, right: 20)
     bar.backgroundView.style = .flat(color: .clear)
     bar.fadesContentEdges = true
-    bar.scrollMode = .interactive
+    bar.scrollMode = .swipe
 
     let isEnglish = NSLocalizedString("lang_code", comment: "") == "en_us"
     var fontSize = isEnglish ? 13 : 14
@@ -26,8 +26,12 @@ func createTopTabBar() -> TMBar.ButtonBar {
     if UIDevice.current.userInterfaceIdiom == .pad {
         fontSize = Int(fontSize.toCGFloat() * 1.3)
         spacing = Int(spacing.toCGFloat() * 2)
-        bar.layout.contentInset = UIEdgeInsets(top: 30, left: 20, bottom: 15, right: 60)
+        bar.layout.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 15, right: 20)
     }
+    
+    #if targetEnvironment(macCatalyst)
+    bar.layout.contentInset = UIEdgeInsets(top: 40, left: 20, bottom: 20, right: 20)
+    #endif
 
     bar.layout.interButtonSpacing = CGFloat(spacing)
     bar.buttons.customize { (button) in
