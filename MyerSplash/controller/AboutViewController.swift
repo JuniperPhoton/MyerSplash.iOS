@@ -191,8 +191,8 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         webRippleController = MDCRippleTouchController.load(view: webButton)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         let margin = 12.cgFloat
         let iconSize = 35.cgFloat
