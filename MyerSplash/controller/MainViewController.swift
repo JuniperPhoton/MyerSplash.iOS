@@ -153,10 +153,15 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let topVc = UIApplication.shared.getTopViewController()
+        if topVc != self {
+            topVc?.viewWillTransition(to: size, with: coordinator)
+        }
+
         self.viewControllers.forEach { (controller) in
             controller.viewWillTransition(to: size, with: coordinator)
         }
-        imageDetailView.invalidate()
+        imageDetailView.invalidate(newBounds: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
     }
     
     func onRequestEdit(item: DownloadItem) {

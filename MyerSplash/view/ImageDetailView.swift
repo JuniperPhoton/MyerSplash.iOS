@@ -39,30 +39,32 @@ class ImageDetailView: UIView {
 
     private var disposable: Disposable? = nil
 
-    private var finalFrame: CGRect {
-        get {
-            let rawRatio = bindImage!.getAspectRatioF(viewWidth: self.frame.width, viewHeight: self.frame.height)
+    private func getFinalFrame(insideBounds: CGRect? = nil) -> CGRect {
+        let bounds = insideBounds ?? UIApplication.shared.windows[0].bounds
+        
+        print("getFinalFrame, bounds is \(bounds)")
+        
+        let rawRatio = bindImage!.getAspectRatioF(viewWidth: bounds.width, viewHeight: bounds.height)
 
-            let fixedHorizontalMargin: CGFloat
-            let fixedVerticalMargin: CGFloat
-            
-            let fixedInfoHeight = Dimensions.ImageDetailExtraHeight
+        let fixedHorizontalMargin: CGFloat
+        let fixedVerticalMargin: CGFloat
+        
+        let fixedInfoHeight = Dimensions.ImageDetailExtraHeight
 
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                fixedHorizontalMargin = 50
-                fixedVerticalMargin = 70
-            } else {
-                fixedHorizontalMargin = 0
-                fixedVerticalMargin = 0
-            }
-            
-            let rect = AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
-                                  insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
-                                                     width: self.frame.width - fixedHorizontalMargin * 2,
-                                                     height: self.frame.height - fixedVerticalMargin * 2 - fixedInfoHeight))
-            
-            return rect
+        if UIDevice.current.userInterfaceIdiom == .pad && bounds.width > 400 {
+            fixedHorizontalMargin = 50
+            fixedVerticalMargin = 70
+        } else {
+            fixedHorizontalMargin = 0
+            fixedVerticalMargin = 0
         }
+        
+        let rect = AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
+                              insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
+                                                 width: bounds.width - fixedHorizontalMargin * 2,
+                                                 height: bounds.height - fixedVerticalMargin * 2 - fixedInfoHeight))
+        
+        return rect
     }
 
     override init(frame: CGRect) {
@@ -335,12 +337,12 @@ class ImageDetailView: UIView {
         }
     }
     
-    func invalidate() {
+    func invalidate(newBounds: CGRect) {
         if self.isHidden {
             return
         }
         
-        self.mainImageView.frame = self.finalFrame
+        self.mainImageView.frame = getFinalFrame(insideBounds: newBounds)
         
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
@@ -361,7 +363,7 @@ class ImageDetailView: UIView {
                 options: UIView.AnimationOptions.curveEaseInOut,
                 animations: {
                     self.backgroundView.alpha = 1.0
-                    self.mainImageView.frame = self.finalFrame
+                    self.mainImageView.frame = self.getFinalFrame()
                 },
                 completion: { b in
                     self.showExtraInformation()

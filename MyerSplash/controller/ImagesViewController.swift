@@ -73,6 +73,8 @@ class ImagesViewController: UIViewController {
     private var loadingFooterView: MDCActivityIndicator!
     private var animateCellFinished = false
     
+    private var viewDidLoaded = false
+    
     private var noMoreItemView: UIView = {
         let label = UILabel()
         label.text = R.strings.no_more_items
@@ -227,6 +229,8 @@ class ImagesViewController: UIViewController {
         }
         
         refreshData()
+        
+        viewDidLoaded = true
     }
     
     @objc
@@ -236,8 +240,7 @@ class ImagesViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        print("viewWillTransition to \(size)}")
-        if collectionView?.superview == nil {
+        if !viewDidLoaded {
             return
         }
         let currentSpan = waterfallLayout.lineCount

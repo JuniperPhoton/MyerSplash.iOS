@@ -106,7 +106,7 @@ class SearchViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         listController?.viewWillTransition(to: size, with: coordinator)
-        imageDetailView.invalidate()
+        imageDetailView.invalidate(newBounds: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
     }
     
     override func viewDidLayoutSubviews() {
