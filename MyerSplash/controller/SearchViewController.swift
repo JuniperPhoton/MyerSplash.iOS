@@ -12,10 +12,7 @@ import MaterialComponents.MDCRippleTouchController
 import FlexLayout
 import RxSwift
 
-class SearchViewController: UIViewController {
-    private static let SEARCH_BAR_MAX_WIDTH = 400.cgFloat
-    private static let SEARCH_BAR_REACH_MAX_WIDTH_THRESHOLD = 600.cgFloat
-    
+class SearchViewController: UIViewController {    
     private var closeRippleController: MDCRippleTouchController!
     
     private var listController: ImagesViewController? = nil
@@ -113,8 +110,8 @@ class SearchViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         let windowWidth = self.view.window?.bounds.width ?? UIScreen.main.bounds.width
-        if windowWidth > SearchViewController.SEARCH_BAR_REACH_MAX_WIDTH_THRESHOLD {
-            searchView.pin.width(SearchViewController.SEARCH_BAR_MAX_WIDTH).top(UIView.topInset).hCenter().sizeToFit(.width)
+        if windowWidth > Dimensions.MIN_MODE_WIDTH {
+            searchView.pin.width(Dimensions.MIN_MODE_WIDTH).top(UIView.topInset).hCenter().sizeToFit(.width)
             closeButton.pin.after(of: searchView, aligned: .center).size(50)
         } else {
             closeButton.pin.topRight().size(50).marginTop(UIView.topInset).marginRight(12)

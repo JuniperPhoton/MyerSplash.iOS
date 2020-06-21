@@ -18,6 +18,8 @@ class Dimensions {
     static let ShadowOffsetY = 2
     static let ShadowRadius = 4
     static let ShadowOpacity: Float = 0.2
+    
+    static let MIN_MODE_WIDTH = 400.cgFloat
 }
 
 extension Int {

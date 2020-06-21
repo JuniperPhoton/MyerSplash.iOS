@@ -51,7 +51,7 @@ class ImageDetailView: UIView {
         
         let fixedInfoHeight = Dimensions.ImageDetailExtraHeight
 
-        if UIDevice.current.userInterfaceIdiom == .pad && bounds.width > 400 {
+        if UIDevice.current.userInterfaceIdiom == .pad && bounds.width > Dimensions.MIN_MODE_WIDTH {
             fixedHorizontalMargin = 50
             fixedVerticalMargin = 70
         } else {

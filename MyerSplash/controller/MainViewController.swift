@@ -19,6 +19,9 @@ func getTopBarHeight()-> CGFloat {
 }
 
 class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesViewControllerDelegate {
+    private static let BAR_BUTTON_SIZE = 50.cgFloat
+    private static let BAR_BUTTON_RIGHT_MARGIN = 12.cgFloat
+
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             appStatusBarStyle
@@ -30,11 +33,71 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
                                                            ImagesViewController(RandomImageRepo()),
                                                            ImagesViewController(DeveloperImageRepo())]
     
-    private var imageDetailView: ImageDetailView!
+    private lazy var imageDetailView: ImageDetailView = {
+        let v = ImageDetailView()
+        v.delegate = self
+        return v
+    }()
     
     private var moreRippleController: MDCRippleTouchController!
     private var downloadsRippleController: MDCRippleTouchController!
     
+    private lazy var bar: TMBar.ButtonBar = {
+        return createTopTabBar()
+    }()
+    
+    private lazy var statusBarPlaceholder: UIView = {
+        let v = UIView()
+        let blurView = UIView.makeBlurBackgroundView()
+        v.addSubview(blurView)
+        return v
+    }()
+    
+    private lazy var moreButton: UIButton = {
+        let moreButton = UIButton()
+        let moreImage = UIImage(named: R.icons.ic_more)!.withRenderingMode(.alwaysTemplate)
+        moreButton.setImage(moreImage, for: .normal)
+        moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+        moreButton.addTarget(self, action: #selector(onClickMore), for: .touchUpInside)
+        self.view.addSubview(moreButton)
+        
+        moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
+                                                              withColor: R.colors.rippleColor, maxRadius: 25)
+        return moreButton
+    }()
+    
+    private lazy var downloadsButton: UIButton = {
+        let downloadsButton = UIButton()
+        
+        let downloadImage = UIImage(named: R.icons.ic_download)!.withRenderingMode(.alwaysTemplate)
+        downloadsButton.setImage(downloadImage, for: .normal)
+        downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+        downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
+        self.view.addSubview(downloadsButton)
+
+        downloadsRippleController = MDCRippleTouchController.load(intoView: downloadsButton,
+                                                                  withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
+        downloadsButton.isHidden = UIApplication.shared.windows[0].bounds.width <= Dimensions.MIN_MODE_WIDTH
+        return downloadsButton
+    }()
+    
+    private lazy var fab: MDCFloatingButton = {
+        let fab = MDCFloatingButton()
+        let searchImage = UIImage(named: R.icons.ic_search)?.withRenderingMode(.alwaysTemplate)
+        fab.setImage(searchImage, for: .normal)
+        fab.tintColor = UIColor.black
+        fab.backgroundColor = UIColor.white
+        fab.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
+        self.view.addSubview(fab)
+        
+        fab.snp.makeConstraints { (maker) in
+            maker.right.equalTo(self.view).offset(-16)
+            maker.bottom.equalTo(self.view).offset(UIView.hasTopNotch ? -24 : -16)
+            maker.size.equalTo(MainViewController.BAR_BUTTON_SIZE)
+        }
+        return fab
+    }()
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -65,89 +128,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
             controller.delegate = self
         }
         
-        // MARK: statusBarPlaceholder
-        let statusBarPlaceholder = UIView()
-        
-        let blurView = UIView.makeBlurBackgroundView()
-        statusBarPlaceholder.addSubview(blurView)
-        
-        self.view.addSubview(statusBarPlaceholder)
-        
-        statusBarPlaceholder.snp.makeConstraints { (maker) in
-            maker.width.equalToSuperview()
-            maker.height.equalTo(UIView.topInset + getTopBarHeight())
-        }
-        
-        let bar = createTopTabBar()
-        addBar(bar, dataSource: self, at: .custom(view: statusBarPlaceholder, layout: { v in
-            v.frame = CGRect(x: 0, y: UIView.topInset, width: UIScreen.main.bounds.width, height: getTopBarHeight())
-        }))
-        
-        // MARK: MORE
-        let moreButton = UIButton()
-        let moreImage = UIImage(named: R.icons.ic_more)!.withRenderingMode(.alwaysTemplate)
-        moreButton.setImage(moreImage, for: .normal)
-        moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
-        moreButton.addTarget(self, action: #selector(onClickMore), for: .touchUpInside)
-        self.view.addSubview(moreButton)
-        
-        moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
-                                                              withColor: R.colors.rippleColor, maxRadius: 25)
-        
-        moreButton.snp.makeConstraints { (maker) in
-            maker.top.equalTo(bar.layout.view.subviews.first(where: { (view) -> Bool in
-                view is UIStackView
-            })!.snp.top)
-            maker.right.equalTo(self.view.snp.right).offset(-10)
-            maker.bottom.equalTo(bar.snp.bottom).offset(-15)
-            maker.width.equalTo(50)
-        }
-        
-        // MARK: DOWNLOADS
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            let downloadsButton = UIButton()
-            let downloadImage = UIImage(named: R.icons.ic_download)!.withRenderingMode(.alwaysTemplate)
-            downloadsButton.setImage(downloadImage, for: .normal)
-            downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
-            downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
-            self.view.addSubview(downloadsButton)
-            
-            downloadsRippleController = MDCRippleTouchController.load(intoView: downloadsButton,
-                                                                      withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
-            
-            downloadsButton.snp.makeConstraints { (maker) in
-                maker.top.equalTo(moreButton.snp.top)
-                maker.right.equalTo(moreButton.snp.left).offset(-10)
-                maker.bottom.equalTo(moreButton.snp.bottom)
-                maker.width.equalTo(50)
-            }
-        }
-        
-        // MARK: FAB
-        let fab = MDCFloatingButton()
-        let searchImage = UIImage(named: R.icons.ic_search)?.withRenderingMode(.alwaysTemplate)
-        fab.setImage(searchImage, for: .normal)
-        fab.tintColor = UIColor.black
-        fab.backgroundColor = UIColor.white
-        fab.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
-        self.view.addSubview(fab)
-        
-        fab.snp.makeConstraints { (maker) in
-            maker.right.equalTo(self.view).offset(-16)
-            maker.bottom.equalTo(self.view).offset(UIView.hasTopNotch ? -24 : -16)
-            maker.width.equalTo(50)
-            maker.height.equalTo(50)
-        }
-        
-        // MARK: ImageDetailView
-        imageDetailView = ImageDetailView()
-        imageDetailView.delegate = self
-        self.view.addSubview(imageDetailView)
-        
-        imageDetailView.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
-        }
+        self.view.addSubViews(statusBarPlaceholder, imageDetailView)
         
         DownloadManager.instance.markDownloadingToFailed()
     }
@@ -162,6 +143,47 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
             controller.viewWillTransition(to: size, with: coordinator)
         }
         imageDetailView.invalidate(newBounds: CGRect(origin: CGPoint(x: 0, y: 0), size: size))
+        
+        invalidateTabBar(size)
+    }
+    
+    private func invalidateTabBar(_ size: CGSize) {
+        downloadsButton.isHidden = size.width <= Dimensions.MIN_MODE_WIDTH
+
+        removeBar(bar)
+        
+        addBar(bar, dataSource: self, at: .custom(view: statusBarPlaceholder, layout: { v in
+            v.frame = CGRect(x: 0, y: UIView.topInset, width: size.width - self.getTabBarMaringRight(), height: getTopBarHeight())
+        }))
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let barLayout = bar.layout.view.subviews.first(where: { (view) -> Bool in
+            view is UIStackView
+        }) else {
+            return
+        }
+        
+        statusBarPlaceholder.pin.height(UIView.topInset + getTopBarHeight()).width(of: self.view)
+        moreButton.pin.right(MainViewController.BAR_BUTTON_RIGHT_MARGIN).vCenter(to: barLayout.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        downloadsButton.pin.before(of: moreButton).vCenter(to: moreButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        imageDetailView.pin.all()
+    }
+    
+    private func getTabBarMaringRight() -> CGFloat {
+        var margin: CGFloat = 0
+        if !moreButton.isHidden {
+            margin += MainViewController.BAR_BUTTON_SIZE
+            margin += MainViewController.BAR_BUTTON_RIGHT_MARGIN
+        }
+        
+        if !downloadsButton.isHidden {
+            margin += MainViewController.BAR_BUTTON_SIZE
+        }
+        
+        return margin
     }
     
     func onRequestEdit(item: DownloadItem) {
@@ -178,7 +200,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     
     // MARK: ImagesViewControllerDelegate
     func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool {
-        imageDetailView?.show(initFrame: rect, image: image)
+        imageDetailView.show(initFrame: rect, image: image)
         return true
     }
     
