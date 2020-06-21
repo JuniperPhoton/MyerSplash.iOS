@@ -106,7 +106,10 @@ class DownloadItemCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        print("dwc \(self.bounds.width)")
         invalidateLayer()
+        updateProgressLayer()
     }
     
     @objc
@@ -167,7 +170,7 @@ class DownloadItemCell: UICollectionViewCell {
     }
     
     private func updateProgressLayer() {
-        let cellWidth = downloadRoot.bounds.width
+        let cellWidth = self.bounds.width
         var progress: Float
         
         if let downloadItem = self.downloadItem {

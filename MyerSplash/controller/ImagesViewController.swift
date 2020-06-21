@@ -276,8 +276,16 @@ class ImagesViewController: UIViewController {
         }
     }
     
-    func showTappedCell() {
+    func showTappedCell(withAlphaAnimation: Bool) {
         tappedCell?.isHidden = false
+        
+        if withAlphaAnimation {
+            tappedCell?.alpha = 0.0
+
+            UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC, animations: {
+                self.tappedCell?.alpha = 1.0
+            })
+        }
     }
     
     @objc

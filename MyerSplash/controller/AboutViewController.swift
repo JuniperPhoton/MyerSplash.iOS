@@ -195,7 +195,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         super.viewDidLayoutSubviews()
         
         let margin = 12.cgFloat
-        let iconSize = 35.cgFloat
+        let iconSize = 32.cgFloat
         
         logo.pin.size(50)
         myerLabel.pin.right(of: logo, aligned: .center).marginLeft(margin).sizeToFit()

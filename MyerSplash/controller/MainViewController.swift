@@ -17,10 +17,10 @@ func getTopBarHeight()-> CGFloat {
     }
 }
 
-class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesViewControllerDelegate {
+class MainViewController: TabmanViewController {
     private static let BAR_BUTTON_SIZE = 50.cgFloat
     private static let BAR_BUTTON_RIGHT_MARGIN = 12.cgFloat
-
+    
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             appStatusBarStyle
@@ -61,7 +61,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         self.view.addSubview(moreButton)
         
         moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
-                                                              withColor: R.colors.rippleColor, maxRadius: 25)
+                                                             withColor: R.colors.rippleColor, maxRadius: 25)
         return moreButton
     }()
     
@@ -73,7 +73,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
         self.view.addSubview(downloadsButton)
-
+        
         downloadsRippleController = MDCRippleTouchController.load(intoView: downloadsButton,
                                                                   withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
         downloadsButton.isHidden = UIApplication.shared.windows[0].bounds.width <= Dimensions.MIN_MODE_WIDTH
@@ -90,7 +90,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         self.view.addSubview(fab)
         return fab
     }()
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -123,6 +123,8 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         
         self.view.addSubViews(statusBarPlaceholder, imageDetailView)
         
+        invalidateTabBar(UIApplication.shared.windows[0].bounds.size)
+        
         DownloadManager.instance.markDownloadingToFailed()
     }
     
@@ -131,7 +133,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         if topVc != self {
             topVc?.viewWillTransition(to: size, with: coordinator)
         }
-
+        
         self.viewControllers.forEach { (controller) in
             controller.viewWillTransition(to: size, with: coordinator)
         }
@@ -142,7 +144,7 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
     
     private func invalidateTabBar(_ size: CGSize) {
         downloadsButton.isHidden = size.width <= Dimensions.MIN_MODE_WIDTH
-
+        
         removeBar(bar)
         
         addBar(bar, dataSource: self, at: .custom(view: statusBarPlaceholder, layout: { v in
@@ -190,31 +192,6 @@ class MainViewController: TabmanViewController, ImageDetailViewDelegate, ImagesV
         
         let vc = SearchViewController()
         self.present(vc, animated: true, completion: nil)
-    }
-    
-    // MARK: ImagesViewControllerDelegate
-    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool {
-        imageDetailView.show(initFrame: rect, image: image)
-        return true
-    }
-    
-    func onRequestDownload(image: UnsplashImage) {
-        DownloadManager.instance.prepareToDownload(vc: self, image: image)
-    }
-    
-    // MARK: ImageDetailViewDelegate
-    func onHidden() {
-        if let vc = self.currentViewController as? ImagesViewController {
-            vc.showTappedCell()
-        }
-    }
-    
-    func onRequestOpenUrl(urlString: String) {
-        UIApplication.shared.open(URL(string: urlString)!)
-    }
-    
-    func onRequestImageDownload(image: UnsplashImage) {
-        DownloadManager.instance.prepareToDownload(vc: self, image: image)
     }
     
     @objc
@@ -267,5 +244,34 @@ extension MainViewController: PageboyViewControllerDataSource, TMBarDataSource {
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         .first
+    }
+}
+
+extension MainViewController: ImageDetailViewDelegate {
+    // MARK: ImageDetailViewDelegate
+    func onHidden(frameAnimationSkipped: Bool) {
+        if let vc = self.currentViewController as? ImagesViewController {
+            vc.showTappedCell(withAlphaAnimation: frameAnimationSkipped)
+        }
+    }
+    
+    func onRequestOpenUrl(urlString: String) {
+        UIApplication.shared.open(URL(string: urlString)!)
+    }
+    
+    func onRequestImageDownload(image: UnsplashImage) {
+        DownloadManager.instance.prepareToDownload(vc: self, image: image)
+    }
+}
+
+extension MainViewController: ImagesViewControllerDelegate {
+    // MARK: ImagesViewControllerDelegate
+    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool {
+        imageDetailView.show(initFrame: rect, image: image)
+        return true
+    }
+    
+    func onRequestDownload(image: UnsplashImage) {
+        DownloadManager.instance.prepareToDownload(vc: self, image: image)
     }
 }

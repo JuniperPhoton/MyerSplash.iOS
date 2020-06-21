@@ -6,7 +6,7 @@ import RxSwift
 import AVFoundation.AVUtilities
 
 protocol ImageDetailViewDelegate: class {
-    func onHidden()
+    func onHidden(frameAnimationSkipped: Bool)
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
     func onRequestEdit(item: DownloadItem)
@@ -38,6 +38,8 @@ class ImageDetailView: UIView {
     private var progressLayer: CALayer!
 
     private var disposable: Disposable? = nil
+    
+    private var layoutWidthOnShow = 0.cgFloat
 
     private func getFinalFrame(insideBounds: CGRect? = nil) -> CGRect {
         let bounds = insideBounds ?? UIApplication.shared.windows[0].bounds
@@ -102,7 +104,7 @@ class ImageDetailView: UIView {
         extraInformationView.isHidden = true
 
         photoByLabel = UILabel()
-        photoByLabel.font = photoByLabel.font.withSize(FontSizes.Large)
+        photoByLabel.font = photoByLabel.font.withSize(FontSizes.Normal)
 
         authorButton = UIButton()
         authorButton.titleLabel!.font = authorButton.titleLabel!.font.with(traits: .traitBold, fontSize: FontSizes.Large)
@@ -356,6 +358,7 @@ class ImageDetailView: UIView {
         Events.trackImagDetailShown()
         
         self.backgroundView.alpha = 0.0
+        self.mainImageView.alpha = 1.0
         isHidden = false
 
         UIView.animate(withDuration: 0.3,
@@ -367,6 +370,7 @@ class ImageDetailView: UIView {
                 },
                 completion: { b in
                     self.showExtraInformation()
+                    self.layoutWidthOnShow = self.bounds.width
                 })
     }
 
@@ -422,20 +426,31 @@ class ImageDetailView: UIView {
     }
 
     private func hideImage() {
+        let skipFrameAnimation = shouldSkipDismissAnimation()
+        
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,
                 options: UIView.AnimationOptions.curveEaseInOut,
                 animations: {
                     self.backgroundView.alpha = 0.0
-                    self.mainImageView.frame = self.initFrame!
                     
-                    // Make sure the subview can layout according to the superview's frame changes
-                    self.mainImageView.layoutIfNeeded()
+                    if !skipFrameAnimation {
+                        self.mainImageView.frame = self.initFrame!
+                         // Make sure the subview can layout according to the superview's frame changes
+                        self.mainImageView.layoutIfNeeded()
+                    } else {
+                        self.mainImageView.alpha = 0.0
+                    }
                 },
                 completion: { b in
                     self.isHidden = true
                     self.extraInformationView.isHidden = true
-                    self.delegate?.onHidden()
+                    self.delegate?.onHidden(frameAnimationSkipped: skipFrameAnimation)
                 })
+    }
+    
+    private func shouldSkipDismissAnimation() -> Bool {
+        let currentWidth = self.bounds.width
+        return currentWidth != layoutWidthOnShow
     }
 }

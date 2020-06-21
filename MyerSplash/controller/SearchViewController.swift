@@ -12,7 +12,7 @@ import MaterialComponents.MDCRippleTouchController
 import FlexLayout
 import RxSwift
 
-class SearchViewController: UIViewController {    
+class SearchViewController: UIViewController {
     private var closeRippleController: MDCRippleTouchController!
     
     private var listController: ImagesViewController? = nil
@@ -171,9 +171,9 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDelegate {
     // MARK: ImageDetailViewDelegate
-    func onHidden() {
+    func onHidden(frameAnimationSkipped: Bool) {
         if let vc = self.listController {
-            vc.showTappedCell()
+            vc.showTappedCell(withAlphaAnimation: frameAnimationSkipped)
         }
     }
     
