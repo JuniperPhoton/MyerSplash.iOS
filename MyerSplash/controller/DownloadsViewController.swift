@@ -126,12 +126,6 @@ class DownloadsViewController: UIViewController {
             waterfallLayout.lineCount = UInt(newSpan)
             collectionView.setNeedsLayout()
         }
-        
-        collectionView.subviews.forEach { (view) in
-            if let cell = view as? DownloadItemCell {
-                cell.invalidateLayer()
-            }
-        }
     }
     
     @objc

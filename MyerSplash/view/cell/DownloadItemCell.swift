@@ -106,6 +106,7 @@ class DownloadItemCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        invalidateLayer()
     }
     
     @objc
@@ -163,8 +164,6 @@ class DownloadItemCell: UICollectionViewCell {
         
         contentView.layer.cornerRadius = Dimensions.SmallRoundCornor.toCGFloat()
         contentView.layer.masksToBounds = true
-        
-        invalidateLayer()
     }
     
     private func updateProgressLayer() {

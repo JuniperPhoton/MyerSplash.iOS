@@ -22,9 +22,11 @@ extension ELWaterFlowLayout {
     static func calculateSpanCount(_ width: CGFloat)-> uint {
         let newSpan: uint
         switch width {
-        case 0..<1000:
+        case 0..<500:
+            newSpan = 1
+        case 500..<900:
             newSpan = 2
-        case 1000..<1600:
+        case 900..<1600:
             newSpan = 3
         case 1600..<2200:
             newSpan = 4
@@ -46,7 +48,6 @@ class ImagesViewController: UIViewController {
     
     static let HIGHLIGHTS_DELAY_SEC = 0.2
     
-
     private let waterfallLayout = ELWaterFlowLayout()
     
     private var paging = 1
@@ -153,17 +154,9 @@ class ImagesViewController: UIViewController {
         
         waterfallLayout.delegate = self
         waterfallLayout.scrollDirection = .vertical
-
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            #if targetEnvironment(macCatalyst)
-            print("run for macCatalyst")
-            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(view.frame.width))
-            #else
-            print("run for pad")
-            waterfallLayout.lineCount = 3
-            #endif
-            
+            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(UIApplication.shared.windows[0].bounds.width))
             waterfallLayout.vItemSpace = 12
             waterfallLayout.hItemSpace = 12
             waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
@@ -243,6 +236,7 @@ class ImagesViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        print("viewWillTransition to \(size)}")
         if collectionView?.superview == nil {
             return
         }
@@ -252,12 +246,6 @@ class ImagesViewController: UIViewController {
         if newSpan != currentSpan {
             waterfallLayout.lineCount = UInt(newSpan)
             collectionView.setNeedsLayout()
-        }
-        
-        collectionView.subviews.forEach { (view) in
-            if let cell = view as? MainImageTableCell {
-                cell.invalidateLayer()
-            }
         }
     }
     

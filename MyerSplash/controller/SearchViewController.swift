@@ -104,6 +104,11 @@ class SearchViewController: UIViewController {
         imageDetailView.delegate = self
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        listController?.viewWillTransition(to: size, with: coordinator)
+        imageDetailView.invalidate()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
