@@ -38,7 +38,7 @@ extension ELWaterFlowLayout {
     }
 }
 
-class ImagesViewController: UIViewController {
+class ImagesViewController: UIViewController, UICollectionViewDragDelegate {
     static let TAG = "ImagesViewController"
     static let CELL_ANIMATE_OFFSET_X: CGFloat = 50.0
     static let CELL_ANIMATE_DELAY_UNIT_SEC = 0.1
@@ -194,6 +194,8 @@ class ImagesViewController: UIViewController {
         
         collectionView.addSubview(loadingFooterView)
         collectionView.addSubview(noMoreItemView)
+        
+        collectionView.dragDelegate = self
         
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
@@ -497,5 +499,35 @@ extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         }
                         cell.loadImage(fade: true)
         })
+    }
+}
+
+extension ImagesViewController {
+    func collectionView(_ collectionView: UICollectionView,
+                        itemsForBeginning session: UIDragSession,
+                        at indexPath: IndexPath) -> [UIDragItem] {
+        guard let images = imageRepo?.images else {
+            return []
+        }
+        
+        let row = indexPath.row
+        
+        if row < 0 || row >= images.count {
+            return []
+        }
+        
+        guard let url = images[row].listUrl else {
+            return []
+        }
+        
+        if !ImageIO.isImageCached(url) {
+            return []
+        }
+        
+        let provider = NSItemProvider(object: ImageIO.getCachedImage(url)!)
+        
+        return [
+            UIDragItem(itemProvider: provider)
+        ]
     }
 }
