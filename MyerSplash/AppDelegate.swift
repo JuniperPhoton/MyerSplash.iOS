@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    @available(iOS 13.0, *)
+    #if targetEnvironment(macCatalyst)
     override func buildMenu(with builder: UIMenuBuilder) {
         builder.remove(menu: .file)
         builder.remove(menu: .edit)
@@ -94,5 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         builder.remove(menu: .format)
         super.buildMenu(with: builder)
     }
+    #endif
 }
 
