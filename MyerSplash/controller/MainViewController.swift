@@ -29,7 +29,8 @@ class MainViewController: TabmanViewController {
     
     private var moreRippleController: MDCRippleTouchController!
     private var downloadsRippleController: MDCRippleTouchController!
-    
+    private var searchRippleController: MDCRippleTouchController?
+
     private lazy var bar: TMBar.ButtonBar = {
         return createTopTabBar()
     }()
@@ -48,8 +49,7 @@ class MainViewController: TabmanViewController {
         moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         moreButton.addTarget(self, action: #selector(onClickMore), for: .touchUpInside)
         
-        moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
-                                                             withColor: R.colors.rippleColor, maxRadius: 25)
+        moreRippleController = MDCRippleTouchController.load(view: moreButton)
         return moreButton
     }()
     
@@ -61,10 +61,22 @@ class MainViewController: TabmanViewController {
         downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
         
-        downloadsRippleController = MDCRippleTouchController.load(intoView: downloadsButton,
-                                                                  withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
+        downloadsRippleController = MDCRippleTouchController.load(view: downloadsButton)
         downloadsButton.isHidden = UIApplication.shared.windows[0].bounds.width <= Dimensions.MIN_MODE_WIDTH
         return downloadsButton
+    }()
+    
+    private lazy var searchButton: UIButton = {
+        let searchButton = UIButton()
+        
+        let searchImage = UIImage(named: R.icons.ic_search)!.withRenderingMode(.alwaysTemplate)
+        searchButton.setImage(searchImage, for: .normal)
+        searchButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+        searchButton.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
+        
+        searchRippleController = MDCRippleTouchController.load(view: searchButton)
+        searchButton.isHidden = UIApplication.shared.windows[0].bounds.width <= Dimensions.MIN_MODE_WIDTH
+        return searchButton
     }()
     
     private lazy var fab: MDCFloatingButton = {
@@ -74,6 +86,7 @@ class MainViewController: TabmanViewController {
         fab.tintColor = UIColor.black
         fab.backgroundColor = UIColor.white
         fab.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
+        fab.isHidden = UIApplication.shared.windows[0].bounds.width > Dimensions.MIN_MODE_WIDTH
         return fab
     }()
     
@@ -107,7 +120,7 @@ class MainViewController: TabmanViewController {
             controller.delegate = self
         }
         
-        self.view.addSubViews(statusBarPlaceholder, moreButton, downloadsButton, fab, imageDetailView)
+        self.view.addSubViews(statusBarPlaceholder, moreButton, downloadsButton, searchButton, fab, imageDetailView)
         
         invalidateTabBar(UIApplication.shared.windows[0].bounds.size)
         
@@ -130,6 +143,8 @@ class MainViewController: TabmanViewController {
     
     private func invalidateTabBar(_ size: CGSize) {
         downloadsButton.isHidden = size.width <= Dimensions.MIN_MODE_WIDTH
+        searchButton.isHidden = downloadsButton.isHidden
+        fab.isHidden = !searchButton.isHidden
         
         removeBar(bar)
         
@@ -152,7 +167,10 @@ class MainViewController: TabmanViewController {
         statusBarPlaceholder.pin.height(statusBarHeight).width(of: self.view)
         moreButton.pin.right(MainViewController.BAR_BUTTON_RIGHT_MARGIN).vCenter(to: barLayout.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
         downloadsButton.pin.before(of: moreButton).vCenter(to: moreButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        searchButton.pin.before(of: downloadsButton).vCenter(to: downloadsButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+
         fab.pin.right(16).bottom(UIView.hasTopNotch ? 24.cgFloat : 16.cgFloat).size(MainViewController.BAR_BUTTON_SIZE)
+        
         imageDetailView.pin.all()
     }
     
@@ -164,6 +182,10 @@ class MainViewController: TabmanViewController {
         }
         
         if !downloadsButton.isHidden {
+            margin += MainViewController.BAR_BUTTON_SIZE
+        }
+        
+        if !searchButton.isHidden {
             margin += MainViewController.BAR_BUTTON_SIZE
         }
         
