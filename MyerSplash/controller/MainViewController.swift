@@ -47,7 +47,6 @@ class MainViewController: TabmanViewController {
         moreButton.setImage(moreImage, for: .normal)
         moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         moreButton.addTarget(self, action: #selector(onClickMore), for: .touchUpInside)
-        self.view.addSubview(moreButton)
         
         moreRippleController = MDCRippleTouchController.load(intoView: moreButton,
                                                              withColor: R.colors.rippleColor, maxRadius: 25)
@@ -61,7 +60,6 @@ class MainViewController: TabmanViewController {
         downloadsButton.setImage(downloadImage, for: .normal)
         downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
-        self.view.addSubview(downloadsButton)
         
         downloadsRippleController = MDCRippleTouchController.load(intoView: downloadsButton,
                                                                   withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3), maxRadius: 25)
@@ -76,7 +74,6 @@ class MainViewController: TabmanViewController {
         fab.tintColor = UIColor.black
         fab.backgroundColor = UIColor.white
         fab.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
-        self.view.addSubview(fab)
         return fab
     }()
     
@@ -110,7 +107,7 @@ class MainViewController: TabmanViewController {
             controller.delegate = self
         }
         
-        self.view.addSubViews(statusBarPlaceholder, imageDetailView)
+        self.view.addSubViews(statusBarPlaceholder, moreButton, downloadsButton, fab, imageDetailView)
         
         invalidateTabBar(UIApplication.shared.windows[0].bounds.size)
         
