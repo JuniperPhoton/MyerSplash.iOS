@@ -4,7 +4,12 @@ import UIKit
 class Dimensions {
     static let ToastHeight: CGFloat = 36
     static let SingleChoiceItemHeight: CGFloat = 50
+    
+    #if targetEnvironment(macCatalyst)
+    static let ImageDetailExtraHeight: CGFloat = 110
+    #else
     static let ImageDetailExtraHeight: CGFloat = 80
+    #endif
     
     static let SmallRoundCornor = 4
 
