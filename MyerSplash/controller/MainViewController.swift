@@ -144,7 +144,7 @@ class MainViewController: TabmanViewController {
     }
     
     private func invalidateTabBar(_ size: CGSize) {
-        downloadsButton.isHidden = size.width <= Dimensions.MIN_MODE_WIDTH
+        downloadsButton.isHidden = UIDevice.current.userInterfaceIdiom == .phone || size.width <= Dimensions.MIN_MODE_WIDTH
         searchButton.isHidden = downloadsButton.isHidden
         fab.isHidden = !searchButton.isHidden
         

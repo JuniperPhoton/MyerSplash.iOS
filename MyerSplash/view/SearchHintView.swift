@@ -76,15 +76,15 @@ class SearchHintView: UIView {
     }
     
     override func layoutSubviews() {
+        let size = rootFlexContainer.flex.width(self.frame.width).intrinsicSize
+        onLayout?(size)
+        
         // Layout the flexbox container using PinLayout
         // NOTE: Could be also layouted by setting directly rootFlexContainer.frame
         rootFlexContainer.pin.all(pin.safeArea)
         
         // Then let the flexbox container layout itself
         rootFlexContainer.flex.layout(mode: .adjustHeight)
-        
-        let size = rootFlexContainer.flex.width(self.frame.width).intrinsicSize
-        onLayout?(size)
     }
     
     @objc

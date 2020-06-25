@@ -53,6 +53,22 @@ class SearchViewController: UIViewController {
         return searchHintView
     }()
     
+    private lazy var blurEffectView: UIView = {
+        let blurEffect: UIBlurEffect!
+        if #available(iOS 13.0, *) {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                blurEffect = UIBlurEffect(style: .systemThickMaterial)
+            } else {
+                blurEffect = UIBlurEffect(style: .systemMaterial)
+            }
+        } else {
+            blurEffect = UIBlurEffect(style: .extraLight)
+        }
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return blurEffectView
+    }()
+    
     init() {
         super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .overCurrentContext
@@ -70,29 +86,8 @@ class SearchViewController: UIViewController {
             return
         }
         
-        let blurEffect: UIBlurEffect!
-        if #available(iOS 13.0, *) {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                blurEffect = UIBlurEffect(style: .systemThickMaterial)
-            } else {
-                blurEffect = UIBlurEffect(style: .systemMaterial)
-            }
-        } else {
-            blurEffect = UIBlurEffect(style: .extraLight)
-        }
-        
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
         view.backgroundColor = .clear
-        view.addSubview(blurEffectView)
-        
-        blurEffectView.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
-        }
-        
-        view.addSubViews(searchView, closeButton, searchHintView)
+        view.addSubViews(blurEffectView, searchView, closeButton, searchHintView)
         
         let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
         closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
@@ -109,7 +104,7 @@ class SearchViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let windowWidth = self.view.window?.bounds.width ?? UIScreen.main.bounds.width
+        let windowWidth = UIApplication.shared.windows[0].bounds.width
         
         #if targetEnvironment(macCatalyst)
         let topInset = 30.cgFloat
@@ -117,7 +112,9 @@ class SearchViewController: UIViewController {
         let topInset = UIView.topInset
         #endif
         
-        if windowWidth > Dimensions.MIN_MODE_WIDTH {
+        blurEffectView.pin.all()
+        
+        if UIDevice.current.userInterfaceIdiom == .pad && windowWidth > Dimensions.MIN_MODE_WIDTH {
             searchView.pin.width(Dimensions.MIN_MODE_WIDTH).top(topInset).hCenter().sizeToFit(.width)
             closeButton.pin.after(of: searchView, aligned: .center).size(50)
         } else {
@@ -125,7 +122,7 @@ class SearchViewController: UIViewController {
             searchView.pin.left(12).before(of: closeButton, aligned: .center).top(topInset).sizeToFit(.width)
         }
         
-        searchHintView.pin.below(of: searchView).left().right().bottom()
+        searchHintView.pin.below(of: searchView).left().right().sizeToFit(.width)
     }
     
     @objc
