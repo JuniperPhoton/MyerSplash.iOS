@@ -5,6 +5,7 @@ import UIKit
 import Alamofire
 import MaterialComponents.MaterialButtons
 import RxSwift
+import SwiftUI
 
 class MainViewController: TabmanViewController {
     public static let BAR_BUTTON_SIZE = 50.cgFloat
@@ -16,7 +17,7 @@ class MainViewController: TabmanViewController {
         }
     }
     
-    private let viewControllers: [ImagesViewController] = [ImagesViewController(NewImageRepo()),
+    private var viewControllers: [ImagesViewController] = [ImagesViewController(NewImageRepo()),
                                                            ImagesViewController(HighlightsImageRepo()),
                                                            ImagesViewController(RandomImageRepo()),
                                                            ImagesViewController(DeveloperImageRepo())]
@@ -104,27 +105,28 @@ class MainViewController: TabmanViewController {
         
         super.viewDidLoad()
         
-        viewControllers.forEach { (controller) in
-            #if targetEnvironment(macCatalyst)
-            (controller as ImagesViewController).collectionTopOffset = getContentTopInsets()
-            #else
-            (controller as ImagesViewController).collectionTopOffset = getTopBarHeight()
-            #endif
-        }
+        setupViewControllers()
         
         self.view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
         
         self.dataSource = self
-        
-        viewControllers.forEach { (controller) in
-            controller.delegate = self
-        }
         
         self.view.addSubViews(statusBarPlaceholder, moreButton, downloadsButton, searchButton, fab, imageDetailView)
         
         invalidateTabBar(UIApplication.shared.windows[0].bounds.size)
         
         DownloadManager.instance.markDownloadingToFailed()
+    }
+    
+    private func setupViewControllers() {
+        viewControllers.forEach { (controller) in
+            #if targetEnvironment(macCatalyst)
+            (controller as ImagesViewController).collectionTopOffset = getContentTopInsets()
+            #else
+            (controller as ImagesViewController).collectionTopOffset = getTopBarHeight()
+            #endif
+            controller.delegate = self
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -200,8 +202,47 @@ class MainViewController: TabmanViewController {
     func onClickSearch() {
         Events.trackClickSearch()
         
-        let vc = SearchViewController()
-        self.present(vc, animated: true, completion: nil)
+        if #available(iOS 13.0, *) {
+            #if !targetEnvironment(macCatalyst)
+            let vc = SearchViewController()
+            self.present(vc, animated: true, completion: nil)
+            #else
+            let view = SearchView(dismissAction: { [weak self] in
+                    guard let self = self else { return }
+                    self.dismiss(animated: true, completion: nil)
+                }, onClickKeyword: { [weak self] k in
+                    guard let self = self else { return }
+                    print("click \(k)")
+                    self.dismiss(animated: true, completion: nil)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                        guard let self = self else { return }
+                        self.addTab(keyword: k)
+                    }
+            })
+            let vc = UIHostingController(rootView: view)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
+            #endif
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    private func addTab(keyword: Keyword) {
+        let existedVc = self.viewControllers.first { (vc) -> Bool in
+            return vc.repoTitle?.caseInsensitiveCompare(keyword.displayTitle) == ComparisonResult.orderedSame
+        }
+        
+        if (existedVc != nil) {
+            return
+        }
+        
+        let repo = SearchImageRepo(query: keyword.query)
+        repo.title = keyword.displayTitle.uppercased()
+        self.viewControllers.append(ImagesViewController(repo))
+        setupViewControllers()
+        insertPage(at: viewControllers.count - 1, then: .scrollToUpdate)
     }
     
     @objc
