@@ -230,11 +230,12 @@ class MainViewController: TabmanViewController {
     }
     
     private func addTab(keyword: Keyword) {
-        let existedVc = self.viewControllers.first { (vc) -> Bool in
+        let index: Int? = self.viewControllers.firstIndex { (vc) -> Bool in
             return vc.repoTitle?.caseInsensitiveCompare(keyword.displayTitle) == ComparisonResult.orderedSame
         }
         
-        if (existedVc != nil) {
+        if let i = index {
+            self.scrollToPage(.at(index: i), animated: true)
             return
         }
         
