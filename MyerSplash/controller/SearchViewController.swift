@@ -122,7 +122,7 @@ class SearchViewController: UIViewController {
             searchView.pin.left(12).before(of: closeButton, aligned: .center).top(topInset).sizeToFit(.width)
         }
         
-        searchHintView.pin.below(of: searchView).left().right().sizeToFit(.width)
+        searchHintView.pin.below(of: searchView).left().right().bottom()
     }
     
     @objc
