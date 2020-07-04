@@ -159,19 +159,14 @@ class ImagesViewController: UIViewController {
         
         if UIDevice.current.userInterfaceIdiom == .pad {
             waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(UIApplication.shared.windows[0].bounds.width))
-            waterfallLayout.vItemSpace = 12
-            waterfallLayout.hItemSpace = 12
-            waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
         } else {
-            print("run for phone")
             waterfallLayout.lineCount = 1
-            waterfallLayout.vItemSpace = 0
-            waterfallLayout.hItemSpace = 0
         }
         
-        waterfallLayout.vItemSpace = 12
-        waterfallLayout.hItemSpace = 12
-        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
+        waterfallLayout.vItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.hItemSpace = Dimensions.imagesViewSpace
+        
+        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: Dimensions.imagesViewSpace, bottom: 0, right: Dimensions.imagesViewSpace)
         
         collectionView.snp.makeConstraints { (maker) in
             maker.height.equalTo(view)

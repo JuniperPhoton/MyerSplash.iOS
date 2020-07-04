@@ -24,6 +24,14 @@ class Dimensions {
     static let ShadowRadius = 4
     static let ShadowOpacity: Float = 0.2
     
+    static var imagesViewSpace: CGFloat = {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return 18
+        } else {
+            return 12
+        }
+    }()
+    
     static let MIN_MODE_WIDTH = 400.cgFloat
 }
 

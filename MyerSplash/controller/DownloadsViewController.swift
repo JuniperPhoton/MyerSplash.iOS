@@ -47,17 +47,15 @@ class DownloadsViewController: UIViewController {
             print("run for pad")
             waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(
                 UIApplication.shared.windows[0].bounds.width))
-            waterfallLayout.vItemSpace = 12
-            waterfallLayout.hItemSpace = 12
-            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         } else {
             print("run for phone")
             waterfallLayout.lineCount = 2
-            waterfallLayout.vItemSpace = 12
-            waterfallLayout.hItemSpace = 12
-            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         }
         
+        waterfallLayout.vItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.hItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.edge = UIEdgeInsets(top: Dimensions.imagesViewSpace, left: Dimensions.imagesViewSpace, bottom: Dimensions.imagesViewSpace, right: Dimensions.imagesViewSpace)
+
         collectionView.contentInset = UIEdgeInsets(top: getContentTopInsets(), left: 0, bottom: 0, right: 0)
         
         collectionView.dataSource = self
