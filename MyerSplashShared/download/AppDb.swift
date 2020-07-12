@@ -9,7 +9,7 @@
 import Foundation
 import WCDBSwift
 
-class AppDb {
+public class AppDb {
     private static let DB_PATH = "app_db/appdb"
     private static let DOWNLOADS_TABLE = "downloads_table"
 

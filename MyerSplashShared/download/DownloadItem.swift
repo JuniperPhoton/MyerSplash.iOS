@@ -6,14 +6,14 @@
 import Foundation
 import WCDBSwift
 
-enum DownloadStatus: Int {
+public enum DownloadStatus: Int {
     case Pending = -1
     case Downloading = 0
     case Success = 1
     case Failed = 2
 }
 
-class DownloadItem: TableCodable {
+public class DownloadItem: TableCodable {
     var id: String? = nil
     var unsplashImage: UnsplashImage? = nil
     var progress: Float = 0
@@ -21,9 +21,9 @@ class DownloadItem: TableCodable {
     var status: Int = DownloadStatus.Pending.rawValue
     var createTime: Int64 = Int64(Date().timeIntervalSinceReferenceDate)
 
-    enum CodingKeys: String, CodingTableKey {
-        typealias Root = DownloadItem
-        static let objectRelationalMapping = TableBinding(CodingKeys.self)
+    public enum CodingKeys: String, CodingTableKey {
+        public typealias Root = DownloadItem
+        public static let objectRelationalMapping = TableBinding(CodingKeys.self)
         case id
         case unsplashImage
         case progress
@@ -31,7 +31,7 @@ class DownloadItem: TableCodable {
         case status
         case createTime
 
-        static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
+        public static var columnConstraintBindings: [CodingKeys: ColumnConstraintBinding]? {
             return [
                 id: ColumnConstraintBinding(isPrimary: true),
                 unsplashImage: ColumnConstraintBinding(isNotNull: false, defaultTo: nil),

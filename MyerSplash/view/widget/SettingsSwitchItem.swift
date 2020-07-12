@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import MyerSplashDesign
 
 class SettingsSwitchItem: SettingsItem {
     private var switchButton: UISwitch!

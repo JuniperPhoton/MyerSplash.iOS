@@ -3,8 +3,9 @@ import UIKit
 import SwiftyJSON
 import WCDBSwift
 import AVFoundation.AVUtilities
+import MyerSplashDesign
 
-class UnsplashImage: ColumnJSONCodable {
+public class UnsplashImage: ColumnJSONCodable {
     private (set) var id: String?
     private (set) var color: String?
     private (set) var likes: Int = 0

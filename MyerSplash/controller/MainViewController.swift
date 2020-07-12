@@ -6,6 +6,7 @@ import Alamofire
 import MaterialComponents.MaterialButtons
 import RxSwift
 import SwiftUI
+import MyerSplashDesign
 
 class MainViewController: TabmanViewController {
     public static let BAR_BUTTON_SIZE = 50.cgFloat

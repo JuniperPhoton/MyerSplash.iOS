@@ -50,6 +50,7 @@ extension UIViewController {
     }
 }
 
+
 extension MDCAlertController {
     func applyColors() {
         backgroundColor = .getDefaultBackgroundUIColor()

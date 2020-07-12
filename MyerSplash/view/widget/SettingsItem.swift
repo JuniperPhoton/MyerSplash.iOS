@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import SnapKit
 import MaterialComponents
+import MyerSplashDesign
 
 class SettingsItem: UIView {
     private var label: UILabel!

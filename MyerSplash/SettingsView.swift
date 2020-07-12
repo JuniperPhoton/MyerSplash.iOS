@@ -4,6 +4,7 @@ import SnapKit
 import Nuke
 import MessageUI
 import MaterialComponents.MaterialDialogs
+import MyerSplashDesign
 
 protocol SettingsViewDelegate: class {
     func showDialog(content: DialogContent, key: String)

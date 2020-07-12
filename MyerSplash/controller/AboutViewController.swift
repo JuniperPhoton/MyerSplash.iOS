@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import MessageUI
 import MaterialComponents.MDCRippleTouchController
+import MyerSplashDesign
+import MyerSplashExtensions
 
 class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate {
     #if targetEnvironment(macCatalyst)

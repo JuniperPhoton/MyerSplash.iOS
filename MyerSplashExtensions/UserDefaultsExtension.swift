@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension UserDefaults {
+public extension UserDefaults {
     func bool(key: String, defaultValue: Bool) -> Bool {
         if (self.object(forKey: key) == nil) {
             return defaultValue

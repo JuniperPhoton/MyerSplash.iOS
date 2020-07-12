@@ -12,6 +12,7 @@ import SnapKit
 import Alamofire
 import MaterialComponents.MaterialActivityIndicator
 import ELWaterFallLayout
+import MyerSplashDesign
 
 protocol ImagesViewControllerDelegate: class {
     func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool

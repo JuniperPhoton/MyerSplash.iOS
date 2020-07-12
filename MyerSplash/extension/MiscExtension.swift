@@ -3,6 +3,7 @@ import UIKit
 import Nuke
 import SnapKit
 import MaterialComponents.MDCRippleTouchController
+import MyerSplashDesign
 
 func showToast(_ text: String, time: TimeInterval = ToastView.STAYING_DURATION_SEC) {
     guard let view = UIApplication.shared.getTopViewController()?.view else {
@@ -73,42 +74,22 @@ extension MDCRippleTouchController {
     }
 }
 
-extension UIEdgeInsets {
-    static func make(unifiedSize: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.init(top: CGFloat(unifiedSize), left: CGFloat(unifiedSize), bottom: CGFloat(unifiedSize), right: CGFloat(unifiedSize))
-    }
-}
-
-extension UIViewController {
-    func add(_ child: UIViewController) {
-        addChild(child)
-        view.addSubview(child.view)
-        child.didMove(toParent: self)
-    }
-
-    func remove() {
-        // Just to be safe, we check that this view controller
-        // is actually added to a parent before removing it.
-        guard parent != nil else {
-            return
-        }
-
-        willMove(toParent: nil)
-        view.removeFromSuperview()
-        removeFromParent()
-    }
-}
-
-extension UIApplication {
-    func getTopViewController() -> UIViewController? {
-        return self.keyWindow?.rootViewController?.presentedViewController ?? self.keyWindow?.rootViewController
-    }
-}
-
 extension MDCRippleTouchController {
     static func load(view: UIView) -> MDCRippleTouchController {
         return MDCRippleTouchController.load(intoView: view,
                                              withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3),
                                              maxRadius: 25)
+    }
+}
+
+extension UICollectionViewCell {
+    func invalidateLayer() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: Dimensions.ShadowOffsetY)
+        layer.shadowRadius = Dimensions.ShadowRadius.toCGFloat()
+        layer.shadowOpacity = Dimensions.ShadowOpacity
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: layer.bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        layer.backgroundColor = UIColor.clear.cgColor
     }
 }

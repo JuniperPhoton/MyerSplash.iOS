@@ -11,6 +11,7 @@ import Tabman
 import Pageboy
 import UIKit
 import MaterialComponents.MDCRippleTouchController
+import MyerSplashDesign
 
 class MoreViewController: TabmanViewController {
     override open var preferredStatusBarStyle: UIStatusBarStyle {

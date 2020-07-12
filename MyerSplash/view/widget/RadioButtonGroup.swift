@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import SnapKit
 import MaterialComponents
+import MyerSplashDesign
 
 class RadioButtonGroup: UIStackView {
     var onItemClicked: ((Int) -> Void)? = nil

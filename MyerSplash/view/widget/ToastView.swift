@@ -1,6 +1,7 @@
 import Foundation
 import SnapKit
 import UIKit
+import MyerSplashDesign
 
 class ToastView: UILabel {
     static let PADDING = CGFloat(10)

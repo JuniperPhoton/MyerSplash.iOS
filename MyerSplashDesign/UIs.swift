@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class UIs {
+public class UIs {
     static func setLabelColor(_ uiView: UILabel) {
         uiView.textColor = UIColor.getDefaultLabelUIColor()
     }
@@ -19,7 +19,7 @@ class UIs {
     }
 }
 
-extension UILabel {
+public extension UILabel {
     func setDefaultLabelColor() {
         if #available(iOS 13.0, *) {
             self.textColor = UIColor.label
@@ -29,7 +29,7 @@ extension UILabel {
     }
 }
 
-extension UIColor {
+public extension UIColor {
     static func getDefaultLabelUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.label
@@ -47,7 +47,7 @@ extension UIColor {
     }
 }
 
-func getTopBarHeight() -> CGFloat {
+public func getTopBarHeight() -> CGFloat {
     if UIDevice.current.userInterfaceIdiom == .pad {
         #if targetEnvironment(macCatalyst)
         return 110
@@ -58,7 +58,7 @@ func getTopBarHeight() -> CGFloat {
     }
 }
 
-func getContentTopInsets() -> CGFloat {
+public func getContentTopInsets() -> CGFloat {
     #if targetEnvironment(macCatalyst)
     return getTopBarHeight() - 26
     #else
@@ -66,7 +66,7 @@ func getContentTopInsets() -> CGFloat {
     #endif
 }
 
-extension UIView {
+public extension UIView {
     static var hasTopNotch: Bool {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
     }
