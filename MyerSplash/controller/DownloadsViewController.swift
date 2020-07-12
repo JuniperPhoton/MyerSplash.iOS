@@ -42,20 +42,21 @@ class DownloadsViewController: UIViewController {
         
         waterfallLayout.delegate = self
         waterfallLayout.scrollDirection = .vertical
-        
+                
         if UIDevice.current.userInterfaceIdiom == .pad {
             print("run for pad")
-            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(UIScreen.main.bounds.width))
-            waterfallLayout.vItemSpace = 12
-            waterfallLayout.hItemSpace = 12
-            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(
+                UIApplication.shared.windows[0].bounds.width))
         } else {
             print("run for phone")
             waterfallLayout.lineCount = 2
-            waterfallLayout.vItemSpace = 12
-            waterfallLayout.hItemSpace = 12
-            waterfallLayout.edge = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         }
+        
+        waterfallLayout.vItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.hItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.edge = UIEdgeInsets(top: Dimensions.imagesViewSpace, left: Dimensions.imagesViewSpace, bottom: Dimensions.imagesViewSpace, right: Dimensions.imagesViewSpace)
+
+        collectionView.contentInset = UIEdgeInsets(top: getContentTopInsets(), left: 0, bottom: 0, right: 0)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -79,6 +80,8 @@ class DownloadsViewController: UIViewController {
         fab.addTarget(self, action: #selector(onClickDelete), for: .touchUpInside)
         self.view.addSubview(fab)
         self.deleteFab = fab
+        
+        self.collectionView.dragDelegate = self
 
         fab.snp.makeConstraints { (maker) in
             maker.right.equalTo(self.view).offset(-16)
@@ -124,12 +127,6 @@ class DownloadsViewController: UIViewController {
         if newSpan != currentSpan {
             waterfallLayout.lineCount = UInt(newSpan)
             collectionView.setNeedsLayout()
-        }
-        
-        collectionView.subviews.forEach { (view) in
-            if let cell = view as? DownloadItemCell {
-                cell.invalidateLayer()
-            }
         }
     }
     
@@ -233,5 +230,43 @@ extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDe
         }
         
         cell.unbind()
+    }
+}
+
+extension DownloadsViewController: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        itemsForBeginning session: UIDragSession,
+                        at indexPath: IndexPath) -> [UIDragItem] {
+        let row = indexPath.row
+        
+        if row < 0 || row >= downloadItems.count {
+            return []
+        }
+        
+        let image = downloadItems[row]
+        
+        // Use downloaded image if possible
+        if image.status == DownloadStatus.Success.rawValue, let path = image.fileURL {
+            let url = DownloadManager.instance.createAbsolutePathForImage(path).path
+
+            if let image = UIImage(contentsOfFile: url) {
+                let provider = NSItemProvider(object: image)
+                return [UIDragItem(itemProvider: provider)]
+            }
+        }
+        
+        guard let url = image.unsplashImage?.listUrl else {
+            return []
+        }
+        
+        if !ImageIO.isImageCached(url) {
+            return []
+        }
+        
+        let provider = NSItemProvider(object: ImageIO.getCachedImage(url)!)
+        
+        return [
+            UIDragItem(itemProvider: provider)
+        ]
     }
 }

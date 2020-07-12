@@ -27,6 +27,13 @@ class MoreViewController: TabmanViewController {
     
     private var selectedIndex = 0
     
+    private lazy var statusbarPlaceholder: UIView = {
+        let v = UIView()
+        let blurView = UIView.makeBlurBackgroundView()
+        v.addSubview(blurView)
+        return v
+    }()
+    
     init(selectedIndex: Int) {
         super.init(nibName: nil, bundle: nil)
         self.selectedIndex = selectedIndex
@@ -55,14 +62,21 @@ class MoreViewController: TabmanViewController {
         self.dataSource = self
 
         let bar = createTopTabBar()
-        bar.layout.contentInset = UIEdgeInsets(top: 20, left: 20.0, bottom: 12.0, right: 50)
-        if #available(iOS 13.0, *) {
-            bar.backgroundView.style = .blur(style: .systemMaterial)
-        } else {
-            bar.backgroundView.style = .blur(style: .extraLight)
-        }
+
+        self.view.addSubview(statusbarPlaceholder)
         
-        addBar(bar, dataSource: self, at: .top)
+        #if targetEnvironment(macCatalyst)
+        let topOffset = UIView.topInset
+        let barHeight = getTopBarHeight()
+        #else
+        let topOffset = UIView.topInset
+        let barHeight = getTopBarHeight()
+        #endif
+        
+        addBar(bar, dataSource: self, at: .custom(view: statusbarPlaceholder, layout: { (v) in
+            v.frame = CGRect(x: 0, y: CGFloat(topOffset),
+                             width: self.view.bounds.width - MainViewController.BAR_BUTTON_SIZE - MainViewController.BAR_BUTTON_RIGHT_MARGIN, height: barHeight)
+        }))
 
         let closeButton = UIButton()
         let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
@@ -79,8 +93,16 @@ class MoreViewController: TabmanViewController {
             maker.top.equalTo(bar.layout.view.snp.top)
             maker.bottom.equalTo(bar.layout.view.snp.bottom)
             maker.right.equalToSuperview().offset(-10)
-            maker.width.equalTo(50)
+            maker.width.equalTo(MainViewController.BAR_BUTTON_SIZE)
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let statusBarHeight = getTopBarHeight() + UIView.topInset
+
+        statusbarPlaceholder.pin.height(statusBarHeight).width(of: self.view).pinEdges()
     }
 
     @objc

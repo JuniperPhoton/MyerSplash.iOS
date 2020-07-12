@@ -18,6 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupShortcuts(application)
         
+        if #available(iOS 13.0, *) {
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            #if targetEnvironment(macCatalyst)
+            if let titlebar = windowScene?.titlebar {
+                titlebar.titleVisibility = .hidden
+                titlebar.toolbar = nil
+            }
+            #endif
+        } else {
+            // Fallback on earlier versions
+        }
+        
         return true
     }
     
@@ -57,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        guard let vc = UIApplication.shared.keyWindow?.rootViewController as? MainViewController else {
+        guard let vc = UIApplication.shared.windows[0].rootViewController as? MainViewController else {
             return
         }
         
@@ -73,5 +85,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    #if targetEnvironment(macCatalyst)
+    override func buildMenu(with builder: UIMenuBuilder) {
+        builder.remove(menu: .file)
+        builder.remove(menu: .edit)
+        builder.remove(menu: .help)
+        builder.remove(menu: .format)
+        super.buildMenu(with: builder)
+    }
+    #endif
 }
 

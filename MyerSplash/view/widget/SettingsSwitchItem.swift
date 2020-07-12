@@ -31,7 +31,7 @@ class SettingsSwitchItem: SettingsItem {
         addSubview(switchButton)
 
         switchButton.snp.makeConstraints { (maker) in
-            maker.right.equalTo(self.snp.right).offset(-Dimensions.TITLE_MARGIN)
+            maker.right.equalTo(self.snp.right).offset(-Dimensions.TitleMargin)
             maker.centerY.equalTo(self)
         }
     }

@@ -12,10 +12,11 @@ class UnsplashImage: ColumnJSONCodable {
     private (set) var height: Int = 0
     private (set) var urls: ImageUrl?
     private (set) var user: UnsplashUser?
+    private (set) var sponsorship: Sponsorship?
     private (set) var isUnsplash = true
     
     enum CodingKeys: String, CodingKey {
-        case id, color, likes, width, height, urls, user
+        case id, color, likes, width, height, urls, user, sponsorship
     }
     
     var rawAspectRatioF: CGFloat {
@@ -110,7 +111,7 @@ extension UnsplashImage {
             rawRatio = CGFloat(width) / CGFloat(height)
         }
 
-        let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
+        let fixedInfoHeight = Dimensions.ImageDetailExtraHeight
 
         let decorViewWidth = viewWidth
         let decorViewHeight = viewHeight
@@ -204,4 +205,8 @@ class ImageUrl: ColumnJSONCodable {
     var regular: String?
     var small: String?
     var thumb: String?
+}
+
+class Sponsorship: ColumnJSONCodable {
+    // empty class
 }

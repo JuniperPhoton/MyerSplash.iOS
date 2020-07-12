@@ -34,6 +34,7 @@ class SettingsView: UIView {
 
         scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
+        scrollView.contentInset = UIEdgeInsets(top: getContentTopInsets(), left: 0, bottom: 0, right: 0)
 
         let personalizationGroup = SettingsGroup()
         personalizationGroup.label = R.strings.settings_personalization
@@ -48,9 +49,14 @@ class SettingsView: UIView {
         darkMaskSwitch.onCheckedChanged = { checked in
             NotificationCenter.default.post(name: NSNotification.Name(AppNotification.KEY_RELOAD), object: nil)
         }
+        
+        let noSponsorSwitch = SettingsSwitchItem(Keys.SHOW_SPONSORSHIP)
+        noSponsorSwitch.title = R.strings.settings_no_sponsorship_title
+        noSponsorSwitch.content = R.strings.settings_no_sponsorship_content
 
         personalizationGroup.addArrangedSubview(quickDownload)
         personalizationGroup.addArrangedSubview(darkMaskSwitch)
+        personalizationGroup.addArrangedSubview(noSponsorSwitch)
 
         let qualityGroup = SettingsGroup()
         qualityGroup.label = R.strings.settings_quality
@@ -92,7 +98,7 @@ class SettingsView: UIView {
         }
         qualityGroup.snp.makeConstraints { (maker) in
             maker.left.right.equalTo(self)
-            maker.top.equalTo(personalizationGroup.snp.bottom).offset(Dimensions.TITLE_MARGIN)
+            maker.top.equalTo(personalizationGroup.snp.bottom).offset(Dimensions.TitleMargin)
         }
         scrollView.snp.makeConstraints { (maker) in
             maker.left.right.bottom.equalTo(self)

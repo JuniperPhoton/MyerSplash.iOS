@@ -11,13 +11,13 @@ import FlexLayout
 import UIKit
 import PinLayout
 
-struct Keyword {
+struct Keyword: Hashable {
     var displayTitle: String!
     var query: String!
 }
 
 class SearchHintView: UIView {
-    let builtInKeywords = [Keyword(displayTitle: "🔍 Minimalist", query: "Minimalist"),
+    static let builtInKeywords = [Keyword(displayTitle: "🔍 Minimalist", query: "Minimalist"),
               Keyword(displayTitle: "🏗 Buildings", query: "Buildings"),
               Keyword(displayTitle: "🍰 Food", query: "Food"),
               Keyword(displayTitle: "🗻 Nature", query: "Nature"),
@@ -41,9 +41,10 @@ class SearchHintView: UIView {
               Keyword(displayTitle: "⚪️ White", query: "White"),
     ]
     
-    fileprivate let rootFlexContainer = UIView()
+    let rootFlexContainer = UIView()
 
     var onClickKeyword: ((Keyword) -> Void)? = nil
+    var onLayout: ((CGSize) -> Void)? = nil
 
     init() {
         super.init(frame: .zero)
@@ -53,7 +54,7 @@ class SearchHintView: UIView {
 
         rootFlexContainer.flex.direction(.row).justifyContent(.start).wrap(.wrap).padding(12).define { (flex) in
             var index = 0
-            builtInKeywords.forEach { (keyword) in
+            SearchHintView.builtInKeywords.forEach { (keyword) in
                 let uiLabel = UIButton()
                 uiLabel.setTitle(keyword.displayTitle, for: .normal)
                 uiLabel.titleLabel?.font = uiLabel.titleLabel?.font.withSize(fontSize)
@@ -75,6 +76,9 @@ class SearchHintView: UIView {
     }
     
     override func layoutSubviews() {
+        let size = rootFlexContainer.flex.width(self.frame.width).intrinsicSize
+        onLayout?(size)
+        
         // Layout the flexbox container using PinLayout
         // NOTE: Could be also layouted by setting directly rootFlexContainer.frame
         rootFlexContainer.pin.all(pin.safeArea)
@@ -86,10 +90,10 @@ class SearchHintView: UIView {
     @objc
     private func onClickItem(button: UIButton) {
         let index = button.tag
-        if (index < 0 || index >= builtInKeywords.count) {
+        if (index < 0 || index >= SearchHintView.builtInKeywords.count) {
             return
         }
-        let keyword = builtInKeywords[index]
+        let keyword = SearchHintView.builtInKeywords[index]
         onClickKeyword?(keyword)
         
         Events.trackClickSearchItem(name: keyword.query)

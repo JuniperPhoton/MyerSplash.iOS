@@ -174,16 +174,7 @@ class DeveloperImageRepo: ImageRepo {
 
 let decoder = JSONDecoder()
 
-class SearchImageRepo: ImageRepo {
-    override var title: String {
-        get {
-            return "SEARCH"
-        }
-        set {
-            // read only
-        }
-    }
-    
+class SearchImageRepo: ImageRepo {    
     private var query: String? = nil
     
     init(query: String?) {
@@ -215,6 +206,12 @@ extension Observable {
             
             if images == nil {
                 images = [UnsplashImage]()
+            }
+            
+            if (AppSettings.isNoSponsorshipEnabled()) {
+                images?.removeAll(where: { (image) -> Bool in
+                    return image.sponsorship != nil
+                })
             }
             
             if appendTodayImage {

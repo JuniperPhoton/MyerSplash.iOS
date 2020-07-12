@@ -25,12 +25,12 @@ class SettingsGroup: UIStackView {
 
         groupTitleView = UILabel()
         groupTitleView.textColor = Colors.THEME.asUIColor()
-        groupTitleView.font = groupTitleView.font.with(traits: .traitBold, fontSize: FontSizes.NORMAL)
+        groupTitleView.font = groupTitleView.font.with(traits: .traitBold, fontSize: FontSizes.Normal)
 
         addArrangedSubview(groupTitleView)
 
         groupTitleView.snp.remakeConstraints { (maker) in
-            maker.left.equalTo(self).offset(Dimensions.TITLE_MARGIN)
+            maker.left.equalTo(self).offset(Dimensions.TitleMargin)
             maker.top.equalTo(self).offset(12)
         }
         

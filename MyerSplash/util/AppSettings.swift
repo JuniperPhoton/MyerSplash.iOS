@@ -26,6 +26,10 @@ class AppSettings {
     static func isDarkMaskEnabled() -> Bool {
         return isSettingsEnabled(key: Keys.DAKR_MASK)
     }
+    
+    static func isNoSponsorshipEnabled() -> Bool {
+        return !isSettingsEnabled(key: Keys.SHOW_SPONSORSHIP)
+    }
 
     static func loadingQuality() -> Int {
         return UserDefaults.standard.integer(key: Keys.LOADING_QUALITY,

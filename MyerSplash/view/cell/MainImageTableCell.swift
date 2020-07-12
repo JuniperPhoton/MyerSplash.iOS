@@ -112,9 +112,12 @@ public class MainImageTableCell: UICollectionViewCell {
         
         mainImageView.applyMask()
         
-        contentView.layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
+        contentView.layer.cornerRadius = Dimensions.SmallRoundCornor.toCGFloat()
         contentView.layer.masksToBounds = true
-
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
         invalidateLayer()
     }
     

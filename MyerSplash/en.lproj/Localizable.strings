@@ -76,3 +76,7 @@
 "settings_dark_mask_title" = "Dark mask";
 "settings_dark_mask_content" = "Dim images in dark mode";
 "no_more_items" = "🚧 No more items";
+
+"settings_no_sponsorship_title" = "Sponsorship setting";
+"settings_no_sponsorship_content" = "Show sponsorship in NEW tab";
+"search_title" = "SEARCH";

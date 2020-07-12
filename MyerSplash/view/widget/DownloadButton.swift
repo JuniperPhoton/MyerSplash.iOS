@@ -14,9 +14,9 @@ class DownloadButton: UIButton {
         super.init(frame: CGRect.zero)
 
         setTitle(R.strings.download, for: .normal)
-        layer.cornerRadius = Dimensions.SMALL_ROUND_CORNOR.toCGFloat()
+        layer.cornerRadius = Dimensions.SmallRoundCornor.toCGFloat()
         titleLabel!.font = titleLabel!.font.with(traits: .traitBold,
-                fontSize: FontSizes.NORMAL)
+                fontSize: FontSizes.Normal)
 
         adjustsImageWhenHighlighted = false
         

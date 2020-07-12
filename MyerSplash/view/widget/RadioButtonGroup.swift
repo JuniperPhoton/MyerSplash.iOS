@@ -70,14 +70,14 @@ class RadioButton: UIView {
         contentView = UILabel()
         contentView.text = content
         contentView.textColor = UIColor.getDefaultLabelUIColor()
-        contentView.font = contentView.font.withSize(FontSizes.NORMAL)
+        contentView.font = contentView.font.withSize(FontSizes.Normal)
 
         addSubview(tickIcon)
         addSubview(contentView)
 
         tickIcon.snp.makeConstraints { maker in
             maker.centerY.equalTo(self)
-            maker.width.height.equalTo(Dimensions.SINGLE_CHOICE_OPTION_HEIGHT / 2)
+            maker.width.height.equalTo(Dimensions.SingleChoiceItemHeight / 2)
             maker.left.equalTo(self).offset(12)
         }
 
@@ -88,7 +88,7 @@ class RadioButton: UIView {
         }
 
         self.snp.makeConstraints { maker in
-            maker.height.equalTo(Dimensions.SINGLE_CHOICE_OPTION_HEIGHT)
+            maker.height.equalTo(Dimensions.SingleChoiceItemHeight)
         }
         
         rippleController = MDCRippleTouchController()

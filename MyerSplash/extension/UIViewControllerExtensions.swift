@@ -40,12 +40,13 @@ extension UIViewController {
         }
         
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
-        present(ac, animated: true)
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            ac.popoverPresentationController?.sourceView = anchorView
-            ac.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.any
+        
+        if UIDevice.current.userInterfaceIdiom == .pad, let popoverVc = ac.popoverPresentationController {
+            popoverVc.sourceView = anchorView
+            popoverVc.sourceRect = anchorView.bounds
         }
+        
+        present(ac, animated: true)
     }
 }
 

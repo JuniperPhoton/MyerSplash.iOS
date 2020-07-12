@@ -6,7 +6,7 @@ import RxSwift
 import AVFoundation.AVUtilities
 
 protocol ImageDetailViewDelegate: class {
-    func onHidden()
+    func onHidden(frameAnimationSkipped: Bool)
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestOpenUrl(urlString: String)
     func onRequestEdit(item: DownloadItem)
@@ -38,31 +38,35 @@ class ImageDetailView: UIView {
     private var progressLayer: CALayer!
 
     private var disposable: Disposable? = nil
+    
+    private var layoutWidthOnShow = 0.cgFloat
 
-    private var finalFrame: CGRect {
-        get {
-            let rawRatio = bindImage!.getAspectRatioF(viewWidth: self.frame.width, viewHeight: self.frame.height)
+    private func getFinalFrame(insideBounds: CGRect? = nil) -> CGRect {
+        let bounds = insideBounds ?? UIApplication.shared.windows[0].bounds
+        
+        print("getFinalFrame, bounds is \(bounds)")
+        
+        let rawRatio = bindImage!.getAspectRatioF(viewWidth: bounds.width, viewHeight: bounds.height)
 
-            let fixedHorizontalMargin: CGFloat
-            let fixedVerticalMargin: CGFloat
-            
-            let fixedInfoHeight = Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT
+        let fixedHorizontalMargin: CGFloat
+        let fixedVerticalMargin: CGFloat
+        
+        let fixedInfoHeight = Dimensions.ImageDetailExtraHeight
 
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                fixedHorizontalMargin = 50
-                fixedVerticalMargin = 70
-            } else {
-                fixedHorizontalMargin = 0
-                fixedVerticalMargin = 0
-            }
-            
-            let rect = AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
-                                  insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
-                                                     width: self.frame.width - fixedHorizontalMargin * 2,
-                                                     height: self.frame.height - fixedVerticalMargin * 2 - fixedInfoHeight))
-            
-            return rect
+        if UIDevice.current.userInterfaceIdiom == .pad && bounds.width > Dimensions.MIN_MODE_WIDTH {
+            fixedHorizontalMargin = 50
+            fixedVerticalMargin = 70
+        } else {
+            fixedHorizontalMargin = 0
+            fixedVerticalMargin = 0
         }
+        
+        let rect = AVMakeRect(aspectRatio: CGSize(width: rawRatio, height: 1.0),
+                              insideRect: CGRect(x: fixedHorizontalMargin, y: fixedVerticalMargin,
+                                                 width: bounds.width - fixedHorizontalMargin * 2,
+                                                 height: bounds.height - fixedVerticalMargin * 2 - fixedInfoHeight))
+        
+        return rect
     }
 
     override init(frame: CGRect) {
@@ -100,10 +104,10 @@ class ImageDetailView: UIView {
         extraInformationView.isHidden = true
 
         photoByLabel = UILabel()
-        photoByLabel.font = photoByLabel.font.withSize(FontSizes.SMALL)
+        photoByLabel.font = photoByLabel.font.withSize(FontSizes.Normal)
 
         authorButton = UIButton()
-        authorButton.titleLabel!.font = authorButton.titleLabel!.font.with(traits: .traitBold, fontSize: FontSizes.LARGE)
+        authorButton.titleLabel!.font = authorButton.titleLabel!.font.with(traits: .traitBold, fontSize: FontSizes.Large)
         authorButton.titleLabel!.lineBreakMode = NSLineBreakMode.byTruncatingTail
         authorButton.addTarget(self, action: #selector(onClickAuthorName), for: .touchUpInside)
 
@@ -115,7 +119,7 @@ class ImageDetailView: UIView {
         progressLayer = CALayer()
         downloadRoot.layer.addSublayer(progressLayer)
         downloadRoot.layer.masksToBounds = true
-        downloadRoot.layer.cornerRadius = CGFloat(Dimensions.SMALL_ROUND_CORNOR)
+        downloadRoot.layer.cornerRadius = CGFloat(Dimensions.SmallRoundCornor)
         
         downloadButton = DownloadButton()
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
@@ -139,7 +143,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.makeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
 
@@ -330,22 +334,22 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
     }
     
-    func invalidate() {
+    func invalidate(newBounds: CGRect) {
         if self.isHidden {
             return
         }
         
-        self.mainImageView.frame = self.finalFrame
+        self.mainImageView.frame = getFinalFrame(insideBounds: newBounds)
         
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
         }
     }
@@ -354,6 +358,7 @@ class ImageDetailView: UIView {
         Events.trackImagDetailShown()
         
         self.backgroundView.alpha = 0.0
+        self.mainImageView.alpha = 1.0
         isHidden = false
 
         UIView.animate(withDuration: 0.3,
@@ -361,10 +366,11 @@ class ImageDetailView: UIView {
                 options: UIView.AnimationOptions.curveEaseInOut,
                 animations: {
                     self.backgroundView.alpha = 1.0
-                    self.mainImageView.frame = self.finalFrame
+                    self.mainImageView.frame = self.getFinalFrame()
                 },
                 completion: { b in
                     self.showExtraInformation()
+                    self.layoutWidthOnShow = self.bounds.width
                 })
     }
 
@@ -374,7 +380,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.top.equalTo(self.mainImageView.snp.bottom).offset(-1)
         }
 
@@ -403,7 +409,7 @@ class ImageDetailView: UIView {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
-            maker.height.equalTo(Dimensions.IMAGE_DETAIL_EXTRA_HEIGHT)
+            maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
         }
 
@@ -420,20 +426,31 @@ class ImageDetailView: UIView {
     }
 
     private func hideImage() {
+        let skipFrameAnimation = shouldSkipDismissAnimation()
+        
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,
                 options: UIView.AnimationOptions.curveEaseInOut,
                 animations: {
                     self.backgroundView.alpha = 0.0
-                    self.mainImageView.frame = self.initFrame!
                     
-                    // Make sure the subview can layout according to the superview's frame changes
-                    self.mainImageView.layoutIfNeeded()
+                    if !skipFrameAnimation {
+                        self.mainImageView.frame = self.initFrame!
+                         // Make sure the subview can layout according to the superview's frame changes
+                        self.mainImageView.layoutIfNeeded()
+                    } else {
+                        self.mainImageView.alpha = 0.0
+                    }
                 },
                 completion: { b in
                     self.isHidden = true
                     self.extraInformationView.isHidden = true
-                    self.delegate?.onHidden()
+                    self.delegate?.onHidden(frameAnimationSkipped: skipFrameAnimation)
                 })
+    }
+    
+    private func shouldSkipDismissAnimation() -> Bool {
+        let currentWidth = self.bounds.width
+        return currentWidth != layoutWidthOnShow
     }
 }

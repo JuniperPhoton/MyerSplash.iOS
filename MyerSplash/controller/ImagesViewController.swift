@@ -22,9 +22,11 @@ extension ELWaterFlowLayout {
     static func calculateSpanCount(_ width: CGFloat)-> uint {
         let newSpan: uint
         switch width {
-        case 0..<1000:
+        case 0..<500:
+            newSpan = 1
+        case 500..<900:
             newSpan = 2
-        case 1000..<1600:
+        case 900..<1600:
             newSpan = 3
         case 1600..<2200:
             newSpan = 4
@@ -46,7 +48,6 @@ class ImagesViewController: UIViewController {
     
     static let HIGHLIGHTS_DELAY_SEC = 0.2
     
-
     private let waterfallLayout = ELWaterFlowLayout()
     
     private var paging = 1
@@ -71,6 +72,8 @@ class ImagesViewController: UIViewController {
     private var noItemView: UIView!
     private var loadingFooterView: MDCActivityIndicator!
     private var animateCellFinished = false
+    
+    private var viewDidLoaded = false
     
     private var noMoreItemView: UIView = {
         let label = UILabel()
@@ -153,30 +156,17 @@ class ImagesViewController: UIViewController {
         
         waterfallLayout.delegate = self
         waterfallLayout.scrollDirection = .vertical
-
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            #if targetEnvironment(macCatalyst)
-            print("run for macCatalyst")
-            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(view.frame.width))
-            #else
-            print("run for pad")
-            waterfallLayout.lineCount = 3
-            #endif
-            
-            waterfallLayout.vItemSpace = 12
-            waterfallLayout.hItemSpace = 12
-            waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
+            waterfallLayout.lineCount = UInt(ELWaterFlowLayout.calculateSpanCount(UIApplication.shared.windows[0].bounds.width))
         } else {
-            print("run for phone")
             waterfallLayout.lineCount = 1
-            waterfallLayout.vItemSpace = 0
-            waterfallLayout.hItemSpace = 0
         }
         
-        waterfallLayout.vItemSpace = 12
-        waterfallLayout.hItemSpace = 12
-        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 12)
+        waterfallLayout.vItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.hItemSpace = Dimensions.imagesViewSpace
+        
+        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: Dimensions.imagesViewSpace, bottom: 0, right: Dimensions.imagesViewSpace)
         
         collectionView.snp.makeConstraints { (maker) in
             maker.height.equalTo(view)
@@ -199,6 +189,8 @@ class ImagesViewController: UIViewController {
         
         collectionView.addSubview(loadingFooterView)
         collectionView.addSubview(noMoreItemView)
+        
+        collectionView.dragDelegate = self
         
         indicator = MDCActivityIndicator()
         indicator.sizeToFit()
@@ -234,6 +226,8 @@ class ImagesViewController: UIViewController {
         }
         
         refreshData()
+        
+        viewDidLoaded = true
     }
     
     @objc
@@ -243,7 +237,7 @@ class ImagesViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        if collectionView?.superview == nil {
+        if !viewDidLoaded {
             return
         }
         let currentSpan = waterfallLayout.lineCount
@@ -252,12 +246,6 @@ class ImagesViewController: UIViewController {
         if newSpan != currentSpan {
             waterfallLayout.lineCount = UInt(newSpan)
             collectionView.setNeedsLayout()
-        }
-        
-        collectionView.subviews.forEach { (view) in
-            if let cell = view as? MainImageTableCell {
-                cell.invalidateLayer()
-            }
         }
     }
     
@@ -283,8 +271,16 @@ class ImagesViewController: UIViewController {
         }
     }
     
-    func showTappedCell() {
+    func showTappedCell(withAlphaAnimation: Bool) {
         tappedCell?.isHidden = false
+        
+        if withAlphaAnimation {
+            tappedCell?.alpha = 0.0
+
+            UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC, animations: {
+                self.tappedCell?.alpha = 1.0
+            })
+        }
     }
     
     @objc
@@ -506,5 +502,35 @@ extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSo
                         }
                         cell.loadImage(fade: true)
         })
+    }
+}
+
+extension ImagesViewController: UICollectionViewDragDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        itemsForBeginning session: UIDragSession,
+                        at indexPath: IndexPath) -> [UIDragItem] {
+        guard let images = imageRepo?.images else {
+            return []
+        }
+        
+        let row = indexPath.row
+        
+        if row < 0 || row >= images.count {
+            return []
+        }
+        
+        guard let url = images[row].listUrl else {
+            return []
+        }
+        
+        if !ImageIO.isImageCached(url) {
+            return []
+        }
+        
+        let provider = NSItemProvider(object: ImageIO.getCachedImage(url)!)
+        
+        return [
+            UIDragItem(itemProvider: provider)
+        ]
     }
 }

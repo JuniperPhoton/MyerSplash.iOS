@@ -11,7 +11,7 @@ func showToast(_ text: String, time: TimeInterval = ToastView.STAYING_DURATION_S
     }
     ToastView.Builder()
             .attachTo(view)
-            .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
+            .setMarginBottom(Dimensions.ToastMarginBottom)
             .setText(text)
             .build()
             .show(time)
@@ -21,7 +21,7 @@ extension UIView {
     func showToast(_ text: String) {
         ToastView.Builder.init()
                 .attachTo(self)
-                .setMarginBottom(Dimensions.TOAST_MARGIN_BOTTOM)
+                .setMarginBottom(Dimensions.ToastMarginBottom)
                 .setText(text)
                 .build()
                 .show()
@@ -102,5 +102,13 @@ extension UIViewController {
 extension UIApplication {
     func getTopViewController() -> UIViewController? {
         return self.keyWindow?.rootViewController?.presentedViewController ?? self.keyWindow?.rootViewController
+    }
+}
+
+extension MDCRippleTouchController {
+    static func load(view: UIView) -> MDCRippleTouchController {
+        return MDCRippleTouchController.load(intoView: view,
+                                             withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3),
+                                             maxRadius: 25)
     }
 }
