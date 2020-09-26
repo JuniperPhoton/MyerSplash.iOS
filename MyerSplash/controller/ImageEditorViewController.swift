@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import MaterialComponents
+import MaterialComponents.MDCSlider
 import Nuke
 import RxSwift
 import func AVFoundation.AVMakeRect
