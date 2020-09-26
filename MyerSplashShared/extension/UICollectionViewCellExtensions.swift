@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UICollectionViewCell {
+public extension UICollectionViewCell {
     func invalidateLayer() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: Dimensions.ShadowOffsetY)

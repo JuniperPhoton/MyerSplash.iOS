@@ -1,6 +1,6 @@
 import Foundation
 
-extension String {
+public extension String {
     func subString(to: Int) -> String {
         return subString(0, to)
     }

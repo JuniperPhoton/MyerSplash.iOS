@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MyerSplashShared
 
 protocol SettingsDelegate: class {
     func refresh()

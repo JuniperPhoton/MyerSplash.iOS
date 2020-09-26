@@ -12,6 +12,7 @@ import MaterialComponents
 import Nuke
 import RxSwift
 import func AVFoundation.AVMakeRect
+import MyerSplashShared
 
 class ImageEditorViewController: UIViewController {
     private static let TAG = "ImageEditViewController"

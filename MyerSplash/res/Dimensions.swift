@@ -1,30 +1,30 @@
 import Foundation
 import UIKit
 
-class Dimensions {
-    static let ToastHeight: CGFloat = 36
-    static let SingleChoiceItemHeight: CGFloat = 50
+public class Dimensions {
+    public static let ToastHeight: CGFloat = 36
+    public static let SingleChoiceItemHeight: CGFloat = 50
     
     #if targetEnvironment(macCatalyst)
-    static let ImageDetailExtraHeight: CGFloat = 110
+    public static let ImageDetailExtraHeight: CGFloat = 110
     #else
-    static let ImageDetailExtraHeight: CGFloat = 80
+    public static let ImageDetailExtraHeight: CGFloat = 80
     #endif
     
-    static let SmallRoundCornor = 4
+    public static let SmallRoundCornor = 4
 
-    static let TitleMargin = 20
+    public static let TitleMargin = 20
 
-    static let ToastMarginBottom = 30
+    public static let ToastMarginBottom = 30
 
-    static let FabRadius = 50
-    static let FabIconSize = 20
+    public static let FabRadius = 50
+    public static let FabIconSize = 20
     
-    static let ShadowOffsetY = 2
-    static let ShadowRadius = 4
-    static let ShadowOpacity: Float = 0.2
+    public static let ShadowOffsetY = 2
+    public static let ShadowRadius = 4
+    public static let ShadowOpacity: Float = 0.2
     
-    static var imagesViewSpace: CGFloat = {
+    public static var imagesViewSpace: CGFloat = {
         if UIDevice.current.userInterfaceIdiom == .pad {
             return 18
         } else {
@@ -32,10 +32,10 @@ class Dimensions {
         }
     }()
     
-    static let MIN_MODE_WIDTH = 400.cgFloat
+    public static let MIN_MODE_WIDTH = 400.cgFloat
 }
 
-extension Int {
+public extension Int {
     func toCGFloat() -> CGFloat {
         return CGFloat(self)
     }

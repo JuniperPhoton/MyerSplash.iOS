@@ -4,6 +4,7 @@ import SnapKit
 import Nuke
 import RxSwift
 import AVFoundation.AVUtilities
+import MyerSplashShared
 
 protocol ImageDetailViewDelegate: class {
     func onHidden(frameAnimationSkipped: Bool)

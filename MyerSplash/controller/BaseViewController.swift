@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import MyerSplashShared
 
 extension UIColor {
     static var isDarkMode: Bool {

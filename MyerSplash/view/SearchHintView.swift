@@ -10,6 +10,7 @@ import Foundation
 import FlexLayout
 import UIKit
 import PinLayout
+import MyerSplashShared
 
 struct Keyword: Hashable {
     var displayTitle: String!

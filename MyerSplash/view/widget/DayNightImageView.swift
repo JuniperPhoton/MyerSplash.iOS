@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import MyerSplashShared
 
 class DayNightImageView: UIImageView {
     private var maskColor: UIColor {

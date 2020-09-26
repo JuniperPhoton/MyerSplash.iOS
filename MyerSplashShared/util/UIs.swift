@@ -9,17 +9,17 @@
 import Foundation
 import UIKit
 
-class UIs {
-    static func setLabelColor(_ uiView: UILabel) {
+public class UIs {
+    public static func setLabelColor(_ uiView: UILabel) {
         uiView.textColor = UIColor.getDefaultLabelUIColor()
     }
 
-    static func setBackgroundColor(_ uiView: UIView) {
+    public static func setBackgroundColor(_ uiView: UIView) {
         uiView.backgroundColor = UIColor.getDefaultBackgroundUIColor()
     }
 }
 
-extension UILabel {
+public extension UILabel {
     func setDefaultLabelColor() {
         if #available(iOS 13.0, *) {
             self.textColor = UIColor.label
@@ -29,8 +29,8 @@ extension UILabel {
     }
 }
 
-extension UIColor {
-    static func getDefaultLabelUIColor() -> UIColor {
+public extension UIColor {
+    public static func getDefaultLabelUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.label
         } else {
@@ -38,7 +38,7 @@ extension UIColor {
         }
     }
 
-    static func getDefaultBackgroundUIColor() -> UIColor {
+    public static func getDefaultBackgroundUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.systemBackground
         } else {
@@ -47,7 +47,7 @@ extension UIColor {
     }
 }
 
-func getTopBarHeight() -> CGFloat {
+public func getTopBarHeight() -> CGFloat {
     if UIDevice.current.userInterfaceIdiom == .pad {
         #if targetEnvironment(macCatalyst)
         return 110
@@ -58,7 +58,7 @@ func getTopBarHeight() -> CGFloat {
     }
 }
 
-func getContentTopInsets() -> CGFloat {
+public func getContentTopInsets() -> CGFloat {
     #if targetEnvironment(macCatalyst)
     return getTopBarHeight() - 26
     #else
@@ -66,19 +66,19 @@ func getContentTopInsets() -> CGFloat {
     #endif
 }
 
-extension UIView {
-    static var hasTopNotch: Bool {
+public extension UIView {
+    public static var hasTopNotch: Bool {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
     }
 
-    static var topInset: CGFloat {
+    public static var topInset: CGFloat {
         #if targetEnvironment(macCatalyst)
         return 0
         #endif
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
     
-    static func makeBlurBackgroundView()-> UIView {
+    public static func makeBlurBackgroundView()-> UIView {
         let blurEffect: UIBlurEffect!
         if #available(iOS 13.0, *) {
             blurEffect = UIBlurEffect(style: .systemMaterial)
@@ -93,15 +93,15 @@ extension UIView {
         return blurEffectView
     }
 
-    static func getDefaultLabelUIColor() -> UIColor {
+    public static func getDefaultLabelUIColor() -> UIColor {
         return UIColor.getDefaultLabelUIColor()
     }
 
-    static func getDefaultBackgroundUIColor() -> UIColor {
+    public static func getDefaultBackgroundUIColor() -> UIColor {
         return UIColor.getDefaultBackgroundUIColor()
     }
 
-    static func getDefaultDialogBackgroundUIColor() -> UIColor {
+    public static func getDefaultDialogBackgroundUIColor() -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (trainCollection) -> UIColor in
                 if trainCollection.userInterfaceStyle == .dark {

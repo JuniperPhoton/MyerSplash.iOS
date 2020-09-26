@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import ELWaterFallLayout
 import MaterialComponents
+import MyerSplashShared
 
 class DownloadsViewController: UIViewController {
     fileprivate let waterfallLayout = ELWaterFlowLayout()

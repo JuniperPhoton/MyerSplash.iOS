@@ -3,6 +3,7 @@ import UIKit
 import SnapKit
 import Nuke
 import MaterialComponents.MaterialRipple
+import MyerSplashShared
 
 public class MainImageTableCell: UICollectionViewCell {
     static let ID = "MainImageTableCell"

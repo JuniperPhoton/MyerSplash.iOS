@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import MyerSplashShared
 
 class DownloadItemCell: UICollectionViewCell {
     static let ID = "DownloadItemCell"

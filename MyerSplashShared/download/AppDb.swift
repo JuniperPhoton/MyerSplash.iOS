@@ -9,11 +9,11 @@
 import Foundation
 import WCDBSwift
 
-class AppDb {
+public class AppDb {
     private static let DB_PATH = "app_db/appdb"
     private static let DOWNLOADS_TABLE = "downloads_table"
 
-    static let instance = AppDb()
+    public static let instance = AppDb()
 
     private var db: Database {
         let documentsURL
@@ -32,7 +32,7 @@ class AppDb {
         }
     }
     
-    func updateItemsToFailed() {
+    public func updateItemsToFailed() {
         do {
             try db.update(table: AppDb.DOWNLOADS_TABLE,
                           on: [DownloadItem.Properties.status],
@@ -44,7 +44,7 @@ class AppDb {
         }
     }
 
-    func insertToDb(_ item: DownloadItem) {
+    public func insertToDb(_ item: DownloadItem) {
         do {
             try db.insert(objects: item, intoTable: AppDb.DOWNLOADS_TABLE)
         } catch {
@@ -52,7 +52,7 @@ class AppDb {
         }
     }
 
-    func insertOrReplace(_ item: DownloadItem) {
+    public func insertOrReplace(_ item: DownloadItem) {
         do {
             try db.insertOrReplace(objects: item, intoTable: AppDb.DOWNLOADS_TABLE)
         } catch {
@@ -60,7 +60,7 @@ class AppDb {
         }
     }
 
-    func deleteAll() {
+    public func deleteAll() {
         do {
             try db.delete(fromTable: AppDb.DOWNLOADS_TABLE)
         } catch {
@@ -68,13 +68,13 @@ class AppDb {
         }
     }
 
-    func queryItemById(id: String) -> DownloadItem? {
+    public func queryItemById(id: String) -> DownloadItem? {
         return try? db.getObject(on: DownloadItem.Properties.all,
                 fromTable: AppDb.DOWNLOADS_TABLE,
                 where: DownloadItem.CodingKeys.id == id)
     }
 
-    func getAllItems() -> [DownloadItem] {
+    public func getAllItems() -> [DownloadItem] {
         return (try? db.getObjects(on: DownloadItem.Properties.all,
                 fromTable: AppDb.DOWNLOADS_TABLE,
                 orderBy: [DownloadItem.Properties.createTime.asOrder(by: .descending)])) ?? [DownloadItem]()

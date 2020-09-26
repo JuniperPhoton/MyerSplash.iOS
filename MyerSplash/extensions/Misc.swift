@@ -1,16 +1,16 @@
 //
-//  UIViewControllerExtensions.swift
+//  Misc.swift
 //  MyerSplash
 //
-//  Created by JuniperPhoton on 2020/1/10.
+//  Created by JuniperPhoton on 2020/9/26.
 //  Copyright © 2020 juniper. All rights reserved.
 //
 
 import Foundation
+import MyerSplashShared
 import UIKit
-import MaterialComponents
 
-extension UIViewController {
+public extension UIViewController {
     func presentEdit(item: DownloadItem) {
         #if !targetEnvironment(macCatalyst)
         let vc = ImageEditorViewController(item: item)
@@ -47,14 +47,5 @@ extension UIViewController {
         }
         
         present(ac, animated: true)
-    }
-}
-
-extension MDCAlertController {
-    func applyColors() {
-        backgroundColor = .getDefaultBackgroundUIColor()
-        titleColor = .getDefaultLabelUIColor()
-        messageColor = .getDefaultLabelUIColor()
-        buttonTitleColor = .getDefaultLabelUIColor()
     }
 }

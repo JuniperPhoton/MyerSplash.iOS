@@ -12,27 +12,27 @@ import Alamofire
 import RxAlamofire
 import RxSwift
 
-class DownloadManager: NSObject {
-    static let instance = DownloadManager()
+public class DownloadManager: NSObject {
+    public static let instance = DownloadManager()
     
     private var publishSubject = PublishSubject<DownloadItem>()
     private var downloadRecord = [String: DownloadRequest]()
     
     private static let TAG = "DownloadManager"
     
-    static let DOWNLOAD_DIR = "MyerSplash"
+    public static let DOWNLOAD_DIR = "MyerSplash"
 
     private override init() {
         // ignored
     }
     
-    func markDownloadingToFailed() {
+    public func markDownloadingToFailed() {
         dbQueue.async {
             AppDb.instance.updateItemsToFailed()
         }
     }
     
-    func addObserver(_ image: UnsplashImage, _ observer: @escaping (Event<DownloadItem>) -> Void) -> Disposable {
+    public func addObserver(_ image: UnsplashImage, _ observer: @escaping (Event<DownloadItem>) -> Void) -> Disposable {
         let disposable = publishSubject.observeOn(MainScheduler.instance).subscribe(observer)
         
         checkDownloadStatusFirst(image)
@@ -54,7 +54,7 @@ class DownloadManager: NSObject {
         }
     }
     
-    func cancel(id: String) {
+    public func cancel(id: String) {
         let request = downloadRecord[id]
         if request != nil {
             showToast(R.strings.download_cancelled)
@@ -66,7 +66,7 @@ class DownloadManager: NSObject {
     }
     
     // MARK: Check first
-    func prepareToDownload(vc: UIViewController,
+    public func prepareToDownload(vc: UIViewController,
                            image: UnsplashImage) {
         Events.trackBeginDownloadEvent()
         
@@ -111,7 +111,7 @@ class DownloadManager: NSObject {
         doDownload(image)
     }
     
-    func createSavingDir()-> URL {
+    public func createSavingDir()-> URL {
         #if targetEnvironment(macCatalyst)
         return FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0].appendingPathComponent(DownloadManager.DOWNLOAD_DIR)
         #else
@@ -119,7 +119,7 @@ class DownloadManager: NSObject {
         #endif
     }
     
-    func createSavingRootPath()-> URL {
+    public func createSavingRootPath()-> URL {
         #if targetEnvironment(macCatalyst)
         return FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0]
         #else
@@ -127,7 +127,7 @@ class DownloadManager: NSObject {
         #endif
     }
     
-    func createAbsolutePathForImage(_ relativePath: String)-> URL {
+    public func createAbsolutePathForImage(_ relativePath: String)-> URL {
         return createSavingRootPath().appendingPathComponent(relativePath)
     }
     

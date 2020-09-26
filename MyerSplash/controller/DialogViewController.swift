@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import MyerSplashShared
 
 protocol DialogContent {
     var title: String? { get set }

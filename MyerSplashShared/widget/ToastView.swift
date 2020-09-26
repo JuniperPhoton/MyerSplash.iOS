@@ -2,17 +2,17 @@ import Foundation
 import SnapKit
 import UIKit
 
-class ToastView: UILabel {
-    static let PADDING = CGFloat(10)
-    static let SHOWING_HIDING_DURATION_SEC = 0.2
-    static let STAYING_DURATION_SEC = 2.0
+public class ToastView: UILabel {
+    public static let PADDING = CGFloat(10)
+    public static let SHOWING_HIDING_DURATION_SEC = 0.2
+    public static let STAYING_DURATION_SEC = 2.0
     
     private static var toast: ToastView? = nil
 
     /**
      Use the Builder of ToastView instead.
     **/
-    class Builder {
+    public class Builder {
         private var text: String? = nil
         private var marginBottom: Int = 0
         private var root: UIView? = nil
@@ -72,7 +72,7 @@ class ToastView: UILabel {
         }
     }
 
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         get {
             var contentSize = super.intrinsicContentSize
             contentSize.width += ToastView.PADDING * 2
@@ -129,7 +129,7 @@ class ToastView: UILabel {
         }
     }
 
-    override func drawText(in rect: CGRect) {
+    public override func drawText(in rect: CGRect) {
         super.drawText(in: rect.insetBy(dx: ToastView.PADDING, dy: 6))
     }
 }
