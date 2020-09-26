@@ -9,6 +9,36 @@ import Nuke
 public class ImageIO {
     private static let TAG = "ImageIO"
     
+    public static func cacheImage(_ url: String?,
+                                  onSuccess: ((UIImage)->Void)? = nil,
+                                  onFailure: ((Error)->Void)? = nil) {
+        if url == nil {
+            onFailure?(ApiError(message: "url is nil"))
+            return
+        }
+        
+        guard let uri = URL(string: url!) else {
+            onFailure?(ApiError(message: "uri is nil"))
+            return
+        }
+        
+        ImagePipeline.shared.loadImage(with: uri, queue: .main) { (response, progress, total) in
+            // ignored
+        } completion: { (result) in
+            switch result {
+            case .success(let response):
+            guard let image = response.image as? UIImage else {
+                onFailure?(ApiError(message: "faild to fetch iamge"))
+            }
+            onSuccess?(image)
+            break
+            case .failure(let error):
+            onFailure?(error)
+            break
+            }
+        }
+    }
+    
     public static func isImageCached(_ url: String)-> Bool {
         guard let uri = URL(string: url) else {
             return false

@@ -41,9 +41,9 @@ target 'MyerSplashShared' do
 
 end
 
-#target 'MyerSplashWidgetExtension' do
- # use_frameworks!
-  #pod 'WCDB.swift'
-  #pod 'SwiftyJSON'
-  #pod 'Nuke', '~> 8.4'
-#end
+target 'MyerSplashWidgetExtension' do
+  use_frameworks!
+  pod 'WCDB.swift'
+  pod 'SwiftyJSON'
+  pod 'Nuke', '~> 8.4'
+end

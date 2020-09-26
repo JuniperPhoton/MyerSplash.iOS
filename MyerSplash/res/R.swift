@@ -114,6 +114,22 @@ public class R {
         public static let share_content_highlight = NSLocalizedString("share_content_highlight", comment: "")
         public static let about_website = NSLocalizedString("about_website", comment: "")
 
+        public static let widget_title = NSLocalizedString("widget_title", comment: "")
+        public static let widget_desc = NSLocalizedString("widget_desc", comment: "")
+        
+        public static let month_01 = NSLocalizedString("month_01", comment: "")
+        public static let month_02 = NSLocalizedString("month_02", comment: "")
+        public static let month_03 = NSLocalizedString("month_03", comment: "")
+        public static let month_04 = NSLocalizedString("month_04", comment: "")
+        public static let month_05 = NSLocalizedString("month_05", comment: "")
+        public static let month_06 = NSLocalizedString("month_06", comment: "")
+        public static let month_07 = NSLocalizedString("month_07", comment: "")
+        public static let month_08 = NSLocalizedString("month_08", comment: "")
+        public static let month_09 = NSLocalizedString("month_09", comment: "")
+        public static let month_10 = NSLocalizedString("month_10", comment: "")
+        public static let month_11 = NSLocalizedString("month_11", comment: "")
+        public static let month_12 = NSLocalizedString("month_12", comment: "")
+
         private init() {
             
         }
