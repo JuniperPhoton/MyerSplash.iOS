@@ -17,14 +17,6 @@ protocol Callback {
     func onFailed(_ e: Error?)
 }
 
-struct NotImplError: Error {
-    
-}
-
-struct ApiError: Error {
-    var message: String? = nil
-}
-
 class AppConcurrentDispatchQueueScheduler {
     private static var internalInstance: ConcurrentDispatchQueueScheduler? = nil
     
