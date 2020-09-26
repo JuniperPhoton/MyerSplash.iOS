@@ -4,22 +4,22 @@ import SwiftyJSON
 import WCDBSwift
 import AVFoundation.AVUtilities
 
-class UnsplashImage: ColumnJSONCodable {
-    private (set) var id: String?
-    private (set) var color: String?
-    private (set) var likes: Int = 0
-    private (set) var width: Int = 0
-    private (set) var height: Int = 0
-    private (set) var urls: ImageUrl?
-    private (set) var user: UnsplashUser?
-    private (set) var sponsorship: Sponsorship?
-    private (set) var isUnsplash = true
+public class UnsplashImage: ColumnJSONCodable {
+    public private (set) var id: String?
+    public private (set) var color: String?
+    public private (set) var likes: Int = 0
+    public private (set) var width: Int = 0
+    public private (set) var height: Int = 0
+    public private (set) var urls: ImageUrl?
+    public private (set) var user: UnsplashUser?
+    public private (set) var sponsorship: Sponsorship?
+    public private (set) var isUnsplash = true
     
     enum CodingKeys: String, CodingKey {
         case id, color, likes, width, height, urls, user, sponsorship
     }
     
-    var rawAspectRatioF: CGFloat {
+    public var rawAspectRatioF: CGFloat {
         get {
             if width == 0 || height == 0 {
                 return CGFloat(1.5)
@@ -29,31 +29,31 @@ class UnsplashImage: ColumnJSONCodable {
         }
     }
 
-    var fileNameForDownload: String {
+    public var fileNameForDownload: String {
         get {
             return "\(user!.name!) - \(id!) - \(tagForDownload)"
         }
     }
 
-    var themeColor: UIColor {
+    public var themeColor: UIColor {
         get {
             return color != nil ? UIColor(color!) : UIColor.black
         }
     }
 
-    var userName: String? {
+    public var userName: String? {
         get {
             return user?.name
         }
     }
 
-    var userHomePage: String? {
+    public var userHomePage: String? {
         get {
             return user?.homeUrl
         }
     }
 
-    var listUrl: String? {
+    public var listUrl: String? {
         get {
             let quality = AppSettings.loadingQuality()
             switch quality {
@@ -65,7 +65,7 @@ class UnsplashImage: ColumnJSONCodable {
         }
     }
 
-    var downloadUrl: String? {
+    public var downloadUrl: String? {
         get {
             let quality = AppSettings.savingQuality()
             switch quality {
@@ -77,7 +77,7 @@ class UnsplashImage: ColumnJSONCodable {
         }
     }
 
-    var fileName: String {
+    public var fileName: String {
         get {
             let id = self.id ?? "id"
             return "\(id)-\(tagForDownload).jpeg"
@@ -97,7 +97,7 @@ class UnsplashImage: ColumnJSONCodable {
 }
 
 // MARK: Aspect ratio
-extension UnsplashImage {
+public extension UnsplashImage {
     func getAspectRatioF(viewWidth: CGFloat, viewHeight: CGFloat)-> CGFloat {
         let rect = getTargetRect(viewWidth: viewWidth, viewHeight: viewHeight)
         return rect.width / rect.height
@@ -143,25 +143,25 @@ extension UnsplashImage {
 extension UnsplashImage {
     private static var createdImageCount = 0
 
-    static func isToday(_ image: UnsplashImage) -> Bool {
+    public static func isToday(_ image: UnsplashImage) -> Bool {
         return image.id == createDateString(Date())
     }
 
-    static func createTodayImageId() -> String {
+    public static func createTodayImageId() -> String {
         return createTodayImageDateString()
     }
 
-    static func createTodayImageDateString() -> String {
+    public static func createTodayImageDateString() -> String {
         return createDateString(Date())
     }
 
-    static func createDateString(_ date: Date) -> String {
+    public static func createDateString(_ date: Date) -> String {
         let df = DateFormatter()
         df.dateFormat = "yyyyMMdd"
         return df.string(from: date)
     }
     
-    static func create(_ date: Date) -> UnsplashImage {
+    public static func create(_ date: Date) -> UnsplashImage {
         let image = UnsplashImage()
         let urls = ImageUrl()
         let user = UnsplashUser()
@@ -194,12 +194,12 @@ extension UnsplashImage {
         return image
     }
 
-    static func createToday() -> UnsplashImage {
+    public static func createToday() -> UnsplashImage {
         return create(Date())
     }
 }
 
-class ImageUrl: ColumnJSONCodable {
+public class ImageUrl: ColumnJSONCodable {
     var raw: String?
     var full: String?
     var regular: String?
@@ -207,6 +207,6 @@ class ImageUrl: ColumnJSONCodable {
     var thumb: String?
 }
 
-class Sponsorship: ColumnJSONCodable {
+public class Sponsorship: ColumnJSONCodable {
     // empty class
 }

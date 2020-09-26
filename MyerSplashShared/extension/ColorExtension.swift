@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     var redValue: CGFloat {
         return CIColor(color: self).red
     }

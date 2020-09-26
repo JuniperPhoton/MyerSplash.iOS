@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension UIFont {
+public extension UIFont {
     var bold: UIFont {
         return with(traits: .traitBold)
     }

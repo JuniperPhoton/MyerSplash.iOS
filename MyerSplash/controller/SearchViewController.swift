@@ -11,6 +11,7 @@ import UIKit
 import MaterialComponents.MDCRippleTouchController
 import FlexLayout
 import RxSwift
+import MyerSplashShared
 
 class SearchViewController: UIViewController {
     private var closeRippleController: MDCRippleTouchController!

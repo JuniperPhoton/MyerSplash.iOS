@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import MyerSplashShared
 
 class SettingsGroup: UIStackView {
     private var groupTitleView: UILabel!

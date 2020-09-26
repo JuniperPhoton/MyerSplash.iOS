@@ -9,6 +9,7 @@
 import Foundation
 import Tabman
 import Pageboy
+import MyerSplashShared
 
 func createTopTabBar() -> TMBar.ButtonBar {
     let bar = TMBar.ButtonBar()

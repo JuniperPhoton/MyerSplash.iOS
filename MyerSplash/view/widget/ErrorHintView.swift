@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import MaterialComponents.MDCActivityIndicator
 import MaterialComponents.MDCFlatButton
+import MyerSplashShared
 
 class ErrorHintView: UIView {
     var onClickRetry: (()->Void)? = nil

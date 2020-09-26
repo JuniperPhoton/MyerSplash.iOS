@@ -6,10 +6,10 @@
 import Foundation
 import Nuke
 
-class ImageIO {
+public class ImageIO {
     private static let TAG = "ImageIO"
     
-    static func isImageCached(_ url: String)-> Bool {
+    public static func isImageCached(_ url: String)-> Bool {
         guard let uri = URL(string: url) else {
             return false
         }
@@ -23,7 +23,7 @@ class ImageIO {
         return diskCached || memoryCached
     }
     
-    static func getCachedImage(_ url: String?)-> UIImage? {
+    public static func getCachedImage(_ url: String?)-> UIImage? {
         if url == nil {
             return nil
         }
@@ -47,15 +47,15 @@ class ImageIO {
         return nil
     }
     
-    static func getDiskCacheSizeBytes()-> Int {
+    public static func getDiskCacheSizeBytes()-> Int {
         return DataLoader.sharedUrlCache.currentDiskUsage
     }
     
-    static func getFormattedDiskCacheSize()-> String {
+    public static func getFormattedDiskCacheSize()-> String {
         return String(format: "%.2fMB", DataLoader.sharedUrlCache.currentDiskUsage.toCGFloat() / 1024.0 / 1024.0)
     }
     
-    static func clearCaches(includingDownloads: Bool) {
+    public static func clearCaches(includingDownloads: Bool) {
         DataLoader.sharedUrlCache.removeAllCachedResponses()
         
         if includingDownloads {
@@ -63,7 +63,7 @@ class ImageIO {
         }
     }
     
-    static func clearDownloadFiles() {
+    public static func clearDownloadFiles() {
         DispatchQueue.global().async {
             do {
                 var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -75,7 +75,7 @@ class ImageIO {
         }
     }
     
-    static func loadImage(url: String,
+    public static func loadImage(url: String,
                           intoView: ImageDisplayingView,
                           fade: Bool = true,
                           completion: ImageTask.Completion? = nil) {
@@ -83,7 +83,7 @@ class ImageIO {
         loadImage(request: request, intoView: intoView, fade: fade, completion: completion)
     }
     
-    static func loadImage(request: ImageRequest,
+    public static func loadImage(request: ImageRequest,
                           intoView: ImageDisplayingView,
                           fade: Bool = true,
                           completion: ImageTask.Completion? = nil) {
@@ -99,7 +99,7 @@ class ImageIO {
                        into: intoView, progress: nil, completion: completion)
     }
     
-    static func getImageSize(at url: URL) -> CGSize {
+    public static func getImageSize(at url: URL) -> CGSize {
         let exist = FileManager.default.fileExists(atPath: url.path)
         if !exist {
             return CGSize.zero
@@ -110,7 +110,7 @@ class ImageIO {
         return image?.size ?? CGSize.zero
     }
     
-    static func resizedImage(at url: URL, for size: CGSize) -> UIImage? {
+    public static func resizedImage(at url: URL, for size: CGSize) -> UIImage? {
         let exist = FileManager.default.fileExists(atPath: url.path)
         
         Log.info(tag: ImageIO.TAG, "resizedImage check exists, \(exist) at \(url.path)")

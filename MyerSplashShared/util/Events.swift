@@ -15,8 +15,8 @@ import AppCenterAnalytics
 import AppCenterCrashes
 #endif
 
-class Events {
-    static func initialize() {
+public class Events {
+    public static func initialize() {
         #if !targetEnvironment(macCatalyst)
         MSAppCenter.start(AppKeys.getAppCenterKey(), withServices:[
             MSAnalytics.self,
@@ -25,59 +25,59 @@ class Events {
         #endif
     }
     
-    static func trackBeginDownloadEvent() {
+    public static func trackBeginDownloadEvent() {
         trackMSEvents("Begin download")
     }
 
-    static func trackImagDetailShown() {
+    public static func trackImagDetailShown() {
         trackMSEvents("Image detail shown")
     }
     
-    static func trackImagDetailBeginDrag() {
+    public static func trackImagDetailBeginDrag() {
         trackMSEvents("Image detail begin drag")
     }
     
-    static func trackImagDetailTapToDismiss() {
+    public static func trackImagDetailTapToDismiss() {
         trackMSEvents("Image detail tap to dismiss")
     }
     
-    static func trackDownloadSuccessEvent() {
+    public static func trackDownloadSuccessEvent() {
         trackMSEvents("Download success")
     }
     
-    static func trackDownloadFailedEvent(_ success: Bool, _ message: String? = nil) {
+    public static func trackDownloadFailedEvent(_ success: Bool, _ message: String? = nil) {
         trackMSEvents("Download failed", withProperties: ["Success": String(success), "Message": message ?? ""])
     }
     
-    static func trackTabSelected(name: String) {
+    public static func trackTabSelected(name: String) {
         trackMSEvents("Tab selected", withProperties: ["name": name])
     }
     
-    static func trackClickSearch() {
+    public static func trackClickSearch() {
         trackMSEvents("Search clicked")
     }
     
-    static func trackClickSearchItem(name: String) {
+    public static func trackClickSearchItem(name: String) {
         trackMSEvents("Search item clicked", withProperties: ["item": name])
     }
     
-    static func trackClickAuthor() {
+    public static func trackClickAuthor() {
         trackMSEvents("Author clicked")
     }
     
-    static func trackEdit() {
+    public static func trackEdit() {
         trackMSEvents("Edit entered")
     }
     
-    static func trackEditOk() {
+    public static func trackEditOk() {
         trackMSEvents("Edit composed")
     }
 
-    static func trackClickMore() {
+    public static func trackClickMore() {
         trackMSEvents("More entered")
     }
     
-    static func trackRefresh(name: String) {
+    public static func trackRefresh(name: String) {
         trackMSEvents("Refresh", withProperties: ["title": name])
     }
     

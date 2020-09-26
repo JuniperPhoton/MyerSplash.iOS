@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import RxAlamofire
 import SwiftyJSON
+import MyerSplashShared
 
 protocol Callback {
     func onNewImages(_ list: [UnsplashImage])

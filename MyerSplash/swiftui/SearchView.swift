@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import MyerSplashShared
 
 @available(iOS 13.0, *)
 struct BlurView: UIViewRepresentable {

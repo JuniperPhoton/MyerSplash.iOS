@@ -24,3 +24,26 @@ target 'MyerSplash' do
   pod 'MaterialComponents/Slider'
 
 end
+
+target 'MyerSplashShared' do
+  use_frameworks!
+  pod 'WCDB.swift'
+  pod 'SwiftyJSON'
+  pod 'Nuke', '~> 8.4'
+  pod 'MaterialComponents/Buttons'
+  pod 'MaterialComponents/ActivityIndicator'
+  pod 'MaterialComponents/BottomSheet'
+  pod 'MaterialComponents/Ripple'
+  pod 'MaterialComponents/Dialogs'
+  pod 'Alamofire', '~> 4.9.1'
+  pod 'RxAlamofire'
+  pod 'SnapKit', '~> 5.0.0'
+
+end
+
+#target 'MyerSplashWidgetExtension' do
+ # use_frameworks!
+  #pod 'WCDB.swift'
+  #pod 'SwiftyJSON'
+  #pod 'Nuke', '~> 8.4'
+#end

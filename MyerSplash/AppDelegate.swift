@@ -1,4 +1,5 @@
 import UIKit
+import MyerSplashShared
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

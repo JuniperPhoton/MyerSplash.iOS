@@ -8,15 +8,15 @@
 
 import Foundation
 
-class AppKeys {
-    static let KEY_PLIST_NAME = "Key"
-    static let UNSPLASH_KEY_NAME = "UnsplashKey"
-    static let APP_CENTER_KEY_NAME = "AppCenterKey"
+public class AppKeys {
+    public static let KEY_PLIST_NAME = "Key"
+    public static let UNSPLASH_KEY_NAME = "UnsplashKey"
+    public static let APP_CENTER_KEY_NAME = "AppCenterKey"
 
     private static var clientId: String = ""
     private static var appCenterKey: String = ""
 
-    static func prepare() {
+    public static func prepare() {
         var keyDict: NSDictionary?
         if let path = Bundle.main.path(forResource: KEY_PLIST_NAME, ofType: "plist") {
             keyDict = NSDictionary(contentsOfFile: path)
@@ -27,7 +27,7 @@ class AppKeys {
         }
     }
 
-    static func getClientId() -> String {
+    public static func getClientId() -> String {
         if clientId.isEmpty {
             prepare()
         }
@@ -35,7 +35,7 @@ class AppKeys {
         return clientId
     }
 
-    static func getAppCenterKey() -> String {
+    public static func getAppCenterKey() -> String {
         if appCenterKey.isEmpty {
             prepare()
         }

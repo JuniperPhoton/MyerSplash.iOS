@@ -1,14 +1,14 @@
 import Foundation
 import UIKit
 
-class Colors {
-    static let THEME = "#18c3d8"
-    static let THEME_DARK = "#159c9c"
-    static let BACKGROUND = "#000000"
-    static let DIALOG_MASK = "#b2000000"
+public class Colors {
+    public static let THEME = "#18c3d8"
+    public static let THEME_DARK = "#159c9c"
+    public static let BACKGROUND = "#000000"
+    public static let DIALOG_MASK = "#b2000000"
 }
 
-extension String {
+public extension String {
     func asUIColor() -> UIColor {
         return UIColor(self)
     }

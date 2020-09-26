@@ -8,8 +8,8 @@
 
 import Foundation
 
-class AppNotification {
-    static let KEY_RELOAD = "reload"
+public class AppNotification {
+    public static let KEY_RELOAD = "reload"
     
     private init() {
     }

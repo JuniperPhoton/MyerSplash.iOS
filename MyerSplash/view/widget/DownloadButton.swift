@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MyerSplashShared
 
 class DownloadButton: UIButton {
     override init(frame: CGRect) {

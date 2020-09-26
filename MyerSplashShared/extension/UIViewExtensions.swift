@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension UIView {
+public extension UIView {
     func addSubViews(_ views: UIView...) {
         views.forEach { (v) in
             addSubview(v)
