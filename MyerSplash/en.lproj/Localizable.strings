@@ -80,3 +80,19 @@
 "settings_no_sponsorship_title" = "Sponsorship setting";
 "settings_no_sponsorship_content" = "Show sponsorship in NEW tab";
 "search_title" = "SEARCH";
+
+"widget_title" = "Today highlight";
+"widget_desc" = "Showing your today's highlight wallpaper.";
+
+"month_01" = "Jan.";
+"month_02" = "Feb.";
+"month_03" = "Mar.";
+"month_04" = "Apr.";
+"month_05" = "May.";
+"month_06" = "Jun.";
+"month_07" = "Jul.";
+"month_08" = "Aug.";
+"month_09" = "Sept.";
+"month_010" = "Oct.";
+"month_011" = "Nov.";
+"month_012" = "Dec.";

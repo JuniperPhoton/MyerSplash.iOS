@@ -81,3 +81,19 @@
 "settings_no_sponsorship_content" = "在「编辑推荐」里显示赞助图片";
 
 "search_title" = "搜索";
+
+"widget_title" = "今日推荐";
+"widget_desc" = "展示 MyerSplash 每日更新的推荐壁纸。";
+
+"month_01" = "一月";
+"month_02" = "二月";
+"month_03" = "三月";
+"month_04" = "四月";
+"month_05" = "五月";
+"month_06" = "六月";
+"month_07" = "七月";
+"month_08" = "八月";
+"month_09" = "九月";
+"month_010" = "十月";
+"month_011" = "十一月";
+"month_012" = "十二月";

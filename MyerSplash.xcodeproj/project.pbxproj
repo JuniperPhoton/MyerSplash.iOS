@@ -50,6 +50,13 @@
 		2247DB3A251F3A2200DC6F4D /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */; platformFilter = ios; };
 		2247DB3F251F3A7D00DC6F4D /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56F8B96F974BAFC1A7D2E /* Request.swift */; };
 		2247DB44251F3AAC00DC6F4D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB43251F3AAC00DC6F4D /* Misc.swift */; };
+		2247DB4F251F3E8000DC6F4D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2247DB4E251F3E8000DC6F4D /* WidgetKit.framework */; platformFilter = ios; };
+		2247DB51251F3E8000DC6F4D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2247DB50251F3E8000DC6F4D /* SwiftUI.framework */; };
+		2247DB54251F3E8000DC6F4D /* MyerSplashWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB53251F3E8000DC6F4D /* MyerSplashWidget.swift */; };
+		2247DB56251F3E8200DC6F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2247DB55251F3E8200DC6F4D /* Assets.xcassets */; };
+		2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2247DB67251F3FB400DC6F4D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB66251F3FB400DC6F4D /* Error.swift */; };
+		2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
 		2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721F23C369E600F921F4 /* DownloadsViewController.swift */; };
 		2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722123C36A1100F921F4 /* AboutViewController.swift */; };
@@ -59,6 +66,8 @@
 		2268722F23C632B100F921F4 /* DownloadItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722E23C632B100F921F4 /* DownloadItemCell.swift */; };
 		2268723123C64A1F00F921F4 /* ImageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268723023C64A1F00F921F4 /* ImageEditorViewController.swift */; };
 		227D5D2123C2346400B2CC4A /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */; };
+		22A0D29B251F9F920043B141 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2219372C23C999BD00A58BE5 /* Localizable.strings */; };
+		22A0D29D251F9F920043B141 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2219372C23C999BD00A58BE5 /* Localizable.strings */; };
 		22D39FF3251F00DA00F69A36 /* MyerSplashShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D39FF1251F00DA00F69A36 /* MyerSplashShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22D39FF6251F00DA00F69A36 /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
 		22D39FF7251F00DA00F69A36 /* MyerSplashShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -77,6 +86,7 @@
 		54A56E07DAF6EB75DC63E7E8 /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A560BD8B67160A59D237A6 /* DialogViewController.swift */; };
 		71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9175F0CC748D0AC10924C /* Pods_MyerSplash.framework */; };
 		815C57B45972B9E2B362B15D /* Pods_MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A7955803E00B757AF256F2 /* Pods_MyerSplashShared.framework */; };
+		C14CF0E30FDB6B55B26196A6 /* Pods_MyerSplashWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FC5B6D40C5466AB235C4F4 /* Pods_MyerSplashWidgetExtension.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		E47DED5B215DF0BD18169D29 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3A054251F01AA00F69A36 /* Pods_MyerSplash.framework */; };
 		F02A4BBC1FF8E37A0027B721 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F02A4BBB1FF8E37A0027B721 /* Assets.xcassets */; };
 		F0B633E0200C7E1400D05D74 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0B633DF200C7E1400D05D74 /* Key.plist */; };
@@ -85,6 +95,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2247DB58251F3E8200DC6F4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0D247B11FF7C35000BB8076 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2247DB4C251F3E8000DC6F4D;
+			remoteInfo = MyerSplashWidgetExtension;
+		};
+		2247DB9D251F40BD00DC6F4D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F0D247B11FF7C35000BB8076 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22D39FEE251F00DA00F69A36;
+			remoteInfo = MyerSplashShared;
+		};
 		22D39FF4251F00DA00F69A36 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F0D247B11FF7C35000BB8076 /* Project object */;
@@ -95,6 +119,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2247DB5C251F3E8200DC6F4D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22D39FF8251F00DA00F69A36 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -109,12 +144,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03A656DD8EA3371BBA7BB59E /* Pods-MyerSplashWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplashWidgetExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplashWidgetExtension/Pods-MyerSplashWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		0489B479236DF5F4005965D8 /* UIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIs.swift; sourceTree = "<group>"; };
 		04DD9D41236F0A43009F5187 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		04DD9D46236F0B2B009F5187 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		04E5608A237139E00085C950 /* AppKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeys.swift; sourceTree = "<group>"; };
 		04E5608C23713DAA0085C950 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		0AC28CD0CF437C5DD4F0B809 /* Pods-MyerSplashShared.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplashShared.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplashShared/Pods-MyerSplashShared.release.xcconfig"; sourceTree = "<group>"; };
+		18FC5B6D40C5466AB235C4F4 /* Pods_MyerSplashWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyerSplashWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A54F03AD19D14182EA816F0 /* ImageIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageIO.swift; sourceTree = "<group>"; };
 		1A54F6D86983A7220256314E /* DayNightImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayNightImageView.swift; sourceTree = "<group>"; };
 		1A54F9E0833C69F3D6955493 /* DownloadItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
@@ -129,6 +166,14 @@
 		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
 		223D1EE424A3AF86000D04FC /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2247DB43251F3AAC00DC6F4D /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MyerSplashWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2247DB4E251F3E8000DC6F4D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2247DB50251F3E8000DC6F4D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		2247DB53251F3E8000DC6F4D /* MyerSplashWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyerSplashWidget.swift; sourceTree = "<group>"; };
+		2247DB55251F3E8200DC6F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2247DB57251F3E8200DC6F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2247DB5B251F3E8200DC6F4D /* MyerSplashWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyerSplashWidgetExtension.entitlements; sourceTree = "<group>"; };
+		2247DB66251F3FB400DC6F4D /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		2268721D23C369AB00F921F4 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		2268721F23C369E600F921F4 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		2268722123C36A1100F921F4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +229,7 @@
 		8C5A8F87AE0DE305C3487239 /* Pods-MyerSplash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.release.xcconfig"; sourceTree = "<group>"; };
 		A02FA5BB50846102410E0BC4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		B8A7955803E00B757AF256F2 /* Pods_MyerSplashShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyerSplashShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFA36C32ED7B3149718E21A1 /* Pods-MyerSplashWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplashWidgetExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplashWidgetExtension/Pods-MyerSplashWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		F02A4BBB1FF8E37A0027B721 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0B633DF200C7E1400D05D74 /* Key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Key.plist; sourceTree = "<group>"; };
 		F0D247B91FF7C35000BB8076 /* MyerSplash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyerSplash.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +238,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2247DB4A251F3E8000DC6F4D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2247DB51251F3E8000DC6F4D /* SwiftUI.framework in Frameworks */,
+				2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */,
+				2247DB4F251F3E8000DC6F4D /* WidgetKit.framework in Frameworks */,
+				C14CF0E30FDB6B55B26196A6 /* Pods_MyerSplashWidgetExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22D39FEC251F00DA00F69A36 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,6 +318,16 @@
 				2247DB43251F3AAC00DC6F4D /* Misc.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		2247DB52251F3E8000DC6F4D /* MyerSplashWidget */ = {
+			isa = PBXGroup;
+			children = (
+				2247DB53251F3E8000DC6F4D /* MyerSplashWidget.swift */,
+				2247DB55251F3E8200DC6F4D /* Assets.xcassets */,
+				2247DB57251F3E8200DC6F4D /* Info.plist */,
+			);
+			path = MyerSplashWidget;
 			sourceTree = "<group>";
 		};
 		2268722923C4F68400F921F4 /* download */ = {
@@ -344,6 +411,7 @@
 			children = (
 				54A566581177A56512E3DE30 /* UnsplashImage.swift */,
 				54A56ABD120FB1828A5DCFC3 /* UnsplashUser.swift */,
+				2247DB66251F3FB400DC6F4D /* Error.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -411,6 +479,9 @@
 				04DD9D41236F0A43009F5187 /* MessageUI.framework */,
 				5FF9175F0CC748D0AC10924C /* Pods_MyerSplash.framework */,
 				B8A7955803E00B757AF256F2 /* Pods_MyerSplashShared.framework */,
+				2247DB4E251F3E8000DC6F4D /* WidgetKit.framework */,
+				2247DB50251F3E8000DC6F4D /* SwiftUI.framework */,
+				18FC5B6D40C5466AB235C4F4 /* Pods_MyerSplashWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -422,6 +493,8 @@
 				8C5A8F87AE0DE305C3487239 /* Pods-MyerSplash.release.xcconfig */,
 				50AB4F0F0D7379FD5BECD603 /* Pods-MyerSplashShared.debug.xcconfig */,
 				0AC28CD0CF437C5DD4F0B809 /* Pods-MyerSplashShared.release.xcconfig */,
+				03A656DD8EA3371BBA7BB59E /* Pods-MyerSplashWidgetExtension.debug.xcconfig */,
+				DFA36C32ED7B3149718E21A1 /* Pods-MyerSplashWidgetExtension.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -429,9 +502,11 @@
 		F0D247B01FF7C35000BB8076 = {
 			isa = PBXGroup;
 			children = (
+				2247DB5B251F3E8200DC6F4D /* MyerSplashWidgetExtension.entitlements */,
 				221D26A723D216B0003BE444 /* Vendor */,
 				F0D247BB1FF7C35000BB8076 /* MyerSplash */,
 				22D39FF0251F00DA00F69A36 /* MyerSplashShared */,
+				2247DB52251F3E8000DC6F4D /* MyerSplashWidget */,
 				F0D247BA1FF7C35000BB8076 /* Products */,
 				CC5B4A83DCADE02770A06C2E /* Pods */,
 				6CE0DF92D868ABA501E01C2A /* Frameworks */,
@@ -443,6 +518,7 @@
 			children = (
 				F0D247B91FF7C35000BB8076 /* MyerSplash.app */,
 				22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */,
+				2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -481,6 +557,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2247DB4C251F3E8000DC6F4D /* MyerSplashWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2247DB5F251F3E8200DC6F4D /* Build configuration list for PBXNativeTarget "MyerSplashWidgetExtension" */;
+			buildPhases = (
+				CE48CD323B9BD3A0B593EF1C /* [CP] Check Pods Manifest.lock */,
+				2247DB49251F3E8000DC6F4D /* Sources */,
+				2247DB4A251F3E8000DC6F4D /* Frameworks */,
+				2247DB4B251F3E8000DC6F4D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2247DB9E251F40BD00DC6F4D /* PBXTargetDependency */,
+			);
+			name = MyerSplashWidgetExtension;
+			productName = MyerSplashWidgetExtension;
+			productReference = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		22D39FEE251F00DA00F69A36 /* MyerSplashShared */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22D39FFB251F00DA00F69A36 /* Build configuration list for PBXNativeTarget "MyerSplashShared" */;
@@ -510,11 +605,13 @@
 				F0D247B71FF7C35000BB8076 /* Resources */,
 				3417380A98BF9B0FB141B0E6 /* [CP] Embed Pods Frameworks */,
 				22D39FF8251F00DA00F69A36 /* Embed Frameworks */,
+				2247DB5C251F3E8200DC6F4D /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				22D39FF5251F00DA00F69A36 /* PBXTargetDependency */,
+				2247DB59251F3E8200DC6F4D /* PBXTargetDependency */,
 			);
 			name = MyerSplash;
 			productName = MyerSplash;
@@ -527,10 +624,13 @@
 		F0D247B11FF7C35000BB8076 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = juniper;
 				TargetAttributes = {
+					2247DB4C251F3E8000DC6F4D = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
 					22D39FEE251F00DA00F69A36 = {
 						CreatedOnToolsVersion = 12.0.1;
 					};
@@ -556,15 +656,26 @@
 			targets = (
 				F0D247B81FF7C35000BB8076 /* MyerSplash */,
 				22D39FEE251F00DA00F69A36 /* MyerSplashShared */,
+				2247DB4C251F3E8000DC6F4D /* MyerSplashWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2247DB4B251F3E8000DC6F4D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2247DB56251F3E8200DC6F4D /* Assets.xcassets in Resources */,
+				22A0D29D251F9F920043B141 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22D39FED251F00DA00F69A36 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22A0D29B251F9F920043B141 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +728,7 @@
 				"${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework",
 				"${BUILT_PRODUCTS_DIR}/MDFTextAccessibility/MDFTextAccessibility.framework",
-				"${BUILT_PRODUCTS_DIR}/MaterialComponents-8d72d380/MaterialComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionAnimator/MotionAnimator.framework",
 				"${BUILT_PRODUCTS_DIR}/MotionInterchange/MotionInterchange.framework",
 				"${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework",
@@ -677,9 +788,39 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CE48CD323B9BD3A0B593EF1C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MyerSplashWidgetExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2247DB49251F3E8000DC6F4D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2247DB54251F3E8000DC6F4D /* MyerSplashWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		22D39FEB251F00DA00F69A36 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -712,6 +853,7 @@
 				2247DB2D251F390500DC6F4D /* AppKeys.swift in Sources */,
 				2247DAFE251F385A00DC6F4D /* ColorExtension.swift in Sources */,
 				2247DB07251F387E00DC6F4D /* AppDb.swift in Sources */,
+				2247DB67251F3FB400DC6F4D /* Error.swift in Sources */,
 				2247DB2F251F390500DC6F4D /* Log.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -753,6 +895,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2247DB59251F3E8200DC6F4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2247DB4C251F3E8000DC6F4D /* MyerSplashWidgetExtension */;
+			targetProxy = 2247DB58251F3E8200DC6F4D /* PBXContainerItemProxy */;
+		};
+		2247DB9E251F40BD00DC6F4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22D39FEE251F00DA00F69A36 /* MyerSplashShared */;
+			targetProxy = 2247DB9D251F40BD00DC6F4D /* PBXContainerItemProxy */;
+		};
 		22D39FF5251F00DA00F69A36 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 22D39FEE251F00DA00F69A36 /* MyerSplashShared */;
@@ -781,6 +933,69 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2247DB5D251F3E8200DC6F4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03A656DD8EA3371BBA7BB59E /* Pods-MyerSplashWidgetExtension.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 430;
+				DEVELOPMENT_TEAM = 7GB9CHCB87;
+				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.3.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2247DB5E251F3E8200DC6F4D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DFA36C32ED7B3149718E21A1 /* Pods-MyerSplashWidgetExtension.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 430;
+				DEVELOPMENT_TEAM = 7GB9CHCB87;
+				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 4.3.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		22D39FF9251F00DA00F69A36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50AB4F0F0D7379FD5BECD603 /* Pods-MyerSplashShared.debug.xcconfig */;
@@ -979,7 +1194,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 422;
+				CURRENT_PROJECT_VERSION = 430;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -991,7 +1206,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1010,7 +1225,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 422;
+				CURRENT_PROJECT_VERSION = 430;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1022,7 +1237,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1035,6 +1250,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2247DB5F251F3E8200DC6F4D /* Build configuration list for PBXNativeTarget "MyerSplashWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2247DB5D251F3E8200DC6F4D /* Debug */,
+				2247DB5E251F3E8200DC6F4D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		22D39FFB251F00DA00F69A36 /* Build configuration list for PBXNativeTarget "MyerSplashShared" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
