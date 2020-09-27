@@ -57,7 +57,6 @@
 		2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2247DB67251F3FB400DC6F4D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB66251F3FB400DC6F4D /* Error.swift */; };
 		2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
-		2247DB9C251F40BD00DC6F4D /* MyerSplashShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
 		2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721F23C369E600F921F4 /* DownloadsViewController.swift */; };
 		2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722123C36A1100F921F4 /* AboutViewController.swift */; };
@@ -87,7 +86,7 @@
 		54A56E07DAF6EB75DC63E7E8 /* DialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A560BD8B67160A59D237A6 /* DialogViewController.swift */; };
 		71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9175F0CC748D0AC10924C /* Pods_MyerSplash.framework */; };
 		815C57B45972B9E2B362B15D /* Pods_MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A7955803E00B757AF256F2 /* Pods_MyerSplashShared.framework */; };
-		C14CF0E30FDB6B55B26196A6 /* Pods_MyerSplashWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FC5B6D40C5466AB235C4F4 /* Pods_MyerSplashWidgetExtension.framework */; };
+		C14CF0E30FDB6B55B26196A6 /* Pods_MyerSplashWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FC5B6D40C5466AB235C4F4 /* Pods_MyerSplashWidgetExtension.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		E47DED5B215DF0BD18169D29 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3A054251F01AA00F69A36 /* Pods_MyerSplash.framework */; };
 		F02A4BBC1FF8E37A0027B721 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F02A4BBB1FF8E37A0027B721 /* Assets.xcassets */; };
 		F0B633E0200C7E1400D05D74 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0B633DF200C7E1400D05D74 /* Key.plist */; };
@@ -129,17 +128,6 @@
 				2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2247DB9F251F40BD00DC6F4D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2247DB9C251F40BD00DC6F4D /* MyerSplashShared.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		22D39FF8251F00DA00F69A36 /* Embed Frameworks */ = {
@@ -577,7 +565,6 @@
 				2247DB49251F3E8000DC6F4D /* Sources */,
 				2247DB4A251F3E8000DC6F4D /* Frameworks */,
 				2247DB4B251F3E8000DC6F4D /* Resources */,
-				2247DB9F251F40BD00DC6F4D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -957,6 +944,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 430;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -965,6 +953,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 4.3.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
@@ -987,6 +976,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 430;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -995,6 +985,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 4.3.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1203,7 +1194,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 425;
+				CURRENT_PROJECT_VERSION = 430;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1234,7 +1225,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 425;
+				CURRENT_PROJECT_VERSION = 430;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
