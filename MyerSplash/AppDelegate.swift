@@ -19,17 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupShortcuts(application)
         
-        if #available(iOS 13.0, *) {
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            #if targetEnvironment(macCatalyst)
-            if let titlebar = windowScene?.titlebar {
-                titlebar.titleVisibility = .hidden
-                titlebar.toolbar = nil
-            }
-            #endif
-        } else {
-            // Fallback on earlier versions
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        #if targetEnvironment(macCatalyst)
+        if let titlebar = windowScene?.titlebar {
+            titlebar.titleVisibility = .hidden
+            titlebar.toolbar = nil
         }
+        #endif
         
         return true
     }

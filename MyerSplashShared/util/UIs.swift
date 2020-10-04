@@ -21,29 +21,17 @@ public class UIs {
 
 public extension UILabel {
     func setDefaultLabelColor() {
-        if #available(iOS 13.0, *) {
-            self.textColor = UIColor.label
-        } else {
-            self.textColor = UIColor.black
-        }
+        self.textColor = UIColor.label
     }
 }
 
 public extension UIColor {
-    public static func getDefaultLabelUIColor() -> UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor.label
-        } else {
-            return UIColor.black
-        }
+    static func getDefaultLabelUIColor() -> UIColor {
+        return UIColor.label
     }
 
-    public static func getDefaultBackgroundUIColor() -> UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor.systemBackground
-        } else {
-            return UIColor.white
-        }
+    static func getDefaultBackgroundUIColor() -> UIColor {
+        return UIColor.systemBackground
     }
 }
 
@@ -67,24 +55,19 @@ public func getContentTopInsets() -> CGFloat {
 }
 
 public extension UIView {
-    public static var hasTopNotch: Bool {
+    static var hasTopNotch: Bool {
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 20
     }
 
-    public static var topInset: CGFloat {
+    static var topInset: CGFloat {
         #if targetEnvironment(macCatalyst)
         return 0
         #endif
         return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0
     }
     
-    public static func makeBlurBackgroundView()-> UIView {
-        let blurEffect: UIBlurEffect!
-        if #available(iOS 13.0, *) {
-            blurEffect = UIBlurEffect(style: .systemMaterial)
-        } else {
-            blurEffect = UIBlurEffect(style: .extraLight)
-        }
+    static func makeBlurBackgroundView()-> UIView {
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
         
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         
@@ -93,25 +76,21 @@ public extension UIView {
         return blurEffectView
     }
 
-    public static func getDefaultLabelUIColor() -> UIColor {
+    static func getDefaultLabelUIColor() -> UIColor {
         return UIColor.getDefaultLabelUIColor()
     }
 
-    public static func getDefaultBackgroundUIColor() -> UIColor {
+    static func getDefaultBackgroundUIColor() -> UIColor {
         return UIColor.getDefaultBackgroundUIColor()
     }
 
-    public static func getDefaultDialogBackgroundUIColor() -> UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor { (trainCollection) -> UIColor in
-                if trainCollection.userInterfaceStyle == .dark {
-                    return "1e1e1e".asUIColor()
-                } else {
-                    return "f4f4f4".asUIColor()
-                }
+    static func getDefaultDialogBackgroundUIColor() -> UIColor {
+        return UIColor { (trainCollection) -> UIColor in
+            if trainCollection.userInterfaceStyle == .dark {
+                return "1e1e1e".asUIColor()
+            } else {
+                return "f4f4f4".asUIColor()
             }
-        } else {
-            return "f4f4f4".asUIColor()
         }
     }
 

@@ -56,14 +56,10 @@ class SearchViewController: UIViewController {
     
     private lazy var blurEffectView: UIView = {
         let blurEffect: UIBlurEffect!
-        if #available(iOS 13.0, *) {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                blurEffect = UIBlurEffect(style: .systemThickMaterial)
-            } else {
-                blurEffect = UIBlurEffect(style: .systemMaterial)
-            }
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            blurEffect = UIBlurEffect(style: .systemThickMaterial)
         } else {
-            blurEffect = UIBlurEffect(style: .extraLight)
+            blurEffect = UIBlurEffect(style: .systemMaterial)
         }
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -157,11 +153,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if #available(iOS 13.0, *) {
-            searchBar.searchTextField.resignFirstResponder()
-        } else {
-            // Fallback on earlier versions
-        }
+        searchBar.searchTextField.resignFirstResponder()
         
         let query = searchBar.text ?? ""
         print("begin search: \(query)")
@@ -211,16 +203,6 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
 
 extension UISearchBar {
     var textField : UITextField? {
-        if #available(iOS 13.0, *) {
-            return self.searchTextField
-        } else {
-            // Fallback on earlier versions
-            for view : UIView in (self.subviews[0]).subviews {
-                if let textField = view as? UITextField {
-                    return textField
-                }
-            }
-        }
-        return nil
+        return self.searchTextField
     }
 }
