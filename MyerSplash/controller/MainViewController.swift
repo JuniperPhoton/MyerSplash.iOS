@@ -7,6 +7,7 @@ import MaterialComponents.MaterialButtons
 import RxSwift
 import SwiftUI
 import MyerSplashShared
+import WidgetKit
 
 class MainViewController: TabmanViewController {
     public static let BAR_BUTTON_SIZE = 50.cgFloat
@@ -117,6 +118,11 @@ class MainViewController: TabmanViewController {
         invalidateTabBar(UIApplication.shared.windows[0].bounds.size)
         
         DownloadManager.instance.markDownloadingToFailed()
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadTimelines(ofKind: "MyerSplashWidget")
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     private func setupViewControllers() {

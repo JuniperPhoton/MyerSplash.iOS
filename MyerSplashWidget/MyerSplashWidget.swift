@@ -27,8 +27,8 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> Void) {
         let date = Date()
         let image = UnsplashImage.create(date)
-        let nextUpdateDate = Calendar.current.date(byAdding: .day, value: 1, to: date)!
-
+        let nextUpdateDate = Calendar.current.date(byAdding: .hour, value: 3, to: date)!
+        
         ImageIO.cacheImage(image.listUrl) { (image) in
             let entry = SimpleEntry(date: date, displayUrl: DisplayUrl.UIImage(uiImage: image))
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdateDate))
