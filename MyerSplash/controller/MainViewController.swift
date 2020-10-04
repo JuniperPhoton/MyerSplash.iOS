@@ -209,39 +209,31 @@ class MainViewController: TabmanViewController {
     func onClickSearch() {
         Events.trackClickSearch()
         
-        #if !targetEnvironment(macCatalyst)
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            presentSwiftUiSearch()
+        if #available(iOS 13.0, *) {
+            #if !targetEnvironment(macCatalyst)
+            let vc = SearchViewController()
+            self.present(vc, animated: true, completion: nil)
+            #else
+            let view = SearchView(dismissAction: { [weak self] in
+                    guard let self = self else { return }
+                    self.dismiss(animated: true, completion: nil)
+                }, onClickKeyword: { [weak self] k in
+                    guard let self = self else { return }
+                    print("click \(k)")
+                    self.dismiss(animated: true, completion: nil)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                        guard let self = self else { return }
+                        self.addTab(keyword: k)
+                    }
+            })
+            let vc = UIHostingController(rootView: view)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
+            #endif
         } else {
-            presentLegacySearchViewController()
+            // Fallback on earlier versions
         }
-        #else
-        presentSwiftUiSearch()
-        #endif
-    }
-    
-    private func presentLegacySearchViewController() {
-        let vc = SearchViewController()
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    private func presentSwiftUiSearch() {
-        let view = SearchView(dismissAction: { [weak self] in
-            guard let self = self else { return }
-            self.dismiss(animated: true, completion: nil)
-        }, onClickKeyword: { [weak self] k in
-            guard let self = self else { return }
-            print("click \(k)")
-            self.dismiss(animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-                guard let self = self else { return }
-                self.addTab(keyword: k)
-            }
-        })
-        let vc = UIHostingController(rootView: view)
-        vc.modalPresentationStyle = .overFullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true, completion: nil)
     }
     
     private func addTab(keyword: Keyword) {
@@ -277,8 +269,12 @@ class MainViewController: TabmanViewController {
     
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            setNeedsStatusBarAppearanceUpdate()
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                setNeedsStatusBarAppearanceUpdate()
+            }
+        } else {
+            // Fallback on earlier versions
         }
     }
 }
