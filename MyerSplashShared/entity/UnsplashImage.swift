@@ -207,6 +207,32 @@ public class ImageUrl: ColumnJSONCodable {
     var thumb: String?
 }
 
+public extension String {
+    func getScaled(maxWidth: Int, quality: Int = 75) -> String? {
+        guard var components = URLComponents(string: self) else {
+            return self
+        }
+                
+        components.replaceQuery(name: "w", value: String(maxWidth))
+        components.replaceQuery(name: "q", value: String(quality))
+        
+        return components.url?.absoluteString
+    }
+}
+
+extension URLComponents {
+    mutating func replaceQuery(name: String, value: String) {
+        let item = URLQueryItem(name: name, value: value)
+        
+        let originalWidthQuery = self.queryItems?.firstIndex(where: { $0.name == name } ) ?? -1
+        if originalWidthQuery > 0 {
+            self.queryItems?[originalWidthQuery] = item
+        } else {
+            self.queryItems?.append(item)
+        }
+    }
+}
+
 public class Sponsorship: ColumnJSONCodable {
     // empty class
 }
