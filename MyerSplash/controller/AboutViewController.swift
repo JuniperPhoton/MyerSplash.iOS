@@ -133,6 +133,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         button.imageView?.contentMode = .scaleAspectFit
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
+        button.adaptForPointer(style: .SystemDefault)
         return button
     }()
     
@@ -145,6 +146,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         button.imageView?.contentMode = .scaleAspectFit
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
+        button.adaptForPointer(style: .SystemDefault)
         return button
     }()
     
@@ -157,6 +159,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         button.imageView?.contentMode = .scaleAspectFit
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
+        button.adaptForPointer(style: .SystemDefault)
         return button
     }()
     
@@ -169,6 +172,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         button.imageView?.contentMode = .scaleAspectFit
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
+        button.adaptForPointer(style: .SystemDefault)
         return button
     }()
     

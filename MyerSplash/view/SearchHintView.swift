@@ -62,6 +62,7 @@ class SearchHintView: UIView {
                 uiLabel.setTitleColor(UIColor.getDefaultLabelUIColor(), for: .normal)
                 uiLabel.tag = index
                 uiLabel.addTarget(self, action: #selector(onClickItem(button:)), for: .touchUpInside)
+                uiLabel.adaptForPointer(style: .SystemDefault)
                 
                 flex.addItem(uiLabel).margin(margin)
                 

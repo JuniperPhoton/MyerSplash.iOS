@@ -14,8 +14,6 @@ import RxSwift
 import MyerSplashShared
 
 class SearchViewController: UIViewController {
-    private var closeRippleController: MDCRippleTouchController!
-    
     private var listController: ImagesViewController? = nil
     
     private var imageDetailView: ImageDetailView!
@@ -40,6 +38,7 @@ class SearchViewController: UIViewController {
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
+        closeButton.adaptForPointer()
         return closeButton
     }()
     
@@ -85,10 +84,7 @@ class SearchViewController: UIViewController {
         
         view.backgroundColor = .clear
         view.addSubViews(blurEffectView, searchView, closeButton, searchHintView)
-        
-        let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
-        closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
-                                                              withColor: rippleColor, maxRadius: 25)
+                
         imageDetailView = ImageDetailView(frame: self.view.bounds)
         imageDetailView.delegate = self
     }

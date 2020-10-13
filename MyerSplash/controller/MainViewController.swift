@@ -29,10 +29,6 @@ class MainViewController: TabmanViewController {
         v.delegate = self
         return v
     }()
-    
-    private var moreRippleController: MDCRippleTouchController!
-    private var downloadsRippleController: MDCRippleTouchController!
-    private var searchRippleController: MDCRippleTouchController?
 
     private lazy var bar: TMBar.ButtonBar = {
         return createTopTabBar()
@@ -51,8 +47,7 @@ class MainViewController: TabmanViewController {
         moreButton.setImage(moreImage, for: .normal)
         moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         moreButton.addTarget(self, action: #selector(onClickMore), for: .touchUpInside)
-        
-        moreRippleController = MDCRippleTouchController.load(view: moreButton)
+        moreButton.adaptForPointer()
         return moreButton
     }()
     
@@ -63,8 +58,7 @@ class MainViewController: TabmanViewController {
         downloadsButton.setImage(downloadImage, for: .normal)
         downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
-        
-        downloadsRippleController = MDCRippleTouchController.load(view: downloadsButton)
+        downloadsButton.adaptForPointer()
         downloadsButton.isHidden = UIApplication.shared.windows[0].bounds.width <= Dimensions.MIN_MODE_WIDTH
         return downloadsButton
     }()
@@ -76,8 +70,7 @@ class MainViewController: TabmanViewController {
         searchButton.setImage(searchImage, for: .normal)
         searchButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         searchButton.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
-        
-        searchRippleController = MDCRippleTouchController.load(view: searchButton)
+        searchButton.adaptForPointer()
         searchButton.isHidden = UIApplication.shared.windows[0].bounds.width <= Dimensions.MIN_MODE_WIDTH
         return searchButton
     }()

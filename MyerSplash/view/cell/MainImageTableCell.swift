@@ -2,14 +2,11 @@ import Foundation
 import UIKit
 import SnapKit
 import Nuke
-import MaterialComponents.MaterialRipple
 import MyerSplashShared
 
 public class MainImageTableCell: UICollectionViewCell {
     static let ID = "MainImageTableCell"
-    
-    private var downloadRippleController: MDCRippleTouchController!
-    
+        
     // todo: use new code style
     private var downloadView: UIButton!
     private var todayTag: UIView!
@@ -24,6 +21,7 @@ public class MainImageTableCell: UICollectionViewCell {
         button.isHidden = true
         button.tintColor = UIColor.white.withAlphaComponent(0.3)
         button.addTarget(self, action: #selector(onClickRetry), for: .touchUpInside)
+        button.adaptForPointer()
         return button
     }()
 
@@ -48,8 +46,7 @@ public class MainImageTableCell: UICollectionViewCell {
                 for: .normal)
         downloadView.adjustsImageWhenHighlighted = false
         downloadView.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
-
-        downloadRippleController = createRippleController(intoView: downloadView)
+        downloadView.adaptForPointer()
 
         todayTag = UIImageView(image: UIImage(named: R.icons.ic_star))
         todayTag.isHidden = true
@@ -97,11 +94,6 @@ public class MainImageTableCell: UICollectionViewCell {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    private func createRippleController(intoView: UIView)-> MDCRippleTouchController {
-        return MDCRippleTouchController.load(intoView: intoView,
-                                             withColor: UIColor.white.withAlphaComponent(0.3), maxRadius: 30)
     }
 
     func bind(image: UnsplashImage) {

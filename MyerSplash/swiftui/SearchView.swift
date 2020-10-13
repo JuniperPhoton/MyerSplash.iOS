@@ -136,7 +136,7 @@ struct SearchView: View {
                         Image("ic_clear")
                             .renderingMode(.template)
                             .accentColor(.init(UIView.getDefaultLabelUIColor()))
-                        }.frame(width: 50, height: 50, alignment: .center)
+                    }.frame(width: 50, height: 50, alignment: .center)
                 }
                 SearchHintSwiftUIView(onClickKeyword: self.onClickKeyword,
                                       expectedWidth: self.hintWidth,

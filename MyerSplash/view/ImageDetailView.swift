@@ -28,6 +28,7 @@ class ImageDetailView: UIView {
         button.setImage(UIImage(named: R.icons.ic_share), for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(onClickShare), for: .touchUpInside)
+        button.adaptForPointer()
         return button
     }()
 
@@ -115,12 +116,15 @@ class ImageDetailView: UIView {
         authorStack = UIStackView(arrangedSubviews: [photoByLabel, authorButton])
         authorStack.axis = NSLayoutConstraint.Axis.vertical
         authorStack.spacing = 2
+        
+        let downloadButtonWidth = 110
+        let downloadButtonHeight = 35
 
         downloadRoot = UIView()
         progressLayer = CALayer()
         downloadRoot.layer.addSublayer(progressLayer)
         downloadRoot.layer.masksToBounds = true
-        downloadRoot.layer.cornerRadius = CGFloat(Dimensions.SmallRoundCornor)
+        downloadRoot.layer.cornerRadius = CGFloat(downloadButtonHeight / 2)
         
         downloadButton = DownloadButton()
         downloadButton.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
@@ -128,6 +132,8 @@ class ImageDetailView: UIView {
         downloadButton.snp.makeConstraints { (maker) in
             maker.edges.equalToSuperview()
         }
+        
+        downloadRoot.addEffectForPointer()
         
         extraInformationView.addSubview(authorStack)
         extraInformationView.addSubview(downloadRoot)
@@ -155,7 +161,8 @@ class ImageDetailView: UIView {
         }
 
         downloadRoot.snp.makeConstraints { maker in
-            maker.width.equalTo(100)
+            maker.width.equalTo(downloadButtonWidth)
+            maker.height.equalTo(downloadButtonHeight)
             maker.centerY.equalTo(self.extraInformationView.snp.centerY)
             maker.right.equalTo(self.extraInformationView.snp.right).offset(-12)
         }
@@ -164,6 +171,7 @@ class ImageDetailView: UIView {
             maker.right.equalTo(downloadRoot.snp.left).offset(-12)
             maker.top.equalTo(downloadRoot.snp.top)
             maker.bottom.equalTo(downloadRoot.snp.bottom)
+            maker.height.equalTo(shareButton.snp.width)
         }
     }
 

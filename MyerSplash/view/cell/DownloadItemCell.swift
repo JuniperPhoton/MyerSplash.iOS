@@ -143,6 +143,7 @@ class DownloadItemCell: UICollectionViewCell {
         
         button.setTitleColor(contentColor, for: .normal)
         shareButton.tintColor = contentColor
+        shareButton.adaptForPointer()
 
         unbind()
         disposable = DownloadManager.instance.addObserver(image) { [weak self] (e) in

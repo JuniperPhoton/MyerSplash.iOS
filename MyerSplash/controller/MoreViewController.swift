@@ -20,8 +20,6 @@ class MoreViewController: TabmanViewController {
         }
     }
 
-    private var closeRippleController: MDCRippleTouchController!
-
     private var viewControllers = [DownloadsViewController(),
                                    SettingsViewController(),
                                    AboutViewController()]
@@ -84,11 +82,8 @@ class MoreViewController: TabmanViewController {
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
+        closeButton.adaptForPointer()
         self.view.addSubview(closeButton)
-
-        closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
-                withColor: UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3),
-                maxRadius: 25)
 
         closeButton.snp.makeConstraints { (maker) in
             maker.top.equalTo(bar.layout.view.snp.top)
