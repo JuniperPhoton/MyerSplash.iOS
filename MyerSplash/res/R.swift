@@ -23,6 +23,7 @@ public class R {
         public static let ic_launcher = "ic_launcher"
         public static let ic_more = "ic_more"
         public static let ic_search = "ic_search"
+        public static let ic_filter_list = "ic_filter_list"
         public static let ic_settings = "ic_settings"
         public static let ic_star = "ic_star"
         public static let ic_app_icon = "ic_app_icon"
@@ -117,6 +118,11 @@ public class R {
         public static let widget_title = NSLocalizedString("widget_title", comment: "")
         public static let widget_desc = NSLocalizedString("widget_desc", comment: "")
         
+        public static let filter_title = NSLocalizedString("filter_title", comment: "")
+        public static let filter_all = NSLocalizedString("filter_all", comment: "")
+        public static let filter_landscape = NSLocalizedString("filter_landscape", comment: "")
+        public static let filter_portrait = NSLocalizedString("filter_portrait", comment: "")
+
         public static let month_01 = NSLocalizedString("month_01", comment: "")
         public static let month_02 = NSLocalizedString("month_02", comment: "")
         public static let month_03 = NSLocalizedString("month_03", comment: "")

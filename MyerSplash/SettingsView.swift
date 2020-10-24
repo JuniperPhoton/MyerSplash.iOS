@@ -5,11 +5,11 @@ import Nuke
 import MessageUI
 import MaterialComponents.MaterialDialogs
 import MyerSplashShared
-import MyerSplashShared
 
-protocol SettingsViewDelegate: class {
-    func showDialog(content: DialogContent, key: String)
-    func present(vc: UIViewController)
+protocol BottomSheetDelegate: class {
+    func presentBottomSheet(content: SingleChoiceDialog,
+                            transitionController: MDCDialogTransitionController,
+                            onSelected: @escaping (Int) -> Void)
 }
 
 class SettingsView: UIView {
@@ -20,7 +20,9 @@ class SettingsView: UIView {
 
     var shouldRefreshWhenDismiss = false
 
-    weak var delegate: SettingsViewDelegate? = nil
+    weak var delegate: BottomSheetDelegate? = nil
+    
+    private let transitionController = MDCDialogTransitionController()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -124,7 +126,7 @@ class SettingsView: UIView {
                 title: loadingQualityItem.title,
                 options: AppSettings.LOADING_OPTIONS,
                 selected: selected)
-        presentBottomSheet(content, { [weak self] i in
+        delegate?.presentBottomSheet(content: content, transitionController: transitionController, onSelected: { [weak self] i in
             UserDefaults.standard.setValue(i, forKey: Keys.LOADING_QUALITY)
             self?.updateSingleChoiseItem()
         })
@@ -136,21 +138,10 @@ class SettingsView: UIView {
                 title: savingQualityItem.title,
                 options: AppSettings.SAVING_OPTIONS,
                 selected: selected)
-        presentBottomSheet(content) { [weak self] i in
+        delegate?.presentBottomSheet(content: content, transitionController: transitionController, onSelected: { [weak self] i in
             UserDefaults.standard.setValue(i, forKey: Keys.SAVING_QUALITY)
             self?.updateSingleChoiseItem()
-        }
-    }
-
-    private let transitionController = MDCDialogTransitionController()
-
-    private func presentBottomSheet(_ content: SingleChoiceDialog, _ onSelected: @escaping (Int) -> Void) {
-        let targetController = DialogViewController(dialogContent: content)
-        targetController.modalPresentationStyle = .custom;
-        targetController.transitioningDelegate = self.transitionController;
-        targetController.makeNormalDialogSize()
-        targetController.onItemSelected = onSelected
-        delegate?.present(vc: targetController)
+        })
     }
 }
 

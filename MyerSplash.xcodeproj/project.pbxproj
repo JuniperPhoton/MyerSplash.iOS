@@ -54,9 +54,9 @@
 		2247DB51251F3E8000DC6F4D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2247DB50251F3E8000DC6F4D /* SwiftUI.framework */; };
 		2247DB54251F3E8000DC6F4D /* MyerSplashWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB53251F3E8000DC6F4D /* MyerSplashWidget.swift */; };
 		2247DB56251F3E8200DC6F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2247DB55251F3E8200DC6F4D /* Assets.xcassets */; };
-		2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2247DB67251F3FB400DC6F4D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB66251F3FB400DC6F4D /* Error.swift */; };
-		2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
+		2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; platformFilter = ios; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
 		2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721F23C369E600F921F4 /* DownloadsViewController.swift */; };
 		2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722123C36A1100F921F4 /* AboutViewController.swift */; };
@@ -73,6 +73,7 @@
 		22D39FF7251F00DA00F69A36 /* MyerSplashShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		22D3A055251F01AA00F69A36 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3A054251F01AA00F69A36 /* Pods_MyerSplash.framework */; };
 		22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B623C8CA0A00B836F0 /* DownloadButton.swift */; };
+		22ED11C125448AEE00847193 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED11C025448AEE00847193 /* FilterButton.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56163F93551D241697C6F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D82CB9E1C0EF954ECE2 /* BaseViewController.swift */; };
 		54A5633E122F31E30C40824D /* SettingsSwitchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A563330188B6094B9D072F /* SettingsSwitchItem.swift */; };
@@ -197,6 +198,7 @@
 		22E496B223C8B5A500B836F0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
 		22E496B823C9952200B836F0 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
+		22ED11C025448AEE00847193 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
 		50AB4F0F0D7379FD5BECD603 /* Pods-MyerSplashShared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplashShared.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplashShared/Pods-MyerSplashShared.debug.xcconfig"; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */,
 				1A54F6D86983A7220256314E /* DayNightImageView.swift */,
 				22E496B623C8CA0A00B836F0 /* DownloadButton.swift */,
+				22ED11C025448AEE00847193 /* FilterButton.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -889,6 +892,7 @@
 				2268722423C36AAB00F921F4 /* TMBarButtonBar.swift in Sources */,
 				2268723123C64A1F00F921F4 /* ImageEditorViewController.swift in Sources */,
 				1A54FD1D9B7E93F3367E6C10 /* DayNightImageView.swift in Sources */,
+				22ED11C125448AEE00847193 /* FilterButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -897,11 +901,13 @@
 /* Begin PBXTargetDependency section */
 		2247DB59251F3E8200DC6F4D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 2247DB4C251F3E8000DC6F4D /* MyerSplashWidgetExtension */;
 			targetProxy = 2247DB58251F3E8200DC6F4D /* PBXContainerItemProxy */;
 		};
 		2247DB9E251F40BD00DC6F4D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 22D39FEE251F00DA00F69A36 /* MyerSplashShared */;
 			targetProxy = 2247DB9D251F40BD00DC6F4D /* PBXContainerItemProxy */;
 		};
@@ -959,7 +965,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -990,7 +996,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

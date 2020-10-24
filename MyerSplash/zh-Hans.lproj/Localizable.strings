@@ -97,3 +97,8 @@
 "month_10" = "十月";
 "month_11" = "十一月";
 "month_12" = "十二月";
+
+"filter_title" = "筛选图片";
+"filter_all" = "不筛选";
+"filter_landscape" = "横屏";
+"filter_portrait" = "竖屏";

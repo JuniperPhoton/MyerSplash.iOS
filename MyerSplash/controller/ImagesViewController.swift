@@ -67,7 +67,7 @@ class ImagesViewController: UIViewController {
     
     private var errorHintView: ErrorHintView!
     
-    private var imageRepo: ImageRepo? = nil
+    private(set) var imageRepo: ImageRepo? = nil
     
     private var indicator: MDCActivityIndicator!
     private var noItemView: UIView!
@@ -109,6 +109,10 @@ class ImagesViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func shouldShowFilterButton() -> Bool {
+        return imageRepo != nil && (imageRepo is RandomImageRepo || imageRepo is SearchImageRepo || imageRepo is DeveloperImageRepo)
     }
     
     override func viewDidLoad() {
@@ -285,9 +289,13 @@ class ImagesViewController: UIViewController {
     }
     
     @objc
-    private func refreshData() {
-        print("refresh data")
+    func refreshData() {
+        if errorHintView == nil {
+            return
+        }
         
+        print("refresh data")
+
         errorHintView.isHidden = true
         noItemView.isHidden = true
         
