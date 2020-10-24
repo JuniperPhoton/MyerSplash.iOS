@@ -39,8 +39,8 @@ class ImageEditorViewController: UIViewController {
         let composeFab = MDCFloatingButton()
         let doneImage = UIImage(named: R.icons.ic_save)?.withRenderingMode(.alwaysTemplate)
         composeFab.setImage(doneImage, for: .normal)
-        composeFab.tintColor = .white
-        composeFab.backgroundColor = Colors.THEME.asUIColor()
+        composeFab.tintColor = .black
+        composeFab.backgroundColor = .white
         composeFab.addTarget(self, action: #selector(onClickCompose), for: .touchUpInside)
         return composeFab
     }()
