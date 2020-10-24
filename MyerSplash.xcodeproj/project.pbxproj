@@ -57,6 +57,7 @@
 		2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2247DB67251F3FB400DC6F4D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB66251F3FB400DC6F4D /* Error.swift */; };
 		2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; platformFilter = ios; };
+		2252128F2544A2DD002553A0 /* NetworkQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252128E2544A2DD002553A0 /* NetworkQuality.swift */; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
 		2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721F23C369E600F921F4 /* DownloadsViewController.swift */; };
 		2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722123C36A1100F921F4 /* AboutViewController.swift */; };
@@ -175,6 +176,7 @@
 		2247DB57251F3E8200DC6F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2247DB5B251F3E8200DC6F4D /* MyerSplashWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyerSplashWidgetExtension.entitlements; sourceTree = "<group>"; };
 		2247DB66251F3FB400DC6F4D /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		2252128E2544A2DD002553A0 /* NetworkQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkQuality.swift; sourceTree = "<group>"; };
 		2268721D23C369AB00F921F4 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		2268721F23C369E600F921F4 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		2268722123C36A1100F921F4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 				22E496B223C8B5A500B836F0 /* Log.swift */,
 				228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */,
 				1A54F03AD19D14182EA816F0 /* ImageIO.swift */,
+				2252128E2544A2DD002553A0 /* NetworkQuality.swift */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 				2247DB2E251F390500DC6F4D /* AppSettings.swift in Sources */,
 				2247DAFC251F385A00DC6F4D /* UIViewControllerExtensions.swift in Sources */,
 				2247DAFF251F385A00DC6F4D /* UICollectionViewCellExtensions.swift in Sources */,
+				2252128F2544A2DD002553A0 /* NetworkQuality.swift in Sources */,
 				2247DB05251F387E00DC6F4D /* DownloadManager.swift in Sources */,
 				2247DAF5251F384000DC6F4D /* FontSizes.swift in Sources */,
 				2247DB3F251F3A7D00DC6F4D /* Request.swift in Sources */,
