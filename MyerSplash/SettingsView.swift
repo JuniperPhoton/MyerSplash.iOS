@@ -13,7 +13,6 @@ protocol BottomSheetDelegate: class {
 }
 
 class SettingsView: UIView {
-    private var loadingQualityItem: SettingsItem!
     private var savingQualityItem: SettingsItem!
 
     private var scrollView: UIScrollView!
@@ -65,12 +64,6 @@ class SettingsView: UIView {
         let qualityGroup = SettingsGroup()
         qualityGroup.label = R.strings.settings_quality
 
-        loadingQualityItem = SettingsItem(frame: CGRect.zero)
-        loadingQualityItem.title = R.strings.settings_quality_browsing
-        loadingQualityItem.onClicked = {
-            self.popupListQualityChosenDialog()
-        }
-
         savingQualityItem = SettingsItem(frame: CGRect.zero)
         savingQualityItem.title = R.strings.settings_quality_download
         savingQualityItem.onClicked = {
@@ -87,7 +80,6 @@ class SettingsView: UIView {
             clearItem.content = "0.0MB"
         }
 
-        qualityGroup.addArrangedSubview(loadingQualityItem)
         qualityGroup.addArrangedSubview(savingQualityItem)
         qualityGroup.addArrangedSubview(clearItem)
 
@@ -111,25 +103,12 @@ class SettingsView: UIView {
     }
 
     private func updateSingleChoiseItem() {
-        loadingQualityItem.content = AppSettings.LOADING_OPTIONS[AppSettings.loadingQuality()]
         savingQualityItem.content = AppSettings.SAVING_OPTIONS[AppSettings.savingQuality()]
     }
 
     private func clearCache() {
         ImageIO.clearCaches(includingDownloads: false)
         self.showToast(R.strings.cleared)
-    }
-
-    private func popupListQualityChosenDialog() {
-        let selected = UserDefaults.standard.integer(key: Keys.LOADING_QUALITY, defaultValue: 0)
-        let content = SingleChoiceDialog(
-                title: loadingQualityItem.title,
-                options: AppSettings.LOADING_OPTIONS,
-                selected: selected)
-        delegate?.presentBottomSheet(content: content, transitionController: transitionController, onSelected: { [weak self] i in
-            UserDefaults.standard.setValue(i, forKey: Keys.LOADING_QUALITY)
-            self?.updateSingleChoiseItem()
-        })
     }
 
     private func popupSavingQualityChosenDialog() {

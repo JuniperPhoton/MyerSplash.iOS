@@ -58,7 +58,7 @@ class ImageEditorViewController: UIViewController {
     private var composeIndicator: MDCActivityIndicator = {
         let indicator = MDCActivityIndicator()
         indicator.sizeToFit()
-        indicator.cycleColors = [UIColor.white]
+        indicator.cycleColors = [UIColor.black]
         indicator.startAnimating()
         indicator.isHidden = true
         return indicator
