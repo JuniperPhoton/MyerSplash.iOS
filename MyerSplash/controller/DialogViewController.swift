@@ -39,6 +39,8 @@ class DialogViewController: BaseViewController {
     init(dialogContent: DialogContent) {
         super.init(nibName: nil, bundle: nil)
         self.dialogContent = dialogContent
+        self.modalPresentationStyle = .custom;
+        self.makeNormalDialogSize()
     }
 
     required init?(coder aDecoder: NSCoder) {

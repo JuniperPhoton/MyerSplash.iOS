@@ -34,6 +34,13 @@ class SearchViewController: UIViewController {
         return searchView
     }()
     
+    private lazy var fab: FilterButton = {
+        let fab = FilterButton()
+        fab.addTarget(self, action: #selector(onClickFilter), for: .touchUpInside)
+        fab.alpha = 0
+        return fab
+    }()
+    
     private lazy var closeButton: UIView = {
         let closeButton = UIButton()
         let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
@@ -84,7 +91,7 @@ class SearchViewController: UIViewController {
         }
         
         view.backgroundColor = .clear
-        view.addSubViews(blurEffectView, searchView, closeButton, searchHintView)
+        view.addSubViews(blurEffectView, searchView, closeButton, fab, searchHintView)
         
         let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
         closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
@@ -120,6 +127,18 @@ class SearchViewController: UIViewController {
         }
         
         searchHintView.pin.below(of: searchView).left().right().bottom()
+        fab.layoutAsFab()
+    }
+    
+    private let transitionController = MDCDialogTransitionController()
+
+    @objc
+    func onClickFilter() {
+        guard let vc = self.listController else {
+            return
+        }
+        
+        showFilterDialog(viewControllerToRefresh: vc)
     }
     
     @objc
@@ -148,6 +167,9 @@ class SearchViewController: UIViewController {
         
         imageDetailView?.removeFromSuperview()
         self.view.addSubview(imageDetailView)
+        
+        self.view.bringSubviewToFront(fab)
+        fab.alpha = 1
     }
 }
 

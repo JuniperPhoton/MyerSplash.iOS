@@ -96,3 +96,8 @@
 "month_10" = "Oct.";
 "month_11" = "Nov.";
 "month_12" = "Dec.";
+
+"filter_title" = "Filter images";
+"filter_all" = "All";
+"filter_landscape" = "Landscape";
+"filter_portrait" = "Portrait";
