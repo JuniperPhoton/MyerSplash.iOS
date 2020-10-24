@@ -126,10 +126,15 @@ public class MainImageTableCell: UICollectionViewCell {
         guard let url = bindImage?.listUrl else {
             return
         }
+        
+        let startTime = NetworkQuality.sharedInstance.getCurrentTimeMillis()
+        
         ImageIO.loadImage(url: url, intoView: mainImageView, fade: fade, completion: { [weak self] result in
             guard let self = self else { return }
             let response = try? result.get()
             self.retryButton.isHidden = response != nil
+                        
+            NetworkQuality.sharedInstance.recordDownloadDuration(startMillis: startTime, success: response != nil)
         })
     }
 

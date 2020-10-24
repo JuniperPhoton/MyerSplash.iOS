@@ -55,12 +55,14 @@ public class UnsplashImage: ColumnJSONCodable {
 
     public var listUrl: String? {
         get {
-            let quality = AppSettings.loadingQuality()
-            switch quality {
-            case 0: return urls?.regular
-            case 1: return urls?.small
-            case 2: return urls?.thumb
-            default: return urls?.regular
+            let averageDuration = NetworkQuality.sharedInstance.averageDurationMillis
+            
+            if averageDuration > 1000 {
+                return urls?.small
+            } else if averageDuration > 2000 {
+                return urls?.thumb
+            } else {
+                return urls?.regular
             }
         }
     }

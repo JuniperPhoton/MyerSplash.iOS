@@ -58,7 +58,7 @@ class ImageEditorViewController: UIViewController {
     private var composeIndicator: MDCActivityIndicator = {
         let indicator = MDCActivityIndicator()
         indicator.sizeToFit()
-        indicator.cycleColors = [UIColor.white]
+        indicator.cycleColors = [UIColor.black]
         indicator.startAnimating()
         indicator.isHidden = true
         return indicator
@@ -301,6 +301,7 @@ class ImageEditorViewController: UIViewController {
     private func onSavedOrError(_ image: UIImage,
                                 didFinishSavingWithError error: Error?,
                                 contextInfo: UnsafeRawPointer) {
+        Log.warn(tag: ImageEditorViewController.TAG, "onSavedOrError \(String(describing: error))")
         if error == nil {
             self.view.showToast(R.strings.saved_album)
         } else {

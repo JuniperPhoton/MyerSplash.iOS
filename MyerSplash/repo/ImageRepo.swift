@@ -44,10 +44,14 @@ class ImageRepo {
     var onLoadFinished: ((_ success: Bool, _ page: Int, _ loadedSize: Int) -> Void)? = nil
     
     func loadImage(_ page: Int) {
+        let startTime = NetworkQuality.sharedInstance.getCurrentTimeMillis()
+
         loadImagesInternal(page)
             .subscribeOn(AppConcurrentDispatchQueueScheduler.instance())
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (list) in
+                NetworkQuality.sharedInstance.recordDownloadDuration(startMillis: startTime, success: true)
+                
                 if page == 1 {
                     self.images.removeAll()
                 }
@@ -58,6 +62,8 @@ class ImageRepo {
                 
                 self.onLoadFinished?.self(true, page, list.count)
             }, onError: { (e) in
+                NetworkQuality.sharedInstance.recordDownloadDuration(startMillis: startTime, success: false)
+
                 print("Error on loading image: %s", e.localizedDescription)
                 self.onLoadFinished?.self(false, page, 0)
             })
