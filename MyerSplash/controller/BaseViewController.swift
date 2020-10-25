@@ -5,11 +5,7 @@ import MyerSplashShared
 extension UIColor {
     static var isDarkMode: Bool {
         get {
-            if #available(iOS 13.0, *) {
-                return UITraitCollection.current.userInterfaceStyle == .dark
-            } else {
-                return true
-            }
+            return true
         }
     }
     
@@ -25,14 +21,10 @@ extension UIColor {
 extension UIViewController {
     var appStatusBarStyle: UIStatusBarStyle {
         get {
-            if #available(iOS 13.0, *) {
-                if UITraitCollection.current.userInterfaceStyle == .dark {
-                    return UIStatusBarStyle.lightContent
-                } else {
-                    return UIStatusBarStyle.darkContent
-                }
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                return UIStatusBarStyle.lightContent
             } else {
-                return UIStatusBarStyle.default
+                return UIStatusBarStyle.darkContent
             }
         }
     }
@@ -56,12 +48,8 @@ open class BaseViewController: UIViewController {
     
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13.0, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                setNeedsStatusBarAppearanceUpdate()
-            }
-        } else {
-            // Fallback on earlier versions
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            setNeedsStatusBarAppearanceUpdate()
         }
     }
 }

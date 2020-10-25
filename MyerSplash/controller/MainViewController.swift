@@ -7,7 +7,10 @@ import MaterialComponents.MaterialButtons
 import RxSwift
 import SwiftUI
 import MyerSplashShared
+
+#if !targetEnvironment(macCatalyst)
 import WidgetKit
+#endif
 
 class MainViewController: TabmanViewController {
     public static let BAR_BUTTON_SIZE = 50.cgFloat
@@ -78,18 +81,12 @@ class MainViewController: TabmanViewController {
         searchButton.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
         
         searchRippleController = MDCRippleTouchController.load(view: searchButton)
-        searchButton.isHidden = UIApplication.shared.windows[0].bounds.width <= Dimensions.MIN_MODE_WIDTH
         return searchButton
     }()
     
-    private lazy var fab: MDCFloatingButton = {
-        let fab = MDCFloatingButton()
-        let searchImage = UIImage(named: R.icons.ic_search)?.withRenderingMode(.alwaysTemplate)
-        fab.setImage(searchImage, for: .normal)
-        fab.tintColor = UIColor.black
-        fab.backgroundColor = UIColor.white
-        fab.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
-        fab.isHidden = UIApplication.shared.windows[0].bounds.width > Dimensions.MIN_MODE_WIDTH
+    private lazy var fab: FilterButton = {
+        let fab = FilterButton()
+        fab.addTarget(self, action: #selector(onClickFilter), for: .touchUpInside)
         return fab
     }()
     
@@ -119,7 +116,9 @@ class MainViewController: TabmanViewController {
         
         DownloadManager.instance.markDownloadingToFailed()
         if #available(iOS 14.0, *) {
+            #if !targetEnvironment(macCatalyst)
             WidgetCenter.shared.reloadTimelines(ofKind: "MyerSplashWidget")
+            #endif
         } else {
             // Fallback on earlier versions
         }
@@ -152,8 +151,12 @@ class MainViewController: TabmanViewController {
     
     private func invalidateTabBar(_ size: CGSize) {
         downloadsButton.isHidden = UIDevice.current.userInterfaceIdiom == .phone || size.width <= Dimensions.MIN_MODE_WIDTH
-        searchButton.isHidden = downloadsButton.isHidden
-        fab.isHidden = !searchButton.isHidden
+        
+        if downloadsButton.isHidden {
+            searchButton.pin.before(of: moreButton).vCenter(to: moreButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        } else {
+            searchButton.pin.before(of: downloadsButton).vCenter(to: downloadsButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        }
         
         removeBar(bar)
         
@@ -176,10 +179,15 @@ class MainViewController: TabmanViewController {
         statusBarPlaceholder.pin.height(statusBarHeight).width(of: self.view)
         moreButton.pin.right(MainViewController.BAR_BUTTON_RIGHT_MARGIN).vCenter(to: barLayout.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
         downloadsButton.pin.before(of: moreButton).vCenter(to: moreButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
-        searchButton.pin.before(of: downloadsButton).vCenter(to: downloadsButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
-
-        fab.pin.right(16).bottom(UIView.hasTopNotch ? 24.cgFloat : 16.cgFloat).size(MainViewController.BAR_BUTTON_SIZE)
         
+        if downloadsButton.isHidden {
+            searchButton.pin.before(of: moreButton).vCenter(to: moreButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        } else {
+            searchButton.pin.before(of: downloadsButton).vCenter(to: downloadsButton.edge.vCenter).size(MainViewController.BAR_BUTTON_SIZE)
+        }
+
+        fab.layoutAsFab()
+    
         imageDetailView.pin.all()
     }
     
@@ -204,6 +212,11 @@ class MainViewController: TabmanViewController {
     func onRequestEdit(item: DownloadItem) {
         presentEdit(item: item)
     }
+
+    @objc
+    func onClickFilter() {
+        showFilterDialog(viewControllerToRefresh: self.viewControllers[currentIndex!])
+    }
     
     @objc
     func onClickSearch() {
@@ -212,6 +225,7 @@ class MainViewController: TabmanViewController {
         if #available(iOS 13.0, *) {
             #if !targetEnvironment(macCatalyst)
             let vc = SearchViewController()
+            vc.delegate = self
             self.present(vc, animated: true, completion: nil)
             #else
             let view = SearchView(dismissAction: { [weak self] in
@@ -277,19 +291,32 @@ class MainViewController: TabmanViewController {
             // Fallback on earlier versions
         }
     }
+    
+    override func pageboyViewController(_ pageboyViewController: PageboyViewController, willScrollToPageAt index: TabmanViewController.PageIndex, direction: PageboyViewController.NavigationDirection, animated: Bool) {
+        super.pageboyViewController(pageboyViewController, willScrollToPageAt: index, direction: direction, animated: animated)
+        
+        let imageVc = self.viewControllers[index]
+        
+        if let title = imageVc.repoTitle {
+            Events.trackTabSelected(name: title)
+        }
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+            self.fab.alpha = imageVc.shouldShowFilterButton() ? 1 : 0
+        }
+    }
+}
+
+extension MainViewController: SearchViewControllerDelegate {
+    func searchBy(query: String) {
+        addTab(keyword: Keyword(displayTitle: query.uppercased(), query: query))
+    }
 }
 
 extension MainViewController: PageboyViewControllerDataSource, TMBarDataSource {
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         let item = TMBarItem(title: (viewControllers[index].repoTitle!))
         return item
-    }
-    
-    override func show(_ vc: UIViewController, sender: Any?) {
-        if let imageVc = vc as? ImagesViewController,
-            let title = imageVc.repoTitle {
-            Events.trackTabSelected(name: title)
-        }
     }
     
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {

@@ -24,16 +24,3 @@ class SettingsViewController: BaseViewController {
         dismiss(animated: true)
     }
 }
-
-extension SettingsViewController: SettingsViewDelegate {
-    // MARK: SettingsViewDelegate
-    func showDialog(content: DialogContent, key: String) {
-        let vc = DialogViewController(dialogContent: content)
-        vc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        present(vc, animated: true)
-    }
-
-    func present(vc: UIViewController) {
-        self.present(vc, animated: true, completion: nil)
-    }
-}

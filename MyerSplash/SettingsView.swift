@@ -5,22 +5,23 @@ import Nuke
 import MessageUI
 import MaterialComponents.MaterialDialogs
 import MyerSplashShared
-import MyerSplashShared
 
-protocol SettingsViewDelegate: class {
-    func showDialog(content: DialogContent, key: String)
-    func present(vc: UIViewController)
+protocol BottomSheetDelegate: class {
+    func presentBottomSheet(content: SingleChoiceDialog,
+                            transitionController: MDCDialogTransitionController,
+                            onSelected: @escaping (Int) -> Void)
 }
 
 class SettingsView: UIView {
-    private var loadingQualityItem: SettingsItem!
     private var savingQualityItem: SettingsItem!
 
     private var scrollView: UIScrollView!
 
     var shouldRefreshWhenDismiss = false
 
-    weak var delegate: SettingsViewDelegate? = nil
+    weak var delegate: BottomSheetDelegate? = nil
+    
+    private let transitionController = MDCDialogTransitionController()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,12 +64,6 @@ class SettingsView: UIView {
         let qualityGroup = SettingsGroup()
         qualityGroup.label = R.strings.settings_quality
 
-        loadingQualityItem = SettingsItem(frame: CGRect.zero)
-        loadingQualityItem.title = R.strings.settings_quality_browsing
-        loadingQualityItem.onClicked = {
-            self.popupListQualityChosenDialog()
-        }
-
         savingQualityItem = SettingsItem(frame: CGRect.zero)
         savingQualityItem.title = R.strings.settings_quality_download
         savingQualityItem.onClicked = {
@@ -85,7 +80,6 @@ class SettingsView: UIView {
             clearItem.content = "0.0MB"
         }
 
-        qualityGroup.addArrangedSubview(loadingQualityItem)
         qualityGroup.addArrangedSubview(savingQualityItem)
         qualityGroup.addArrangedSubview(clearItem)
 
@@ -109,7 +103,6 @@ class SettingsView: UIView {
     }
 
     private func updateSingleChoiseItem() {
-        loadingQualityItem.content = AppSettings.LOADING_OPTIONS[AppSettings.loadingQuality()]
         savingQualityItem.content = AppSettings.SAVING_OPTIONS[AppSettings.savingQuality()]
     }
 
@@ -118,39 +111,16 @@ class SettingsView: UIView {
         self.showToast(R.strings.cleared)
     }
 
-    private func popupListQualityChosenDialog() {
-        let selected = UserDefaults.standard.integer(key: Keys.LOADING_QUALITY, defaultValue: 0)
-        let content = SingleChoiceDialog(
-                title: loadingQualityItem.title,
-                options: AppSettings.LOADING_OPTIONS,
-                selected: selected)
-        presentBottomSheet(content, { [weak self] i in
-            UserDefaults.standard.setValue(i, forKey: Keys.LOADING_QUALITY)
-            self?.updateSingleChoiseItem()
-        })
-    }
-
     private func popupSavingQualityChosenDialog() {
         let selected = UserDefaults.standard.integer(key: Keys.SAVING_QUALITY, defaultValue: 1)
         let content = SingleChoiceDialog(
                 title: savingQualityItem.title,
                 options: AppSettings.SAVING_OPTIONS,
                 selected: selected)
-        presentBottomSheet(content) { [weak self] i in
+        delegate?.presentBottomSheet(content: content, transitionController: transitionController, onSelected: { [weak self] i in
             UserDefaults.standard.setValue(i, forKey: Keys.SAVING_QUALITY)
             self?.updateSingleChoiseItem()
-        }
-    }
-
-    private let transitionController = MDCDialogTransitionController()
-
-    private func presentBottomSheet(_ content: SingleChoiceDialog, _ onSelected: @escaping (Int) -> Void) {
-        let targetController = DialogViewController(dialogContent: content)
-        targetController.modalPresentationStyle = .custom;
-        targetController.transitioningDelegate = self.transitionController;
-        targetController.makeNormalDialogSize()
-        targetController.onItemSelected = onSelected
-        delegate?.present(vc: targetController)
+        })
     }
 }
 

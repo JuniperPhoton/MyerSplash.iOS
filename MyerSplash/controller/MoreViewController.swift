@@ -113,12 +113,8 @@ class MoreViewController: TabmanViewController {
 
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13.0, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                setNeedsStatusBarAppearanceUpdate()
-            }
-        } else {
-            // Fallback on earlier versions
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            setNeedsStatusBarAppearanceUpdate()
         }
     }
 }

@@ -105,9 +105,11 @@ struct MyerSplashWidgetEntryView : View {
                     .font(.system(size: 13, weight: .light, design: .default))
                     .foregroundColor(Color.white)
                     .offset(x: 7, y: 0)
+                    .shadow(radius: 8)
                 Text(String(day))
                     .font(.system(size: 20, weight: .bold, design: .default))
                     .foregroundColor(Color.white)
+                    .shadow(radius: 8)
             }.offset(x: -10, y: -5)
         }
     }

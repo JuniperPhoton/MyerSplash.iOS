@@ -9,8 +9,9 @@
 import Foundation
 import MyerSplashShared
 import UIKit
+import MaterialComponents.MaterialDialogs
 
-public extension UIViewController {
+extension UIViewController {
     func presentEdit(item: DownloadItem) {
         #if !targetEnvironment(macCatalyst)
         let vc = ImageEditorViewController(item: item)
@@ -47,5 +48,18 @@ public extension UIViewController {
         }
         
         present(ac, animated: true)
+    }
+}
+
+extension UIViewController: BottomSheetDelegate {
+    func presentBottomSheet(content: SingleChoiceDialog,
+                            transitionController: MDCDialogTransitionController,
+                            onSelected: @escaping (Int) -> Void) {
+        let vc = DialogViewController(dialogContent: content)
+        vc.modalPresentationStyle = .custom;
+        vc.transitioningDelegate = transitionController;
+        vc.makeNormalDialogSize()
+        vc.onItemSelected = onSelected
+        self.present(vc, animated: true, completion: nil)
     }
 }

@@ -37,16 +37,21 @@ class ImageRepo {
     var title: String = ""
     
     var images = [UnsplashImage]()
+    var filterOption = FilterOption.All
     
     private var disposeBag = DisposeBag()
     
     var onLoadFinished: ((_ success: Bool, _ page: Int, _ loadedSize: Int) -> Void)? = nil
     
     func loadImage(_ page: Int) {
+        let startTime = NetworkQuality.sharedInstance.getCurrentTimeMillis()
+
         loadImagesInternal(page)
             .subscribeOn(AppConcurrentDispatchQueueScheduler.instance())
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (list) in
+                NetworkQuality.sharedInstance.recordDownloadDuration(startMillis: startTime, success: true)
+                
                 if page == 1 {
                     self.images.removeAll()
                 }
@@ -57,6 +62,8 @@ class ImageRepo {
                 
                 self.onLoadFinished?.self(true, page, list.count)
             }, onError: { (e) in
+                NetworkQuality.sharedInstance.recordDownloadDuration(startMillis: startTime, success: false)
+
                 print("Error on loading image: %s", e.localizedDescription)
                 self.onLoadFinished?.self(false, page, 0)
             })
@@ -128,7 +135,7 @@ class NewImageRepo: ImageRepo {
     
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
         return json(.get, Request.PHOTO_URL,
-                    parameters: Request.getDefaultParams(paging: page)).mapToList(appendTodayImage: page == 1)
+                    parameters: Request.getDefaultParams(paging: page, filter: filterOption)).mapToList(appendTodayImage: page == 1)
     }
 }
 
@@ -143,7 +150,7 @@ class RandomImageRepo: ImageRepo {
     }
     
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
-        var params = Request.getDefaultParams(paging: page)
+        var params = Request.getDefaultParams(paging: page, filter: filterOption)
         params["count"] = 30
         return json(.get, Request.RANDOM_PHOTOS_URL, parameters: params).mapToList()
     }
@@ -161,7 +168,7 @@ class DeveloperImageRepo: ImageRepo {
     
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
         return json(.get, Request.DEVELOPER_PHOTOS_URL,
-                    parameters: Request.getDefaultParams(paging: page)).mapToList()
+                    parameters: Request.getDefaultParams(paging: page, filter: filterOption)).mapToList()
     }
 }
 
@@ -180,7 +187,7 @@ class SearchImageRepo: ImageRepo {
             return Observable.error(ApiError(message: "query should not be nil"))
         }
         
-        var params = Request.getDefaultParams(paging: page)
+        var params = Request.getDefaultParams(paging: page, filter: filterOption)
         params["query"] = query
         
         return json(.get, Request.SEARCH_URL, parameters: params)

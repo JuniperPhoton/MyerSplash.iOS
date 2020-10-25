@@ -20,11 +20,15 @@ struct Keyword: Hashable {
 class SearchHintView: UIView {
     static let builtInKeywords = [Keyword(displayTitle: "🔍 Minimalist", query: "Minimalist"),
               Keyword(displayTitle: "🏗 Buildings", query: "Buildings"),
+              Keyword(displayTitle: "📰 Current Events", query: "Current Events"),
+              Keyword(displayTitle: "🚋 Street", query: "Street"),
               Keyword(displayTitle: "🍰 Food", query: "Food"),
+              Keyword(displayTitle: "🎞️ Film", query: "Film"),
               Keyword(displayTitle: "🗻 Nature", query: "Nature"),
               Keyword(displayTitle: "📱 Technology", query: "Technology"),
               Keyword(displayTitle: "🏖 Coastal", query: "Coastal"),
               Keyword(displayTitle: "✈️ Travel", query: "Travel"),
+              Keyword(displayTitle: "👕 Fashion", query: "Fashion"),
               Keyword(displayTitle: "👀 People", query: "People"),
               Keyword(displayTitle: "🏀 Sport", query: "Sport"),
               Keyword(displayTitle: "❄️ Snow", query: "Snow"),
@@ -41,6 +45,12 @@ class SearchHintView: UIView {
               Keyword(displayTitle: "⚫️ Black", query: "Black"),
               Keyword(displayTitle: "⚪️ White", query: "White"),
     ]
+    
+    private lazy var scrollView: UIScrollView = {
+        let v = UIScrollView()
+        v.contentSize = CGSize(width: 300, height: 300)
+        return v
+    }()
     
     let rootFlexContainer = UIView()
 
@@ -68,8 +78,9 @@ class SearchHintView: UIView {
                 index = index + 1
             }
         }
-        
-        addSubview(rootFlexContainer)
+                
+        scrollView.addSubview(rootFlexContainer)
+        addSubview(scrollView)
     }
     
     required init?(coder: NSCoder) {
@@ -80,12 +91,18 @@ class SearchHintView: UIView {
         let size = rootFlexContainer.flex.width(self.frame.width).intrinsicSize
         onLayout?(size)
         
+        scrollView.pin.all(pin.safeArea)
+
         // Layout the flexbox container using PinLayout
         // NOTE: Could be also layouted by setting directly rootFlexContainer.frame
         rootFlexContainer.pin.all(pin.safeArea)
         
         // Then let the flexbox container layout itself
         rootFlexContainer.flex.layout(mode: .adjustHeight)
+        
+        let w = rootFlexContainer.bounds.width
+        let h = rootFlexContainer.bounds.height
+        scrollView.contentSize = CGSize(width: w, height: h)
     }
     
     @objc

@@ -11,12 +11,8 @@ class DayNightImageView: UIImageView {
     private var maskColor: UIColor {
         get {
             let maskColor: UIColor!
-            if #available(iOS 13.0, *) {
-                if UITraitCollection.current.userInterfaceStyle == .dark {
-                    maskColor = UIColor.black.withAlphaComponent(0.3)
-                } else {
-                    maskColor = UIColor.clear
-                }
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                maskColor = UIColor.black.withAlphaComponent(0.3)
             } else {
                 maskColor = UIColor.clear
             }
@@ -48,11 +44,7 @@ class DayNightImageView: UIImageView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13.0, *) {
-            guard traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else {
-                return
-            }
-        } else {
+        guard traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else {
             return
         }
 

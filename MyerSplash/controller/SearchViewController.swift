@@ -13,6 +13,10 @@ import FlexLayout
 import RxSwift
 import MyerSplashShared
 
+protocol SearchViewControllerDelegate: class {
+    func searchBy(query: String)
+}
+
 class SearchViewController: UIViewController {
     private var closeRippleController: MDCRippleTouchController!
     
@@ -21,6 +25,8 @@ class SearchViewController: UIViewController {
     private var imageDetailView: ImageDetailView!
     
     private var disposeBag = DisposeBag()
+    
+    weak var delegate: SearchViewControllerDelegate?
     
     private lazy var searchView: UISearchBar = {
         let searchView = UISearchBar()
@@ -32,6 +38,13 @@ class SearchViewController: UIViewController {
         searchView.becomeFirstResponder()
         searchView.textField?.font = searchView.textField?.font?.withSize(16)
         return searchView
+    }()
+    
+    private lazy var fab: FilterButton = {
+        let fab = FilterButton()
+        fab.addTarget(self, action: #selector(onClickFilter), for: .touchUpInside)
+        fab.alpha = 0
+        return fab
     }()
     
     private lazy var closeButton: UIView = {
@@ -46,9 +59,10 @@ class SearchViewController: UIViewController {
     private lazy var searchHintView: UIView = {
         let searchHintView = SearchHintView()
         searchHintView.onClickKeyword = { [weak self] (keyword) in
-            self?.searchView.text = keyword.query
-            self?.addImageViewController(keyword.query)
-            self?.searchView.resignFirstResponder()
+            guard let self = self else { return }
+            self.searchView.text = keyword.query
+            self.searchImageBy(word: keyword.query)
+            self.searchView.resignFirstResponder()
         }
         searchHintView.isUserInteractionEnabled = true
         return searchHintView
@@ -56,14 +70,10 @@ class SearchViewController: UIViewController {
     
     private lazy var blurEffectView: UIView = {
         let blurEffect: UIBlurEffect!
-        if #available(iOS 13.0, *) {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                blurEffect = UIBlurEffect(style: .systemThickMaterial)
-            } else {
-                blurEffect = UIBlurEffect(style: .systemMaterial)
-            }
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            blurEffect = UIBlurEffect(style: .systemThickMaterial)
         } else {
-            blurEffect = UIBlurEffect(style: .extraLight)
+            blurEffect = UIBlurEffect(style: .systemMaterial)
         }
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -88,7 +98,7 @@ class SearchViewController: UIViewController {
         }
         
         view.backgroundColor = .clear
-        view.addSubViews(blurEffectView, searchView, closeButton, searchHintView)
+        view.addSubViews(blurEffectView, searchView, closeButton, fab, searchHintView)
         
         let rippleColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.3)
         closeRippleController = MDCRippleTouchController.load(intoView: closeButton,
@@ -124,6 +134,18 @@ class SearchViewController: UIViewController {
         }
         
         searchHintView.pin.below(of: searchView).left().right().bottom()
+        fab.layoutAsFab()
+    }
+    
+    private let transitionController = MDCDialogTransitionController()
+
+    @objc
+    func onClickFilter() {
+        guard let vc = self.listController else {
+            return
+        }
+        
+        showFilterDialog(viewControllerToRefresh: vc)
     }
     
     @objc
@@ -152,16 +174,15 @@ class SearchViewController: UIViewController {
         
         imageDetailView?.removeFromSuperview()
         self.view.addSubview(imageDetailView)
+        
+        self.view.bringSubviewToFront(fab)
+        fab.alpha = 1
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if #available(iOS 13.0, *) {
-            searchBar.searchTextField.resignFirstResponder()
-        } else {
-            // Fallback on earlier versions
-        }
+        searchBar.searchTextField.resignFirstResponder()
         
         let query = searchBar.text ?? ""
         print("begin search: \(query)")
@@ -170,7 +191,16 @@ extension SearchViewController: UISearchBarDelegate {
             return
         }
         
-        addImageViewController(query)
+        searchImageBy(word: query)
+    }
+    
+    func searchImageBy(word: String) {
+        if UIDevice.current.userInterfaceIdiom == .pad && delegate != nil {
+            delegate?.searchBy(query: word)
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            addImageViewController(word)
+        }
     }
 }
 
@@ -211,16 +241,6 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
 
 extension UISearchBar {
     var textField : UITextField? {
-        if #available(iOS 13.0, *) {
-            return self.searchTextField
-        } else {
-            // Fallback on earlier versions
-            for view : UIView in (self.subviews[0]).subviews {
-                if let textField = view as? UITextField {
-                    return textField
-                }
-            }
-        }
-        return nil
+        return self.searchTextField
     }
 }
