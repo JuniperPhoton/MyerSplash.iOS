@@ -13,6 +13,10 @@ import FlexLayout
 import RxSwift
 import MyerSplashShared
 
+protocol SearchViewControllerDelegate: class {
+    func searchBy(query: String)
+}
+
 class SearchViewController: UIViewController {
     private var closeRippleController: MDCRippleTouchController!
     
@@ -21,6 +25,8 @@ class SearchViewController: UIViewController {
     private var imageDetailView: ImageDetailView!
     
     private var disposeBag = DisposeBag()
+    
+    weak var delegate: SearchViewControllerDelegate?
     
     private lazy var searchView: UISearchBar = {
         let searchView = UISearchBar()
@@ -53,9 +59,10 @@ class SearchViewController: UIViewController {
     private lazy var searchHintView: UIView = {
         let searchHintView = SearchHintView()
         searchHintView.onClickKeyword = { [weak self] (keyword) in
-            self?.searchView.text = keyword.query
-            self?.addImageViewController(keyword.query)
-            self?.searchView.resignFirstResponder()
+            guard let self = self else { return }
+            self.searchView.text = keyword.query
+            self.searchImageBy(word: keyword.query)
+            self.searchView.resignFirstResponder()
         }
         searchHintView.isUserInteractionEnabled = true
         return searchHintView
@@ -184,7 +191,16 @@ extension SearchViewController: UISearchBarDelegate {
             return
         }
         
-        addImageViewController(query)
+        searchImageBy(word: query)
+    }
+    
+    func searchImageBy(word: String) {
+        if UIDevice.current.userInterfaceIdiom == .pad && delegate != nil {
+            delegate?.searchBy(query: word)
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            addImageViewController(word)
+        }
     }
 }
 
