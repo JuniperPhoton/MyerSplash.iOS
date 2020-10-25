@@ -225,8 +225,8 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
     }
     
     // MARK: ImagesViewControllerDelegate
-    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool {
-        imageDetailView?.show(initFrame: rect, image: image)
+    func onClickImage(rect: CGRect, image: UnsplashImage, imageUrl: String) -> Bool {
+        imageDetailView?.show(initFrame: rect, image: image, imageUrl: imageUrl)
         return true
     }
     

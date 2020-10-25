@@ -31,8 +31,9 @@ class ImageDetailView: UIView {
         return button
     }()
 
-    private var initFrame: CGRect? = nil
-    private var bindImage: UnsplashImage? = nil
+    private var initFrame: CGRect?
+    private var bindImage: UnsplashImage?
+    private var imageUrl: String?
 
     weak var delegate: ImageDetailViewDelegate? = nil
 
@@ -80,9 +81,10 @@ class ImageDetailView: UIView {
         super.init(coder: aDecoder)
     }
 
-    func show(initFrame: CGRect, image: UnsplashImage) {
+    func show(initFrame: CGRect, image: UnsplashImage, imageUrl: String) {
         self.initFrame = initFrame
         self.bindImage = image
+        self.imageUrl = imageUrl
         bind()
         showInternal()
     }
@@ -259,7 +261,7 @@ class ImageDetailView: UIView {
         mainImageView.frame = initFrame
         mainImageView.applyMask()
         
-        if let listUrl = image.listUrl {
+        if let listUrl = imageUrl {
             ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }
 

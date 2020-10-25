@@ -202,11 +202,11 @@ extension UnsplashImage {
 }
 
 public class ImageUrl: ColumnJSONCodable {
-    var raw: String?
-    var full: String?
-    var regular: String?
-    var small: String?
-    var thumb: String?
+    public var raw: String?
+    public var full: String?
+    public var regular: String?
+    public var small: String?
+    public var thumb: String?
 }
 
 public extension String {

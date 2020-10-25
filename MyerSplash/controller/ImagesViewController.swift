@@ -15,7 +15,7 @@ import ELWaterFallLayout
 import MyerSplashShared
 
 protocol ImagesViewControllerDelegate: class {
-    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool
+    func onClickImage(rect: CGRect, image: UnsplashImage, imageUrl: String) -> Bool
     func onRequestDownload(image: UnsplashImage)
 }
 
@@ -441,8 +441,8 @@ extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.onClickDownload = { [weak self] unsplashImage in
             self?.delegate?.onRequestDownload(image: unsplashImage)
         }
-        cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage) -> Void in
-            if self?.delegate?.onClickImage(rect: rect, image: image) == true {
+        cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage, imageUrl: String) -> Void in
+            if self?.delegate?.onClickImage(rect: rect, image: image, imageUrl: imageUrl) == true {
                 cell.isHidden = true
                 self?.tappedCell = cell
             }
