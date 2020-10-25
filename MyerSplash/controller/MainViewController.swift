@@ -215,11 +215,7 @@ class MainViewController: TabmanViewController {
 
     @objc
     func onClickFilter() {
-        guard let currentVc = self.viewControllers[currentIndex!] as? ImagesViewController else {
-            return
-        }
-        
-        showFilterDialog(viewControllerToRefresh: currentVc)
+        showFilterDialog(viewControllerToRefresh: self.viewControllers[currentIndex!])
     }
     
     @objc
@@ -229,6 +225,7 @@ class MainViewController: TabmanViewController {
         if #available(iOS 13.0, *) {
             #if !targetEnvironment(macCatalyst)
             let vc = SearchViewController()
+            vc.delegate = self
             self.present(vc, animated: true, completion: nil)
             #else
             let view = SearchView(dismissAction: { [weak self] in
@@ -307,6 +304,12 @@ class MainViewController: TabmanViewController {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
             self.fab.alpha = imageVc.shouldShowFilterButton() ? 1 : 0
         }
+    }
+}
+
+extension MainViewController: SearchViewControllerDelegate {
+    func searchBy(query: String) {
+        addTab(keyword: Keyword(displayTitle: query.uppercased(), query: query))
     }
 }
 
