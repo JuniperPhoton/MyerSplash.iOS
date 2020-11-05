@@ -170,10 +170,10 @@ class ImagesViewController: UIViewController {
             waterfallLayout.lineCount = 1
         }
         
-        waterfallLayout.vItemSpace = Dimensions.imagesViewSpace
-        waterfallLayout.hItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.vItemSpace = Dimensions.ImagesViewSpace
+        waterfallLayout.hItemSpace = Dimensions.ImagesViewSpace
         
-        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: Dimensions.imagesViewSpace, bottom: 0, right: Dimensions.imagesViewSpace)
+        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: Dimensions.ImagesViewSpace, bottom: 0, right: Dimensions.ImagesViewSpace)
         
         collectionView.snp.makeConstraints { (maker) in
             maker.height.equalTo(view)

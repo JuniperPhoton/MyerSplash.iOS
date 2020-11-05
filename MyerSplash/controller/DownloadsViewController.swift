@@ -53,9 +53,9 @@ class DownloadsViewController: UIViewController {
             waterfallLayout.lineCount = 2
         }
         
-        waterfallLayout.vItemSpace = Dimensions.imagesViewSpace
-        waterfallLayout.hItemSpace = Dimensions.imagesViewSpace
-        waterfallLayout.edge = UIEdgeInsets(top: Dimensions.imagesViewSpace, left: Dimensions.imagesViewSpace, bottom: Dimensions.imagesViewSpace, right: Dimensions.imagesViewSpace)
+        waterfallLayout.vItemSpace = Dimensions.ImagesViewSpace
+        waterfallLayout.hItemSpace = Dimensions.ImagesViewSpace
+        waterfallLayout.edge = UIEdgeInsets(top: Dimensions.ImagesViewSpace, left: Dimensions.ImagesViewSpace, bottom: Dimensions.ImagesViewSpace, right: Dimensions.ImagesViewSpace)
 
         collectionView.contentInset = UIEdgeInsets(top: getContentTopInsets(), left: 0, bottom: 0, right: 0)
         

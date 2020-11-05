@@ -195,12 +195,8 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchImageBy(word: String) {
-        if UIDevice.current.userInterfaceIdiom == .pad && delegate != nil {
-            delegate?.searchBy(query: word)
-            self.dismiss(animated: true, completion: nil)
-        } else {
-            addImageViewController(word)
-        }
+        delegate?.searchBy(query: word)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

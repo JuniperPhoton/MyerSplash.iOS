@@ -69,6 +69,7 @@
 		227D5D2123C2346400B2CC4A /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227D5D2023C2346400B2CC4A /* LaunchScreen2.storyboard */; };
 		22A0D29B251F9F920043B141 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2219372C23C999BD00A58BE5 /* Localizable.strings */; };
 		22A0D29D251F9F920043B141 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2219372C23C999BD00A58BE5 /* Localizable.strings */; };
+		22B284BA2553DBC50042DD9B /* TabsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B284B92553DBC50042DD9B /* TabsListView.swift */; };
 		22D39FF3251F00DA00F69A36 /* MyerSplashShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D39FF1251F00DA00F69A36 /* MyerSplashShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22D39FF6251F00DA00F69A36 /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
 		22D39FF7251F00DA00F69A36 /* MyerSplashShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -192,6 +193,7 @@
 		227D5D2323C23DEA00B2CC4A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		228F8E2C23E1AD23002BA1E5 /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		22A3E01E249F2FB0008159F0 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		22B284B92553DBC50042DD9B /* TabsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsListView.swift; sourceTree = "<group>"; };
 		22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyerSplashShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D39FF1251F00DA00F69A36 /* MyerSplashShared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyerSplashShared.h; sourceTree = "<group>"; };
 		22D39FF2251F00DA00F69A36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				223D1EE424A3AF86000D04FC /* SearchView.swift */,
+				22B284B92553DBC50042DD9B /* TabsListView.swift */,
 			);
 			path = swiftui;
 			sourceTree = "<group>";
@@ -889,6 +892,7 @@
 				54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */,
 				222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */,
 				54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */,
+				22B284BA2553DBC50042DD9B /* TabsListView.swift in Sources */,
 				2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */,
 				2268722F23C632B100F921F4 /* DownloadItemCell.swift in Sources */,
 				54A5646DE8E2778738D9664F /* ImageDetailView.swift in Sources */,
