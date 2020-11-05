@@ -118,7 +118,7 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         let view = self.view!
         
-        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int, _ size: Int) in
+        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int, _ size: Int, _ startIndex: Int) in
             if let self = self {
                 if !success {
                     showToast(R.strings.something_wrong)
@@ -145,7 +145,7 @@ class ImagesViewController: UIViewController {
                     self.noMoreItemView.isHidden = true
                 }
                 
-                self.collectionView.reloadData()
+                self.collectionView.insertItems(at: [IndexPath(item: startIndex, section: 0)])
                 self.waterfallLayout.invalidateLayout()
             }
         }

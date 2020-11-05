@@ -41,7 +41,7 @@ class ImageRepo {
     
     private var disposeBag = DisposeBag()
     
-    var onLoadFinished: ((_ success: Bool, _ page: Int, _ loadedSize: Int) -> Void)? = nil
+    var onLoadFinished: ((_ success: Bool, _ page: Int, _ loadedSize: Int, _ startIndex: Int) -> Void)? = nil
     
     func loadImage(_ page: Int) {
         let startTime = NetworkQuality.sharedInstance.getCurrentTimeMillis()
@@ -60,12 +60,12 @@ class ImageRepo {
                     self.images.append(image)
                 }
                 
-                self.onLoadFinished?.self(true, page, list.count)
+                self.onLoadFinished?.self(true, page, list.count, self.images.count - list.count)
             }, onError: { (e) in
                 NetworkQuality.sharedInstance.recordDownloadDuration(startMillis: startTime, success: false)
 
                 print("Error on loading image: %s", e.localizedDescription)
-                self.onLoadFinished?.self(false, page, 0)
+                self.onLoadFinished?.self(false, page, 0, 0)
             })
             .disposed(by: disposeBag)
     }
