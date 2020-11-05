@@ -23,8 +23,8 @@ public class Dimensions {
     public static let ShadowOffsetY = 2
     public static let ShadowRadius = 4
     public static let ShadowOpacity: Float = 0.2
-    
-    public static var imagesViewSpace: CGFloat = {
+        
+    public static var ImagesViewSpace: CGFloat = {
         if UIDevice.current.userInterfaceIdiom == .pad {
             return 18
         } else {

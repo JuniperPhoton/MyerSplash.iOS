@@ -250,13 +250,41 @@ class MainViewController: TabmanViewController {
         }
     }
     
-    private func addTab(keyword: Keyword) {
+    private func scrollToExistPageBy(title: String) -> Bool {
         let index: Int? = self.viewControllers.firstIndex { (vc) -> Bool in
-            return vc.repoTitle?.caseInsensitiveCompare(keyword.displayTitle) == ComparisonResult.orderedSame
+            return vc.repoTitle?.caseInsensitiveCompare(title) == ComparisonResult.orderedSame
         }
         
         if let i = index {
             self.scrollToPage(.at(index: i), animated: true)
+            return true
+        }
+        
+        return false
+    }
+    
+    private func addTab(user: UnsplashUser) {
+        guard let userName = user.userName else {
+            return
+        }
+        
+        guard let userDisplayName = (user.name ?? userName)?.uppercased() else {
+            return
+        }
+        
+        if scrollToExistPageBy(title: userDisplayName) {
+            return
+        }
+        
+        let repo = PhotographerImageRepo(authorName: userName)
+        repo.title = userDisplayName
+        self.viewControllers.append(ImagesViewController(repo))
+        setupViewControllers()
+        insertPage(at: viewControllers.count - 1, then: .scrollToUpdate)
+    }
+    
+    private func addTab(keyword: Keyword) {
+        if scrollToExistPageBy(title: keyword.displayTitle) {
             return
         }
         
@@ -270,15 +298,50 @@ class MainViewController: TabmanViewController {
     @objc
     private func onClickMore() {
         Events.trackClickMore()
-        let controller = MoreViewController(selectedIndex: UIDevice.current.userInterfaceIdiom == .pad ? 1 : 0)
+        let controller = MoreViewController(selectedIndex: 0, tabs: getTabDataSource())
+        controller.moreDelegate = self
         self.present(controller, animated: true, completion: nil)
     }
     
     @objc
     private func onClickDownloads() {
         Events.trackClickMore()
-        let controller = MoreViewController(selectedIndex: 0)
+        let controller = MoreViewController(selectedIndex: 1, tabs: getTabDataSource())
+        controller.moreDelegate = self
         self.present(controller, animated: true, completion: nil)
+    }
+    
+    private func getTabDataSource() -> TabDataSource? {
+        let tabs: [TabSource] =  self.viewControllers.map { (vc) in
+            let title = vc.repoTitle!
+            let deletable = !(vc.imageRepo is NewImageRepo) && !(vc.imageRepo is RandomImageRepo) && !(vc.imageRepo is HighlightsImageRepo)
+                && !(vc.imageRepo is DeveloperImageRepo)
+            
+            let prefix: String
+            
+            if vc.imageRepo is SearchImageRepo {
+                prefix = "🔍"
+            } else if vc.imageRepo is PhotographerImageRepo {
+                prefix = "📷"
+            } else {
+                prefix = ""
+            }
+            
+            return TabSource(id: title.hash,
+                     content: title,
+                     displayTitle: "\(prefix) \(title)",
+                     deletable: deletable)
+        }
+        
+        if tabs.filter({ (t) -> Bool in
+            t.deletable
+        }).count == 0 {
+            return nil
+        }
+        
+        let dataSource = TabDataSource()
+        dataSource.tabs = tabs
+        return dataSource
     }
     
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -341,8 +404,8 @@ extension MainViewController: ImageDetailViewDelegate {
         }
     }
     
-    func onRequestOpenUrl(urlString: String) {
-        UIApplication.shared.open(URL(string: urlString)!)
+    func onRequestOpenAuthorPage(user: UnsplashUser) {
+        self.addTab(user: user)
     }
     
     func onRequestImageDownload(image: UnsplashImage) {
@@ -352,12 +415,66 @@ extension MainViewController: ImageDetailViewDelegate {
 
 extension MainViewController: ImagesViewControllerDelegate {
     // MARK: ImagesViewControllerDelegate
-    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool {
-        imageDetailView.show(initFrame: rect, image: image)
+    func onClickImage(rect: CGRect, image: UnsplashImage, imageUrl: String) -> Bool {
+        imageDetailView.show(initFrame: rect, image: image, imageUrl: imageUrl)
         return true
     }
     
     func onRequestDownload(image: UnsplashImage) {
         DownloadManager.instance.prepareToDownload(vc: self, image: image)
+    }
+}
+
+extension MainViewController: MoreViewControllerDelegate {
+    func onDismiss(tabs: TabDataSource) {
+        let newTabs = tabs.tabs.map { (t) in
+            t.content
+        }
+        
+        guard let currentIndex = self.currentIndex else { return }
+        
+        let currentVc = self.viewControllers[currentIndex]
+        var currentSelectedDeleted = false
+        
+        var deletedCount = 0
+        
+        var firstVcToDelete: ImagesViewController? = nil
+        
+        viewControllers.removeAll { (vc) -> Bool in
+            guard let title = vc.repoTitle else {
+                return false
+            }
+            if !newTabs.contains(title) {
+                if currentVc == vc {
+                    currentSelectedDeleted = true
+                }
+                deletedCount = deletedCount + 1
+                
+                if firstVcToDelete == nil {
+                    firstVcToDelete = vc
+                }
+                return true
+            }
+            
+            return false
+        }
+        
+        if deletedCount == 0 {
+            return
+        }
+        
+        if deletedCount == 1 {
+            if currentSelectedDeleted {
+                self.reloadData()
+            } else if let firstVcToDelete = firstVcToDelete {
+                if let indexToDelete = self.viewControllers.firstIndex(of: firstVcToDelete) {
+                    self.deletePage(at: indexToDelete, then: .scrollToUpdate)
+                }
+            }
+            
+            return
+        }
+        
+        self.reloadData()
     }
 }

@@ -29,7 +29,7 @@ public class MainImageTableCell: UICollectionViewCell {
 
     var mainImageView: DayNightImageView!
 
-    var onClickMainImage: ((CGRect, UnsplashImage) -> Void)?
+    var onClickMainImage: ((CGRect, UnsplashImage, String) -> Void)?
     var onClickDownload: ((UnsplashImage) -> Void)?
     
     public override init(frame: CGRect) {
@@ -138,12 +138,27 @@ public class MainImageTableCell: UICollectionViewCell {
         })
     }
 
-    private func isImageCached() -> Bool {
-        guard let bindImage = bindImage,
-              let url = bindImage.listUrl else {
-            return false
+    private func cachedImageUrl() -> String? {
+        guard let urls = bindImage?.urls else { return nil }
+        let regularUrl = urls.regular
+        
+        if ImageIO.isImageCached(regularUrl) {
+            return regularUrl
         }
-        return ImageIO.isImageCached(url)
+        
+        let smallUrl = urls.small
+        
+        if ImageIO.isImageCached(smallUrl) {
+            return smallUrl
+        }
+        
+        let thumbUrl = urls.thumb
+        
+        if ImageIO.isImageCached(thumbUrl) {
+            return thumbUrl
+        }
+
+        return nil
     }
 
     @objc
@@ -153,14 +168,14 @@ public class MainImageTableCell: UICollectionViewCell {
             print("bindImage is nil or superview is nil")
             return
         }
-
-        if (!isImageCached()) {
+        
+        guard let cachedUrl = cachedImageUrl() else {
             print("image not cached, skip showing details")
             return
         }
 
         let rect = superView.convert(frame, to: nil)
-        onClickMainImage?(rect, bindImage)
+        onClickMainImage?(rect, bindImage, cachedUrl)
     }
 
     @objc

@@ -4,6 +4,7 @@
 "tab_random" = "RANDOM";
 "tab_developer" = "DEVELOPER";
 
+"tab_management" = "TABS";
 "tab_downloads" = "DOWNLOADS";
 "tab_settings" = "SETTINGS";
 "tab_about" = "ABOUT";
@@ -27,6 +28,8 @@
 "download_cancelled" = "Cancelled";
 
 "no_network" = "Network unavailable :(";
+
+"action_delete" = "DELETE";
 
 "delete_dialog_title" = "Delete download history?";
 "delete_dialog_message" = "This operation won't delete photos in your devices.";

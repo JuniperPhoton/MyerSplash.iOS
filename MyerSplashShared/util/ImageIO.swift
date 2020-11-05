@@ -39,7 +39,11 @@ public class ImageIO {
         }
     }
     
-    public static func isImageCached(_ url: String)-> Bool {
+    public static func isImageCached(_ url: String?)-> Bool {
+        guard let url = url else {
+            return false
+        }
+        
         guard let uri = URL(string: url) else {
             return false
         }

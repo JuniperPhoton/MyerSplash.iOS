@@ -100,7 +100,6 @@ struct CustomTextField: UIViewRepresentable {
     }
 }
 
-@available(iOS 13.0, *)
 struct SearchView: View {
     private let searchBarWidth = 600.cgFloat
     private let hintWidth = 760.cgFloat

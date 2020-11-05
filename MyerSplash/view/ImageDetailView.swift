@@ -9,8 +9,8 @@ import MyerSplashShared
 protocol ImageDetailViewDelegate: class {
     func onHidden(frameAnimationSkipped: Bool)
     func onRequestImageDownload(image: UnsplashImage)
-    func onRequestOpenUrl(urlString: String)
     func onRequestEdit(item: DownloadItem)
+    func onRequestOpenAuthorPage(user: UnsplashUser)
 }
 
 class ImageDetailView: UIView {
@@ -31,8 +31,9 @@ class ImageDetailView: UIView {
         return button
     }()
 
-    private var initFrame: CGRect? = nil
-    private var bindImage: UnsplashImage? = nil
+    private var initFrame: CGRect?
+    private var bindImage: UnsplashImage?
+    private var imageUrl: String?
 
     weak var delegate: ImageDetailViewDelegate? = nil
 
@@ -80,9 +81,10 @@ class ImageDetailView: UIView {
         super.init(coder: aDecoder)
     }
 
-    func show(initFrame: CGRect, image: UnsplashImage) {
+    func show(initFrame: CGRect, image: UnsplashImage, imageUrl: String) {
         self.initFrame = initFrame
         self.bindImage = image
+        self.imageUrl = imageUrl
         bind()
         showInternal()
     }
@@ -186,7 +188,7 @@ class ImageDetailView: UIView {
             mainImageView.center.x = startX + translation.x
             mainImageView.center.y = startY + translation.y
         case UIGestureRecognizerState.ended:
-            hideInternal()
+            dismissInternal()
         default:
             return
         }
@@ -215,15 +217,17 @@ class ImageDetailView: UIView {
     @objc
     private func onClickAuthorName() {
         Events.trackClickAuthor()
-        guard let url = bindImage?.userHomePage else {
+        guard let user = bindImage?.user else {
             return
         }
-        delegate?.onRequestOpenUrl(urlString: url)
+        
+        self.dismiss(forceSkipAnimation: true)
+        self.delegate?.onRequestOpenAuthorPage(user: user)
     }
 
     @objc private func onClickBackground() {
         Events.trackImagDetailTapToDismiss()
-        hideInternal()
+        dismissInternal()
     }
 
     private var downloadItem: DownloadItem? = nil
@@ -259,7 +263,7 @@ class ImageDetailView: UIView {
         mainImageView.frame = initFrame
         mainImageView.applyMask()
         
-        if let listUrl = image.listUrl {
+        if let listUrl = imageUrl {
             ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }
 
@@ -394,15 +398,15 @@ class ImageDetailView: UIView {
                 completion: nil)
     }
 
-    private func hideInternal() {
+    private func dismissInternal() {
         disposable?.dispose()
 
         if (!self.extraInformationView.isHidden) {
             hideExtraInformationView {
-                self.hideImage()
+                self.dismiss()
             }
         } else {
-            hideImage()
+            dismiss()
         }
     }
 
@@ -426,8 +430,15 @@ class ImageDetailView: UIView {
                 })
     }
 
-    private func hideImage() {
-        let skipFrameAnimation = shouldSkipDismissAnimation()
+    private func dismiss(forceSkipAnimation: Bool? = nil) {
+        let skipFrameAnimation = forceSkipAnimation ?? shouldSkipDismissAnimation()
+        
+        if skipFrameAnimation {
+            self.isHidden = true
+            self.extraInformationView.isHidden = true
+            self.delegate?.onHidden(frameAnimationSkipped: true)
+            return
+        }
         
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,

@@ -4,6 +4,7 @@
 "tab_random" = "随机";
 "tab_developer" = "开发者";
 
+"tab_management" = "主页管理";
 "tab_downloads" = "下载管理";
 "tab_settings" = "设置";
 "tab_about" = "关于";
@@ -17,6 +18,8 @@
 "uh_oh" = "Uh oh :-(";
 "something_wrong" = "似乎出了些问题";
 "retry" = "重试";
+
+"action_delete" = "删除";
 
 "saved_album" = "成功保存到相册了 :D";
 "failed_process" = "处理失败，抱歉";

@@ -43,6 +43,7 @@ public class R {
         public static let tab_random = NSLocalizedString("tab_random", comment: "")
         public static let tab_developer = NSLocalizedString("tab_developer", comment: "")
         
+        public static let tab_management = NSLocalizedString("tab_management", comment: "")
         public static let tab_downloads = NSLocalizedString("tab_downloads", comment: "")
         public static let tab_settings = NSLocalizedString("tab_settings", comment: "")
         public static let tab_about = NSLocalizedString("tab_about", comment: "")
@@ -69,6 +70,8 @@ public class R {
         public static let delete_dialog_title = NSLocalizedString("delete_dialog_title", comment: "")
         public static let delete_dialog_message = NSLocalizedString("delete_dialog_message", comment: "")
         public static let delete_dialog_action_delete = NSLocalizedString("delete_dialog_action_delete", comment: "")
+        
+        public static let action_delete = NSLocalizedString("action_delete", comment: "")
 
         public static let about_credit = NSLocalizedString("about_credit", comment: "")
         public static let about_credit_content = NSLocalizedString("about_credit_content", comment: "")

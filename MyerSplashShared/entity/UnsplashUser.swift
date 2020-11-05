@@ -3,15 +3,19 @@ import SwiftyJSON
 import WCDBSwift
 
 public class UnsplashUser: ColumnJSONCodable {
-    var id: String?
-    var userName: String?
-    var name: String?
-    var links: ProfileUrl?
+    public internal (set) var id: String?
+    public internal (set) var userName: String?
+    public internal (set) var name: String?
+    public internal (set) var links: ProfileUrl?
 
-    var homeUrl: String? {
+    public var homeUrl: String? {
         get {
             return links?.html
         }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, userName = "username", name, links
     }
 }
 

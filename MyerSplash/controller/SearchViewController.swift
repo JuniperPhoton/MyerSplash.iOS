@@ -195,12 +195,8 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchImageBy(word: String) {
-        if UIDevice.current.userInterfaceIdiom == .pad && delegate != nil {
-            delegate?.searchBy(query: word)
-            self.dismiss(animated: true, completion: nil)
-        } else {
-            addImageViewController(word)
-        }
+        delegate?.searchBy(query: word)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -216,8 +212,11 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
         presentEdit(item: item)
     }
     
-    func onRequestOpenUrl(urlString: String) {
-        UIApplication.shared.open(URL(string: urlString)!)
+    func onRequestOpenAuthorPage(user: UnsplashUser) {
+        guard let homeUrl = user.homeUrl else {
+            return
+        }
+        UIApplication.shared.open(URL(string: homeUrl)!)
     }
     
     func onRequestImageDownload(image: UnsplashImage) {
@@ -225,8 +224,8 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
     }
     
     // MARK: ImagesViewControllerDelegate
-    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool {
-        imageDetailView?.show(initFrame: rect, image: image)
+    func onClickImage(rect: CGRect, image: UnsplashImage, imageUrl: String) -> Bool {
+        imageDetailView?.show(initFrame: rect, image: image, imageUrl: imageUrl)
         return true
     }
     

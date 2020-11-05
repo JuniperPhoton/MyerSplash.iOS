@@ -12,6 +12,11 @@ import Pageboy
 import UIKit
 import MaterialComponents.MDCRippleTouchController
 import MyerSplashShared
+import SwiftUI
+
+protocol MoreViewControllerDelegate: class {
+    func onDismiss(tabs: TabDataSource)
+}
 
 class MoreViewController: TabmanViewController {
     override open var preferredStatusBarStyle: UIStatusBarStyle {
@@ -35,9 +40,19 @@ class MoreViewController: TabmanViewController {
         return v
     }()
     
-    init(selectedIndex: Int) {
+    weak var moreDelegate: MoreViewControllerDelegate? = nil
+    
+    private var tabs: TabDataSource?
+    
+    init(selectedIndex: Int, tabs: TabDataSource?) {
         super.init(nibName: nil, bundle: nil)
         self.selectedIndex = selectedIndex
+        
+        self.tabs = tabs
+        
+        if let tabs = self.tabs {
+            viewControllers.insert(UIHostingController(rootView: TabsListView().environmentObject(tabs)), at: 0)
+        }
         
         #if targetEnvironment(macCatalyst)
         self.modalPresentationStyle = .fullScreen
@@ -110,6 +125,14 @@ class MoreViewController: TabmanViewController {
     private func onClickClose() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let tabs = self.tabs {
+            self.moreDelegate?.onDismiss(tabs: tabs)
+        }
+    }
 
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -121,17 +144,24 @@ class MoreViewController: TabmanViewController {
 
 extension MoreViewController: PageboyViewControllerDataSource, TMBarDataSource {
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+        let vc = viewControllers[index]
+        
         let title: String!
-        switch index {
-        case 0:
+        
+        switch vc {
+        case is DownloadsViewController:
             title = R.strings.tab_downloads
-        case 1:
+            break
+        case is SettingsViewController:
             title = R.strings.tab_settings
-        case 2:
+            break
+        case is AboutViewController:
             title = R.strings.tab_about
+            break
         default:
-            title = ""
+            title = R.strings.tab_management
         }
+        
         let item = TMBarItem(title: title)
         return item
     }

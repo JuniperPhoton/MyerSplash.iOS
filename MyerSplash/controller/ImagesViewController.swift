@@ -15,7 +15,7 @@ import ELWaterFallLayout
 import MyerSplashShared
 
 protocol ImagesViewControllerDelegate: class {
-    func onClickImage(rect: CGRect, image: UnsplashImage) -> Bool
+    func onClickImage(rect: CGRect, image: UnsplashImage, imageUrl: String) -> Bool
     func onRequestDownload(image: UnsplashImage)
 }
 
@@ -118,7 +118,7 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         let view = self.view!
         
-        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int, _ size: Int) in
+        imageRepo?.onLoadFinished = { [weak self] (_ success: Bool, _ page: Int, _ size: Int, _ startIndex: Int) in
             if let self = self {
                 if !success {
                     showToast(R.strings.something_wrong)
@@ -145,8 +145,10 @@ class ImagesViewController: UIViewController {
                     self.noMoreItemView.isHidden = true
                 }
                 
-                self.collectionView.reloadData()
-                self.waterfallLayout.invalidateLayout()
+                if size > 0 {
+                    self.collectionView.insertItems(at: [IndexPath(item: startIndex, section: 0)])
+                    self.waterfallLayout.invalidateLayout()
+                }
             }
         }
         
@@ -168,10 +170,10 @@ class ImagesViewController: UIViewController {
             waterfallLayout.lineCount = 1
         }
         
-        waterfallLayout.vItemSpace = Dimensions.imagesViewSpace
-        waterfallLayout.hItemSpace = Dimensions.imagesViewSpace
+        waterfallLayout.vItemSpace = Dimensions.ImagesViewSpace
+        waterfallLayout.hItemSpace = Dimensions.ImagesViewSpace
         
-        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: Dimensions.imagesViewSpace, bottom: 0, right: Dimensions.imagesViewSpace)
+        waterfallLayout.edge = UIEdgeInsets.init(top: 0, left: Dimensions.ImagesViewSpace, bottom: 0, right: Dimensions.ImagesViewSpace)
         
         collectionView.snp.makeConstraints { (maker) in
             maker.height.equalTo(view)
@@ -441,8 +443,8 @@ extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.onClickDownload = { [weak self] unsplashImage in
             self?.delegate?.onRequestDownload(image: unsplashImage)
         }
-        cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage) -> Void in
-            if self?.delegate?.onClickImage(rect: rect, image: image) == true {
+        cell.onClickMainImage = { [weak self] (rect: CGRect, image: UnsplashImage, imageUrl: String) -> Void in
+            if self?.delegate?.onClickImage(rect: rect, image: image, imageUrl: imageUrl) == true {
                 cell.isHidden = true
                 self?.tappedCell = cell
             }
