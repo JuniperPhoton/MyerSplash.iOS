@@ -50,7 +50,7 @@ class MoreViewController: TabmanViewController {
         
         self.tabs = tabs
         
-        if let tabs = tabs {
+        if let tabs = self.tabs {
             viewControllers.insert(UIHostingController(rootView: TabsListView().environmentObject(tabs)), at: 0)
         }
         
@@ -129,10 +129,8 @@ class MoreViewController: TabmanViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if isBeingDismissed {
-            if let tabs = self.tabs {
-                self.moreDelegate?.onDismiss(tabs: tabs)
-            }
+        if let tabs = self.tabs {
+            self.moreDelegate?.onDismiss(tabs: tabs)
         }
     }
 
