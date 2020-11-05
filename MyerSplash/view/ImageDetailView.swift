@@ -9,8 +9,8 @@ import MyerSplashShared
 protocol ImageDetailViewDelegate: class {
     func onHidden(frameAnimationSkipped: Bool)
     func onRequestImageDownload(image: UnsplashImage)
-    func onRequestOpenUrl(urlString: String)
     func onRequestEdit(item: DownloadItem)
+    func onRequestOpenAuthorPage(user: UnsplashUser)
 }
 
 class ImageDetailView: UIView {
@@ -188,7 +188,7 @@ class ImageDetailView: UIView {
             mainImageView.center.x = startX + translation.x
             mainImageView.center.y = startY + translation.y
         case UIGestureRecognizerState.ended:
-            hideInternal()
+            dismissInternal()
         default:
             return
         }
@@ -217,15 +217,17 @@ class ImageDetailView: UIView {
     @objc
     private func onClickAuthorName() {
         Events.trackClickAuthor()
-        guard let url = bindImage?.userHomePage else {
+        guard let user = bindImage?.user else {
             return
         }
-        delegate?.onRequestOpenUrl(urlString: url)
+        
+        self.dismiss(forceSkipAnimation: true)
+        self.delegate?.onRequestOpenAuthorPage(user: user)
     }
 
     @objc private func onClickBackground() {
         Events.trackImagDetailTapToDismiss()
-        hideInternal()
+        dismissInternal()
     }
 
     private var downloadItem: DownloadItem? = nil
@@ -396,15 +398,15 @@ class ImageDetailView: UIView {
                 completion: nil)
     }
 
-    private func hideInternal() {
+    private func dismissInternal() {
         disposable?.dispose()
 
         if (!self.extraInformationView.isHidden) {
             hideExtraInformationView {
-                self.hideImage()
+                self.dismiss()
             }
         } else {
-            hideImage()
+            dismiss()
         }
     }
 
@@ -428,8 +430,15 @@ class ImageDetailView: UIView {
                 })
     }
 
-    private func hideImage() {
-        let skipFrameAnimation = shouldSkipDismissAnimation()
+    private func dismiss(forceSkipAnimation: Bool? = nil) {
+        let skipFrameAnimation = forceSkipAnimation ?? shouldSkipDismissAnimation()
+        
+        if skipFrameAnimation {
+            self.isHidden = true
+            self.extraInformationView.isHidden = true
+            self.delegate?.onHidden(frameAnimationSkipped: true)
+            return
+        }
         
         UIView.animate(withDuration: Values.DEFAULT_ANIMATION_DURATION_SEC,
                 delay: 0,

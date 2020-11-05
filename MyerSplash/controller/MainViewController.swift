@@ -250,13 +250,41 @@ class MainViewController: TabmanViewController {
         }
     }
     
-    private func addTab(keyword: Keyword) {
+    private func scrollToExistPageBy(title: String) -> Bool {
         let index: Int? = self.viewControllers.firstIndex { (vc) -> Bool in
-            return vc.repoTitle?.caseInsensitiveCompare(keyword.displayTitle) == ComparisonResult.orderedSame
+            return vc.repoTitle?.caseInsensitiveCompare(title) == ComparisonResult.orderedSame
         }
         
         if let i = index {
             self.scrollToPage(.at(index: i), animated: true)
+            return true
+        }
+        
+        return false
+    }
+    
+    private func addTab(user: UnsplashUser) {
+        guard let userName = user.userName else {
+            return
+        }
+        
+        guard let userDisplayName = (user.name ?? userName)?.uppercased() else {
+            return
+        }
+        
+        if scrollToExistPageBy(title: userDisplayName) {
+            return
+        }
+        
+        let repo = PhotographerImageRepo(authorName: userName)
+        repo.title = userDisplayName
+        self.viewControllers.append(ImagesViewController(repo))
+        setupViewControllers()
+        insertPage(at: viewControllers.count - 1, then: .scrollToUpdate)
+    }
+    
+    private func addTab(keyword: Keyword) {
+        if scrollToExistPageBy(title: keyword.displayTitle) {
             return
         }
         
@@ -341,8 +369,8 @@ extension MainViewController: ImageDetailViewDelegate {
         }
     }
     
-    func onRequestOpenUrl(urlString: String) {
-        UIApplication.shared.open(URL(string: urlString)!)
+    func onRequestOpenAuthorPage(user: UnsplashUser) {
+        self.addTab(user: user)
     }
     
     func onRequestImageDownload(image: UnsplashImage) {

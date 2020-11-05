@@ -216,8 +216,11 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
         presentEdit(item: item)
     }
     
-    func onRequestOpenUrl(urlString: String) {
-        UIApplication.shared.open(URL(string: urlString)!)
+    func onRequestOpenAuthorPage(user: UnsplashUser) {
+        guard let homeUrl = user.homeUrl else {
+            return
+        }
+        UIApplication.shared.open(URL(string: homeUrl)!)
     }
     
     func onRequestImageDownload(image: UnsplashImage) {

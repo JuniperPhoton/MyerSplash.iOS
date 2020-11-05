@@ -15,6 +15,8 @@ public class Request {
     public static let DEVELOPER_PHOTOS_URL = "https://api.unsplash.com/users/juniperphoton/photos?"
     public static let SEARCH_URL = "https://api.unsplash.com/search/photos?"
 
+    public static let PHOTOGRAPHER_PHOTOS_URL = "https://api.unsplash.com/users/%@/photos?"
+
     public static let AUTO_CHANGE_WALLPAPER = "https://juniperphoton.net/myersplash/wallpapers/"
     public static let AUTO_CHANGE_WALLPAPER_THUMB = "https://juniperphoton.net/myersplash/wallpapers/thumbs/"
 

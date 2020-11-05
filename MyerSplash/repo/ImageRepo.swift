@@ -12,6 +12,8 @@ import RxAlamofire
 import SwiftyJSON
 import MyerSplashShared
 
+let decoder = JSONDecoder()
+
 protocol Callback {
     func onNewImages(_ list: [UnsplashImage])
     func onFailed(_ e: Error?)
@@ -172,7 +174,23 @@ class DeveloperImageRepo: ImageRepo {
     }
 }
 
-let decoder = JSONDecoder()
+class PhotographerImageRepo: ImageRepo {
+    private let authorName: String
+    
+    init(authorName: String) {
+        self.authorName = authorName
+        super.init()
+    }
+    
+    override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
+        let url = Request.PHOTOGRAPHER_PHOTOS_URL
+        let requestUrl = String(format: url, authorName)
+        
+        print(requestUrl)
+        return json(.get, requestUrl,
+                    parameters: Request.getDefaultParams(paging: page, filter: filterOption)).mapToList()
+    }
+}
 
 class SearchImageRepo: ImageRepo {    
     private var query: String? = nil

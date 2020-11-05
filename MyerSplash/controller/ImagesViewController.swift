@@ -145,8 +145,10 @@ class ImagesViewController: UIViewController {
                     self.noMoreItemView.isHidden = true
                 }
                 
-                self.collectionView.insertItems(at: [IndexPath(item: startIndex, section: 0)])
-                self.waterfallLayout.invalidateLayout()
+                if size > 0 {
+                    self.collectionView.insertItems(at: [IndexPath(item: startIndex, section: 0)])
+                    self.waterfallLayout.invalidateLayout()
+                }
             }
         }
         
