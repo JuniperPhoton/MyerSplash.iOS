@@ -38,20 +38,20 @@ struct TabsRow: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(Font.system(size: FontSizes.contentFontSize))
             
-            Button(action:{
-                onClickDelete(title)
-            }) {
-                HStack {
-                    Image(R.icons.ic_delete)
+            if title.deletable {
+                Button(action:{
+                    onClickDelete(title)
+                }) {
+                    HStack {
+                        Image(R.icons.ic_delete)
+                    }
                 }
+                .buttonStyle(BorderlessButtonStyle())
+                .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
+                .frame(width: 40, height: 40)
+                .foregroundColor(Color.red)
+                .cornerRadius(20)
             }
-            .buttonStyle(BorderlessButtonStyle())
-            .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
-            .frame(width: 40, height: 40)
-            .foregroundColor(title.deletable ? Color.red: Color.gray)
-            .opacity(title.deletable ? 1 : 0.5)
-            .disabled(!title.deletable)
-            .cornerRadius(20)
         })
     }
 }
