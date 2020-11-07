@@ -402,7 +402,7 @@ class ImageDetailView: UIView {
         disposable?.dispose()
 
         if (!self.extraInformationView.isHidden) {
-            hideExtraInformationView {
+            hideExtraInformationView(animated: true) {
                 self.dismiss()
             }
         } else {
@@ -410,12 +410,18 @@ class ImageDetailView: UIView {
         }
     }
 
-    private func hideExtraInformationView(_ completion: (() -> Void)? = nil) {
+    private func hideExtraInformationView(animated: Bool, _ completion: (() -> Void)? = nil) {
         extraInformationView.snp.remakeConstraints { maker in
             maker.left.equalTo(mainImageView.snp.left)
             maker.right.equalTo(mainImageView.snp.right)
             maker.height.equalTo(Dimensions.ImageDetailExtraHeight)
             maker.bottom.equalTo(self.mainImageView.snp.bottom)
+        }
+        
+        if !animated {
+            self.extraInformationView.isHidden = true
+            completion?()
+            return
         }
 
         UIView.animate(withDuration: Values.A_BIT_SLOW_ANIMATION_DURATION_SEC,
@@ -435,6 +441,7 @@ class ImageDetailView: UIView {
         
         if skipFrameAnimation {
             self.isHidden = true
+            self.hideExtraInformationView(animated: false)
             self.extraInformationView.isHidden = true
             self.delegate?.onHidden(frameAnimationSkipped: true)
             return

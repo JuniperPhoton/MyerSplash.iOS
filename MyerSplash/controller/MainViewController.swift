@@ -431,50 +431,20 @@ extension MainViewController: MoreViewControllerDelegate {
             t.content
         }
         
-        guard let currentIndex = self.currentIndex else { return }
-        
-        let currentVc = self.viewControllers[currentIndex]
-        var currentSelectedDeleted = false
-        
-        var deletedCount = 0
-        
-        var firstVcToDelete: ImagesViewController? = nil
+        let currentVc = self.viewControllers[self.currentIndex ?? 0]
         
         viewControllers.removeAll { (vc) -> Bool in
-            guard let title = vc.repoTitle else {
+            if let title = vc.repoTitle {
+                return !newTabs.contains(title)
+            } else {
                 return false
             }
-            if !newTabs.contains(title) {
-                if currentVc == vc {
-                    currentSelectedDeleted = true
-                }
-                deletedCount = deletedCount + 1
-                
-                if firstVcToDelete == nil {
-                    firstVcToDelete = vc
-                }
-                return true
-            }
-            
-            return false
-        }
-        
-        if deletedCount == 0 {
-            return
-        }
-        
-        if deletedCount == 1 {
-            if currentSelectedDeleted {
-                self.reloadData()
-            } else if let firstVcToDelete = firstVcToDelete {
-                if let indexToDelete = self.viewControllers.firstIndex(of: firstVcToDelete) {
-                    self.deletePage(at: indexToDelete, then: .scrollToUpdate)
-                }
-            }
-            
-            return
         }
         
         self.reloadData()
+        
+        if let currentVcIndex = self.viewControllers.firstIndex(of: currentVc) {
+            self.scrollToPage(.at(index: currentVcIndex), animated: false)
+        }
     }
 }
