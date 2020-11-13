@@ -50,11 +50,11 @@
 		2247DB3A251F3A2200DC6F4D /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 221D26A823D216F2003BE444 /* AppCenterAnalytics.framework */; platformFilter = ios; };
 		2247DB3F251F3A7D00DC6F4D /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56F8B96F974BAFC1A7D2E /* Request.swift */; };
 		2247DB44251F3AAC00DC6F4D /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB43251F3AAC00DC6F4D /* Misc.swift */; };
-		2247DB4F251F3E8000DC6F4D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2247DB4E251F3E8000DC6F4D /* WidgetKit.framework */; platformFilter = ios; };
+		2247DB4F251F3E8000DC6F4D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2247DB4E251F3E8000DC6F4D /* WidgetKit.framework */; };
 		2247DB51251F3E8000DC6F4D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2247DB50251F3E8000DC6F4D /* SwiftUI.framework */; };
 		2247DB54251F3E8000DC6F4D /* MyerSplashWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB53251F3E8000DC6F4D /* MyerSplashWidget.swift */; };
 		2247DB56251F3E8200DC6F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2247DB55251F3E8200DC6F4D /* Assets.xcassets */; };
-		2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2247DB5A251F3E8200DC6F4D /* MyerSplashWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2247DB67251F3FB400DC6F4D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2247DB66251F3FB400DC6F4D /* Error.swift */; };
 		2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; platformFilter = ios; };
 		2252128F2544A2DD002553A0 /* NetworkQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252128E2544A2DD002553A0 /* NetworkQuality.swift */; };
@@ -909,7 +909,6 @@
 /* Begin PBXTargetDependency section */
 		2247DB59251F3E8200DC6F4D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = 2247DB4C251F3E8000DC6F4D /* MyerSplashWidgetExtension */;
 			targetProxy = 2247DB58251F3E8200DC6F4D /* PBXContainerItemProxy */;
 		};
@@ -962,6 +961,7 @@
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -973,9 +973,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -994,6 +994,7 @@
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1004,9 +1005,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
