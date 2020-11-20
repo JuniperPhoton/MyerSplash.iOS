@@ -330,7 +330,7 @@ class ImageEditorViewController: UIViewController {
             var height = item.unsplashImage!.height
             
             let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
-            let size = ImageIO.getImageSize(at: url)
+            let size = ImageIO.shared.getImageSize(at: url)
             
             width = Int(size.width)
             height = Int(size.height)
@@ -375,7 +375,7 @@ class ImageEditorViewController: UIViewController {
             Log.info(tag: ImageEditorViewController.TAG, "target w: \(targetWidth), target h: \(targetHeight)")
                         
             DispatchQueue.global().async {
-                let resizedImage = ImageIO.resizedImage(at: url, for: CGSize(width: targetWidth, height: targetHeight))
+                let resizedImage = ImageIO.shared.resizedImage(at: url, for: CGSize(width: targetWidth, height: targetHeight))
                 
                 DispatchQueue.main.async {
                     self.loadingIndicator.isHidden = true

@@ -264,7 +264,7 @@ class ImageDetailView: UIView {
         mainImageView.applyMask()
         
         if let listUrl = imageUrl {
-            ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
+            ImageIO.shared.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }
 
         let themeColor = image.themeColor

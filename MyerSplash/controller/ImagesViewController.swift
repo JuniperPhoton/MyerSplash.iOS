@@ -457,7 +457,7 @@ extension ImagesViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if !willCellPerformEnterAnimation(indexPath: indexPath) {
             cell.loadImage(fade: true)
         } else {
-            if let url = image.listUrl, ImageIO.isImageCached(url) {
+            if let url = image.listUrl, ImageIO.shared.isImageCached(url) {
                 cell.loadImage(fade: false)
             }
         }
@@ -534,11 +534,11 @@ extension ImagesViewController: UICollectionViewDragDelegate {
             return []
         }
         
-        if !ImageIO.isImageCached(url) {
+        if !ImageIO.shared.isImageCached(url) {
             return []
         }
         
-        let provider = NSItemProvider(object: ImageIO.getCachedImage(url)!)
+        let provider = NSItemProvider(object: ImageIO.shared.getCachedImage(url)!)
         
         return [
             UIDragItem(itemProvider: provider)

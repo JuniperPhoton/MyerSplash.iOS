@@ -35,7 +35,7 @@ extension UIViewController {
 
         var items = [content!, URL(string: url)!] as [Any]
         
-        let image = ImageIO.getCachedImage(unsplashImage.listUrl)
+        let image = ImageIO.shared.getCachedImage(unsplashImage.listUrl)
         if image != nil {
             items.append(image!)
         }

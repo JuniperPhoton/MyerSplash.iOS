@@ -129,7 +129,7 @@ public class MainImageTableCell: UICollectionViewCell {
         
         let startTime = NetworkQuality.sharedInstance.getCurrentTimeMillis()
         
-        ImageIO.loadImage(url: url, intoView: mainImageView, fade: fade, completion: { [weak self] result in
+        ImageIO.shared.loadImage(url: url, intoView: mainImageView, fade: fade, completion: { [weak self] result in
             guard let self = self else { return }
             let response = try? result.get()
             self.retryButton.isHidden = response != nil
@@ -142,19 +142,19 @@ public class MainImageTableCell: UICollectionViewCell {
         guard let urls = bindImage?.urls else { return nil }
         let regularUrl = urls.regular
         
-        if ImageIO.isImageCached(regularUrl) {
+        if ImageIO.shared.isImageCached(regularUrl) {
             return regularUrl
         }
         
         let smallUrl = urls.small
         
-        if ImageIO.isImageCached(smallUrl) {
+        if ImageIO.shared.isImageCached(smallUrl) {
             return smallUrl
         }
         
         let thumbUrl = urls.thumb
         
-        if ImageIO.isImageCached(thumbUrl) {
+        if ImageIO.shared.isImageCached(thumbUrl) {
             return thumbUrl
         }
 

@@ -127,7 +127,7 @@ class DownloadItemCell: UICollectionViewCell {
         self.image = image
 
         if let url = image.listUrl {
-            ImageIO.loadImage(url: url, intoView: view)
+            ImageIO.shared.loadImage(url: url, intoView: view)
         }
 
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)

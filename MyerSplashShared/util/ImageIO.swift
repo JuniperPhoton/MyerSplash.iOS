@@ -9,7 +9,16 @@ import Nuke
 public class ImageIO {
     private static let TAG = "ImageIO"
     
-    public static func cacheImage(_ url: String?,
+    public static let shared = ImageIO()
+    
+    private init() {
+        _ = ImagePipeline {
+            $0.isProgressiveDecodingEnabled = true
+            $0.isStoringPreviewsInMemoryCache = true
+        }
+    }
+    
+    public func cacheImage(_ url: String?,
                                   onSuccess: ((UIImage)->Void)? = nil,
                                   onFailure: ((Error)->Void)? = nil) {
         if url == nil {
@@ -39,7 +48,7 @@ public class ImageIO {
         }
     }
     
-    public static func isImageCached(_ url: String?)-> Bool {
+    public func isImageCached(_ url: String?)-> Bool {
         guard let url = url else {
             return false
         }
@@ -57,7 +66,7 @@ public class ImageIO {
         return diskCached || memoryCached
     }
     
-    public static func getCachedImage(_ url: String?)-> UIImage? {
+    public func getCachedImage(_ url: String?)-> UIImage? {
         if url == nil {
             return nil
         }
@@ -68,8 +77,8 @@ public class ImageIO {
         let request = ImageRequest(url: uri)
         let image = Nuke.ImageCache.shared[request]
         
-        if image != nil {
-            return image
+        if image?.image != nil {
+            return image!.image
         }
         
         let data = DataLoader.sharedUrlCache.cachedResponse(for: request.urlRequest)?.data
@@ -81,15 +90,15 @@ public class ImageIO {
         return nil
     }
     
-    public static func getDiskCacheSizeBytes()-> Int {
+    public func getDiskCacheSizeBytes()-> Int {
         return DataLoader.sharedUrlCache.currentDiskUsage
     }
     
-    public static func getFormattedDiskCacheSize()-> String {
+    public func getFormattedDiskCacheSize()-> String {
         return String(format: "%.2fMB", DataLoader.sharedUrlCache.currentDiskUsage.toCGFloat() / 1024.0 / 1024.0)
     }
     
-    public static func clearCaches(includingDownloads: Bool) {
+    public func clearCaches(includingDownloads: Bool) {
         DataLoader.sharedUrlCache.removeAllCachedResponses()
         
         if includingDownloads {
@@ -97,7 +106,7 @@ public class ImageIO {
         }
     }
     
-    public static func clearDownloadFiles() {
+    public func clearDownloadFiles() {
         DispatchQueue.global().async {
             do {
                 var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -109,15 +118,18 @@ public class ImageIO {
         }
     }
     
-    public static func loadImage(url: String,
+    public func loadImage(url: String,
                           intoView: ImageDisplayingView,
                           fade: Bool = true,
                           completion: ImageTask.Completion? = nil) {
-        let request = ImageRequest(url: URL(string: url)!)
+        guard let url = URL(string: url) else {
+            return
+        }
+        let request = ImageRequest(urlRequest: URLRequest(url: url))
         loadImage(request: request, intoView: intoView, fade: fade, completion: completion)
     }
     
-    public static func loadImage(request: ImageRequest,
+    public func loadImage(request: ImageRequest,
                           intoView: ImageDisplayingView,
                           fade: Bool = true,
                           completion: ImageTask.Completion? = nil) {
@@ -133,7 +145,7 @@ public class ImageIO {
                        into: intoView, progress: nil, completion: completion)
     }
     
-    public static func getImageSize(at url: URL) -> CGSize {
+    public func getImageSize(at url: URL) -> CGSize {
         let exist = FileManager.default.fileExists(atPath: url.path)
         if !exist {
             return CGSize.zero
@@ -144,7 +156,7 @@ public class ImageIO {
         return image?.size ?? CGSize.zero
     }
     
-    public static func resizedImage(at url: URL, for size: CGSize) -> UIImage? {
+    public func resizedImage(at url: URL, for size: CGSize) -> UIImage? {
         let exist = FileManager.default.fileExists(atPath: url.path)
         
         Log.info(tag: ImageIO.TAG, "resizedImage check exists, \(exist) at \(url.path)")
