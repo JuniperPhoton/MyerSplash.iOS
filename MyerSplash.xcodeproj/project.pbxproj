@@ -956,10 +956,11 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 460;
+				CURRENT_PROJECT_VERSION = 461;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -988,10 +989,11 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 460;
+				CURRENT_PROJECT_VERSION = 461;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1016,7 +1018,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 460;
+				CURRENT_PROJECT_VERSION = 461;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1055,7 +1057,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 460;
+				CURRENT_PROJECT_VERSION = 461;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1208,7 +1210,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 460;
+				CURRENT_PROJECT_VERSION = 461;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1239,7 +1241,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 460;
+				CURRENT_PROJECT_VERSION = 461;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
