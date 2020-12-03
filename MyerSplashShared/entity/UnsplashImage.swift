@@ -55,15 +55,7 @@ public class UnsplashImage: ColumnJSONCodable {
 
     public var listUrl: String? {
         get {
-            let averageDuration = NetworkQuality.sharedInstance.averageDurationMillis
-            
-            if averageDuration > 1000 {
-                return urls?.small
-            } else if averageDuration > 2000 {
-                return urls?.thumb
-            } else {
-                return urls?.regular
-            }
+            return urls?.regular
         }
     }
 

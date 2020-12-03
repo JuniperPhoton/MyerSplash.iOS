@@ -170,23 +170,55 @@ class ImageDetailView: UIView {
     }
 
     // MARK: Motion
-    private var startX: CGFloat = -1
-    private var startY: CGFloat = -1
+    private var startImageCenterX: CGFloat = -1
+    private var startImageCenterY: CGFloat = -1
+    
+    private var touchDownX: CGFloat = -1
+    private var touchDownY: CGFloat = -1
+    
+    private var touchDownLongSideRef: CGFloat = -1
+    
+    private let DAMPING_RATIO_FACTOR: CGFloat = 1
 
     @objc
     private func onMotionEvent(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self)
-
+        
         switch gesture.state {
         case UIGestureRecognizerState.began:
             Events.trackImagDetailBeginDrag()
             
-            startX = mainImageView.center.x
-            startY = mainImageView.center.y
+            let w = UIApplication.shared.windows[0].bounds.width
+            let h = UIApplication.shared.windows[0].bounds.height
+            
+            touchDownLongSideRef = max(w, h)
+
+            let currentPosition = gesture.location(in: self)
+            touchDownX = currentPosition.x
+            touchDownY = currentPosition.y
+            
+            startImageCenterX = mainImageView.center.x
+            startImageCenterY = mainImageView.center.y
             resetExtraInformationConstraint()
         case UIGestureRecognizerState.changed:
-            mainImageView.center.x = startX + translation.x
-            mainImageView.center.y = startY + translation.y
+            var dampingRatio: CGFloat = -1
+            
+            if touchDownLongSideRef > 0 {
+                let currentPosition = gesture.location(in: self)
+                let currentX = currentPosition.x
+                let currentY = currentPosition.y
+                let distance = sqrt(pow(currentX - touchDownX, 2) + pow(currentY - touchDownY, 2))
+                dampingRatio = (1 - distance / touchDownLongSideRef) * DAMPING_RATIO_FACTOR
+            }
+            
+            if dampingRatio <= 0 || dampingRatio == CGFloat.nan {
+                dampingRatio = 1
+            }
+            
+            print("damping ratio is \(dampingRatio)")
+            
+            mainImageView.center.x = startImageCenterX + translation.x * dampingRatio
+            mainImageView.center.y = startImageCenterY + translation.y * dampingRatio
         case UIGestureRecognizerState.ended:
             dismissInternal()
         default:
@@ -264,7 +296,7 @@ class ImageDetailView: UIView {
         mainImageView.applyMask()
         
         if let listUrl = imageUrl {
-            ImageIO.loadImage(url: listUrl, intoView: mainImageView, fade: false)
+            ImageIO.shared.loadImage(url: listUrl, intoView: mainImageView, fade: false)
         }
 
         let themeColor = image.themeColor

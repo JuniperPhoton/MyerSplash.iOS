@@ -9,7 +9,7 @@ target 'MyerSplash' do
   pod 'Alamofire', '~> 4.9.1'
   pod 'RxAlamofire'
   pod 'SwiftyJSON'
-  pod 'Nuke', '~> 8.4'
+  pod 'Nuke', '9.1.3'
   pod 'Tabman'
   pod 'Pageboy'
   pod 'FlexLayout'
@@ -29,7 +29,7 @@ target 'MyerSplashShared' do
   use_frameworks!
   pod 'WCDB.swift'
   pod 'SwiftyJSON'
-  pod 'Nuke', '~> 8.4'
+  pod 'Nuke', '9.1.3'
   pod 'MaterialComponents/Buttons'
   pod 'MaterialComponents/ActivityIndicator'
   pod 'MaterialComponents/BottomSheet'
@@ -46,5 +46,5 @@ target 'MyerSplashWidgetExtension' do
   use_frameworks!
   pod 'WCDB.swift'
   pod 'SwiftyJSON'
-  pod 'Nuke', '~> 8.4'
+  pod 'Nuke', '9.1.3'
 end

@@ -155,7 +155,7 @@ class DownloadsViewController: UIViewController {
     private func deleteItems() {
         DispatchQueue.global().async {
             AppDb.instance.deleteAll()
-            ImageIO.clearDownloadFiles()
+            ImageIO.shared.clearDownloadFiles()
             
             DispatchQueue.main.async {
                 self.downloadItems.removeAll()
@@ -260,11 +260,11 @@ extension DownloadsViewController: UICollectionViewDragDelegate {
             return []
         }
         
-        if !ImageIO.isImageCached(url) {
+        if !ImageIO.shared.isImageCached(url) {
             return []
         }
         
-        let provider = NSItemProvider(object: ImageIO.getCachedImage(url)!)
+        let provider = NSItemProvider(object: ImageIO.shared.getCachedImage(url)!)
         
         return [
             UIDragItem(itemProvider: provider)

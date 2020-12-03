@@ -74,7 +74,7 @@ class SettingsView: UIView {
 
         let clearItem = SettingsItem(frame: CGRect.zero)
         clearItem.title = R.strings.settings_clear
-        clearItem.content = ImageIO.getFormattedDiskCacheSize()
+        clearItem.content = ImageIO.shared.getFormattedDiskCacheSize()
         clearItem.onClicked = { [weak self] in
             self?.clearCache()
             clearItem.content = "0.0MB"
@@ -107,7 +107,7 @@ class SettingsView: UIView {
     }
 
     private func clearCache() {
-        ImageIO.clearCaches(includingDownloads: false)
+        ImageIO.shared.clearCaches(includingDownloads: false)
         self.showToast(R.strings.cleared)
     }
 

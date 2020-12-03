@@ -21,6 +21,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     
     #if targetEnvironment(macCatalyst)
     private let largeTitleFontSize = CGFloat(50)
+    private let creditTextMaxWidth = CGFloat(500)
     #else
     private lazy var largeTitleFontSize: CGFloat = {
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -29,7 +30,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
             return CGFloat(32)
         }
     }()
-    
+    private let creditTextMaxWidth = CGFloat(300)
     #endif
     
     private var feedbackRippleController: MDCRippleTouchController!
@@ -78,14 +79,6 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         return container
     }()
     
-    private lazy var platformsLabel: UILabel = {
-        let platformsLabel = UILabel()
-        platformsLabel.text = "for Windows 10, macOS, iOS and Android"
-        platformsLabel.textColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
-        platformsLabel.font = platformsLabel.font.withSize(FontSizes.contentFontSize)
-        return platformsLabel
-    }()
-    
     private lazy var versionsRoot: UIView = {
         let versionsRoot = UIView()
         versionsRoot.backgroundColor = Colors.THEME.asUIColor()
@@ -98,7 +91,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         let versionsLabel = UILabel()
         versionsLabel.text = "Versions \(UIApplication.shared.appVersion())"
         versionsLabel.textColor = UIColor.white
-        versionsLabel.font = platformsLabel.font.with(traits: .traitBold).withSize(FontSizes.contentFontSize)
+        versionsLabel.font = versionsLabel.font.with(traits: .traitBold).withSize(FontSizes.contentFontSize)
         return versionsLabel
     }()
     
@@ -110,7 +103,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         let creditText = UILabel()
         creditText.text = R.strings.about_credit_content
         creditText.textColor = UIColor.getDefaultLabelUIColor()
-        creditText.font = platformsLabel.font.withSize(FontSizes.contentFontSize)
+        creditText.font = creditText.font.withSize(FontSizes.contentFontSize)
         creditText.numberOfLines = 0
         creditText.textAlignment = .center
         return creditText
@@ -182,7 +175,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         
         feedbackContainer.addSubViews(feedbackButton, githubButton, twitterButton, webButton)
         
-        rootView.addSubViews(logoContainer, platformsLabel, versionsRoot, creditLabel, creditText, feedbackLabel, feedbackContainer)
+        rootView.addSubViews(logoContainer, versionsRoot, creditLabel, creditText, feedbackLabel, feedbackContainer)
         
         view.addSubview(rootView)
         
@@ -195,7 +188,12 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        #if !targetEnvironment(macCatalyst)
         let margin = 12.cgFloat
+        #else
+        let margin = 20.cgFloat
+        #endif
+        
         let iconSize = 32.cgFloat
         
         logo.pin.size(50)
@@ -203,13 +201,12 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
         splashLabel.pin.right(of: myerLabel, aligned: .center).sizeToFit()
         logoContainer.pin.center().wrapContent()
         
-        platformsLabel.pin.below(of: logoContainer, aligned: .center).marginTop(margin).sizeToFit()
         versionsLabel.pin.all().sizeToFit()
-        versionsRoot.pin.below(of: platformsLabel, aligned: .center).marginTop(margin).wrapContent(padding: margin / 2)
+        versionsRoot.pin.below(of: logoContainer, aligned: .center).marginTop(margin).wrapContent(padding: margin / 2)
         
         creditLabel.pin.below(of: versionsRoot, aligned: .center).marginTop(margin * 2).sizeToFit()
         creditText.pin.below(of: creditLabel, aligned: .center)
-            .maxWidth(300).marginTop(margin).marginLeft(margin).marginRight(margin).sizeToFit(.width)
+            .maxWidth(creditTextMaxWidth).marginTop(margin).marginLeft(margin).marginRight(margin).sizeToFit(.width)
         
         feedbackLabel.pin.below(of: creditText, aligned: .center).marginTop(margin * 2).sizeToFit()
         
