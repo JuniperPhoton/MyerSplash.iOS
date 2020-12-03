@@ -298,7 +298,7 @@ class MainViewController: TabmanViewController {
     @objc
     private func onClickMore() {
         Events.trackClickMore()
-        let controller = MoreViewController(selectedIndex: 0, tabs: getTabDataSource())
+        let controller = MoreViewController(selectedIndex: 1, tabs: getTabDataSource())
         controller.moreDelegate = self
         self.present(controller, animated: true, completion: nil)
     }
@@ -306,7 +306,7 @@ class MainViewController: TabmanViewController {
     @objc
     private func onClickDownloads() {
         Events.trackClickMore()
-        let controller = MoreViewController(selectedIndex: 1, tabs: getTabDataSource())
+        let controller = MoreViewController(selectedIndex: 0, tabs: getTabDataSource())
         controller.moreDelegate = self
         self.present(controller, animated: true, completion: nil)
     }

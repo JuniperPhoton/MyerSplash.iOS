@@ -52,6 +52,7 @@ class MoreViewController: TabmanViewController {
         
         if let tabs = self.tabs {
             viewControllers.insert(UIHostingController(rootView: TabsListView().environmentObject(tabs)), at: 0)
+            self.selectedIndex = self.selectedIndex + 1
         }
         
         #if targetEnvironment(macCatalyst)
