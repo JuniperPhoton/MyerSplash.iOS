@@ -114,7 +114,6 @@ class MainViewController: TabmanViewController {
         
         invalidateTabBar(UIApplication.shared.windows[0].bounds.size)
         
-        DownloadManager.instance.markDownloadingToFailed()
         if #available(iOS 14.0, *) {
             #if !targetEnvironment(macCatalyst)
             WidgetCenter.shared.reloadTimelines(ofKind: "MyerSplashWidget")
