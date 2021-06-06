@@ -6,7 +6,7 @@ import MessageUI
 import MaterialComponents.MaterialDialogs
 import MyerSplashShared
 
-protocol BottomSheetDelegate: class {
+protocol BottomSheetDelegate: AnyObject {
     func presentBottomSheet(content: SingleChoiceDialog,
                             transitionController: MDCDialogTransitionController,
                             onSelected: @escaping (Int) -> Void)

@@ -14,7 +14,7 @@ import MaterialComponents.MDCRippleTouchController
 import MyerSplashShared
 import SwiftUI
 
-protocol MoreViewControllerDelegate: class {
+protocol MoreViewControllerDelegate: AnyObject {
     func onDismiss(tabs: TabDataSource)
 }
 
@@ -56,7 +56,7 @@ class MoreViewController: TabmanViewController {
         }
         
         #if targetEnvironment(macCatalyst)
-        self.modalPresentationStyle = .fullScreen
+        self.modalPresentationStyle = .pageSheet
         #else
         self.modalPresentationStyle = .pageSheet
         #endif

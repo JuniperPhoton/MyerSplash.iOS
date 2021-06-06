@@ -185,7 +185,7 @@ class ImageDetailView: UIView {
         let translation = gesture.translation(in: self)
         
         switch gesture.state {
-        case UIGestureRecognizerState.began:
+        case UIGestureRecognizer.State.began:
             Events.trackImagDetailBeginDrag()
             
             let w = UIApplication.shared.windows[0].bounds.width
@@ -200,7 +200,7 @@ class ImageDetailView: UIView {
             startImageCenterX = mainImageView.center.x
             startImageCenterY = mainImageView.center.y
             resetExtraInformationConstraint()
-        case UIGestureRecognizerState.changed:
+        case UIGestureRecognizer.State.changed:
             var dampingRatio: CGFloat = -1
             
             if touchDownLongSideRef > 0 {
@@ -219,7 +219,7 @@ class ImageDetailView: UIView {
             
             mainImageView.center.x = startImageCenterX + translation.x * dampingRatio
             mainImageView.center.y = startImageCenterY + translation.y * dampingRatio
-        case UIGestureRecognizerState.ended:
+        case UIGestureRecognizer.State.ended:
             dismissInternal()
         default:
             return
