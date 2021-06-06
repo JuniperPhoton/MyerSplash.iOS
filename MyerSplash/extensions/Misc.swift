@@ -13,14 +13,27 @@ import MaterialComponents.MaterialDialogs
 
 extension UIViewController {
     func presentEdit(item: DownloadItem) {
+        // for iOS and iPad OS
         #if !targetEnvironment(macCatalyst)
         let vc = ImageEditorViewController(item: item)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
         #else
-        let path = DownloadManager.instance.createSavingDir()
-        UIApplication.shared.open(path)
+        guard let fileURL = item.fileURL else {
+            return
+        }
+        
+        let path = DownloadManager.instance.createAbsolutePathForImage(fileURL)
+        if setAsWallpaper(path: path.path) {
+            showToast(R.strings.set_as_wallpaper_success)
+        } else {
+            showToast(R.strings.set_as_wallpaper_fail)
+        }
         #endif
+    }
+    
+    private func setAsWallpaper(path: String) -> Bool {
+        MacBundlePlugin.sharedInstance?.setAsWallpaper(path: path) ?? false
     }
     
     func presentShare(_ unsplashImage: UnsplashImage, _ anchorView: UIView) {

@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         
         DownloadManager.instance.markDownloadingToFailed()
-        
+                
         return true
     }
     

@@ -11,6 +11,12 @@ public class FontSizes {
     #else
     public static let contentFontSize = CGFloat(13)
     #endif
+    
+    #if targetEnvironment(macCatalyst)
+    public static let toastFontSize = CGFloat(17)
+    #else
+    public static let toastFontSize = CGFloat(13)
+    #endif
 
     #if targetEnvironment(macCatalyst)
     public static let titleFontSize = CGFloat(25)

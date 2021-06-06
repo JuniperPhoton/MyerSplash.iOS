@@ -2,13 +2,16 @@ import Foundation
 import UIKit
 
 public class Dimensions {
-    public static let ToastHeight: CGFloat = 36
     public static let SingleChoiceItemHeight: CGFloat = 50
     
     #if targetEnvironment(macCatalyst)
+    public static let ToastHeight: CGFloat = 44
     public static let ImageDetailExtraHeight: CGFloat = 110
+    public static let DownloadButtonWidth = 120
     #else
+    public static let ToastHeight: CGFloat = 36
     public static let ImageDetailExtraHeight: CGFloat = 80
+    public static let DownloadButtonWidth = 100
     #endif
     
     public static let SmallRoundCornor = 4

@@ -3,7 +3,7 @@ import SnapKit
 import UIKit
 
 public class ToastView: UILabel {
-    public static let PADDING = CGFloat(10)
+    public static let PADDING = CGFloat(15)
     public static let SHOWING_HIDING_DURATION_SEC = 0.2
     public static let STAYING_DURATION_SEC = 2.0
     
@@ -122,7 +122,7 @@ public class ToastView: UILabel {
         self.textColor = UIColor.black
 
         self.alpha = 0.0
-        self.font = self.font.withSize(FontSizes.Normal)
+        self.font = self.font.withSize(FontSizes.toastFontSize)
 
         self.snp.makeConstraints { maker in
             maker.height.equalTo(Dimensions.ToastHeight)
