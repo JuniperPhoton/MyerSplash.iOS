@@ -56,7 +56,7 @@ class MoreViewController: TabmanViewController {
         }
         
         #if targetEnvironment(macCatalyst)
-        self.modalPresentationStyle = .pageSheet
+        self.modalPresentationStyle = .fullScreen
         #else
         self.modalPresentationStyle = .pageSheet
         #endif
