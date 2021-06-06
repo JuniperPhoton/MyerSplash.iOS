@@ -31,6 +31,7 @@ public class R {
         public static let ic_retry = "ic_retry"
         public static let ic_share = "ic_share"
         public static let ic_save = "ic_save"
+        public static let ic_outline_folder = "ic_outline_folder"
 
         private init() {
             
@@ -138,6 +139,10 @@ public class R {
         public static let month_10 = NSLocalizedString("month_10", comment: "")
         public static let month_11 = NSLocalizedString("month_11", comment: "")
         public static let month_12 = NSLocalizedString("month_12", comment: "")
+
+        public static let set_as_wallpaper = NSLocalizedString("set_wallpaper", comment: "")
+        public static let set_as_wallpaper_success = NSLocalizedString("set_wallpaper_success", comment: "")
+        public static let set_as_wallpaper_fail = NSLocalizedString("set_wallpaper_failed", comment: "")
 
         private init() {
             

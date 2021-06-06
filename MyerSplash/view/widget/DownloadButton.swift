@@ -17,7 +17,7 @@ class DownloadButton: UIButton {
         setTitle(R.strings.download, for: .normal)
         layer.cornerRadius = Dimensions.SmallRoundCornor.toCGFloat()
         titleLabel!.font = titleLabel!.font.with(traits: .traitBold,
-                fontSize: FontSizes.Normal)
+                fontSize: FontSizes.contentFontSize)
 
         adjustsImageWhenHighlighted = false
         
@@ -39,7 +39,7 @@ class DownloadButton: UIButton {
             #if !targetEnvironment(macCatalyst)
             self.setTitle(R.strings.edit, for: .normal)
             #else
-            self.setTitle(R.strings.open_in_folder, for: .normal)
+            self.setTitle(R.strings.set_as_wallpaper, for: .normal)
             #endif
         case DownloadStatus.Failed.rawValue:
             self.setTitle(R.strings.retry, for: .normal)

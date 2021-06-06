@@ -104,3 +104,7 @@
 "filter_all" = "All";
 "filter_landscape" = "Landscape";
 "filter_portrait" = "Portrait";
+
+"set_wallpaper" = "Set wallpaper";
+"set_wallpaper_success" = "Succeeded to set wallpaper";
+"set_wallpaper_failed" = "Failed to set wallpaper";

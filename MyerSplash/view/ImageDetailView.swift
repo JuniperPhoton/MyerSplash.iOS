@@ -157,7 +157,7 @@ class ImageDetailView: UIView {
         }
 
         downloadRoot.snp.makeConstraints { maker in
-            maker.width.equalTo(100)
+            maker.width.equalTo(Dimensions.DownloadButtonWidth)
             maker.centerY.equalTo(self.extraInformationView.snp.centerY)
             maker.right.equalTo(self.extraInformationView.snp.right).offset(-12)
         }

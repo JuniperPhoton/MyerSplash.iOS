@@ -105,3 +105,7 @@
 "filter_all" = "不筛选";
 "filter_landscape" = "横屏";
 "filter_portrait" = "竖屏";
+
+"set_wallpaper" = "设置壁纸";
+"set_wallpaper_success" = "成功设置为壁纸";
+"set_wallpaper_failed" = "设置为壁纸失败 :(";
