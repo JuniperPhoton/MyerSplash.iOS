@@ -73,7 +73,6 @@
 		22D39FF3251F00DA00F69A36 /* MyerSplashShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D39FF1251F00DA00F69A36 /* MyerSplashShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22D39FF6251F00DA00F69A36 /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
 		22D39FF7251F00DA00F69A36 /* MyerSplashShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		22D3A055251F01AA00F69A36 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3A054251F01AA00F69A36 /* Pods_MyerSplash.framework */; };
 		22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B623C8CA0A00B836F0 /* DownloadButton.swift */; };
 		22ED11C125448AEE00847193 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED11C025448AEE00847193 /* FilterButton.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
@@ -90,7 +89,7 @@
 		71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9175F0CC748D0AC10924C /* Pods_MyerSplash.framework */; };
 		815C57B45972B9E2B362B15D /* Pods_MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A7955803E00B757AF256F2 /* Pods_MyerSplashShared.framework */; };
 		C14CF0E30FDB6B55B26196A6 /* Pods_MyerSplashWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FC5B6D40C5466AB235C4F4 /* Pods_MyerSplashWidgetExtension.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		E47DED5B215DF0BD18169D29 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3A054251F01AA00F69A36 /* Pods_MyerSplash.framework */; };
+		E47DED5B215DF0BD18169D29 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		F02A4BBC1FF8E37A0027B721 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F02A4BBB1FF8E37A0027B721 /* Assets.xcassets */; };
 		F0B633E0200C7E1400D05D74 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0B633DF200C7E1400D05D74 /* Key.plist */; };
 		F0D247BD1FF7C35000BB8076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D247BC1FF7C35000BB8076 /* AppDelegate.swift */; };
@@ -197,7 +196,6 @@
 		22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyerSplashShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D39FF1251F00DA00F69A36 /* MyerSplashShared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyerSplashShared.h; sourceTree = "<group>"; };
 		22D39FF2251F00DA00F69A36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		22D3A054251F01AA00F69A36 /* Pods_MyerSplash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_MyerSplash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCellExtensions.swift; sourceTree = "<group>"; };
 		22E496B223C8B5A500B836F0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22D3A055251F01AA00F69A36 /* Pods_MyerSplash.framework in Frameworks */,
 				2247DB37251F3A1D00DC6F4D /* AppCenter.framework in Frameworks */,
 				815C57B45972B9E2B362B15D /* Pods_MyerSplashShared.framework in Frameworks */,
 				2247DB33251F3A1D00DC6F4D /* AppCenterCrashes.framework in Frameworks */,
@@ -277,7 +274,7 @@
 				221D26AC23D216F3003BE444 /* AppCenterCrashes.framework in Frameworks */,
 				221D26AB23D216F3003BE444 /* AppCenterAnalytics.framework in Frameworks */,
 				71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */,
-				E47DED5B215DF0BD18169D29 /* Pods_MyerSplash.framework in Frameworks */,
+				E47DED5B215DF0BD18169D29 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,7 +480,6 @@
 		6CE0DF92D868ABA501E01C2A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				22D3A054251F01AA00F69A36 /* Pods_MyerSplash.framework */,
 				04DD9D46236F0B2B009F5187 /* Social.framework */,
 				04DD9D41236F0A43009F5187 /* MessageUI.framework */,
 				5FF9175F0CC748D0AC10924C /* Pods_MyerSplash.framework */,
@@ -956,7 +952,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 462;
+				CURRENT_PROJECT_VERSION = 463;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -966,7 +962,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.5.6;
+				MARKETING_VERSION = 4.5.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
@@ -989,7 +985,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 462;
+				CURRENT_PROJECT_VERSION = 463;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -999,7 +995,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.5.6;
+				MARKETING_VERSION = 4.5.7;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1018,7 +1014,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 462;
+				CURRENT_PROJECT_VERSION = 463;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1036,7 +1032,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.6;
+				MARKETING_VERSION = 4.5.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.MyerSplashShared;
@@ -1057,7 +1053,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 462;
+				CURRENT_PROJECT_VERSION = 463;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1075,7 +1071,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.6;
+				MARKETING_VERSION = 4.5.7;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.MyerSplashShared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1210,7 +1206,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 462;
+				CURRENT_PROJECT_VERSION = 463;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1222,7 +1218,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.6;
+				MARKETING_VERSION = 4.5.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1241,7 +1237,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 462;
+				CURRENT_PROJECT_VERSION = 463;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1253,7 +1249,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.6;
+				MARKETING_VERSION = 4.5.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
