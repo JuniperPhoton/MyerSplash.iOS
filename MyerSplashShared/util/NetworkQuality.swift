@@ -27,7 +27,6 @@ public class NetworkQuality {
     public func recordDownloadDuration(startMillis: Int64, success: Bool) {
         let duration = Int64((Date().timeIntervalSince1970 * 1000)) - startMillis
         
-        print("recordDownloadDuration, duration is \(duration), success \(success)")
         downloadRecords.append(duration)
         
         if !success {
@@ -41,8 +40,6 @@ public class NetworkQuality {
             
             downloadRecords.removeAll()
             errorRecords = 0
-            
-            print("recordDownloadDuration, update averageDurationMillis \(averageDurationMillis)")
         }
     }
 }

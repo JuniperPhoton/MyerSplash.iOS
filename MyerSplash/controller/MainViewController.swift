@@ -447,3 +447,11 @@ extension MainViewController: MoreViewControllerDelegate {
         }
     }
 }
+
+extension MainViewController {
+    override var keyCommands: [UIKeyCommand]? {
+        return [UIKeyCommand(input: "s", modifierFlags: .command, action: #selector(onClickSearch)),
+                UIKeyCommand(input: "d", modifierFlags: .command, action: #selector(onClickDownloads))
+        ]
+    }
+}
