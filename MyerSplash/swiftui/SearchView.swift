@@ -113,42 +113,62 @@ struct SearchView: View {
     var predefinedKeywords: [Keyword] = SearchHintView.builtInKeywords
     
     var body: some View {
-        ZStack(alignment: .center) {
+        ZStack {
             VStack(alignment: .center, spacing: 12) {
                 Text(R.strings.search_title)
                     .font(.system(size: 30))
                     .fontWeight(.bold)
                     .accentColor(.init(UIView.getDefaultLabelUIColor()))
                 HStack(alignment: .center, spacing: 12) {
-                    CustomTextField(text: self.$searchContent,
-                                    placeholder: R.strings.search_hint, isFirstResponder: true,
-                                    onCommited: { s in
-                                        if !self.searchContent.isEmpty {
-                                            self.onClickKeyword?(Keyword(displayTitle: self.searchContent, query: self.searchContent))
-                                        }
-                    })
-                        .frame(width: self.searchBarWidth, height: 30, alignment: .leading)
-                        .padding(12)
-                        .background(Color.gray.opacity(0.05))
-                        .cornerRadius(8)
-                    Button(action: self.dismissAction!) {
-                        Image("ic_clear")
-                            .renderingMode(.template)
-                            .accentColor(.init(UIView.getDefaultLabelUIColor()))
-                        }.frame(width: 50, height: 50, alignment: .center)
+                    customTextField()
+                    closeButton()
                 }
-                SearchHintSwiftUIView(onClickKeyword: self.onClickKeyword,
-                                      expectedWidth: self.hintWidth,
-                                      height: self.$hintHeight)
-                    .frame(width: self.hintWidth, height: self.hintHeight, alignment: .center)
+                searchHintSwiftUIView()
             }
-        }.edgesIgnoringSafeArea(.all)
+        }
+        .frame(
+            minWidth: 0,
+            maxWidth: .infinity,
+            minHeight: 0,
+            maxHeight: .infinity,
+            alignment: .center
+        )
+        .edgesIgnoringSafeArea(.all)
     }
-}
-
-@available(iOS 13.0, *)
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
+    
+    private func searchHintSwiftUIView() -> some View {
+        SearchHintSwiftUIView(onClickKeyword: self.onClickKeyword,
+                              expectedWidth: self.hintWidth,
+                              height: self.$hintHeight)
+            .frame(width: self.hintWidth, height: self.hintHeight, alignment: .center)
+    }
+    
+    private func closeButton() -> some View {
+        Button(action: self.dismissAction!) {
+            Image("ic_clear")
+                .renderingMode(.template)
+                .accentColor(.init(UIView.getDefaultLabelUIColor()))
+        }.frame(width: 50, height: 50, alignment: .center)
+    }
+    
+    private func customTextField() -> some View {
+        CustomTextField(text: self.$searchContent,
+                        placeholder: R.strings.search_hint, isFirstResponder: true,
+                        onCommited: { s in
+                            if !self.searchContent.isEmpty {
+                                self.onClickKeyword?(Keyword(displayTitle: self.searchContent, query: self.searchContent))
+                            }
+                        })
+            .frame(width: self.searchBarWidth, height: 30, alignment: .leading)
+            .padding(12)
+            .background(Color.gray.opacity(0.05))
+            .cornerRadius(8)
+    }
+    
+    @available(iOS 13.0, *)
+    struct SearchView_Previews: PreviewProvider {
+        static var previews: some View {
+            SearchView()
+        }
     }
 }
