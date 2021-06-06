@@ -21,7 +21,7 @@ class DownloadItemCell: UICollectionViewCell {
     private var image: UnsplashImage? = nil
     
     private var mainImageView: DayNightImageView!
-    private var button: DownloadButton!
+    private var downloadAndPreviewButton: DownloadButton!
     private var downloadRoot: UIView!
     
     private(set) lazy var shareButton: UIButton = {
@@ -53,14 +53,14 @@ class DownloadItemCell: UICollectionViewCell {
         downloadRoot = UIView()
         downloadRoot.backgroundColor = .getDefaultLabelUIColor()
         
-        button = DownloadButton()
-        button.contentHorizontalAlignment = .leading
+        downloadAndPreviewButton = DownloadButton()
+        downloadAndPreviewButton.contentHorizontalAlignment = .leading
         
-        button.setTitleColor(.white, for: .normal)
+        downloadAndPreviewButton.setTitleColor(.white, for: .normal)
         
-        button.addTarget(self, action: #selector(handleClickedSetAs), for: .touchUpInside)
-        button.showsTouchWhenHighlighted = false
-        button.layer.cornerRadius = 0
+        downloadAndPreviewButton.addTarget(self, action: #selector(handleClickedSetAs), for: .touchUpInside)
+        downloadAndPreviewButton.showsTouchWhenHighlighted = false
+        downloadAndPreviewButton.layer.cornerRadius = 0
         
         progressLayer = CALayer()
         progressLayer.needsDisplayOnBoundsChange = true
@@ -68,15 +68,16 @@ class DownloadItemCell: UICollectionViewCell {
         downloadRoot.layer.addSublayer(progressLayer)
         downloadRoot.layer.masksToBounds = true
         
-        downloadRoot.addSubview(button)
+        downloadRoot.addSubview(downloadAndPreviewButton)
         downloadRoot.addSubview(shareButton)
         
         #if targetEnvironment(macCatalyst)
         downloadRoot.addSubview(openFolderButton)
         #endif
         
-        button.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
+        downloadAndPreviewButton.snp.makeConstraints { (maker) in
+            maker.left.equalToSuperview().offset(8)
+            maker.top.bottom.right.equalToSuperview()
         }
         
         shareButton.snp.makeConstraints { (maker) in
@@ -110,7 +111,7 @@ class DownloadItemCell: UICollectionViewCell {
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
             maker.top.equalToSuperview()
-            maker.bottom.equalTo(button.snp.top)
+            maker.bottom.equalTo(downloadAndPreviewButton.snp.top)
         }
     }
     
@@ -167,7 +168,7 @@ class DownloadItemCell: UICollectionViewCell {
         
         let contentColor = isLight ? UIColor.black : UIColor.white
         
-        button.setTitleColor(contentColor, for: .normal)
+        downloadAndPreviewButton.setTitleColor(contentColor, for: .normal)
         shareButton.tintColor = contentColor
         
         #if targetEnvironment(macCatalyst)
@@ -188,7 +189,7 @@ class DownloadItemCell: UICollectionViewCell {
             }
             
             self.downloadItem = element
-            self.button.updateStatus(element)
+            self.downloadAndPreviewButton.updateStatus(element)
             self.updateProgressLayer()
             
             self.onDownloadItemUpdated?(element)
