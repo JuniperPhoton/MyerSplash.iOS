@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         
         DownloadManager.instance.markDownloadingToFailed()
-        
+                
         return true
     }
     
@@ -86,9 +86,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case AppDelegate.SEARCH_SHORTCUT:
                 let targetVc = SearchViewController()
                 vc.present(targetVc, animated: true, completion: nil)
+                targetVc.delegate = vc
             case AppDelegate.DOWNLOADS_SHORTCUT:
                 let targetVc = MoreViewController()
                 vc.present(targetVc, animated: true, completion: nil)
+                targetVc.delegate = vc
             default: break
             }
         }

@@ -132,7 +132,7 @@ DEPENDENCIES:
   - WCDB.swift
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - ELWaterFallLayout
     - FlexLayout
@@ -176,4 +176,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b884618668df66d746ecfd5d1ecd5b466794ddbe
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.10.1

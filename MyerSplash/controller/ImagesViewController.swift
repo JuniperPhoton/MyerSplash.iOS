@@ -14,7 +14,7 @@ import MaterialComponents.MaterialActivityIndicator
 import ELWaterFallLayout
 import MyerSplashShared
 
-protocol ImagesViewControllerDelegate: class {
+protocol ImagesViewControllerDelegate: AnyObject {
     func onClickImage(rect: CGRect, image: UnsplashImage, imageUrl: String) -> Bool
     func onRequestDownload(image: UnsplashImage)
 }

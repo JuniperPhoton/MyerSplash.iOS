@@ -297,7 +297,7 @@ class MainViewController: TabmanViewController {
     @objc
     private func onClickMore() {
         Events.trackClickMore()
-        let controller = MoreViewController(selectedIndex: 1, tabs: getTabDataSource())
+        let controller = MoreViewController(selectedIndex: 0, tabs: getTabDataSource())
         controller.moreDelegate = self
         self.present(controller, animated: true, completion: nil)
     }
@@ -445,5 +445,13 @@ extension MainViewController: MoreViewControllerDelegate {
         if let currentVcIndex = self.viewControllers.firstIndex(of: currentVc) {
             self.scrollToPage(.at(index: currentVcIndex), animated: false)
         }
+    }
+}
+
+extension MainViewController {
+    override var keyCommands: [UIKeyCommand]? {
+        return [UIKeyCommand(input: "s", modifierFlags: .command, action: #selector(onClickSearch)),
+                UIKeyCommand(input: "d", modifierFlags: .command, action: #selector(onClickDownloads))
+        ]
     }
 }

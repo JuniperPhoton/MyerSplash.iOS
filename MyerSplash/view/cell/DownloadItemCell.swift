@@ -15,13 +15,13 @@ class DownloadItemCell: UICollectionViewCell {
     static let ID = "DownloadItemCell"
     
     private static let TAG = "DownloadItemCell"
-
+    
     static let BOTTOM_BUTTON_HEIGHT = 50
-
+    
     private var image: UnsplashImage? = nil
-
+    
     private var mainImageView: DayNightImageView!
-    private var button: DownloadButton!
+    private var downloadAndPreviewButton: DownloadButton!
     private var downloadRoot: UIView!
     
     private(set) lazy var shareButton: UIButton = {
@@ -32,27 +32,35 @@ class DownloadItemCell: UICollectionViewCell {
         return button
     }()
     
+    private(set) lazy var openFolderButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: R.icons.ic_outline_folder)?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.alpha = 0.3
+        button.addTarget(self, action: #selector(openInFolder), for: .touchUpInside)
+        return button
+    }()
+    
     private var progressLayer: CALayer!
-
+    
     var onClickEdit: ((UnsplashImage) -> Void)? = nil
     var onClickDownload: ((UnsplashImage) -> Void)? = nil
     var onDownloadItemUpdated: ((DownloadItem) -> Void)? = nil
     var onClickShare: ((UnsplashImage) -> Void)? = nil
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-                
+        
         downloadRoot = UIView()
         downloadRoot.backgroundColor = .getDefaultLabelUIColor()
-
-        button = DownloadButton()
-        button.contentHorizontalAlignment = .leading
-
-        button.setTitleColor(.white, for: .normal)
         
-        button.addTarget(self, action: #selector(handleClickedSetAs), for: .touchUpInside)
-        button.showsTouchWhenHighlighted = false
-        button.layer.cornerRadius = 0
+        downloadAndPreviewButton = DownloadButton()
+        downloadAndPreviewButton.contentHorizontalAlignment = .leading
+        
+        downloadAndPreviewButton.setTitleColor(.white, for: .normal)
+        
+        downloadAndPreviewButton.addTarget(self, action: #selector(handleClickedSetAs), for: .touchUpInside)
+        downloadAndPreviewButton.showsTouchWhenHighlighted = false
+        downloadAndPreviewButton.layer.cornerRadius = 0
         
         progressLayer = CALayer()
         progressLayer.needsDisplayOnBoundsChange = true
@@ -60,11 +68,16 @@ class DownloadItemCell: UICollectionViewCell {
         downloadRoot.layer.addSublayer(progressLayer)
         downloadRoot.layer.masksToBounds = true
         
-        downloadRoot.addSubview(button)
+        downloadRoot.addSubview(downloadAndPreviewButton)
         downloadRoot.addSubview(shareButton)
         
-        button.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
+        #if targetEnvironment(macCatalyst)
+        downloadRoot.addSubview(openFolderButton)
+        #endif
+        
+        downloadAndPreviewButton.snp.makeConstraints { (maker) in
+            maker.left.equalToSuperview().offset(8)
+            maker.top.bottom.right.equalToSuperview()
         }
         
         shareButton.snp.makeConstraints { (maker) in
@@ -72,36 +85,44 @@ class DownloadItemCell: UICollectionViewCell {
             maker.top.bottom.equalToSuperview()
             maker.width.equalTo(shareButton.snp.height)
         }
-
+        
+        #if targetEnvironment(macCatalyst)
+        openFolderButton.snp.makeConstraints { (maker) in
+            maker.right.equalTo(shareButton.snp.left)
+            maker.top.bottom.equalToSuperview()
+            maker.width.equalTo(shareButton.snp.height)
+        }
+        #endif
+        
         mainImageView = DayNightImageView()
         mainImageView.clipsToBounds = true
-
+        
         self.contentView.addSubview(mainImageView)
         self.contentView.addSubview(downloadRoot)
-
+        
         downloadRoot.snp.makeConstraints { (maker) in
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
             maker.bottom.equalToSuperview()
             maker.height.equalTo(DownloadItemCell.BOTTOM_BUTTON_HEIGHT)
         }
-
+        
         mainImageView.snp.makeConstraints { (maker) in
             maker.left.equalToSuperview()
             maker.right.equalToSuperview()
             maker.top.equalToSuperview()
-            maker.bottom.equalTo(button.snp.top)
+            maker.bottom.equalTo(downloadAndPreviewButton.snp.top)
         }
     }
-
+    
     deinit {
         unbind()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private var disposable: Disposable? = nil
     private var downloadItem: DownloadItem? = nil
     
@@ -112,38 +133,48 @@ class DownloadItemCell: UICollectionViewCell {
     }
     
     @objc
+    private func openInFolder() {
+        let path = DownloadManager.instance.createSavingDir()
+        UIApplication.shared.open(path)
+    }
+    
+    @objc
     private func shareImage() {
         guard let image = self.image else {
             return
         }
         onClickShare?(image)
     }
-
+    
     func bind(_ image: UnsplashImage) {
         guard let view = mainImageView else {
             return
         }
-
+        
         self.image = image
-
+        
         if let url = image.listUrl {
             ImageIO.shared.loadImage(url: url, intoView: view)
         }
-
+        
         mainImageView.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
         downloadRoot.backgroundColor = image.themeColor.getDarker(alpha: 0.7)
-
+        
         mainImageView.applyMask()
-
+        
         updateProgressLayer()
         
         let isLight = image.themeColor.isLightColor()
-
+        
         let contentColor = isLight ? UIColor.black : UIColor.white
         
-        button.setTitleColor(contentColor, for: .normal)
+        downloadAndPreviewButton.setTitleColor(contentColor, for: .normal)
         shareButton.tintColor = contentColor
-
+        
+        #if targetEnvironment(macCatalyst)
+        openFolderButton.tintColor = contentColor
+        #endif
+        
         unbind()
         disposable = DownloadManager.instance.addObserver(image) { [weak self] (e) in
             guard let element = e.element else {
@@ -152,13 +183,13 @@ class DownloadItemCell: UICollectionViewCell {
             guard let self = self else {
                 return
             }
-
+            
             if e.element?.id != image.id {
                 return
             }
-
+            
             self.downloadItem = element
-            self.button.updateStatus(element)
+            self.downloadAndPreviewButton.updateStatus(element)
             self.updateProgressLayer()
             
             self.onDownloadItemUpdated?(element)
@@ -199,11 +230,11 @@ class DownloadItemCell: UICollectionViewCell {
             progressLayer.frame = targetFrame
         }
     }
-
+    
     func unbind() {
         disposable?.dispose()
     }
-
+    
     @objc
     private func handleClickedSetAs() {
         guard let image = self.image,
@@ -211,7 +242,7 @@ class DownloadItemCell: UICollectionViewCell {
             Log.error(tag: DownloadItemCell.TAG, "image or download item is null")
             return
         }
-
+        
         switch item.status {
         case DownloadStatus.Downloading.rawValue:
             DownloadManager.instance.cancel(id: image.id!)

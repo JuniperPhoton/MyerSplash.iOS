@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import MyerSplashShared
 
-protocol SettingsDelegate: class {
+protocol SettingsDelegate: AnyObject {
     func refresh()
 }
 

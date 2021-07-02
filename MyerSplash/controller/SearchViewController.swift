@@ -13,7 +13,7 @@ import FlexLayout
 import RxSwift
 import MyerSplashShared
 
-protocol SearchViewControllerDelegate: class {
+protocol SearchViewControllerDelegate: AnyObject {
     func searchBy(query: String)
 }
 

@@ -14,7 +14,7 @@ import MaterialComponents.MDCRippleTouchController
 import MyerSplashShared
 import SwiftUI
 
-protocol MoreViewControllerDelegate: class {
+protocol MoreViewControllerDelegate: AnyObject {
     func onDismiss(tabs: TabDataSource)
 }
 
