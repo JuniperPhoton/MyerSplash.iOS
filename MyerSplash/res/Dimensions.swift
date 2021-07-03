@@ -14,7 +14,7 @@ public class Dimensions {
     public static let DownloadButtonWidth = 100
     #endif
     
-    public static let SmallRoundCornor = 4
+    public static let SmallRoundCornor = 6
 
     public static let TitleMargin = 20
 

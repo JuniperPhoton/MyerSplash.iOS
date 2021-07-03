@@ -74,6 +74,11 @@ class DialogViewController: BaseViewController {
             maker.left.top.right.bottom.equalToSuperview()
         }
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        dialogContentView.roundCorners(corners: [.allCorners], radius: Dimensions.SmallRoundCornor.cgFloat)
+    }
 
     private func initDialogContentView(_ dialogContentView: UIView) {
         if (dialogContent is SingleChoiceDialog) {
