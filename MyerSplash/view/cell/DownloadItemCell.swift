@@ -134,7 +134,7 @@ class DownloadItemCell: UICollectionViewCell {
     
     @objc
     private func openInFolder() {
-        let path = DownloadManager.instance.createSavingDir()
+        let path = DownloadManager.shared.createSavingDir()
         UIApplication.shared.open(path)
     }
     
@@ -176,7 +176,7 @@ class DownloadItemCell: UICollectionViewCell {
         #endif
         
         unbind()
-        disposable = DownloadManager.instance.addObserver(image) { [weak self] (e) in
+        disposable = DownloadManager.shared.addObserver(image) { [weak self] (e) in
             guard let element = e.element else {
                 return
             }
@@ -245,7 +245,7 @@ class DownloadItemCell: UICollectionViewCell {
         
         switch item.status {
         case DownloadStatus.Downloading.rawValue:
-            DownloadManager.instance.cancel(id: image.id!)
+            DownloadManager.shared.cancel(id: image.id!)
         case DownloadStatus.Pending.rawValue:
             Log.error(tag: DownloadItemCell.TAG, "fallthrough pending status")
             fallthrough

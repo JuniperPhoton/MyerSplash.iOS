@@ -256,7 +256,7 @@ class ImageEditorViewController: UIViewController {
             return
         }
         
-        let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+        let url = DownloadManager.shared.createAbsolutePathForImage(relativePath)
 
         guard let image = UIImage(contentsOfFile: url.path) else {
             Log.warn(tag: ImageEditorViewController.TAG, "error on getting cached file")
@@ -329,7 +329,7 @@ class ImageEditorViewController: UIViewController {
             var width = item.unsplashImage!.width
             var height = item.unsplashImage!.height
             
-            let url = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+            let url = DownloadManager.shared.createAbsolutePathForImage(relativePath)
             let size = ImageIO.shared.getImageSize(at: url)
             
             width = Int(size.width)

@@ -7,6 +7,11 @@ public enum FilterOption {
     case Portrait
 }
 
+public enum ContentSafety {
+    case Low
+    case High
+}
+
 public class Request {
     public static let BASE_URL = "https://api.unsplash.com/"
     public static let PHOTO_URL = "https://api.unsplash.com/photos?"
@@ -14,6 +19,7 @@ public class Request {
     public static let RANDOM_PHOTOS_URL = "https://api.unsplash.com/photos/random?"
     public static let DEVELOPER_PHOTOS_URL = "https://api.unsplash.com/users/juniperphoton/photos?"
     public static let SEARCH_URL = "https://api.unsplash.com/search/photos?"
+    public static let WALLPAPER_URL = "https://unsplash.com/napi/topics/wallpapers/photos?"
 
     public static let PHOTOGRAPHER_PHOTOS_URL = "https://api.unsplash.com/users/%@/photos?"
 
@@ -28,12 +34,13 @@ public class Request {
     private static let DEFAULT_HIGHLIGHTS_COUNT = 60
     private static let CLIENT_ID_KEY = "client_id"
     private static let ORIENTATION_FILTER = "orientation"
-    
+    private static let CONTENT_FILTER = "content_filter"
+
     static let FILTER_ALL = 0
     static let FILTER_LANDSCAPE = 1
     static let FILTER_PORTRAIT = 2
 
-    public static func getDefaultParams(paging: Int, filter: FilterOption = .All) -> Dictionary<String, Any> {
+    public static func getDefaultParams(paging: Int, filter: FilterOption = .All, contentSafety: ContentSafety = .Low) -> Dictionary<String, Any> {
         var dic = [
             CLIENT_ID_KEY: AppKeys.getClientId(),
             Request.PAGING_PARAM: paging
@@ -43,6 +50,10 @@ public class Request {
         
         if filter != .All {
             dic[ORIENTATION_FILTER] = filter == .Landscape ? "landscape" : "portrait"
+        }
+        
+        if contentSafety != .Low {
+            dic[CONTENT_FILTER] = "high"
         }
 
         return dic

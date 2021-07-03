@@ -59,6 +59,9 @@
 "settings_quality_download_small" = "高 (默认)";
 "settings_quality_download_thumb" = "低 (不推荐)";
 
+"settings_show_status_icon" = "显示状态栏图标";
+"settings_show_status_icon_desc" = "你可以在上面进行换壁纸等快捷操作";
+
 "settings_clear" = "清理缓存";
 "settings_clear_cache" = "清理所有图片缓存";
 "cleared" = "清理完毕";
@@ -109,3 +112,12 @@
 "set_wallpaper" = "设置壁纸";
 "set_wallpaper_success" = "成功设置为壁纸";
 "set_wallpaper_failed" = "设置为壁纸失败 :(";
+
+"status_launch" = "启动 app";
+"status_toggle_dock" = "显示/隐藏 Dock 图标";
+"status_set_today" = "设置今日推荐的壁纸";
+"status_set_random" = "设置随机壁纸";
+"status_exit" = "退出 app";
+
+"new_update_title" = "🚀 新功能";
+"new_update_desc" = "你现在可以直接在状态栏里设置壁纸了，请注意保持 app 继续运行。";

@@ -188,6 +188,15 @@ class MainViewController: TabmanViewController {
         fab.layoutAsFab()
     
         imageDetailView.pin.all()
+        
+        #if targetEnvironment(macCatalyst)
+        if AppSettings.shouldShowWhatIsNew() {
+            AppSettings.setSettings(key: Keys.ALREADY_SHOW_WHAT_IS_NEW, value: true)
+            let vc = NewUpdatesViewController()
+            vc.transitioningDelegate = defaultMDCDialogTransitionController;
+            self.present(vc, animated: true, completion: nil)
+        }
+        #endif
     }
     
     private func getTabBarMaringRight() -> CGFloat {
@@ -408,7 +417,7 @@ extension MainViewController: ImageDetailViewDelegate {
     }
     
     func onRequestImageDownload(image: UnsplashImage) {
-        DownloadManager.instance.prepareToDownload(vc: self, image: image)
+        prepareForDownload(image)
     }
 }
 
@@ -420,7 +429,7 @@ extension MainViewController: ImagesViewControllerDelegate {
     }
     
     func onRequestDownload(image: UnsplashImage) {
-        DownloadManager.instance.prepareToDownload(vc: self, image: image)
+        prepareForDownload(image)
     }
 }
 

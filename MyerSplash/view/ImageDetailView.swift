@@ -234,7 +234,7 @@ class ImageDetailView: UIView {
 
         switch downloadItem?.status {
         case DownloadStatus.Downloading.rawValue:
-            DownloadManager.instance.cancel(id: bindImage.id!)
+            DownloadManager.shared.cancel(id: bindImage.id!)
             break
         case DownloadStatus.Success.rawValue:
             Log.info(tag: ImageDetailView.self.description(), "click on success")
@@ -272,7 +272,7 @@ class ImageDetailView: UIView {
         }
 
         disposable?.dispose()
-        disposable = DownloadManager.instance.addObserver(image, { [weak self] (e) in
+        disposable = DownloadManager.shared.addObserver(image, { [weak self] (e) in
             guard let item = e.element else {
                 return
             }
@@ -362,8 +362,6 @@ class ImageDetailView: UIView {
                 
         let layerWidth = Int(ceil(buttonWidth * CGFloat(progress)))
         progressLayer.frame = CGRect(x: 0, y: 0, width: layerWidth, height: Int(buttonHeight))
-        
-        Log.info(tag: "detailsview", "layer bounds is \(progressLayer.frame), progress: \(progress)")
     }
 
     private func resetExtraInformationConstraint() {

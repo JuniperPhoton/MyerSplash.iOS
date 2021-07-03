@@ -87,6 +87,9 @@ public class R {
         public static let settings_no_sponsorship_title = NSLocalizedString("settings_no_sponsorship_title", comment: "")
         public static let settings_no_sponsorship_content = NSLocalizedString("settings_no_sponsorship_content", comment: "")
         
+        public static let settings_show_status_icon = NSLocalizedString("settings_show_status_icon", comment: "")
+        public static let settings_show_status_icon_desc = NSLocalizedString("settings_show_status_icon_desc", comment: "")
+
         public static let cleared = NSLocalizedString("cleared", comment: "")
         public static let download_in_background = NSLocalizedString("download_in_background", comment: "")
         public static let no_network = NSLocalizedString("no_network", comment: "")
@@ -129,6 +132,15 @@ public class R {
         public static let set_as_wallpaper = NSLocalizedString("set_wallpaper", comment: "")
         public static let set_as_wallpaper_success = NSLocalizedString("set_wallpaper_success", comment: "")
         public static let set_as_wallpaper_fail = NSLocalizedString("set_wallpaper_failed", comment: "")
+
+        public static let status_launch = NSLocalizedString("status_launch", comment: "")
+        public static let status_set_today = NSLocalizedString("status_set_today", comment: "")
+        public static let status_set_random = NSLocalizedString("status_set_random", comment: "")
+        public static let status_exit = NSLocalizedString("status_exit", comment: "")
+        public static let status_toggle_dock = NSLocalizedString("status_toggle_dock", comment: "")
+
+        public static let new_update_title = NSLocalizedString("new_update_title", comment: "")
+        public static let new_update_desc = NSLocalizedString("new_update_desc", comment: "")
 
         private init() {
             
