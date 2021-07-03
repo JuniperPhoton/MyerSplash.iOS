@@ -98,7 +98,7 @@ class MoreViewController: TabmanViewController {
         let closeButton = UIButton()
         let closeImage = UIImage(systemName: "xmark")!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
-        closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+        closeButton.tintColor = UIColor.getDefaultLabelUIColor()
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)
         self.view.addSubview(closeButton)
 
