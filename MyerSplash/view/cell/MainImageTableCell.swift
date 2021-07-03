@@ -18,11 +18,11 @@ public class MainImageTableCell: UICollectionViewCell {
     
     private lazy var retryButton: UIButton = {
         let button = UIButton()
-        let image = UIImage(named: R.icons.ic_retry)
-        button.setImage(UIImage(named: R.icons.ic_retry), for: .normal)
+        let image = UIImage(systemName: "arrow.counterclockwise", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .semibold))
+        button.setImage(image, for: .normal)
         button.adjustsImageWhenHighlighted = false
         button.isHidden = true
-        button.tintColor = UIColor.white.withAlphaComponent(0.3)
+        button.tintColor = UIColor.white
         button.addTarget(self, action: #selector(onClickRetry), for: .touchUpInside)
         return button
     }()
@@ -42,17 +42,20 @@ public class MainImageTableCell: UICollectionViewCell {
         mainImageView.addGestureRecognizer(UITapGestureRecognizer(target: self,
                 action: #selector(self.onClickImage)))
 
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 23)
+        let downloadImage = UIImage(systemName: "arrow.down", withConfiguration: largeConfig)?.withRenderingMode(.alwaysTemplate)
         downloadView = UIButton()
-        downloadView.setImage(UIImage(
-            named: R.icons.ic_download)?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)),
-                for: .normal)
+        downloadView.setImage(downloadImage, for: .normal)
         downloadView.adjustsImageWhenHighlighted = false
+        downloadView.tintColor = UIColor.white
+        downloadView.alpha = 0.7
         downloadView.addTarget(self, action: #selector(onClickDownloadButton), for: .touchUpInside)
 
         downloadRippleController = createRippleController(intoView: downloadView)
 
-        todayTag = UIImageView(image: UIImage(named: R.icons.ic_star))
+        todayTag = UIImageView(image: UIImage(systemName: "star.fill")?.withRenderingMode(.alwaysTemplate))
         todayTag.isHidden = true
+        todayTag.tintColor = UIColor.yellow
 
         todayTextTag = UILabel()
         todayTextTag.text = R.strings.today
@@ -86,8 +89,7 @@ public class MainImageTableCell: UICollectionViewCell {
 
         todayTextTag.snp.makeConstraints { (maker) in
             maker.left.equalTo(todayTag.snp.right).offset(8)
-            maker.top.equalTo(todayTag.snp.top)
-            maker.bottom.equalTo(todayTag.snp.bottom)
+            maker.centerY.equalTo(todayTag.snp.centerY).offset(2)
         }
         
         retryButton.snp.makeConstraints { (maker) in

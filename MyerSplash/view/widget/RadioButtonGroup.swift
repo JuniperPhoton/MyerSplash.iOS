@@ -64,7 +64,7 @@ class RadioButton: UIView {
 
     private func initUi() {
         tickIcon = UIImageView()
-        tickIcon.image = UIImage(named: R.icons.ic_done)?.withRenderingMode(.alwaysTemplate)
+        tickIcon.image = UIImage(systemName: "checkmark")?.withRenderingMode(.alwaysTemplate)
         tickIcon.isHidden = true
         tickIcon.tintColor = UIColor.getDefaultLabelUIColor()
 

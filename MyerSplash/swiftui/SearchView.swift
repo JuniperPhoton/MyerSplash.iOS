@@ -145,7 +145,7 @@ struct SearchView: View {
     
     private func closeButton() -> some View {
         Button(action: self.dismissAction!) {
-            Image("ic_clear")
+            Image(systemName: "xmark")
                 .renderingMode(.template)
                 .accentColor(.init(UIView.getDefaultLabelUIColor()))
         }.frame(width: 50, height: 50, alignment: .center)

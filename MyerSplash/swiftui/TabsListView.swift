@@ -43,7 +43,7 @@ struct TabsRow: View {
                     onClickDelete(title)
                 }) {
                     HStack {
-                        Image(R.icons.ic_delete)
+                        Image(systemName: "trash")
                     }
                 }
                 .buttonStyle(BorderlessButtonStyle())

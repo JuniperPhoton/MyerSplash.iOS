@@ -37,7 +37,7 @@ class ImageEditorViewController: UIViewController {
     
     private var composeFab: MDCFloatingButton = {
         let composeFab = MDCFloatingButton()
-        let doneImage = UIImage(named: R.icons.ic_save)?.withRenderingMode(.alwaysTemplate)
+        let doneImage = UIImage(systemName: "square.and.arrow.down")?.withRenderingMode(.alwaysTemplate)
         composeFab.setImage(doneImage, for: .normal)
         composeFab.tintColor = .black
         composeFab.backgroundColor = .white
@@ -47,7 +47,7 @@ class ImageEditorViewController: UIViewController {
     
     private var homeFab: MDCFloatingButton = {
         let homeFab = MDCFloatingButton()
-        let homeImage = UIImage(named: R.icons.ic_home)?.withRenderingMode(.alwaysTemplate)
+        let homeImage = UIImage(systemName: "house")?.withRenderingMode(.alwaysTemplate)
         homeFab.setImage(homeImage, for: .normal)
         homeFab.tintColor = UIColor.black
         homeFab.backgroundColor = UIColor.white
@@ -120,7 +120,7 @@ class ImageEditorViewController: UIViewController {
 
         // MARK: CLOSE BUTTON
 
-        let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(systemName: "xmark")!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = .black
         closeButton.setShadowColor(UIColor.black.withAlphaComponent(0.3), for: .normal)
@@ -163,7 +163,7 @@ class ImageEditorViewController: UIViewController {
         }
 
         // MARK: EXPOSURE ICON
-        let exposureIcon = UIImage(named: R.icons.ic_exposure)!.withRenderingMode(.alwaysTemplate)
+        let exposureIcon = UIImage(systemName: "dial.max")!.withRenderingMode(.alwaysTemplate)
         let exposureImageView = UIImageView(image: exposureIcon)
         exposureImageView.tintColor = .white
         exposureImageView.contentMode = .scaleAspectFit
@@ -181,12 +181,12 @@ class ImageEditorViewController: UIViewController {
 
         exposureImageView.snp.makeConstraints { (maker) in
             maker.left.equalToSuperview().offset(12)
-            maker.width.equalTo(40)
+            maker.width.height.equalTo(28)
             maker.bottom.equalToSuperview().offset(-40)
         }
 
         exposureSlider.snp.makeConstraints { (maker) in
-            maker.left.equalTo(exposureImageView.snp.right)
+            maker.left.equalTo(exposureImageView.snp.right).offset(8)
             maker.right.equalToSuperview().offset(-12)
             maker.bottom.equalToSuperview().offset(-40)
         }
@@ -244,7 +244,7 @@ class ImageEditorViewController: UIViewController {
     
     private func toggleComposeFabIcon(_ show: Bool) {
         if show {
-            let doneImage = UIImage(named: R.icons.ic_save)?.withRenderingMode(.alwaysTemplate)
+            let doneImage = UIImage(systemName: "square.and.arrow.down")?.withRenderingMode(.alwaysTemplate)
             composeFab.setImage(doneImage, for: .normal)
         } else {
             composeFab.setImage(nil, for: .normal)

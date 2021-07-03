@@ -40,11 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let searchItem = UIApplicationShortcutItem(type: AppDelegate.SEARCH_SHORTCUT,
                                                    localizedTitle: R.strings.shortcut_search,
                                                    localizedSubtitle: nil,
-                                                   icon: UIApplicationShortcutIcon(templateImageName: R.icons.ic_search), userInfo: nil)
+                                                   icon: UIApplicationShortcutIcon(systemImageName: "magnifyingglass"), userInfo: nil)
         let downloadsItem = UIApplicationShortcutItem(type: AppDelegate.DOWNLOADS_SHORTCUT,
                                                       localizedTitle: R.strings.shortcut_downloads,
                                                       localizedSubtitle: nil,
-                                                      icon: UIApplicationShortcutIcon(templateImageName: R.icons.ic_download), userInfo: nil)
+                                                      icon: UIApplicationShortcutIcon(systemImageName: "arrow.down.circle"), userInfo: nil)
         
         application.shortcutItems = [searchItem, downloadsItem]
     }

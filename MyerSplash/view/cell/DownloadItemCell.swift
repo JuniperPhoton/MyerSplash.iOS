@@ -26,7 +26,7 @@ class DownloadItemCell: UICollectionViewCell {
     
     private(set) lazy var shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: R.icons.ic_share), for: .normal)
+        button.setImage(UIImage(systemName: "square.and.arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)), for: .normal)
         button.alpha = 0.3
         button.addTarget(self, action: #selector(shareImage), for: .touchUpInside)
         return button
@@ -34,7 +34,7 @@ class DownloadItemCell: UICollectionViewCell {
     
     private(set) lazy var openFolderButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: R.icons.ic_outline_folder)?.withRenderingMode(.alwaysTemplate), for: .normal)
+        button.setImage(UIImage(systemName: "folder")?.withRenderingMode(.alwaysTemplate), for: .normal)
         button.alpha = 0.3
         button.addTarget(self, action: #selector(openInFolder), for: .touchUpInside)
         return button
