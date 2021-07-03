@@ -102,7 +102,7 @@ public class DownloadManager: NSObject {
                 }
                 alertController.addAction(ok)
                 alertController.addAction(cancel)
-                
+                alertController.cornerRadius = Dimensions.SmallRoundCornor.cgFloat
                 vc.present(alertController, animated: true, completion: nil)
                 return
             }

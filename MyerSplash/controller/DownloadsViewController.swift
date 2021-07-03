@@ -143,6 +143,7 @@ class DownloadsViewController: UIViewController {
     private func onClickDelete() {
         let vc = MDCAlertController(title: R.strings.delete_dialog_title, message: R.strings.delete_dialog_message)
         vc.applyColors()
+        vc.cornerRadius = Dimensions.SmallRoundCornor.cgFloat
         vc.addAction(MDCAlertAction(title: R.strings.cancel, emphasis: .high, handler: { (action) in
             vc.dismiss(animated: true, completion: nil)
         }))
