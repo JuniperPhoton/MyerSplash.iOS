@@ -15,23 +15,9 @@ public class R {
     }
     
     public class icons {
-        public static let ic_clear = "ic_clear"
-        public static let ic_delete = "ic_delete"
-        public static let ic_done = "ic_done"
-        public static let ic_exposure = "ic_exposure"
-        public static let ic_download = "ic_download"
         public static let ic_launcher = "ic_launcher"
-        public static let ic_more = "ic_more"
-        public static let ic_search = "ic_search"
         public static let ic_filter_list = "ic_filter_list"
-        public static let ic_settings = "ic_settings"
-        public static let ic_star = "ic_star"
         public static let ic_app_icon = "ic_app_icon"
-        public static let ic_home = "ic_home"
-        public static let ic_retry = "ic_retry"
-        public static let ic_share = "ic_share"
-        public static let ic_save = "ic_save"
-        public static let ic_outline_folder = "ic_outline_folder"
 
         private init() {
             

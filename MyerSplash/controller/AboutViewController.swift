@@ -155,7 +155,7 @@ class AboutViewController: UIViewController, MFMailComposeViewControllerDelegate
     
     private lazy var webButton: UIView = {
         let button = UIButton()
-        let image = UIImage(named: "ic_home")
+        let image = UIImage(systemName: "house.fill")
         button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(openWebsite), for: .touchUpInside)
         button.tintColor = UIColor.getDefaultLabelUIColor()

@@ -6,7 +6,7 @@ import RxSwift
 import AVFoundation.AVUtilities
 import MyerSplashShared
 
-protocol ImageDetailViewDelegate: class {
+protocol ImageDetailViewDelegate: AnyObject {
     func onHidden(frameAnimationSkipped: Bool)
     func onRequestImageDownload(image: UnsplashImage)
     func onRequestEdit(item: DownloadItem)
@@ -25,7 +25,7 @@ class ImageDetailView: UIView {
     
     private(set) lazy var shareButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: R.icons.ic_share), for: .normal)
+        button.setImage(UIImage(systemName: "square.and.arrow.up", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold)), for: .normal)
         button.tintColor = .white
         button.addTarget(self, action: #selector(onClickShare), for: .touchUpInside)
         return button

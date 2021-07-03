@@ -49,7 +49,7 @@ class SearchViewController: UIViewController {
     
     private lazy var closeButton: UIView = {
         let closeButton = UIButton()
-        let closeImage = UIImage(named: R.icons.ic_clear)!.withRenderingMode(.alwaysTemplate)
+        let closeImage = UIImage(systemName: "xmark")!.withRenderingMode(.alwaysTemplate)
         closeButton.setImage(closeImage, for: .normal)
         closeButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
         closeButton.addTarget(self, action: #selector(onClickClose), for: .touchUpInside)

@@ -50,9 +50,9 @@ class MainViewController: TabmanViewController {
     
     private lazy var moreButton: UIButton = {
         let moreButton = UIButton()
-        let moreImage = UIImage(named: R.icons.ic_more)!.withRenderingMode(.alwaysTemplate)
+        let moreImage = UIImage(systemName: "ellipsis")!.withRenderingMode(.alwaysTemplate)
         moreButton.setImage(moreImage, for: .normal)
-        moreButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+        moreButton.tintColor = UIColor.getDefaultLabelUIColor()
         moreButton.addTarget(self, action: #selector(onClickMore), for: .touchUpInside)
         
         moreRippleController = MDCRippleTouchController.load(view: moreButton)
@@ -62,9 +62,9 @@ class MainViewController: TabmanViewController {
     private lazy var downloadsButton: UIButton = {
         let downloadsButton = UIButton()
         
-        let downloadImage = UIImage(named: R.icons.ic_download)!.withRenderingMode(.alwaysTemplate)
+        let downloadImage = UIImage(systemName: "arrow.down")!.withRenderingMode(.alwaysTemplate)
         downloadsButton.setImage(downloadImage, for: .normal)
-        downloadsButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+        downloadsButton.tintColor = UIColor.getDefaultLabelUIColor()
         downloadsButton.addTarget(self, action: #selector(onClickDownloads), for: .touchUpInside)
         
         downloadsRippleController = MDCRippleTouchController.load(view: downloadsButton)
@@ -75,9 +75,9 @@ class MainViewController: TabmanViewController {
     private lazy var searchButton: UIButton = {
         let searchButton = UIButton()
         
-        let searchImage = UIImage(named: R.icons.ic_search)!.withRenderingMode(.alwaysTemplate)
+        let searchImage = UIImage(systemName: "magnifyingglass")!.withRenderingMode(.alwaysTemplate)
         searchButton.setImage(searchImage, for: .normal)
-        searchButton.tintColor = UIColor.getDefaultLabelUIColor().withAlphaComponent(0.5)
+        searchButton.tintColor = UIColor.getDefaultLabelUIColor()
         searchButton.addTarget(self, action: #selector(onClickSearch), for: .touchUpInside)
         
         searchRippleController = MDCRippleTouchController.load(view: searchButton)
