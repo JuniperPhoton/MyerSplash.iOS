@@ -11,8 +11,12 @@ public class AppSettings {
     public static let LOADING_QUALITY_DEFAULT = 0
     public static let SAVING_QUALITY_DEFAULT = 1
 
-    public static func isSettingsEnabled(key: String) -> Bool {
-        return UserDefaults.standard.bool(key: key, defaultValue: true)
+    public static func isSettingsEnabled(key: String, defaultValue: Bool = true) -> Bool {
+        return UserDefaults.standard.bool(key: key, defaultValue: defaultValue)
+    }
+    
+    public static func setSettings(key: String, value: Bool) {
+        UserDefaults.standard.set(value, forKey: key)
     }
 
     public static func isQuickDownloadEnabled() -> Bool {
@@ -23,8 +27,20 @@ public class AppSettings {
         return isSettingsEnabled(key: Keys.METERED)
     }
     
+    public static func shouldShowWhatIsNew() -> Bool {
+        return !isSettingsEnabled(key: Keys.ALREADY_SHOW_WHAT_IS_NEW, defaultValue: false)
+    }
+    
     public static func isDarkMaskEnabled() -> Bool {
         return isSettingsEnabled(key: Keys.DAKR_MASK)
+    }
+    
+    public static func isStatusBarEnabled() -> Bool {
+        return isSettingsEnabled(key: Keys.SHOW_STATUS_BAR)
+    }
+    
+    public static func isShowDockEnabled() -> Bool {
+        return isSettingsEnabled(key: Keys.SHOW_DOCK)
     }
     
     public static func isNoSponsorshipEnabled() -> Bool {

@@ -23,7 +23,7 @@ extension UIViewController {
             return
         }
         
-        let path = DownloadManager.instance.createAbsolutePathForImage(fileURL)
+        let path = DownloadManager.shared.createAbsolutePathForImage(fileURL)
         if setAsWallpaper(path: path.path) {
             showToast(R.strings.set_as_wallpaper_success)
         } else {

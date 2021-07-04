@@ -234,7 +234,7 @@ extension SearchViewController: ImageDetailViewDelegate, ImagesViewControllerDel
     }
     
     func onRequestDownload(image: UnsplashImage) {
-        DownloadManager.instance.prepareToDownload(vc: self, image: image)
+        prepareForDownload(image)
     }
 }
 

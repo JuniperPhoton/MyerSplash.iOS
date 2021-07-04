@@ -33,7 +33,15 @@ public class Log {
 
     private static func printInternal(tag: String, level: String, text: String) {
         #if DEBUG
-        print("\(tag), \(level): \(text)")
+        var tagEmoji = ""
+        if (level == "info") {
+            tagEmoji = "⌨️"
+        } else if (level == "warn") {
+            tagEmoji = "⚠️"
+        } else if (level == "error") {
+            tagEmoji = "❌"
+        }
+        print("\(tagEmoji) \(tag), \(level): \(text)")
         #endif
     }
 }

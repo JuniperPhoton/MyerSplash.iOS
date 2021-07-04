@@ -211,7 +211,7 @@ extension DownloadsViewController: UICollectionViewDelegate, ELWaterFlowLayoutDe
         }
         cell.onClickDownload = { [weak self] (image) in
             guard let self = self else { return }
-            DownloadManager.instance.prepareToDownload(vc: self, image: image)
+            self.prepareForDownload(image)
         }
         cell.onDownloadItemUpdated = { [weak self] (item) in
             guard let self = self else { return }
@@ -249,7 +249,7 @@ extension DownloadsViewController: UICollectionViewDragDelegate {
         
         // Use downloaded image if possible
         if image.status == DownloadStatus.Success.rawValue, let path = image.fileURL {
-            let url = DownloadManager.instance.createAbsolutePathForImage(path).path
+            let url = DownloadManager.shared.createAbsolutePathForImage(path).path
 
             if let image = UIImage(contentsOfFile: url) {
                 let provider = NSItemProvider(object: image)
