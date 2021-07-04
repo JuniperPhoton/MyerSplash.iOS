@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         completionHandler(.alert)
     }
     
+    // TODO: currently not used
     private func registerBackgroundTasks() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: AutoWallpaperBGTask.ID, using: nil) { task in
             AutoWallpaperBGTask.shared.handleBackgroundTask(task as! BGAppRefreshTask)
