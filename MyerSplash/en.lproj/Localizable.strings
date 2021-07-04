@@ -59,6 +59,9 @@
 "settings_quality_download_small" = "High (Default)";
 "settings_quality_download_thumb" = "Medium (Not recommended)";
 
+"settings_show_status_icon" = "Show status icon";
+"settings_show_status_icon_desc" = "You can perform some shortcust directly in your menu bar";
+
 "settings_clear" = "Clear cache";
 "settings_clear_cache" = "Remove all cached images";
 "cleared" = "Cleared";
@@ -108,3 +111,13 @@
 "set_wallpaper" = "Set wallpaper";
 "set_wallpaper_success" = "Succeeded to set wallpaper";
 "set_wallpaper_failed" = "Failed to set wallpaper";
+
+"status_launch" = "Launch app";
+"status_toggle_dock" = "Show/hide Dock icon";
+"status_set_today" = "Set today's highlight wallpaper";
+"status_set_random" = "Set random wallpaper";
+"status_exit" = "Exit app";
+
+"new_update_title" = "🚀 WHAT'S NEW";
+"new_update_desc" = "You can now set wallpaper directly in status bar menu. You need to keep the app running.";
+

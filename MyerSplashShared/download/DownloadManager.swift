@@ -7,13 +7,14 @@
 //
 
 import Foundation
-import MaterialComponents.MDCAlertController
 import Alamofire
 import RxAlamofire
 import RxSwift
 
 public class DownloadManager: NSObject {
-    public static let instance = DownloadManager()
+    public static let shared = {
+       DownloadManager()
+    }()
     
     private var publishSubject = PublishSubject<DownloadItem>()
     private var downloadRecord = [String: DownloadRequest]()
@@ -21,6 +22,8 @@ public class DownloadManager: NSObject {
     private static let TAG = "DownloadManager"
     
     public static let DOWNLOAD_DIR = "MyerSplash"
+
+    private var dbQueue = DispatchQueue(label: "db_queue")
 
     private override init() {
         // ignored
@@ -64,53 +67,7 @@ public class DownloadManager: NSObject {
             Log.warn(tag: DownloadManager.TAG, "can't find request to cancel")
         }
     }
-    
-    // MARK: Check first
-    public func prepareToDownload(vc: UIViewController,
-                           image: UnsplashImage) {
-        Events.trackBeginDownloadEvent()
         
-        var reachability: Reachability!
-        
-        do {
-            reachability = try Reachability()
-        } catch {
-            print("Unable to create Reachability")
-            return
-        }
-        
-        if reachability.connection != .unavailable {
-            print("isReachable")
-        } else {
-            print("is NOT Reachable")
-            vc.view.showToast(R.strings.no_network)
-            return
-        }
-        
-        if reachability.connection != .wifi {
-            print("NOT using wifi")
-            if AppSettings.isMeteredEnabled() {
-                let alertController = MDCAlertController(
-                    title: R.strings.metered_dialog_title,
-                    message: R.strings.metered_dialog_message)
-                alertController.applyColors()
-                let ok = MDCAlertAction(title: R.strings.download) { (action) in
-                    self.doDownload(image)
-                }
-                let cancel = MDCAlertAction(title: R.strings.cancel) { (action) in
-                    alertController.dismiss(animated: true, completion: nil)
-                }
-                alertController.addAction(ok)
-                alertController.addAction(cancel)
-                
-                vc.present(alertController, animated: true, completion: nil)
-                return
-            }
-        }
-        
-        doDownload(image)
-    }
-    
     public func createSavingDir()-> URL {
         #if targetEnvironment(macCatalyst)
         return FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0].appendingPathComponent(DownloadManager.DOWNLOAD_DIR)
@@ -131,7 +88,10 @@ public class DownloadManager: NSObject {
         return createSavingRootPath().appendingPathComponent(relativePath)
     }
     
-    private func doDownload(_ unsplashImage: UnsplashImage) {
+    public func downloadImage(_ unsplashImage: UnsplashImage,
+                              onStart: @escaping (_ request: DownloadRequest) -> Void,
+                              onSuccess: @escaping (_ fileURL: URL) -> Void,
+                              onFailure: @escaping () -> Void) {
         if downloadRecord[unsplashImage.id!] != nil {
             Log.warn(tag: DownloadManager.TAG, "already downloading...")
             return
@@ -154,7 +114,7 @@ public class DownloadManager: NSObject {
             showToast(R.strings.download_in_background)
             
             let relativePath = "\(DownloadManager.DOWNLOAD_DIR)/\(unsplashImage.fileName)"
-            let fileURL = DownloadManager.instance.createAbsolutePathForImage(relativePath)
+            let fileURL = DownloadManager.shared.createAbsolutePathForImage(relativePath)
             
             let destination: DownloadRequest.DownloadFileDestination = { _, _ in
                 return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
@@ -168,26 +128,37 @@ public class DownloadManager: NSObject {
                 self.downloadRecord.removeValue(forKey: item.id!)
                 
                 if response.error == nil, let imagePath = response.destinationURL?.path {
-                    Log.info(tag: DownloadManager.TAG, "image downloaded!")
+                    Log.info(tag: DownloadManager.TAG, "image downloaded! imagePath is \(imagePath), relativePath is \(relativePath), fileURL is \(fileURL)")
                     
                     Events.trackDownloadSuccessEvent()
                     
                     self.notifySuccess(downloadItem: item, imagePath: relativePath)
-
-                    #if !targetEnvironment(macCatalyst)
-                    UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
-                    #else
-                    showToast(R.strings.saved_mac, time: 4)
-                    #endif
+                    onSuccess(fileURL)
                 } else {
                     Log.info(tag: DownloadManager.TAG, "error while download image: \(response.error?.localizedDescription ?? "null error")")
                     self.notifyFailed(downloadItem: item)
                     Events.trackDownloadFailedEvent(false, response.error?.localizedDescription)
+                    onFailure()
                 }
             }
             
             self.downloadRecord[unsplashImage.id!] = request
         })
+    }
+    
+    public func downloadImage(_ unsplashImage: UnsplashImage) {
+        self.downloadImage(unsplashImage) { Request in
+            // ignored
+        } onSuccess: { fileURL in
+            let imagePath = fileURL.path
+            #if !targetEnvironment(macCatalyst)
+            UIImageWriteToSavedPhotosAlbum(UIImage(contentsOfFile: imagePath)!, self, #selector(self.onSavedOrError), nil)
+            #else
+            showToast(R.strings.saved_mac, time: 4)
+            #endif
+        } onFailure: {
+            // ignored
+        }
     }
     
     @objc
@@ -196,9 +167,7 @@ public class DownloadManager: NSObject {
                                 contextInfo: UnsafeRawPointer) {
         DownloadManager.showSavedToastOnVC(success: error == nil)
     }
-    
-    private var dbQueue = DispatchQueue(label: "db_queue")
-    
+        
     private func insertItemAndNotify(downloadItem: DownloadItem) {
         dbQueue.async {
             AppDb.instance.insertOrReplace(downloadItem)

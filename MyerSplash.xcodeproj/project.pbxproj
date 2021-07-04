@@ -78,8 +78,12 @@
 		22D39FF3251F00DA00F69A36 /* MyerSplashShared.h in Headers */ = {isa = PBXBuildFile; fileRef = 22D39FF1251F00DA00F69A36 /* MyerSplashShared.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		22D39FF6251F00DA00F69A36 /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
 		22D39FF7251F00DA00F69A36 /* MyerSplashShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		22DB08222690AE9300A664A2 /* AutoWallpaperBGTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB08212690AE9300A664A2 /* AutoWallpaperBGTask.swift */; };
+		22DB082A26918FC300A664A2 /* StatusBarAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB082926918FC300A664A2 /* StatusBarAgent.swift */; };
+		22DB082C2691A9B500A664A2 /* NewUpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB082B2691A9B500A664A2 /* NewUpdatesViewController.swift */; };
 		22E496B723C8CA0A00B836F0 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E496B623C8CA0A00B836F0 /* DownloadButton.swift */; };
 		22ED11C125448AEE00847193 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ED11C025448AEE00847193 /* FilterButton.swift */; };
+		22FD04E62690A1F9006E50C1 /* UIViewControllerDownloadExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FD04E52690A1F9006E50C1 /* UIViewControllerDownloadExtensions.swift */; };
 		54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A5627DD12058A08C88A28B /* RadioButtonGroup.swift */; };
 		54A56163F93551D241697C6F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56D82CB9E1C0EF954ECE2 /* BaseViewController.swift */; };
 		54A5633E122F31E30C40824D /* SettingsSwitchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A563330188B6094B9D072F /* SettingsSwitchItem.swift */; };
@@ -215,11 +219,15 @@
 		22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MyerSplashShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D39FF1251F00DA00F69A36 /* MyerSplashShared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyerSplashShared.h; sourceTree = "<group>"; };
 		22D39FF2251F00DA00F69A36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22DB08212690AE9300A664A2 /* AutoWallpaperBGTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoWallpaperBGTask.swift; sourceTree = "<group>"; };
+		22DB082926918FC300A664A2 /* StatusBarAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAgent.swift; sourceTree = "<group>"; };
+		22DB082B2691A9B500A664A2 /* NewUpdatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUpdatesViewController.swift; sourceTree = "<group>"; };
 		22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCellExtensions.swift; sourceTree = "<group>"; };
 		22E496B223C8B5A500B836F0 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		22E496B623C8CA0A00B836F0 /* DownloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
 		22E496B823C9952200B836F0 /* R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.swift; sourceTree = "<group>"; };
 		22ED11C025448AEE00847193 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
+		22FD04E52690A1F9006E50C1 /* UIViewControllerDownloadExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerDownloadExtensions.swift; sourceTree = "<group>"; };
 		4A2B06F4E1389C35FBC44B8C /* Pods-MyerSplash.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplash.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplash/Pods-MyerSplash.debug.xcconfig"; sourceTree = "<group>"; };
 		50AB4F0F0D7379FD5BECD603 /* Pods-MyerSplashShared.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyerSplashShared.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyerSplashShared/Pods-MyerSplashShared.debug.xcconfig"; sourceTree = "<group>"; };
 		54A5607B141B4AF5F592908D /* MainImageTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainImageTableCell.swift; sourceTree = "<group>"; };
@@ -414,6 +422,15 @@
 			path = util;
 			sourceTree = "<group>";
 		};
+		22FD04E226904F84006E50C1 /* background */ = {
+			isa = PBXGroup;
+			children = (
+				22DB08212690AE9300A664A2 /* AutoWallpaperBGTask.swift */,
+				22DB082926918FC300A664A2 /* StatusBarAgent.swift */,
+			);
+			path = background;
+			sourceTree = "<group>";
+		};
 		54A5610203E1DD4A590B39A2 /* api */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,6 +499,7 @@
 				2268721F23C369E600F921F4 /* DownloadsViewController.swift */,
 				2268722123C36A1100F921F4 /* AboutViewController.swift */,
 				2268723023C64A1F00F921F4 /* ImageEditorViewController.swift */,
+				22DB082B2691A9B500A664A2 /* NewUpdatesViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -497,6 +515,7 @@
 				A02FA5BB50846102410E0BC4 /* UIViewControllerExtensions.swift */,
 				22DC52B423E2D5A700CFD177 /* UICollectionViewCellExtensions.swift */,
 				22A3E01E249F2FB0008159F0 /* UIViewExtensions.swift */,
+				22FD04E52690A1F9006E50C1 /* UIViewControllerDownloadExtensions.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -578,6 +597,7 @@
 				F0D247C51FF7C35000BB8076 /* LaunchScreen.storyboard */,
 				F0D247C81FF7C35000BB8076 /* Info.plist */,
 				223D1EE624A3C246000D04FC /* swiftui */,
+				22FD04E226904F84006E50C1 /* background */,
 				54A56DDFB155912867287711 /* controller */,
 				222D46B123C10C9B003C754B /* repo */,
 				54A56784A667D3A8D353B24A /* view */,
@@ -929,6 +949,7 @@
 				2247DB2A251F390500DC6F4D /* Reachability.swift in Sources */,
 				2247DAF6251F384000DC6F4D /* Keys.swift in Sources */,
 				2247DAFB251F385A00DC6F4D /* UIFontExtension.swift in Sources */,
+				22FD04E62690A1F9006E50C1 /* UIViewControllerDownloadExtensions.swift in Sources */,
 				2247DAF4251F384000DC6F4D /* R.swift in Sources */,
 				2247DB2C251F390500DC6F4D /* UIs.swift in Sources */,
 				2247DAFA251F385A00DC6F4D /* UserDefaultsExtension.swift in Sources */,
@@ -949,6 +970,7 @@
 			files = (
 				F0D247BD1FF7C35000BB8076 /* AppDelegate.swift in Sources */,
 				54A56482196A6EC512092AEF /* MainViewController.swift in Sources */,
+				22DB082A26918FC300A664A2 /* StatusBarAgent.swift in Sources */,
 				222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */,
 				2247DB44251F3AAC00DC6F4D /* Misc.swift in Sources */,
 				2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */,
@@ -964,11 +986,13 @@
 				2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */,
 				54A56E07DAF6EB75DC63E7E8 /* DialogViewController.swift in Sources */,
 				54A56163F93551D241697C6F /* BaseViewController.swift in Sources */,
+				22DB08222690AE9300A664A2 /* AutoWallpaperBGTask.swift in Sources */,
 				223D1EE524A3AF86000D04FC /* SearchView.swift in Sources */,
 				54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */,
 				22639DA0266D286800B76C02 /* Plugin.swift in Sources */,
 				222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */,
 				54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */,
+				22DB082C2691A9B500A664A2 /* NewUpdatesViewController.swift in Sources */,
 				22B284BA2553DBC50042DD9B /* TabsListView.swift in Sources */,
 				2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */,
 				2268722F23C632B100F921F4 /* DownloadItemCell.swift in Sources */,
@@ -1039,7 +1063,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1049,7 +1073,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
@@ -1072,7 +1096,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplashWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MyerSplashWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1082,7 +1106,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash.MyerSplashWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1101,7 +1125,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MacPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -1111,7 +1135,7 @@
 					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.MacPlugin;
@@ -1133,7 +1157,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				INFOPLIST_FILE = MacPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -1143,7 +1167,7 @@
 					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.MacPlugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1163,7 +1187,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1181,7 +1205,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.MyerSplashShared;
@@ -1202,7 +1226,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1220,7 +1244,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.MyerSplashShared;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -1355,7 +1379,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1368,7 +1392,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1387,7 +1411,7 @@
 				CODE_SIGN_ENTITLEMENTS = MyerSplash/MyerSplash.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 468;
+				CURRENT_PROJECT_VERSION = 471;
 				DEVELOPMENT_TEAM = 7GB9CHCB87;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1400,7 +1424,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.2;
+				MARKETING_VERSION = 4.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.myersplash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

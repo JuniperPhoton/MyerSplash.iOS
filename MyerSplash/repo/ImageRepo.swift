@@ -40,6 +40,7 @@ class ImageRepo {
     
     var images = [UnsplashImage]()
     var filterOption = FilterOption.All
+    var contentSafety = ContentSafety.Low
     
     private var disposeBag = DisposeBag()
     
@@ -152,9 +153,17 @@ class RandomImageRepo: ImageRepo {
     }
     
     override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
-        var params = Request.getDefaultParams(paging: page, filter: filterOption)
+        var params = Request.getDefaultParams(paging: page, filter: filterOption, contentSafety: contentSafety)
         params["count"] = 30
         return json(.get, Request.RANDOM_PHOTOS_URL, parameters: params).mapToList()
+    }
+}
+
+class WallpaperRepo: ImageRepo {
+    override func loadImagesInternal(_ page: Int) -> Observable<[UnsplashImage]> {
+        var params = Request.getDefaultParams(paging: page, filter: filterOption, contentSafety: contentSafety)
+        params["count"] = 1
+        return json(.get, Request.WALLPAPER_URL, parameters: params).mapToList()
     }
 }
 

@@ -1,8 +1,9 @@
 import UIKit
 import MyerSplashShared
+import BackgroundTasks
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     static let SEARCH_SHORTCUT = "search"
     static let DOWNLOADS_SHORTCUT = "downloads"
     
@@ -14,6 +15,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Log.info(tag: AppDelegate.TAG, "application didFinishLaunchingWithOptions")
         
+        #if targetEnvironment(macCatalyst)
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        if let titlebar = windowScene?.titlebar {
+            titlebar.titleVisibility = .hidden
+            titlebar.toolbar = nil
+        }
+        
+        if AppSettings.isStatusBarEnabled() {
+            StatusBarAgent.shared.setup(activated: true)
+            StatusBarAgent.shared.toggleDock(show: AppSettings.isShowDockEnabled())
+        }
+        #endif
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         let controller = MainViewController(nibName: nil, bundle: nil)
         window!.rootViewController = controller
@@ -22,18 +36,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Events.initialize()
         
         setupShortcuts(application)
-        
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        #if targetEnvironment(macCatalyst)
-        if let titlebar = windowScene?.titlebar {
-            titlebar.titleVisibility = .hidden
-            titlebar.toolbar = nil
-        }
-        #endif
-        
-        DownloadManager.instance.markDownloadingToFailed()
                 
+        UNUserNotificationCenter.current().delegate = self
+
+        DownloadManager.shared.markDownloadingToFailed()
+        MacBundlePlugin.sharedInstance?.onAppDidLaunch()
+        
         return true
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler(.alert)
+    }
+    
+    // TODO: currently not used
+    private func registerBackgroundTasks() {
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: AutoWallpaperBGTask.ID, using: nil) { task in
+            AutoWallpaperBGTask.shared.handleBackgroundTask(task as! BGAppRefreshTask)
+        }
+        
+        AutoWallpaperBGTask.shared.scheduleBackgroundTasks()
     }
     
     private func setupShortcuts(_ application: UIApplication) {

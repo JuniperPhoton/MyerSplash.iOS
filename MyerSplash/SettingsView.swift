@@ -56,10 +56,21 @@ class SettingsView: UIView {
         let noSponsorSwitch = SettingsSwitchItem(Keys.SHOW_SPONSORSHIP)
         noSponsorSwitch.title = R.strings.settings_no_sponsorship_title
         noSponsorSwitch.content = R.strings.settings_no_sponsorship_content
+        
+        let statusBarSwitch = SettingsSwitchItem(Keys.SHOW_STATUS_BAR)
+        statusBarSwitch.title = R.strings.settings_show_status_icon
+        statusBarSwitch.content = R.strings.settings_show_status_icon_desc
+        statusBarSwitch.onCheckedChanged = { checked in
+            StatusBarAgent.shared.setup(activated: checked)
+        }
 
         personalizationGroup.addArrangedSubview(quickDownload)
         personalizationGroup.addArrangedSubview(darkMaskSwitch)
         personalizationGroup.addArrangedSubview(noSponsorSwitch)
+        
+        #if targetEnvironment(macCatalyst)
+        personalizationGroup.addArrangedSubview(statusBarSwitch)
+        #endif
 
         let qualityGroup = SettingsGroup()
         qualityGroup.label = R.strings.settings_quality
