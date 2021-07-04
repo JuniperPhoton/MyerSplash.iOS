@@ -71,8 +71,10 @@ class StatusBarAgent {
             AppSettings.setSettings(key: Keys.SHOW_DOCK, value: toggled)
         }
         
-        MacBundlePlugin.sharedInstance?.activateStatusItem(configConverter: converter, onToggleDock: onToggleDock,
-                                                           onSetTodayWallpaper: onSetTodayWallpaper, onSetRandomWallpaper: onSetRandomWallpaper)
+        MacBundlePlugin.sharedInstance?.activateStatusItem(configConverter: converter,
+                                                           onToggleDock: onToggleDock,
+                                                           onSetTodayWallpaper: onSetTodayWallpaper,
+                                                           onSetRandomWallpaper: onSetRandomWallpaper)
     }
     
     private var previousRequest: DownloadRequest? = nil

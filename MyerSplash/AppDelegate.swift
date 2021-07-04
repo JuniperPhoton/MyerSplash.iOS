@@ -15,17 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Log.info(tag: AppDelegate.TAG, "application didFinishLaunchingWithOptions")
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let controller = MainViewController(nibName: nil, bundle: nil)
-        window!.rootViewController = controller
-        window!.makeKeyAndVisible()
-        
-        Events.initialize()
-        
-        setupShortcuts(application)
-        
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         #if targetEnvironment(macCatalyst)
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         if let titlebar = windowScene?.titlebar {
             titlebar.titleVisibility = .hidden
             titlebar.toolbar = nil
@@ -37,10 +28,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         #endif
         
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let controller = MainViewController(nibName: nil, bundle: nil)
+        window!.rootViewController = controller
+        window!.makeKeyAndVisible()
+        
+        Events.initialize()
+        
+        setupShortcuts(application)
+                
         UNUserNotificationCenter.current().delegate = self
 
         DownloadManager.shared.markDownloadingToFailed()
-
+        MacBundlePlugin.sharedInstance?.onAppDidLaunch()
+        
         return true
     }
     

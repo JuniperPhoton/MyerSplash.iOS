@@ -36,4 +36,5 @@ protocol Plugin: NSObjectProtocol {
                             onSetTodayWallpaper: @escaping () -> Void,
                             onSetRandomWallpaper: @escaping () -> Void)
     func toggleDock(show: Bool)
+    func onAppDidLaunch()
 }
