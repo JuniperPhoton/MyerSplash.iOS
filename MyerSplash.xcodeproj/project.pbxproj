@@ -92,7 +92,7 @@
 		71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF9175F0CC748D0AC10924C /* Pods_MyerSplash.framework */; };
 		815C57B45972B9E2B362B15D /* Pods_MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A7955803E00B757AF256F2 /* Pods_MyerSplashShared.framework */; };
 		C14CF0E30FDB6B55B26196A6 /* Pods_MyerSplashWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FC5B6D40C5466AB235C4F4 /* Pods_MyerSplashWidgetExtension.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		E47DED5B215DF0BD18169D29 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		E47DED5B215DF0BD18169D29 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		F02A4BBC1FF8E37A0027B721 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F02A4BBB1FF8E37A0027B721 /* Assets.xcassets */; };
 		F0B633E0200C7E1400D05D74 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0B633DF200C7E1400D05D74 /* Key.plist */; };
 		F0D247BD1FF7C35000BB8076 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D247BC1FF7C35000BB8076 /* AppDelegate.swift */; };
@@ -293,7 +293,7 @@
 				04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */,
 				22D39FF6251F00DA00F69A36 /* MyerSplashShared.framework in Frameworks */,
 				71DD32711D47C488B94A44C2 /* Pods_MyerSplash.framework in Frameworks */,
-				E47DED5B215DF0BD18169D29 /* (null) in Frameworks */,
+				E47DED5B215DF0BD18169D29 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

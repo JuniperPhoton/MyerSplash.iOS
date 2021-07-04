@@ -135,7 +135,29 @@ class MacPlugin: NSObject, Plugin {
         NotificationCenter.default.addObserver(self, selector: #selector(onWindowBecomeMain), name: NSWindow.didBecomeMainNotification, object: nil)
     }
     
+    private func createBlurView() -> NSVisualEffectView {
+        let v = NSVisualEffectView()
+        v.material = .underWindowBackground
+        v.blendingMode = .behindWindow
+        v.autoresizingMask = [.width, .height]
+        return v
+    }
+    
     @objc func onWindowBecomeMain(notification: Notification) {
         currentMainWindow = notification.object as? NSWindow
+        
+        if let contentView = currentMainWindow?.contentView {
+            let v = createBlurView()
+            v.frame = contentView.bounds
+            contentView.addSubview(v, positioned: NSWindow.OrderingMode.below, relativeTo: nil)
+        }
+    }
+    
+    func addBlurView(view: NSObject) {
+        if let nsView = view as? NSView {
+            let v = createBlurView()
+            v.frame = nsView.bounds
+            nsView.addSubview(v)
+        }
     }
 }

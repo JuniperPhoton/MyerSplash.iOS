@@ -178,13 +178,13 @@ class ImagesViewController: UIViewController {
         collectionView.snp.makeConstraints { (maker) in
             maker.height.equalTo(view)
             maker.width.equalTo(view)
-            maker.top.equalTo(view)
+            maker.top.equalTo(view).offset(collectionTopOffset)
         }
         
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.contentInset = UIEdgeInsets(
-            top: collectionTopOffset,
+            top: 0,
             left: 0,
             bottom: ImagesViewController.FOOTER_HEIGHT.toCGFloat(),
             right: 0

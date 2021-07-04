@@ -40,4 +40,5 @@ protocol Plugin: NSObjectProtocol {
                             onSetRandomWallpaper: @escaping () -> Void)
     func toggleDock(show: Bool)
     func onAppDidLaunch()
+    func addBlurView(view: NSObject)
 }

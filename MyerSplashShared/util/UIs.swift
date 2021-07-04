@@ -48,7 +48,7 @@ public func getTopBarHeight() -> CGFloat {
 
 public func getContentTopInsets() -> CGFloat {
     #if targetEnvironment(macCatalyst)
-    return getTopBarHeight() - 26
+    return getTopBarHeight()
     #else
     return getTopBarHeight() + UIView.topInset
     #endif

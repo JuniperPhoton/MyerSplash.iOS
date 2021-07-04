@@ -43,8 +43,6 @@ class MainViewController: TabmanViewController {
     
     private lazy var statusBarPlaceholder: UIView = {
         let v = UIView()
-        let blurView = UIView.makeBlurBackgroundView()
-        v.addSubview(blurView)
         return v
     }()
     
@@ -106,7 +104,7 @@ class MainViewController: TabmanViewController {
         
         setupViewControllers()
         
-        self.view.backgroundColor = UIColor.getDefaultBackgroundUIColor()
+        self.view.backgroundColor = .clear
         
         self.dataSource = self
         
