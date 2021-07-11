@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if !targetEnvironment(simulator)
+import AppKit
+#endif
 
 enum StatusItemKind {
     case Launch
