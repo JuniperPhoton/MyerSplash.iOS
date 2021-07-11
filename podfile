@@ -16,6 +16,7 @@ target 'MyerSplash' do
   pod 'PinLayout'
   pod 'WCDB.swift'
   pod 'ELWaterFallLayout'
+  pod 'AppCenter'
 
 pod 'MaterialComponents/Buttons'
   pod 'MaterialComponents/ActivityIndicator'
@@ -39,7 +40,7 @@ target 'MyerSplashShared' do
   pod 'Alamofire', '~> 4.9.1'
   pod 'RxAlamofire'
   pod 'SnapKit', '~> 5.0.0'
-
+  pod 'AppCenter'
 end
 
 target 'MyerSplashWidgetExtension' do
