@@ -8,7 +8,7 @@
 
 import Foundation
 #if !targetEnvironment(simulator)
-import UIKit
+import AppKit
 #endif
 
 enum StatusItemKind {
