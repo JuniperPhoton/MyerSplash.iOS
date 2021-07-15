@@ -13,6 +13,8 @@
 		221D26A623D21502003BE444 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D26A523D21502003BE444 /* SettingsView.swift */; };
 		222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46AF23C1081B003C754B /* ImagesViewController.swift */; };
 		222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46B223C10CAA003C754B /* ImageRepo.swift */; };
+		22346A9926A07D9600074F5F /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346A9826A07D9600074F5F /* NotificationManager.swift */; };
+		22346A9C26A07E4900074F5F /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346A9B26A07E4900074F5F /* WidgetManager.swift */; };
 		223D1EE524A3AF86000D04FC /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D1EE424A3AF86000D04FC /* SearchView.swift */; };
 		2247DAF1251F384000DC6F4D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56ADEB602096935F951BA /* Colors.swift */; };
 		2247DAF2251F384000DC6F4D /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C275843D1B6C0016A44 /* Dimensions.swift */; };
@@ -174,6 +176,8 @@
 		221D26A523D21502003BE444 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = MyerSplash/SettingsView.swift; sourceTree = SOURCE_ROOT; };
 		222D46AF23C1081B003C754B /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
+		22346A9826A07D9600074F5F /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		22346A9B26A07E4900074F5F /* WidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetManager.swift; sourceTree = "<group>"; };
 		223D1EE424A3AF86000D04FC /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2247DB43251F3AAC00DC6F4D /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MyerSplashWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -308,6 +312,22 @@
 			path = repo;
 			sourceTree = "<group>";
 		};
+		22346A9726A07D8000074F5F /* notification */ = {
+			isa = PBXGroup;
+			children = (
+				22346A9826A07D9600074F5F /* NotificationManager.swift */,
+			);
+			path = notification;
+			sourceTree = "<group>";
+		};
+		22346A9A26A07E3D00074F5F /* views */ = {
+			isa = PBXGroup;
+			children = (
+				54A56B10293331F08D52173B /* ToastView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		223D1EE624A3C246000D04FC /* swiftui */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,7 +340,7 @@
 		2247DB24251F38EA00DC6F4D /* widget */ = {
 			isa = PBXGroup;
 			children = (
-				54A56B10293331F08D52173B /* ToastView.swift */,
+				22346A9B26A07E4900074F5F /* WidgetManager.swift */,
 			);
 			path = widget;
 			sourceTree = "<group>";
@@ -368,6 +388,8 @@
 		22D39FF0251F00DA00F69A36 /* MyerSplashShared */ = {
 			isa = PBXGroup;
 			children = (
+				22346A9A26A07E3D00074F5F /* views */,
+				22346A9726A07D8000074F5F /* notification */,
 				2247DB24251F38EA00DC6F4D /* widget */,
 				2268722923C4F68400F921F4 /* download */,
 				54A5610203E1DD4A590B39A2 /* api */,
@@ -904,6 +926,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2247DB25251F38F100DC6F4D /* ToastView.swift in Sources */,
+				22346A9C26A07E4900074F5F /* WidgetManager.swift in Sources */,
 				2247DB2E251F390500DC6F4D /* AppSettings.swift in Sources */,
 				2247DAFC251F385A00DC6F4D /* UIViewControllerExtensions.swift in Sources */,
 				2247DAFF251F385A00DC6F4D /* UICollectionViewCellExtensions.swift in Sources */,
@@ -918,6 +941,7 @@
 				2247DAF2251F384000DC6F4D /* Dimensions.swift in Sources */,
 				2247DAF9251F385A00DC6F4D /* StringExtension.swift in Sources */,
 				2247DB2B251F390500DC6F4D /* AppNotification.swift in Sources */,
+				22346A9926A07D9600074F5F /* NotificationManager.swift in Sources */,
 				2247DB00251F385A00DC6F4D /* MiscExtension.swift in Sources */,
 				2247DB28251F390500DC6F4D /* Events.swift in Sources */,
 				2247DB2A251F390500DC6F4D /* Reachability.swift in Sources */,

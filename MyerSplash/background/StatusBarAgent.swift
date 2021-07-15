@@ -33,11 +33,15 @@ class StatusBarAgent {
         }
         
         let onSetTodayWallpaper = {
+            NotificationManager.shared.showWillSetWallpaper()
+            
             let todayImage = UnsplashImage.createToday()
             self.downloadAndSetAsWallpaper(todayImage)
         }
         
         let onSetRandomWallpaper = {
+            NotificationManager.shared.showWillSetWallpaper()
+            
             let repo = RandomImageRepo()
             repo.filterOption = .Landscape
             repo.contentSafety = .High
@@ -86,9 +90,14 @@ class StatusBarAgent {
         DownloadManager.shared.downloadImage(image) { request in
             self.previousRequest = request
         } onSuccess: { fileURL in
-            _ = MacBundlePlugin.sharedInstance?.setAsWallpaper(path: fileURL.path) ?? false
+            let success = MacBundlePlugin.sharedInstance?.setAsWallpaper(path: fileURL.path) ?? false
+            if success {
+                NotificationManager.shared.showDidSetWallpaper()
+            } else {
+                NotificationManager.shared.showFailedToSetWallpaper()
+            }
         } onFailure: {
-            // ignored
+            NotificationManager.shared.showFailedToSetWallpaper()
         }
     }
 }

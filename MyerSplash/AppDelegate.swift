@@ -1,6 +1,7 @@
 import UIKit
 import MyerSplashShared
 import BackgroundTasks
+import NotificationCenter
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -47,7 +48,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        #if targetEnvironment(macCatalyst)
+        completionHandler(UNNotificationPresentationOptions.list)
+        #else
         completionHandler(.alert)
+        #endif
     }
     
     // TODO: currently not used
@@ -92,6 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         Log.info(tag: AppDelegate.TAG, "applicationDidBecomeActive")
+        WidgetManager.shared.triggerUpdate()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -100,23 +106,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        guard let vc = UIApplication.shared.windows[0].rootViewController as? MainViewController else {
-            return
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            switch shortcutItem.type {
-            case AppDelegate.SEARCH_SHORTCUT:
-                let targetVc = SearchViewController()
-                vc.present(targetVc, animated: true, completion: nil)
-                targetVc.delegate = vc
-            case AppDelegate.DOWNLOADS_SHORTCUT:
-                let targetVc = MoreViewController()
-                vc.present(targetVc, animated: true, completion: nil)
-                targetVc.delegate = vc
-            default: break
-            }
-        }
+        presentShortcutViewController(type: shortcutItem.type)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        Log.info(tag: AppDelegate.TAG, "userNotificationCenter")
+        presentShortcutViewController(type: AppDelegate.DOWNLOADS_SHORTCUT)
     }
     
     #if targetEnvironment(macCatalyst)
@@ -128,5 +123,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         super.buildMenu(with: builder)
     }
     #endif
+    
+    private func presentShortcutViewController(type: String) {
+        guard let vc = UIApplication.shared.windows[0].rootViewController as? MainViewController else {
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            switch type {
+            case AppDelegate.SEARCH_SHORTCUT:
+                vc.onClickSearch()
+            case AppDelegate.DOWNLOADS_SHORTCUT:
+                vc.onClickDownloads()
+            default: break
+            }
+        }
+    }
 }
 

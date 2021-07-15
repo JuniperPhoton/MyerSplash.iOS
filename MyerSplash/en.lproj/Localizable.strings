@@ -121,3 +121,6 @@
 "new_update_title" = "🚀 WHAT'S NEW";
 "new_update_desc" = "You can now set wallpaper directly in status bar menu. You need to keep the app running.";
 
+"will_set_wallpaper" = "🏖 Downloading wallpaper to set, please wait...";
+"did_set_wallpaper" = "😃 Succeeded to set wallpaper";
+"fail_set_wallpaper" = "😱 Failed to set wallpaper";

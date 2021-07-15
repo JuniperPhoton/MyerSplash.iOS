@@ -142,6 +142,10 @@ public class R {
         public static let new_update_title = NSLocalizedString("new_update_title", comment: "")
         public static let new_update_desc = NSLocalizedString("new_update_desc", comment: "")
 
+        public static let will_set_wallpaper = NSLocalizedString("will_set_wallpaper", comment: "")
+        public static let did_set_wallpaper = NSLocalizedString("did_set_wallpaper", comment: "")
+        public static let fail_set_wallpaper = NSLocalizedString("fail_set_wallpaper", comment: "")
+
         private init() {
             
         }
