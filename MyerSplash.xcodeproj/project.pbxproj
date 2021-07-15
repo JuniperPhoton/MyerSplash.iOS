@@ -15,6 +15,13 @@
 		222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46B223C10CAA003C754B /* ImageRepo.swift */; };
 		22346A9926A07D9600074F5F /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346A9826A07D9600074F5F /* NotificationManager.swift */; };
 		22346A9C26A07E4900074F5F /* WidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346A9B26A07E4900074F5F /* WidgetManager.swift */; };
+		22346AA026A08D0C00074F5F /* WallpaperPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346A9F26A08D0C00074F5F /* WallpaperPlugin.swift */; };
+		22346AA226A08D2300074F5F /* ApplicationDelegationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346AA126A08D2300074F5F /* ApplicationDelegationPlugin.swift */; };
+		22346AA326A08E1200074F5F /* WallpaperPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346A9F26A08D0C00074F5F /* WallpaperPlugin.swift */; };
+		22346AA426A08E1500074F5F /* ApplicationDelegationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346AA126A08D2300074F5F /* ApplicationDelegationPlugin.swift */; };
+		22346AA626A08EB100074F5F /* MacStatusBarPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346AA526A08EB100074F5F /* MacStatusBarPlugin.swift */; };
+		22346AA926A08ED400074F5F /* MacWallpaperPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346AA826A08ED400074F5F /* MacWallpaperPlugin.swift */; };
+		22346AAB26A08EED00074F5F /* MacApplicationDelegationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22346AAA26A08EED00074F5F /* MacApplicationDelegationPlugin.swift */; };
 		223D1EE524A3AF86000D04FC /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D1EE424A3AF86000D04FC /* SearchView.swift */; };
 		2247DAF1251F384000DC6F4D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56ADEB602096935F951BA /* Colors.swift */; };
 		2247DAF2251F384000DC6F4D /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A56C275843D1B6C0016A44 /* Dimensions.swift */; };
@@ -55,10 +62,9 @@
 		2247DB9B251F40BD00DC6F4D /* MyerSplashShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D39FEF251F00DA00F69A36 /* MyerSplashShared.framework */; };
 		2252128F2544A2DD002553A0 /* NetworkQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2252128E2544A2DD002553A0 /* NetworkQuality.swift */; };
 		22639D95266D264000B76C02 /* MacPlugin.bundle in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 22639D8F266D261B00B76C02 /* MacPlugin.bundle */; platformFilter = maccatalyst; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		22639D9A266D265300B76C02 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22639D99266D265300B76C02 /* Plugin.swift */; };
-		22639D9C266D266700B76C02 /* MacPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22639D9B266D266700B76C02 /* MacPlugin.swift */; };
-		22639DA0266D286800B76C02 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22639D99266D265300B76C02 /* Plugin.swift */; };
-		22639DA2266D2B1700B76C02 /* MacBundlePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22639DA1266D2B1700B76C02 /* MacBundlePlugin.swift */; };
+		22639D9A266D265300B76C02 /* StatusBarPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22639D99266D265300B76C02 /* StatusBarPlugin.swift */; };
+		22639DA0266D286800B76C02 /* StatusBarPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22639D99266D265300B76C02 /* StatusBarPlugin.swift */; };
+		22639DA2266D2B1700B76C02 /* MacBundlePlugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22639DA1266D2B1700B76C02 /* MacBundlePlugins.swift */; };
 		2268721E23C369AB00F921F4 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721D23C369AB00F921F4 /* MoreViewController.swift */; };
 		2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268721F23C369E600F921F4 /* DownloadsViewController.swift */; };
 		2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2268722123C36A1100F921F4 /* AboutViewController.swift */; };
@@ -178,6 +184,11 @@
 		222D46B223C10CAA003C754B /* ImageRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepo.swift; sourceTree = "<group>"; };
 		22346A9826A07D9600074F5F /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		22346A9B26A07E4900074F5F /* WidgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetManager.swift; sourceTree = "<group>"; };
+		22346A9F26A08D0C00074F5F /* WallpaperPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperPlugin.swift; sourceTree = "<group>"; };
+		22346AA126A08D2300074F5F /* ApplicationDelegationPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationDelegationPlugin.swift; sourceTree = "<group>"; };
+		22346AA526A08EB100074F5F /* MacStatusBarPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacStatusBarPlugin.swift; sourceTree = "<group>"; };
+		22346AA826A08ED400074F5F /* MacWallpaperPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacWallpaperPlugin.swift; sourceTree = "<group>"; };
+		22346AAA26A08EED00074F5F /* MacApplicationDelegationPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacApplicationDelegationPlugin.swift; sourceTree = "<group>"; };
 		223D1EE424A3AF86000D04FC /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2247DB43251F3AAC00DC6F4D /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		2247DB4D251F3E8000DC6F4D /* MyerSplashWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MyerSplashWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,9 +203,8 @@
 		22639D8F266D261B00B76C02 /* MacPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MacPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		22639D91266D261B00B76C02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22639D98266D265200B76C02 /* MacPlugin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MacPlugin-Bridging-Header.h"; sourceTree = "<group>"; };
-		22639D99266D265300B76C02 /* Plugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
-		22639D9B266D266700B76C02 /* MacPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacPlugin.swift; sourceTree = "<group>"; };
-		22639DA1266D2B1700B76C02 /* MacBundlePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBundlePlugin.swift; sourceTree = "<group>"; };
+		22639D99266D265300B76C02 /* StatusBarPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarPlugin.swift; sourceTree = "<group>"; };
+		22639DA1266D2B1700B76C02 /* MacBundlePlugins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBundlePlugins.swift; sourceTree = "<group>"; };
 		2268721D23C369AB00F921F4 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		2268721F23C369E600F921F4 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		2268722123C36A1100F921F4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -349,7 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				2247DB43251F3AAC00DC6F4D /* Misc.swift */,
-				22639DA1266D2B1700B76C02 /* MacBundlePlugin.swift */,
+				22639DA1266D2B1700B76C02 /* MacBundlePlugins.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -368,9 +378,13 @@
 			isa = PBXGroup;
 			children = (
 				22639D91266D261B00B76C02 /* Info.plist */,
-				22639D99266D265300B76C02 /* Plugin.swift */,
+				22639D99266D265300B76C02 /* StatusBarPlugin.swift */,
 				22639D98266D265200B76C02 /* MacPlugin-Bridging-Header.h */,
-				22639D9B266D266700B76C02 /* MacPlugin.swift */,
+				22346A9F26A08D0C00074F5F /* WallpaperPlugin.swift */,
+				22346AA126A08D2300074F5F /* ApplicationDelegationPlugin.swift */,
+				22346AA526A08EB100074F5F /* MacStatusBarPlugin.swift */,
+				22346AA826A08ED400074F5F /* MacWallpaperPlugin.swift */,
+				22346AAA26A08EED00074F5F /* MacApplicationDelegationPlugin.swift */,
 			);
 			path = MacPlugin;
 			sourceTree = "<group>";
@@ -916,8 +930,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22639D9C266D266700B76C02 /* MacPlugin.swift in Sources */,
-				22639D9A266D265300B76C02 /* Plugin.swift in Sources */,
+				22346AA626A08EB100074F5F /* MacStatusBarPlugin.swift in Sources */,
+				22346AA926A08ED400074F5F /* MacWallpaperPlugin.swift in Sources */,
+				22346AA226A08D2300074F5F /* ApplicationDelegationPlugin.swift in Sources */,
+				22346AAB26A08EED00074F5F /* MacApplicationDelegationPlugin.swift in Sources */,
+				22639D9A266D265300B76C02 /* StatusBarPlugin.swift in Sources */,
+				22346AA026A08D0C00074F5F /* WallpaperPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -980,16 +998,18 @@
 				54A5633E122F31E30C40824D /* SettingsSwitchItem.swift in Sources */,
 				221D26A623D21502003BE444 /* SettingsView.swift in Sources */,
 				54A56709576E7FF86A3B5D92 /* SettingsItem.swift in Sources */,
-				22639DA2266D2B1700B76C02 /* MacBundlePlugin.swift in Sources */,
+				22639DA2266D2B1700B76C02 /* MacBundlePlugins.swift in Sources */,
 				2268722223C36A1100F921F4 /* AboutViewController.swift in Sources */,
 				54A56E07DAF6EB75DC63E7E8 /* DialogViewController.swift in Sources */,
+				22346AA426A08E1500074F5F /* ApplicationDelegationPlugin.swift in Sources */,
 				54A56163F93551D241697C6F /* BaseViewController.swift in Sources */,
 				22DB08222690AE9300A664A2 /* AutoWallpaperBGTask.swift in Sources */,
 				223D1EE524A3AF86000D04FC /* SearchView.swift in Sources */,
 				54A56051D8CDE89833CFA912 /* RadioButtonGroup.swift in Sources */,
-				22639DA0266D286800B76C02 /* Plugin.swift in Sources */,
+				22639DA0266D286800B76C02 /* StatusBarPlugin.swift in Sources */,
 				222D46B323C10CAA003C754B /* ImageRepo.swift in Sources */,
 				54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */,
+				22346AA326A08E1200074F5F /* WallpaperPlugin.swift in Sources */,
 				22DB082C2691A9B500A664A2 /* NewUpdatesViewController.swift in Sources */,
 				22B284BA2553DBC50042DD9B /* TabsListView.swift in Sources */,
 				2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */,

@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().delegate = self
 
         DownloadManager.shared.markDownloadingToFailed()
-        MacBundlePlugin.sharedInstance?.onAppDidLaunch()
+        MacBundlePlugins.sharedApplicationDelegationPlugin?.onAppDidLaunch()
         
         return true
     }

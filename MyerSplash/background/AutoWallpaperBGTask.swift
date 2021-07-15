@@ -54,7 +54,7 @@ class AutoWallpaperBGTask {
         DownloadManager.shared.downloadImage(todayImage) { request in
             downloadRequest = request
         } onSuccess: { fileURL in
-            let success = MacBundlePlugin.sharedInstance?.setAsWallpaper(path: fileURL.path) ?? false
+            let success = MacBundlePlugins.sharedWallpaperPlugin?.setAsWallpaper(path: fileURL.path) ?? false
             Log.warn(tag: AutoWallpaperBGTask.TAG, "success on downloading today image \(todayImage), set success: \(success)")
             
             // todo use a better way
