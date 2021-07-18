@@ -33,7 +33,7 @@ extension UIViewController {
     }
     
     private func setAsWallpaper(path: String) -> Bool {
-        MacBundlePlugin.sharedInstance?.setAsWallpaper(path: path) ?? false
+        MacBundlePlugins.sharedWallpaperPlugin?.setAsWallpaper(path: path) ?? false
     }
     
     func presentShare(_ unsplashImage: UnsplashImage, _ anchorView: UIView) {

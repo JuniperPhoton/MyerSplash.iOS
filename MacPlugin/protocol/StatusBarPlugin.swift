@@ -7,9 +7,6 @@
 //
 
 import Foundation
-#if !targetEnvironment(simulator)
-import AppKit
-#endif
 
 enum StatusItemKind {
     case Launch
@@ -28,16 +25,14 @@ public class StatusItemConfig: NSObject {
     }
 }
 
-@objc(Plugin)
-protocol Plugin: NSObjectProtocol {
+@objc(StatusBarPlugin)
+protocol StatusBarPlugin: NSObjectProtocol {
     init()
-
-    func setAsWallpaper(path: String) -> Bool
+    func register(onToggleDock: @escaping (Bool) -> Void,
+                  onSetTodayWallpaper: @escaping () -> Void,
+                  onSetRandomWallpaper: @escaping () -> Void,
+                  onLaunchApp: @escaping (() -> Void),
+                  onExitApp: @escaping (() -> Void))
+    func activateStatusItem(configConverter: (StatusItemConfig) -> String)
     func deactivateStatusItem()
-    func activateStatusItem(configConverter: (StatusItemConfig) -> String,
-                            onToggleDock: @escaping (Bool) -> Void,
-                            onSetTodayWallpaper: @escaping () -> Void,
-                            onSetRandomWallpaper: @escaping () -> Void)
-    func toggleDock(show: Bool)
-    func onAppDidLaunch()
 }

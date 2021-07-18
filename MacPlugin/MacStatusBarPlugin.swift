@@ -1,41 +1,47 @@
 //
-//  MacPlugin.swift
+//  MacStatusBarPlugin.swift
 //  MacPlugin
 //
-//  Created by JuniperPhoton on 2021/6/6.
+//  Created by juniperphoton on 2021/7/15.
 //  Copyright © 2021 juniper. All rights reserved.
 //
 
 import Foundation
+#if !targetEnvironment(simulator)
 import AppKit
+#endif
 
-class MacPlugin: NSObject, Plugin {
-    required override init() {
-    }
-    
+class MacStatusBarPlugin: NSObject, StatusBarPlugin {
     var item: NSStatusItem? = nil
     
     private var onSetTodayWallpaper: (() -> Void)? = nil
     private var onSetRandomWallpaper: (() -> Void)? = nil
     private var onToggleDock: ((Bool) -> Void)? = nil
+    
+    private var onLaunchApp: (() -> Void)? = nil
+    private var onExitApp: (() -> Void)? = nil
 
-    // MARK: Status bar
+    required override init() {
+        // ignored
+    }
+    
+    func register(onToggleDock: @escaping (Bool) -> Void,
+                  onSetTodayWallpaper: @escaping () -> Void,
+                  onSetRandomWallpaper: @escaping () -> Void,
+                  onLaunchApp: @escaping (() -> Void),
+                  onExitApp: @escaping (() -> Void)) {
+        self.onToggleDock = onToggleDock
+        self.onSetTodayWallpaper = onSetTodayWallpaper
+        self.onSetRandomWallpaper = onSetRandomWallpaper
+        self.onLaunchApp = onLaunchApp
+        self.onExitApp = onExitApp
+    }
+    
     func deactivateStatusItem() {
         item = nil
     }
     
-    func toggleDock(show: Bool) {
-        if (!show) {
-            NSApp.setActivationPolicy(.accessory)
-        } else {
-            NSApp.setActivationPolicy(.regular)
-        }
-    }
-
-    func activateStatusItem(configConverter: (StatusItemConfig) -> String,
-                            onToggleDock: @escaping (Bool) -> Void,
-                            onSetTodayWallpaper: @escaping () -> Void,
-                            onSetRandomWallpaper: @escaping () -> Void) {
+    func activateStatusItem(configConverter: (StatusItemConfig) -> String) {
         if item != nil {
             return
         }
@@ -73,10 +79,6 @@ class MacPlugin: NSObject, Plugin {
         let icon = NSImage(named: "ic_status")
         item?.button?.image = icon
         item?.menu = statusMenu
-                
-        self.onSetTodayWallpaper = onSetTodayWallpaper
-        self.onSetRandomWallpaper = onSetRandomWallpaper
-        self.onToggleDock = onToggleDock
     }
     
     @objc func toggleDockIcon() {
@@ -93,49 +95,19 @@ class MacPlugin: NSObject, Plugin {
         self.onSetRandomWallpaper?()
     }
     
-    @objc func exitApp() {
-        NSApp.terminate(nil)
-    }
-    
-    // MARK: Set as wallpaper
-    func setAsWallpaper(path: String) -> Bool {
-        do {
-            let imgurl = NSURL.fileURL(withPath: path)
-            
-            print("setAsWallpaper \(imgurl)")
-            
-            let workspace = NSWorkspace.shared
-            try NSScreen.screens.forEach { screen in
-                try workspace.setDesktopImageURL(imgurl, for: screen, options: [:])
-            }
-            return true
-        } catch {
-            print(error)
-            
-            return false
-        }
-    }
-    
-    // MARK: launch
-    private var currentMainWindow: NSWindow? = nil
-    
     @objc func launchApp() {
-        if let window = currentMainWindow {
-            if window.isMiniaturized {
-                window.deminiaturize(nil)
-            } else {
-                NSApp.activate(ignoringOtherApps: true)
-            }
+        self.onLaunchApp?()
+    }
+    
+    @objc func exitApp() {
+        self.onExitApp?()
+    }
+    
+    func toggleDock(show: Bool) {
+        if (!show) {
+            NSApp.setActivationPolicy(.accessory)
         } else {
-            NSApp.activate(ignoringOtherApps: true)
+            NSApp.setActivationPolicy(.regular)
         }
-    }
-    
-    func onAppDidLaunch() {
-        NotificationCenter.default.addObserver(self, selector: #selector(onWindowBecomeMain), name: NSWindow.didBecomeMainNotification, object: nil)
-    }
-    
-    @objc func onWindowBecomeMain(notification: Notification) {
-        currentMainWindow = notification.object as? NSWindow
     }
 }

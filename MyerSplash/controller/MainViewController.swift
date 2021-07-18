@@ -8,10 +8,6 @@ import RxSwift
 import SwiftUI
 import MyerSplashShared
 
-#if !targetEnvironment(macCatalyst)
-import WidgetKit
-#endif
-
 class MainViewController: TabmanViewController {
     public static let BAR_BUTTON_SIZE = 50.cgFloat
     public static let BAR_BUTTON_RIGHT_MARGIN = 12.cgFloat
@@ -114,13 +110,7 @@ class MainViewController: TabmanViewController {
         
         invalidateTabBar(UIApplication.shared.windows[0].bounds.size)
         
-        if #available(iOS 14.0, *) {
-            #if !targetEnvironment(macCatalyst)
-            WidgetCenter.shared.reloadTimelines(ofKind: "MyerSplashWidget")
-            #endif
-        } else {
-            // Fallback on earlier versions
-        }
+        NotificationManager.shared.requestPermission()
     }
     
     private func setupViewControllers() {
@@ -190,7 +180,7 @@ class MainViewController: TabmanViewController {
         imageDetailView.pin.all()
         
         #if targetEnvironment(macCatalyst)
-        if AppSettings.shouldShowWhatIsNew() {
+        if AppSettings.shouldShowWhatIsNew() && (MacBundlePlugins.sharedAppPlugin?.isSupportStatusBarFeature()) == true {
             AppSettings.setSettings(key: Keys.ALREADY_SHOW_WHAT_IS_NEW, value: true)
             let vc = NewUpdatesViewController()
             vc.transitioningDelegate = defaultMDCDialogTransitionController;
@@ -312,7 +302,7 @@ class MainViewController: TabmanViewController {
     }
     
     @objc
-    private func onClickDownloads() {
+    func onClickDownloads() {
         Events.trackClickMore()
         let controller = MoreViewController(selectedIndex: 0, tabs: getTabDataSource())
         controller.moreDelegate = self

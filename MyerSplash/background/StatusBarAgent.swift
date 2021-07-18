@@ -23,21 +23,29 @@ class StatusBarAgent {
     }
     
     func toggleDock(show: Bool) {
-        MacBundlePlugin.sharedInstance?.toggleDock(show: show)
+        MacBundlePlugins.sharedApplicationDelegationPlugin?.toggleDockIcon(show: show)
     }
     
     func setup(activated: Bool) {
+        guard let statusBarPlugin = MacBundlePlugins.sharedStatusBarPlugin else {
+            return
+        }
+        
         if !activated {
-            MacBundlePlugin.sharedInstance?.deactivateStatusItem()
+            statusBarPlugin.deactivateStatusItem()
             return
         }
         
         let onSetTodayWallpaper = {
+            NotificationManager.shared.showWillSetWallpaper()
+            
             let todayImage = UnsplashImage.createToday()
             self.downloadAndSetAsWallpaper(todayImage)
         }
         
         let onSetRandomWallpaper = {
+            NotificationManager.shared.showWillSetWallpaper()
+            
             let repo = RandomImageRepo()
             repo.filterOption = .Landscape
             repo.contentSafety = .High
@@ -67,14 +75,24 @@ class StatusBarAgent {
             }
         }
         
+        let onLaunchApp: () -> Void = {
+            MacBundlePlugins.sharedApplicationDelegationPlugin?.launchApp()
+        }
+        
+        let onExitApp: () -> Void = {
+            MacBundlePlugins.sharedApplicationDelegationPlugin?.exitApp()
+        }
+        
         let onToggleDock: (Bool) -> Void = { toggled in
             AppSettings.setSettings(key: Keys.SHOW_DOCK, value: toggled)
         }
         
-        MacBundlePlugin.sharedInstance?.activateStatusItem(configConverter: converter,
-                                                           onToggleDock: onToggleDock,
-                                                           onSetTodayWallpaper: onSetTodayWallpaper,
-                                                           onSetRandomWallpaper: onSetRandomWallpaper)
+        statusBarPlugin.register(onToggleDock: onToggleDock,
+                                 onSetTodayWallpaper: onSetTodayWallpaper,
+                                 onSetRandomWallpaper: onSetRandomWallpaper,
+                                 onLaunchApp: onLaunchApp,
+                                 onExitApp: onExitApp)
+        statusBarPlugin.activateStatusItem(configConverter: converter)
     }
     
     private var previousRequest: DownloadRequest? = nil
@@ -86,9 +104,14 @@ class StatusBarAgent {
         DownloadManager.shared.downloadImage(image) { request in
             self.previousRequest = request
         } onSuccess: { fileURL in
-            _ = MacBundlePlugin.sharedInstance?.setAsWallpaper(path: fileURL.path) ?? false
+            let success = MacBundlePlugins.sharedWallpaperPlugin?.setAsWallpaper(path: fileURL.path) ?? false
+            if success {
+                NotificationManager.shared.showDidSetWallpaper()
+            } else {
+                NotificationManager.shared.showFailedToSetWallpaper()
+            }
         } onFailure: {
-            // ignored
+            NotificationManager.shared.showFailedToSetWallpaper()
         }
     }
 }
