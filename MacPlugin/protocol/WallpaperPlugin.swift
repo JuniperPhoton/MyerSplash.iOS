@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AppKit
 
 @objc(WallpaperPlugin)
 protocol WallpaperPlugin: NSObjectProtocol {
