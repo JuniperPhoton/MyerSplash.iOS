@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		04DD9D43236F0A58009F5187 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DD9D41236F0A43009F5187 /* MessageUI.framework */; };
 		1A54FD1D9B7E93F3367E6C10 /* DayNightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A54F6D86983A7220256314E /* DayNightImageView.swift */; };
+		220E4E4A26A4536800566E97 /* AppPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E4E4926A4536800566E97 /* AppPlugin.swift */; };
+		220E4E4D26A453E200566E97 /* MacAppPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E4E4C26A453E200566E97 /* MacAppPlugin.swift */; };
+		220E4E4E26A4557900566E97 /* AppPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E4E4926A4536800566E97 /* AppPlugin.swift */; };
 		2219372A23C999BD00A58BE5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2219372C23C999BD00A58BE5 /* Localizable.strings */; };
 		221D26A623D21502003BE444 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D26A523D21502003BE444 /* SettingsView.swift */; };
 		222D46B023C1081B003C754B /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D46AF23C1081B003C754B /* ImagesViewController.swift */; };
@@ -176,6 +179,8 @@
 		1A54F03AD19D14182EA816F0 /* ImageIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageIO.swift; sourceTree = "<group>"; };
 		1A54F6D86983A7220256314E /* DayNightImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayNightImageView.swift; sourceTree = "<group>"; };
 		1A54F9E0833C69F3D6955493 /* DownloadItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadItem.swift; sourceTree = "<group>"; };
+		220E4E4926A4536800566E97 /* AppPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPlugin.swift; sourceTree = "<group>"; };
+		220E4E4C26A453E200566E97 /* MacAppPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAppPlugin.swift; sourceTree = "<group>"; };
 		2219372B23C999BD00A58BE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2219372E23C99AF000A58BE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2219372F23C99C1B00A58BE5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -314,6 +319,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		220E4E4B26A4538200566E97 /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				22639D99266D265300B76C02 /* StatusBarPlugin.swift */,
+				22346A9F26A08D0C00074F5F /* WallpaperPlugin.swift */,
+				22346AA126A08D2300074F5F /* ApplicationDelegationPlugin.swift */,
+				220E4E4926A4536800566E97 /* AppPlugin.swift */,
+			);
+			path = protocol;
+			sourceTree = "<group>";
+		};
 		222D46B123C10C9B003C754B /* repo */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,14 +393,13 @@
 		22639D90266D261B00B76C02 /* MacPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				220E4E4B26A4538200566E97 /* protocol */,
 				22639D91266D261B00B76C02 /* Info.plist */,
-				22639D99266D265300B76C02 /* StatusBarPlugin.swift */,
 				22639D98266D265200B76C02 /* MacPlugin-Bridging-Header.h */,
-				22346A9F26A08D0C00074F5F /* WallpaperPlugin.swift */,
-				22346AA126A08D2300074F5F /* ApplicationDelegationPlugin.swift */,
 				22346AA526A08EB100074F5F /* MacStatusBarPlugin.swift */,
 				22346AA826A08ED400074F5F /* MacWallpaperPlugin.swift */,
 				22346AAA26A08EED00074F5F /* MacApplicationDelegationPlugin.swift */,
+				220E4E4C26A453E200566E97 /* MacAppPlugin.swift */,
 			);
 			path = MacPlugin;
 			sourceTree = "<group>";
@@ -933,8 +948,10 @@
 				22346AA626A08EB100074F5F /* MacStatusBarPlugin.swift in Sources */,
 				22346AA926A08ED400074F5F /* MacWallpaperPlugin.swift in Sources */,
 				22346AA226A08D2300074F5F /* ApplicationDelegationPlugin.swift in Sources */,
+				220E4E4A26A4536800566E97 /* AppPlugin.swift in Sources */,
 				22346AAB26A08EED00074F5F /* MacApplicationDelegationPlugin.swift in Sources */,
 				22639D9A266D265300B76C02 /* StatusBarPlugin.swift in Sources */,
+				220E4E4D26A453E200566E97 /* MacAppPlugin.swift in Sources */,
 				22346AA026A08D0C00074F5F /* WallpaperPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1011,6 +1028,7 @@
 				54A56D3CB8BEF537A73CE386 /* MainImageTableCell.swift in Sources */,
 				22346AA326A08E1200074F5F /* WallpaperPlugin.swift in Sources */,
 				22DB082C2691A9B500A664A2 /* NewUpdatesViewController.swift in Sources */,
+				220E4E4E26A4557900566E97 /* AppPlugin.swift in Sources */,
 				22B284BA2553DBC50042DD9B /* TabsListView.swift in Sources */,
 				2268722023C369E600F921F4 /* DownloadsViewController.swift in Sources */,
 				2268722F23C632B100F921F4 /* DownloadItemCell.swift in Sources */,
@@ -1152,7 +1170,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 4.7.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1184,7 +1202,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 4.7.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.MacPlugin;
@@ -1218,7 +1236,7 @@
 				INFOPLIST_FILE = MyerSplashShared/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1258,7 +1276,7 @@
 				INFOPLIST_FILE = MyerSplashShared/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1407,7 +1425,7 @@
 				);
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1439,7 +1457,7 @@
 				);
 				INFOPLIST_FILE = MyerSplash/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

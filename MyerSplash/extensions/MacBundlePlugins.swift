@@ -43,6 +43,16 @@ class MacBundlePlugins {
         return plugin
     }()
     
+    static let sharedAppPlugin: AppPlugin? = {
+        guard let bundle = createBundle() else { return nil}
+        
+        let className = "MacPlugin.MacAppPlugin"
+        guard let pluginClass = bundle.classNamed(className) as? AppPlugin.Type else { return nil}
+        
+        let plugin = pluginClass.init()
+        return plugin
+    }()
+    
     private static func createBundle() -> Bundle? {
         let bundleFileName = "MacPlugin.bundle"
         guard let bundleURL = Bundle.main.builtInPlugInsURL?

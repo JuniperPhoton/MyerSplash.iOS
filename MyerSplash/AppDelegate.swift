@@ -23,7 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             titlebar.toolbar = nil
         }
         
-        if AppSettings.isStatusBarEnabled() {
+        if AppSettings.isStatusBarEnabled() && (MacBundlePlugins.sharedAppPlugin?.isSupportStatusBarFeature()) == true {
+            UNUserNotificationCenter.current().delegate = self
+            MacBundlePlugins.sharedApplicationDelegationPlugin?.onAppDidLaunch()
+            
             StatusBarAgent.shared.setup(activated: true)
             StatusBarAgent.shared.toggleDock(show: AppSettings.isShowDockEnabled())
         }
@@ -38,10 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         setupShortcuts(application)
                 
-        UNUserNotificationCenter.current().delegate = self
-
         DownloadManager.shared.markDownloadingToFailed()
-        MacBundlePlugins.sharedApplicationDelegationPlugin?.onAppDidLaunch()
         
         return true
     }
@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         #if targetEnvironment(macCatalyst)
-        completionHandler(UNNotificationPresentationOptions.list)
+        completionHandler(.alert)
         #else
         completionHandler(.alert)
         #endif

@@ -180,7 +180,7 @@ class MainViewController: TabmanViewController {
         imageDetailView.pin.all()
         
         #if targetEnvironment(macCatalyst)
-        if AppSettings.shouldShowWhatIsNew() {
+        if AppSettings.shouldShowWhatIsNew() && (MacBundlePlugins.sharedAppPlugin?.isSupportStatusBarFeature()) == true {
             AppSettings.setSettings(key: Keys.ALREADY_SHOW_WHAT_IS_NEW, value: true)
             let vc = NewUpdatesViewController()
             vc.transitioningDelegate = defaultMDCDialogTransitionController;
